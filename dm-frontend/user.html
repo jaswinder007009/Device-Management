@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-red.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</head>
+
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+        mdl-layout--fixed-tabs">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title">Device Management System</span>
+            <div class="mdl-layout-spacer"></div>
+
+            <nav class="mdl-navigation">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable2">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" id="search-expandable2">
+                        <label class="mdl-textfield__label" for="search-expandable2">
+                            Enter search text below
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="4">notifications</div>
+
+                <button id="profile" class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">person_pin</i>
+                </button>
+                <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="profile">
+                    <li class="mdl-menu__item" id="#userProfile">Profile</li>
+                    <li class="mdl-menu__item" id="#changePassword">Change Password</li>
+                    <li class="mdl-menu__item" id="#logout">Logout</li>
+                </ul>
+            </nav>
+        </div>
+        <header>
+
+            <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+                <a href="#dashboard" class="mdl-layout__tab is-active">Dashboard</a>
+                <a href="#myDevices" class="mdl-layout__tab">My Devices</a>
+                <a href="#devices" class="mdl-layout__tab">All Devices</a>
+                <a href="#requestDevice" class="mdl-layout__tab">Request Device</a>
+                <a href="#requestHistory" class="mdl-layout__tab">All Requests</a>
+            </div>
+        </header>
+        <main class="mdl-layout__content">
+            <section class="mdl-layout__tab-panel is-active" id="dashboard">
+                <div class="page-content">
+                    <!-- Dashboard Content goes here -->
+                </div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="myDevices">
+                <div class="page-content">
+                    <!-- User's devices -->
+                </div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="devices">
+                <div class="page-content">
+                    <!-- All Device-->
+                </div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="requestDevice">
+                <div class="page-content">
+                    <!-- Request for a device -->
+                </div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="requestHistory">
+                <div class="page-content">
+                    <!-- User's request history and status -->
+                </div>
+            </section>
+
+
+        </main>
+
+    </div>
+</body>
+
+</html>
