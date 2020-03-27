@@ -14,7 +14,7 @@
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
         mdl-layout--fixed-tabs">
         <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title">Dashboard</span>
+            <span class="mdl-layout-title">Device Management System</span>
             <div class="mdl-layout-spacer"></div>
 
             <nav class="mdl-navigation">
@@ -29,53 +29,67 @@
                         </label>
                     </div>
                 </div>
-                <a class="mdl-navigation__link" href="#" style="color: black;">Profile</a>
+
+
+                 <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="4">notifications</div> 
+
+                <button id="profile" class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">person_pin</i>
+                  </button>
+                  <ul class="mdl-menu mdl-js-menu" for="profile">
+                    <li class="mdl-menu__item">Profile</li>
+                    <li class="mdl-menu__item">Settings</li>
+                   
+                  </ul>
 
             </nav>
         </div>
-        <!-- Tabs --><header>
-            <div class="mdl-layout-spacer"></div>
+        <header>
 
-        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-            <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Users</a>
-            <a href="#fixed-tab-2" class="mdl-layout__tab">Devices</a>
-            <a href="#fixed-tab-3" class="mdl-layout__tab">Device Requests</a>
-            <a href="#fixed-tab-4" class="mdl-layout__tab">Roles</a>
-            <a href="#fixed-tab-5" class="mdl-layout__tab">Permissions</a>
-        </div>
+            <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+                <a href="#dashboard" class="mdl-layout__tab is-active">Dashboard</a>
+                <a href="#users" class="mdl-layout__tab">Users</a>
+                <a href="#devices" class="mdl-layout__tab">Devices</a>
+                <a href="#deviceRequests" class="mdl-layout__tab">Device Requests</a>
+                <a href="#roles" class="mdl-layout__tab">Roles</a>
+                <a href="#permissions" class="mdl-layout__tab">Permissions</a>
+            </div>
         </header>
         <main class="mdl-layout__content">
-            <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+            <section class="mdl-layout__tab-panel is-active" id="dashboard">
                 <div class="page-content">
-                    <!-- Your content goes here -->
+                    <!-- Dashboard Content goes here -->
                 </div>
             </section>
-            <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+            <section class="mdl-layout__tab-panel" id="users">
                 <div class="page-content">
-                    <!-- Your content goes here -->
+                    <!-- User List goes here -->
                 </div>
             </section>
-            <section class="mdl-layout__tab-panel" id="fixed-tab-3">
+            <section class="mdl-layout__tab-panel" id="devices">
                 <div class="page-content">
-                    <!-- Your content goes here -->
+                    <!-- Device goes here -->
                 </div>
             </section>
-            <section class="mdl-layout__tab-panel" id="fixed-tab-4">
+            <section class="mdl-layout__tab-panel" id="deviceRequests">
                 <div class="page-content">
-                    <!-- Your content goes here -->
+                    <!-- user's request for device goes here -->
+                </div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="roles">
+                <div class="page-content">
+                    <!-- Roles page -->
                 </div>
             </section>
 
-            <section class="mdl-layout__tab-panel" id="fixed-tab-5">
+            <section class="mdl-layout__tab-panel" id="permissions">
                 <div class="page-content">
-                    <!-- Your content goes here -->
+                    <!-- Permissions page -->
                 </div>
             </section>
+
         </main>
-    </div>
-    <!-- <main class="mdl-layout__content">
-            <div>Content</div>
-        </main> -->
+
     </div>
 </body>
 
