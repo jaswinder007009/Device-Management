@@ -20,18 +20,26 @@ namespace dm_backend.Models
         internal SpecificationModel(AppDb db){
             Db = db;
         }
-        internal int getSpecificationID(){
-            using var cmd = Db.Connection.CreateCommand();
+
+        // Returns Specification ID from given specifications
+        // Otherwise throws a NullReferenceException
+        internal int GetSpecificationID(AppDb db){
+            using var cmd = db.Connection.CreateCommand();
+            
             cmd.CommandText = "get_specification_id";
             cmd.CommandType = CommandType.StoredProcedure;
-            BindParams(cmd);
-            int SpecificationID = (int)cmd.ExecuteScalar();
-            // if(SpecificationID == null){
-                // throw NullReferenceException("Specifications not valid");
-            // }
-            return SpecificationID;
+            BindSpecificationParams(cmd);
+            MySqlParameter SpecificationID = new MySqlParameter("@output", MySqlDbType.Int32) { Direction = ParameterDirection.ReturnValue };
+            cmd.Parameters.Add(SpecificationID);
+            cmd.ExecuteScalar();
+            
+            if(SpecificationID.Value == DBNull.Value){
+                throw new NullReferenceException("Specifications are not valid");
+            }
+            return (int)SpecificationID.Value;
         }
-        private void BindParams(MySqlCommand cmd) {
+
+        private void BindSpecificationParams(MySqlCommand cmd) {
             cmd.Parameters.Add(new MySqlParameter("var_ram", RAM));
             cmd.Parameters.Add(new MySqlParameter("var_storage", Storage));
             cmd.Parameters.Add(new MySqlParameter("var_screen_size", ScreenSize));

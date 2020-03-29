@@ -18,7 +18,7 @@ namespace dm_backend.Models
         public SpecificationModel specs { get; set; }
         public string requestDate { get; set; }
         public int noOfDays { get; set; }
-        // public string comment { get; set; } 
+        public string comment { get; set; } 
         internal AppDb Db { get; set; }
 
         public RequestModel(){
@@ -29,7 +29,7 @@ namespace dm_backend.Models
 
         public string AddRequest(){
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "add_request";
+            cmd.CommandText = "insert_request";
             cmd.CommandType = CommandType.StoredProcedure;
             try{
                 BindRequestProcedureParams(cmd);
@@ -37,7 +37,7 @@ namespace dm_backend.Models
                 return "Request sent";
             }
             catch(Exception e){
-                return e.Message;
+                throw e;
             }
         }
 
@@ -46,9 +46,9 @@ namespace dm_backend.Models
             cmd.Parameters.Add(new MySqlParameter("var_device_model", deviceModel));
             cmd.Parameters.Add(new MySqlParameter("var_device_brand", deviceBrand));
             cmd.Parameters.Add(new MySqlParameter("var_device_type", deviceType));
-            cmd.Parameters.Add(new MySqlParameter("var_specification_id", specs.getSpecificationID()));
+            cmd.Parameters.Add(new MySqlParameter("var_specification_id", specs.GetSpecificationID(Db)));
             cmd.Parameters.Add(new MySqlParameter("var_no_of_days", noOfDays));
-            // cmd.Parameters.Add(new MySqlParameter("var_comment", comment));
+            cmd.Parameters.Add(new MySqlParameter("var_comment", comment));
         }
 
     }   
