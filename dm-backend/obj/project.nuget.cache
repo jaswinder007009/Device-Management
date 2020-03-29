@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "GRYcUkhfQRvLIRHE3mx7IhVfpgeKEDtn8Y6QwnHsX5WjRu/hj81LRIJjtH5vlN8ePRzBiCl9qPV/BaDvewQxcw==",
+  "dgSpecHash": "UZUo+ek5cn3gt/fm7TwQfX3PRZZc7u7op0g9Jj01h+hEKn1rYTxLBW7vTG9YNG2e7N/56LRx+1jHTfLESXQCjg==",
   "success": true,
-  "projectFilePath": "E:\\Dotnet\\Device-Management\\dm-backend\\dm-backend.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "E:\\Dotnet\\Device-Management\\dm-backend\\DeviceManagement.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dell\\.nuget\\packages\\mysqlconnector\\0.63.0\\mysqlconnector.0.63.0.nupkg.sha512"
+  ],
   "logs": []
 }

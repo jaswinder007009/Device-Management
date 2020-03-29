@@ -5,5 +5,9 @@
     <RootNamespace>DeviceManagement</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MySqlConnector" Version="0.63.0" />
+  </ItemGroup>
+
 
 </Project>
