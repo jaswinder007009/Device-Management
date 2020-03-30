@@ -58,7 +58,7 @@ namespace DeviceManagement.Controllers
             List<Device> count = new List<Device>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "allDevice";
+            cmd.CommandText = "allDevices";
             cmd.CommandType = CommandType.StoredProcedure;
             var reader = cmd.ExecuteReader();
 
