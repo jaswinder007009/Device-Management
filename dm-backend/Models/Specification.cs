@@ -12,7 +12,7 @@ namespace dm_backend.Models
         public string ScreenSize { get; set; }
         public string Connectivity { get; set; } 
 
-        public AppDb Db { get; set; }
+        internal AppDb Db { get; set; }
     
         public SpecificationModel(){
 
