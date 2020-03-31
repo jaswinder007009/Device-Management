@@ -1,7 +1,7 @@
 using System;
 using MySql.Data.MySqlClient;
 
-namespace DeviceManagement
+namespace dm_backend
 {
     public class AppDb : IDisposable
     {

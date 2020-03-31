@@ -54,9 +54,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Dotnet\\Device-Management\\dm-backend\\DeviceManagement.csproj",
-      "projectName": "DeviceManagement",
-      "projectPath": "E:\\Dotnet\\Device-Management\\dm-backend\\DeviceManagement.csproj",
+      "projectUniqueName": "E:\\Dotnet\\Device-Management\\dm-backend\\dm_backend.csproj",
+      "projectName": "dm_backend",
+      "projectPath": "E:\\Dotnet\\Device-Management\\dm-backend\\dm_backend.csproj",
       "packagesPath": "C:\\Users\\dell\\.nuget\\packages\\",
       "outputPath": "E:\\Dotnet\\Device-Management\\dm-backend\\obj\\",
       "projectStyle": "PackageReference",
