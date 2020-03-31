@@ -22,7 +22,7 @@ namespace DeviceManagement.Controllers
         [Route("{email}/devices/returndates")]
         public IActionResult getDeviceReturnDates(string email)
         {
-            List<Device> deviceDevice = new List<Device>();
+            List<Overview> device = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "deviceReturnDates";
@@ -34,7 +34,7 @@ namespace DeviceManagement.Controllers
             {
                 while (reader.Read())
                 {
-                    deviceDevice.Add(new Device(){
+                    device.Add(new Overview(){
                     deviceType = reader.GetString(0),
                     deviceModel = reader.GetString(1),
                     returnDate = reader.GetDateTime(2)
@@ -43,9 +43,9 @@ namespace DeviceManagement.Controllers
                 }
             }
             Db.Connection.Close();
-            if (deviceDevice.Count > 0)
+            if (device.Count > 0)
             {
-                return Ok(deviceDevice);
+                return Ok(device);
             }
             else
                 return NoContent();
@@ -55,7 +55,7 @@ namespace DeviceManagement.Controllers
         [Route("device/count")]
         public IActionResult getDeviceCount()
         {
-            List<Device> count = new List<Device>();
+            List<Overview> count = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "allDevices";
@@ -66,7 +66,7 @@ namespace DeviceManagement.Controllers
             {
                 while (reader.Read())
                 {
-                    count.Add(new Device()
+                    count.Add(new Overview()
                     {
                         count = reader.GetInt32(0)
                     });
@@ -86,7 +86,7 @@ namespace DeviceManagement.Controllers
         [Route("requests/accepted")]
         public IActionResult getAcceptedRequestStatistics()
         {
-            List<Device> deviceDevice = new List<Device>();
+            List<Overview> device = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "latestAcceptedRequests";
@@ -97,7 +97,7 @@ namespace DeviceManagement.Controllers
             {
                 while (reader.Read())
                 {
-                    deviceDevice.Add(new Device()
+                    device.Add(new Overview()
                     {
                         deviceId = reader.GetInt32(0),
                         deviceType=reader.GetString(1),
@@ -109,9 +109,9 @@ namespace DeviceManagement.Controllers
                 }
             }
             Db.Connection.Close();
-            if (deviceDevice.Count > 0)
+            if (device.Count > 0)
             {
-                return Ok(deviceDevice);
+                return Ok(device);
             }
             else
                 return NoContent();
@@ -122,7 +122,7 @@ namespace DeviceManagement.Controllers
         [Route("requests/pending")]
         public IActionResult getPendingRequestStatistics()
         {
-            List<Device> deviceDevice = new List<Device>();
+            List<Overview> device = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "latestPendingRequests";
@@ -133,7 +133,7 @@ namespace DeviceManagement.Controllers
             {
                 while (reader.Read())
                 {
-                    deviceDevice.Add(new Device()
+                    device.Add(new Overview()
                     {
                         deviceId = reader.GetInt32(0),
                         deviceType=reader.GetString(1),
@@ -144,9 +144,9 @@ namespace DeviceManagement.Controllers
                 }
             }
             Db.Connection.Close();
-            if (deviceDevice.Count > 0)
+            if (device.Count > 0)
             {
-                return Ok(deviceDevice);
+                return Ok(device);
             }
             else
                 return NoContent();
@@ -157,7 +157,7 @@ namespace DeviceManagement.Controllers
         [Route("requests/rejected")]
         public IActionResult getRejectedRequestStatistics()
         {
-            List<Device> count = new List<Device>();
+            List<Overview> count = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "rejectedRequests";
@@ -168,7 +168,7 @@ namespace DeviceManagement.Controllers
             {
                 while (reader.Read())
                 {
-                    count.Add(new Device()
+                    count.Add(new Overview()
                     {
                         count=reader.GetInt32(0)
 
@@ -189,7 +189,7 @@ namespace DeviceManagement.Controllers
         [Route("device/faults")]
         public IActionResult getFaultStatistics()
         {
-            List<Device> deviceDevice = new List<Device>();
+            List<Overview> device = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "faults";
@@ -200,7 +200,7 @@ namespace DeviceManagement.Controllers
             {
                 while (reader.Read())
                 {
-                    deviceDevice.Add(new Device()
+                    device.Add(new Overview()
                     {
                         deviceType=reader.GetString(0),
                         deviceModel=reader.GetString(1),
@@ -210,9 +210,9 @@ namespace DeviceManagement.Controllers
                 }
             }
             Db.Connection.Close();
-            if (deviceDevice.Count > 0)
+            if (device.Count > 0)
             {
-                return Ok(deviceDevice);
+                return Ok(device);
             }
             else
                 return NoContent();
@@ -223,7 +223,7 @@ namespace DeviceManagement.Controllers
     public AppDb Db { get; }
     }  
 
-    public class Device
+    public class Overview
     {
         public int deviceId { get; set; }
         public int userId { get; set; }
