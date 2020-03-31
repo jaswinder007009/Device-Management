@@ -41,6 +41,22 @@ namespace dm_backend.Models
             }
         }
 
+        public int CancelRequest(string  requestId)
+        {
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "cancel_request";
+            cmd.CommandType = CommandType.StoredProcedure; 
+            try{
+                cmd.Parameters.AddWithValue("@requestId", request_id));
+                cmd.ExecuteNonQuery();
+                return "Request cancelled";
+            }
+            catch(Exception e){
+                throw e;
+            }
+            
+        }
+
         private void BindRequestProcedureParams(MySqlCommand cmd){
             cmd.Parameters.Add(new MySqlParameter("var_user_id", userId));
             cmd.Parameters.Add(new MySqlParameter("var_device_model", deviceModel));

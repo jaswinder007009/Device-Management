@@ -45,6 +45,23 @@ namespace dm_backend.Controllers
         {
             return Ok(JsonSerializer.Serialize(new RequestModel()));
         }
+
+        [HttpDelete]
+        [Route("{requestId}/cancel")]
+        public IActionResult DeleteRequest(string username)
+        {
+            Db.Connection.Open();
+            Request query = new Request(Db);
+            string result = null;
+            try{
+                result =query.CancelRequest(request_id);
+            }
+            catch(Exception e){
+                return NoContent();
+            }
+            Db.Connection.Close();
+            return  Ok(result);
+        }
         
     }
 }
