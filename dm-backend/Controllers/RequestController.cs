@@ -48,13 +48,13 @@ namespace dm_backend.Controllers
 
         [HttpDelete]
         [Route("{requestId}/cancel")]
-        public IActionResult DeleteRequest(string username)
+        public IActionResult DeleteRequest(int requestId)
         {
             Db.Connection.Open();
-            Request query = new Request(Db);
+            RequestModel query = new RequestModel(Db);
             string result = null;
             try{
-                result =query.CancelRequest(request_id);
+                result =query.CancelRequest(requestId);
             }
             catch(Exception e){
                 return NoContent();

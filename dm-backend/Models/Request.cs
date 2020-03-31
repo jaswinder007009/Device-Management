@@ -41,13 +41,13 @@ namespace dm_backend.Models
             }
         }
 
-        public int CancelRequest(string  requestId)
+        public string CancelRequest(int  requestId)
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "cancel_request";
             cmd.CommandType = CommandType.StoredProcedure; 
             try{
-                cmd.Parameters.AddWithValue("@requestId", request_id));
+                cmd.Parameters.AddWithValue("@request_id", requestId);
                 cmd.ExecuteNonQuery();
                 return "Request cancelled";
             }
