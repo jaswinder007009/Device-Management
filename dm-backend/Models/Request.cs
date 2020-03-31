@@ -41,6 +41,22 @@ namespace dm_backend.Models
             }
         }
 
+        public string AcceptDeviceRequest(int  requestId)
+        {
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "accept_request";
+            cmd.CommandType = CommandType.StoredProcedure; 
+            try{
+                cmd.Parameters.AddWithValue("@request_id", requestId);
+                cmd.ExecuteNonQuery();
+                return "Request accepted";
+            }
+            catch(Exception e){
+                throw e;
+            }
+            
+        }
+
         public string CancelRequest(int  requestId)
         {
             using var cmd = Db.Connection.CreateCommand();
