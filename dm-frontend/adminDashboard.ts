@@ -62,7 +62,7 @@ function getLatestPendingRequests(url: string) {
 
     var tableTitle = "<TH COLSPAN='4'><center>RECENT REQUESTS</center></th>";
     var tableHeading = "";
-    tableHeading += "<th class='mdl-data-table__cell--non-numeric'>Device Id</th>"
+    tableHeading += "<th class='mdl-data-table__cell--non-numeric'>Specification Id</th>"
         + "<th>Type</th>"
         + "<th>Model</th>"
         + "<th>User Id</th>";
