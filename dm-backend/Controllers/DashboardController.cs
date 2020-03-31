@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 
-namespace DeviceManagement.Controllers
+namespace dm_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -22,10 +22,10 @@ namespace DeviceManagement.Controllers
         [Route("{email}/devices/returndates")]
         public IActionResult getDeviceReturnDates(string email)
         {
-            List<Overview> device = new List<Overview>();
+            List<Overview> returnDateOverview = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "deviceReturnDates";
+            cmd.CommandText = "device_return_dates";
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@email", email);
             var reader = cmd.ExecuteReader();
@@ -34,7 +34,7 @@ namespace DeviceManagement.Controllers
             {
                 while (reader.Read())
                 {
-                    device.Add(new Overview(){
+                    returnDateOverview.Add(new Overview(){
                     deviceType = reader.GetString(0),
                     deviceModel = reader.GetString(1),
                     returnDate = reader.GetDateTime(2)
@@ -43,9 +43,9 @@ namespace DeviceManagement.Controllers
                 }
             }
             Db.Connection.Close();
-            if (device.Count > 0)
+            if (returnDateOverview.Count > 0)
             {
-                return Ok(device);
+                return Ok(returnDateOverview);
             }
             else
                 return NoContent();
@@ -55,10 +55,10 @@ namespace DeviceManagement.Controllers
         [Route("device/count")]
         public IActionResult getDeviceCount()
         {
-            List<Overview> count = new List<Overview>();
+            List<Overview> deviceCount = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "allDevices";
+            cmd.CommandText = "all_devices";
             cmd.CommandType = CommandType.StoredProcedure;
             var reader = cmd.ExecuteReader();
 
@@ -66,16 +66,16 @@ namespace DeviceManagement.Controllers
             {
                 while (reader.Read())
                 {
-                    count.Add(new Overview()
+                    deviceCount.Add(new Overview()
                     {
                         count = reader.GetInt32(0)
                     });
                 }
             }
             Db.Connection.Close();
-            if (count.Count > 0)
+            if (deviceCount.Count > 0)
             {
-                return Ok(count);
+                return Ok(deviceCount);
             }
             else
                 return NoContent();
@@ -86,10 +86,10 @@ namespace DeviceManagement.Controllers
         [Route("requests/accepted")]
         public IActionResult getAcceptedRequestStatistics()
         {
-            List<Overview> device = new List<Overview>();
+            List<Overview> acceptedRequestsOverview = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "latestAcceptedRequests";
+            cmd.CommandText = "latest_accepted_requests";
             cmd.CommandType = CommandType.StoredProcedure;
             var reader = cmd.ExecuteReader();
 
@@ -97,7 +97,7 @@ namespace DeviceManagement.Controllers
             {
                 while (reader.Read())
                 {
-                    device.Add(new Overview()
+                    acceptedRequestsOverview.Add(new Overview()
                     {
                         deviceId = reader.GetInt32(0),
                         deviceType=reader.GetString(1),
@@ -109,9 +109,9 @@ namespace DeviceManagement.Controllers
                 }
             }
             Db.Connection.Close();
-            if (device.Count > 0)
+            if (acceptedRequestsOverview.Count > 0)
             {
-                return Ok(device);
+                return Ok(acceptedRequestsOverview);
             }
             else
                 return NoContent();
@@ -122,10 +122,10 @@ namespace DeviceManagement.Controllers
         [Route("requests/pending")]
         public IActionResult getPendingRequestStatistics()
         {
-            List<Overview> device = new List<Overview>();
+            List<Overview> pendingRequestsOverview = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "latestPendingRequests";
+            cmd.CommandText = "latest_pending_requests";
             cmd.CommandType = CommandType.StoredProcedure;
             var reader = cmd.ExecuteReader();
 
@@ -133,7 +133,7 @@ namespace DeviceManagement.Controllers
             {
                 while (reader.Read())
                 {
-                    device.Add(new Overview()
+                    pendingRequestsOverview.Add(new Overview()
                     {
                         deviceId = reader.GetInt32(0),
                         deviceType=reader.GetString(1),
@@ -144,9 +144,9 @@ namespace DeviceManagement.Controllers
                 }
             }
             Db.Connection.Close();
-            if (device.Count > 0)
+            if (pendingRequestsOverview.Count > 0)
             {
-                return Ok(device);
+                return Ok(pendingRequestsOverview);
             }
             else
                 return NoContent();
@@ -157,10 +157,10 @@ namespace DeviceManagement.Controllers
         [Route("requests/rejected")]
         public IActionResult getRejectedRequestStatistics()
         {
-            List<Overview> count = new List<Overview>();
+            List<Overview> rejectedRequestsCount = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "rejectedRequests";
+            cmd.CommandText = "rejected_requests";
             cmd.CommandType = CommandType.StoredProcedure;
             var reader = cmd.ExecuteReader();
 
@@ -168,7 +168,7 @@ namespace DeviceManagement.Controllers
             {
                 while (reader.Read())
                 {
-                    count.Add(new Overview()
+                    rejectedRequestsCount.Add(new Overview()
                     {
                         count=reader.GetInt32(0)
 
@@ -176,9 +176,9 @@ namespace DeviceManagement.Controllers
                 }
             }
             Db.Connection.Close();
-            if (count.Count > 0)
+            if (rejectedRequestsCount.Count > 0)
             {
-                return Ok(count);
+                return Ok(rejectedRequestsCount);
             }
             else
                 return NoContent();
@@ -189,10 +189,10 @@ namespace DeviceManagement.Controllers
         [Route("device/faults")]
         public IActionResult getFaultStatistics()
         {
-            List<Overview> device = new List<Overview>();
+            List<Overview> faultOverview = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "faults";
+            cmd.CommandText = "get_Faults";
             cmd.CommandType = CommandType.StoredProcedure;
             var reader = cmd.ExecuteReader();
 
@@ -200,7 +200,7 @@ namespace DeviceManagement.Controllers
             {
                 while (reader.Read())
                 {
-                    device.Add(new Overview()
+                    faultOverview.Add(new Overview()
                     {
                         deviceType=reader.GetString(0),
                         deviceModel=reader.GetString(1),
@@ -210,9 +210,9 @@ namespace DeviceManagement.Controllers
                 }
             }
             Db.Connection.Close();
-            if (device.Count > 0)
+            if (faultOverview.Count > 0)
             {
-                return Ok(device);
+                return Ok(faultOverview);
             }
             else
                 return NoContent();

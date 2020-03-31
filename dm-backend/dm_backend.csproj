@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>DeviceManagement</RootNamespace>
+    <RootNamespace>dm_backend</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
