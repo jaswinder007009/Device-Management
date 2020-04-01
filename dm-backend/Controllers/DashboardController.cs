@@ -160,7 +160,7 @@ namespace dm_backend.Controllers
             List<Overview> rejectedRequestsCount = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "rejected_requests";
+            cmd.CommandText = "rejected_requests_count";
             cmd.CommandType = CommandType.StoredProcedure;
             var reader = cmd.ExecuteReader();
 
