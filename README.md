@@ -6,6 +6,11 @@ Database dump can [be found here](https://github.com/KhushiSarkari/db-schema)
 
 ### Request
 
-1. DELETE `/api/request/{requestId}/cancel`
-2. GET `/api/request/{requestId}/accept`
-3. GET `/api/requesthistory/{assignedId}/accept`
+1. POST `/api/request`
+2. GET `/api/request/pending`
+3. DELETE `/api/request/{requestId}/cancel`
+4. GET `/api/request/{requestId}/accept`
+
+### Return
+
+1. GET `/api/requesthistory/{assignedId}/accept`
