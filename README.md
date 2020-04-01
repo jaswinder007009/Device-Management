@@ -9,3 +9,4 @@ Database dump can [be found here](https://github.com/kaustubh-ex2/device_schema/
 1. POST `/api/request`
 2. GET `/api/request/pending`
     * Returns all pending requests (meant to be used by admin)
+3. GET `/api/request/{requestId}/reject`

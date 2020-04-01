@@ -41,6 +41,23 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("{requestId}/reject")]
+        public IActionResult RejectRequest(int requestId, [System.Web.Http.FromUri]int id){
+            Db.Connection.Open();
+            RequestModel query = new RequestModel(Db);
+            query.requestId = requestId;
+            try{
+                query.RejectDeviceRequest(id);
+            }
+            catch(Exception e){
+                Console.WriteLine(e.Message);
+                return BadRequest("An error occured while rejecting the request");
+            }
+            Db.Connection.Close();
+            return Ok("Request rejected");
+        }
         
     }
 }

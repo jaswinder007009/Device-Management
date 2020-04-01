@@ -58,23 +58,21 @@ namespace dm_backend.Models
             using( MySqlDataReader reader =  cmd.ExecuteReader())
                 return ReadAll(reader);
         }
-
-        private static T GetOptionalColumn<T>(MySqlDataReader reader, string colName){
-            if(HasColumn(reader, colName) && reader[colName] != DBNull.Value)
-                return (T)reader[colName];
-            else
-                return default(T);
-        }
-        public static bool HasColumn(MySqlDataReader dataReader, string columnName)
-        {
-            for (int i = 0; i < dataReader.FieldCount; i++)
+        public void RejectDeviceRequest(int id){
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "reject_request";
+            cmd.CommandType = CommandType.StoredProcedure;
+            try
             {
-                if (dataReader.GetName(i).Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
-                    return true;
+                BindId(cmd);
+                cmd.Parameters.Add(new MySqlParameter("var_admin_id", id));
+                cmd.ExecuteNonQuery();
             }
-            return false;
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
-
 
         private void BindRequestProcedureParams(MySqlCommand cmd)
         {
@@ -85,6 +83,9 @@ namespace dm_backend.Models
             cmd.Parameters.Add(new MySqlParameter("var_specification_id", specs.GetSpecificationID(Db)));
             cmd.Parameters.Add(new MySqlParameter("var_no_of_days", noOfDays));
             cmd.Parameters.Add(new MySqlParameter("var_comment", comment));
+        }
+        private void BindId(MySqlCommand cmd){
+            cmd.Parameters.Add(new MySqlParameter("var_request_id", requestId));
         }
 
         private List<RequestModel> ReadAll(MySqlDataReader reader)
