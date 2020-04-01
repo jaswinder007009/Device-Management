@@ -58,7 +58,6 @@ namespace dm_backend.Controllers
             }
             catch(Exception e){
                 result="Device unavailable";
-				//return NoContent();
             }
             Db.Connection.Close();
             return  Ok(result);
