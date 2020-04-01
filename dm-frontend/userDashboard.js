@@ -7,7 +7,7 @@ function createCard(cardData) {
         + "</h5>"
         + "</div>"
         + "</div>";
-    document.getElementById("dynamicData").innerHTML += cardCreationCode;
+    document.getElementById("content").innerHTML += cardCreationCode;
 }
 function createTable(tableTitle, tableHeading, tableBody) {
     var tableData = "<br><br><table class='mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color-text--blue-grey-800'>"
@@ -23,7 +23,7 @@ function createTable(tableTitle, tableHeading, tableBody) {
         + tableBody
         + "</tbody>"
         + "</table>";
-    document.getElementById("dynamicData").innerHTML += tableData;
+    document.getElementById("content").innerHTML += tableData;
 }
 function getTotalDevices(url) {
     var cardData = "Total Devices:";
@@ -55,8 +55,18 @@ function getDeviceReturnDates(url) {
     });
 }
 function dashboardData() {
-    document.getElementById("dynamicData").innerHTML = "";
+    document.getElementById("content").innerHTML = "";
     getDeviceReturnDates("http://localhost:5000/api/dashboard/" + email + "/devices/returndates");
     getTotalDevices("http://localhost:5000/api/dashboard/device/count");
 }
-dashboardData();
+window.onload = function () {
+    dashboardData();
+};
+function navigate(id) {
+    if (id == "dashboard") {
+        dashboardData();
+    }
+    else {
+        document.getElementById("content").innerHTML = "hello " + id;
+    }
+}
