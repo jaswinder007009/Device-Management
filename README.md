@@ -1,6 +1,6 @@
 # Device Management
 
-Database dump can [be found here](https://github.com/kaustubh-ex2/device_schema/tree/dm_kaustubh)
+Database dump can [be found here](https://github.com/KhushiSarkari/db-schema)
 
 ## Endpoints
 
@@ -10,3 +10,9 @@ Database dump can [be found here](https://github.com/kaustubh-ex2/device_schema/
 2. GET `/api/request/pending`
     * Returns all pending requests (meant to be used by admin)
 3. GET `/api/request/{requestId}/reject`
+4. DELETE `/api/request/{requestId}/cancel`
+5. GET `/api/request/{requestId}/accept`
+
+### Return
+
+1. GET `/api/requesthistory/{assignedId}/accept`

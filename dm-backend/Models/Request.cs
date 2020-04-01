@@ -7,7 +7,6 @@ using MySql.Data.MySqlClient;
 using dm_backend.Models;
 using static dm_backend.Utilities.Readers;
 
-
 namespace dm_backend.Models
 {
     public class RequestModel
@@ -74,8 +73,7 @@ namespace dm_backend.Models
             }
         }
 
-        private void BindRequestProcedureParams(MySqlCommand cmd)
-        {
+        private void BindRequestProcedureParams(MySqlCommand cmd){
             cmd.Parameters.Add(new MySqlParameter("var_user_id", userId));
             cmd.Parameters.Add(new MySqlParameter("var_device_model", deviceModel));
             cmd.Parameters.Add(new MySqlParameter("var_device_brand", deviceBrand));
@@ -105,5 +103,37 @@ namespace dm_backend.Models
             return requests;
         }
 
-    }
+        public string AcceptDeviceRequest(int  requestId)
+        {
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "accept_request";
+            cmd.CommandType = CommandType.StoredProcedure; 
+            try{
+                cmd.Parameters.AddWithValue("@request_id", requestId);
+                cmd.ExecuteNonQuery();
+                return "Request accepted";
+            }
+            catch(Exception e){
+                throw e;
+            }
+            
+        }
+
+        public string CancelRequest(int  requestId)
+        {
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "cancel_request";
+            cmd.CommandType = CommandType.StoredProcedure; 
+            try{
+                cmd.Parameters.AddWithValue("@request_id", requestId);
+                cmd.ExecuteNonQuery();
+                return "Request cancelled";
+            }
+            catch(Exception e){
+                throw e;
+            }
+            
+        }
+
+    }   
 }

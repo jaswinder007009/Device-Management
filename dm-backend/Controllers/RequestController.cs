@@ -59,5 +59,39 @@ namespace dm_backend.Controllers
             return Ok("Request rejected");
         }
         
+        [HttpGet]
+        [Route("{requestId}/accept")]
+        public IActionResult AcceptRequest(int requestId)
+        {
+            Db.Connection.Open();
+            RequestModel query = new RequestModel(Db);
+            string result = null;
+            try{
+                result =query.AcceptDeviceRequest(requestId);
+            }
+            catch(Exception e){
+                result="Device unavailable";
+            }
+            Db.Connection.Close();
+            return  Ok(result);
+        }
+
+        [HttpDelete]
+        [Route("{requestId}/cancel")]
+        public IActionResult DeleteRequest(int requestId)
+        {
+            Db.Connection.Open();
+            RequestModel query = new RequestModel(Db);
+            string result = null;
+            try{
+                result =query.CancelRequest(requestId);
+            }
+            catch(Exception e){
+                return NoContent();
+            }
+            Db.Connection.Close();
+            return  Ok(result);
+        }
+        
     }
 }
