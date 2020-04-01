@@ -6,7 +6,7 @@ function createCard(cardData) {
         + "</h5>"
         + "</div>"
         + "</div>";
-    document.getElementById("dynamicData").innerHTML += cardCreationCode;
+    document.getElementById("content").innerHTML += cardCreationCode;
 }
 function createTable(tableTitle, tableHeading, tableBody) {
     var tableData = "<br><br><table class='mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color-text--blue-grey-800'>"
@@ -22,7 +22,7 @@ function createTable(tableTitle, tableHeading, tableBody) {
         + tableBody
         + "</tbody>"
         + "</table>";
-    document.getElementById("dynamicData").innerHTML += tableData;
+    document.getElementById("content").innerHTML += tableData;
 }
 function getLatestAccepetedRequests(url) {
     var tableTitle = "<TH COLSPAN='5'><center>LATEST ACCEPTED REQUESTS</center></th>";
@@ -110,7 +110,7 @@ function getTotalDevices(url) {
     });
 }
 function dashboardData() {
-    document.getElementById("dynamicData").innerHTML = "";
+    document.getElementById("content").innerHTML = "";
     getLatestAccepetedRequests("http://localhost:5000/api/dashboard/requests/accepted");
     getLatestPendingRequests("http://localhost:5000/api/dashboard/requests/pending");
     getRejectedRequests("http://localhost:5000/api/dashboard/requests/rejected");
@@ -120,8 +120,11 @@ function dashboardData() {
 window.onload = function () {
     dashboardData();
 };
-// (document.querySelector("#dashboard") as HTMLAnchorElement).addEventListener(
-//     "click",function(){
-//         dashboardData()
-//     }
-// )
+function navigate(id) {
+    if (id == "dashboard") {
+        dashboardData();
+    }
+    else {
+        document.getElementById("content").innerHTML = "hello " + id;
+    }
+}
