@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using dm_backend.Models;
-using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
-using Newtonsoft.Json.Linq;
-using System.Web.Http.Results;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace dm_backend.Controllers
 {
@@ -40,10 +31,15 @@ namespace dm_backend.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+       [HttpGet]
+        [Route("pending")]
         public IActionResult GetRequest()
         {
-            return Ok(JsonSerializer.Serialize(new RequestModel()));
+            Db.Connection.Open();
+            var requestObject = new RequestModel(Db);
+            var result = requestObject.GetAllPendingRequests();
+            Db.Connection.Close();
+            return Ok(result);
         }
 
         [HttpGet]
