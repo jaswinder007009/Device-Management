@@ -1,6 +1,6 @@
 # Device Management
 
-Database dump can [be found here](https://github.com/KhushiSarkari/db-schema)
+Database dump can [be found here](https://github.com/kaustubh-ex2/device_schema/tree/DM-4)
 
 ## Endpoints
 
