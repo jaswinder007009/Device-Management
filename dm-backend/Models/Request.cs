@@ -32,43 +32,46 @@ namespace dm_backend.Models
             Db = db;
         }
 
-        public string AddRequest(){
+        public string AddRequest()
+        {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "insert_request";
             cmd.CommandType = CommandType.StoredProcedure;
-            try{
+            try
+            {
                 BindRequestProcedureParams(cmd);
                 cmd.ExecuteNonQuery();
                 return "Request sent";
             }
-            catch(Exception e){
+            catch (Exception e)
+            {
                 throw e;
             }
         }
 
-        public List<RequestModel> GetAllPendingRequests()
+        public List<RequestModel> GetAllPendingRequests(string sortField,int sortDirection,string searchField)
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "get_all_pending_requests";
-            cmd.CommandType = CommandType.StoredProcedure;
-            using( MySqlDataReader reader =  cmd.ExecuteReader())
-                return ReadAll(reader);
+            cmd.CommandText = get_all_pending_requests+searchQuery+sortQuery+sortField+(sortDirection==-1 ? " desc":" asc");; 
+            cmd.Parameters.AddWithValue("@search_field", searchField); 
+            using MySqlDataReader reader =  cmd.ExecuteReader();
+            return ReadAll(reader);
         }
 
-        private static T GetOptionalColumn<T>(MySqlDataReader reader, string colName){
-            if(HasColumn(reader, colName) && reader[colName] != DBNull.Value)
-                return (T)reader[colName];
-            else
-                return default(T);
-        }
-        public static bool HasColumn(MySqlDataReader dataReader, string columnName)
-        {
-            for (int i = 0; i < dataReader.FieldCount; i++)
+        public void RejectDeviceRequest(int id){
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "reject_request";
+            cmd.CommandType = CommandType.StoredProcedure;
+            try
             {
-                if (dataReader.GetName(i).Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
-                    return true;
+                BindId(cmd);
+                cmd.Parameters.Add(new MySqlParameter("var_admin_id", id));
+                cmd.ExecuteNonQuery();
             }
-            return false;
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         private void BindRequestProcedureParams(MySqlCommand cmd){
@@ -80,8 +83,11 @@ namespace dm_backend.Models
             cmd.Parameters.Add(new MySqlParameter("var_no_of_days", noOfDays));
             cmd.Parameters.Add(new MySqlParameter("var_comment", comment));
         }
+        private void BindId(MySqlCommand cmd){
+            cmd.Parameters.Add(new MySqlParameter("var_request_id", requestId));
+        }
 
-         private List<RequestModel> ReadAll(MySqlDataReader reader)
+        private List<RequestModel> ReadAll(MySqlDataReader reader)
         {
             var requests = new List<RequestModel>();
             using (reader)
@@ -129,7 +135,31 @@ namespace dm_backend.Models
             }
             
         }
+    internal string get_all_pending_requests=@"select request_device_id, user_id, device_model.model, device_type.type, device_brand.brand, specification.*, request_date, no_of_days, comment, salutation, first_name, middle_name, last_name, department_name, designation_name, email, date_of_birth, date_of_joining, gender,
+    if(count(available_devices.device_id) = 0, FALSE, TRUE) as availability
+    from request_device
+    inner join user using(user_id)
+    inner join department_designation using(department_designation_id)
+    inner join department using(department_id)
+    inner join designation using(designation_id)
+    inner join device_brand using(device_brand_id)
+    inner join device_model using(device_model_id)
+    inner join device_type using(device_type_id)
+    inner join specification using(specification_id)
+    inner join salutation using(salutation_id)
+    inner join gender using(gender_id)
+    left join (
+		select * from device
+        inner join status
+        using(status_id)
+        where status_name='Free'
+    ) as available_devices
+    on available_devices.device_model_id = request_device.device_model_id
+    and available_devices.specification_id = request_device.specification_id
+    and available_devices.device_type_id = request_device.device_type_id";
 
+    internal string searchQuery=@" where device_type.type like CONCAT('%', @search_field, '%') or device_model.model like CONCAT('%', @search_field, '%') or device_brand.brand like CONCAT('%', @search_field, '%') or get_full_name(user.user_id) like CONCAT('%', @search_field, '%') ";       
+    internal string sortQuery=@" group by request_device_id order by ";
 
     }   
 }
