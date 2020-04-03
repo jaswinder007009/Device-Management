@@ -1,6 +1,6 @@
 # Device Management
 
-[Database:](https://github.com/KhushiSarkari/db-schema)
+[Database:](https://github.com/kaustubh-ex2/device_schema/tree/DM-15)
 
 ## Endpoints for Admin Dashboard:
 
