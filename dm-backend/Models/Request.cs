@@ -136,7 +136,7 @@ namespace dm_backend.Models
             
         }
     internal string get_all_pending_requests=@"select request_device_id, user_id, device_model.model, device_type.type, device_brand.brand, specification.*, request_date, no_of_days, comment, salutation, first_name, middle_name, last_name, department_name, designation_name, email, date_of_birth, date_of_joining, gender,
-    if(count(available_devices.device_id) = 0, FALSE, TRUE) as availability
+    if(count(available_devices.device_id) =1, TRUE, FALSE) as availability
     from request_device
     inner join user using(user_id)
     inner join department_designation using(department_designation_id)
@@ -156,7 +156,8 @@ namespace dm_backend.Models
     ) as available_devices
     on available_devices.device_model_id = request_device.device_model_id
     and available_devices.specification_id = request_device.specification_id
-    and available_devices.device_type_id = request_device.device_type_id";
+    and available_devices.device_type_id = request_device.device_type_id
+	and available_devices.device_brand_id = request_device.device_brand_id";
 
     internal string searchQuery=@" where device_type.type like CONCAT('%', @search_field, '%') or device_model.model like CONCAT('%', @search_field, '%') or device_brand.brand like CONCAT('%', @search_field, '%') or get_full_name(user.user_id) like CONCAT('%', @search_field, '%') ";       
     internal string sortQuery=@" group by request_device_id order by ";
