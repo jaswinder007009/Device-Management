@@ -7,3 +7,6 @@
     font: 1em sans-serif;
     color: slategray;
 }
+ th[colspan]{
+    text-align: center;
+}

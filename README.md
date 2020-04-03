@@ -7,7 +7,7 @@ Database dump can [be found here](https://github.com/kaustubh-ex2/device_schema/
 ### Request
 
 1. POST `/api/request`
-2. GET `/api/request/pending`
+2. GET `/api/request/pending?search={searchField}&sort={sortField}&direction={sortDirection}`
     * Returns all pending requests (meant to be used by admin)
 3. GET `/api/request/{requestId}/reject`
 4. DELETE `/api/request/{requestId}/cancel`
