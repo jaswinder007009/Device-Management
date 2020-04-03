@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+
+
+    <!-- <script src="https://kit.fontawesome.com/7208822aa4.js" crossorigin="anonymous"></script> -->
+
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="demo-layout-waterfall mdl-layout mdl-js-layout">
+        <header class="mdl-layout__header mdl-layout__header--waterfall">
+            <!-- Top row, always visible -->
+            <button id="getdata">Get Data</button>
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title">Title</span>
+                <div class="mdl-layout-spacer"></div>
+
+            </div>
+            <!-- Bottom row, not visible on scroll -->
+
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Admin</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="">Roles & Permission</a>
+                <a class="mdl-navigation__link" href="">Dash-Board</a>
+                <a class="mdl-navigation__link" href="">Create New User</a>
+                <a class="mdl-navigation__link" href="">All Devices</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <div class="requestdata">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                mdl-textfield--floating-label mdl-textfield--align-right">
+                        <label class="mdl-button mdl-js-button mdl-button--icon" for="waterfall-exp">
+                            <i class="material-icons">search</i>
+                        </label>
+                        <div class="mdl-textfield__expandable-holder">
+                            <input class="mdl-textfield__input" type="text" name="sample" id="waterfall-exp" value="">
+                        </div>
+                    </div>
+                    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                        <thead id="tableHead" sort="" sortby="">
+                            <tr>
+                                <th class="mdl-js-data-table mdl-data-table__header--sorted-ascending" id="user">
+                                    User Name</th>
+                                <th class="mdl-data-table__header--sorted-ascending" id="serialNumber">
+                                    Device Serial number</th>
+                                <th class="mdl-data-table__header--sorted-ascending" id="type"
+                                    id="">Device Type</th>
+                                <th class="mdl-data-table__header--sorted-ascending" id="device"
+                                    id="deviceName">Device Name</th>
+                                    <th class="mdl-data-table__header--sorted-ascending" id="status"
+                                    id="deviceName">Device Status</th>
+                                <th class="mdl-data-table__header--sorted-ascending" id="assigndate"
+                                    id="">Assign Date</th>
+                                <th class="mdl-data-table__header--sorted-ascending" id="returndate"
+                                    id="">Device Return Date</th>
+                                <th class="mdl-data-table__header--sorted-ascending" id="admin"
+                                    id="">Admin Handler Name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="Request_data">
+
+                        </tbody>
+                    </table>
+                   
+                </div>
+                <br />
+                <div class="paging" id="pagination" currentpage="1">
+                    
+
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <script data-main="index.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+</body>
+
+</html>
