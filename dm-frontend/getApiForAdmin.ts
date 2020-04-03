@@ -20,18 +20,18 @@ class GetApiForAdmin {
 
     }
     getData() {
-        const URL = "https://localhost:5001/dm/Device/page?limit1=15&offset1=0";
+        const URL = "http://localhost:5000/dm/Device/page?limit1=15&offset1=0";
         this.getApi(URL);
     }
     searchByName() {
         var search = (document.getElementById("fixed-header-drawer-exp") as HTMLInputElement).value;
-        const URL = "https://localhost:5001/dm/Device/" + search;
+        const URL = "http://localhost:5000/dm/Device/" + search;
         this.getApi(URL);
 
     }
     sort(SortColumn, SortDirection: any) {
 
-        const URL = "https://localhost:5001/dm/Device/sort?SortColumn=" + SortColumn + "&SortDirection=" + SortDirection;
+        const URL = "http://localhost:5000/dm/Device/sort?SortColumn=" + SortColumn + "&SortDirection=" + SortDirection;
         this.getApi(URL);
     }
     checkSortType(value: string): string {
@@ -50,7 +50,7 @@ class GetApiForAdmin {
     deleteDevice(device_id) {
 
 
-        fetch("https://localhost:5001/dm/Device/del/" + device_id, {
+        fetch("http://localhost:5000/dm/Device/del/" + device_id, {
             method: "DELETE"
         });
 

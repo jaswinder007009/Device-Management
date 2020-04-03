@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-
-namespace device_management.Models
+using dm_backend;
+namespace dm_backend.Models
 {
     public class Specification
     {
@@ -18,13 +18,13 @@ namespace device_management.Models
 
         public string Connectivity { get; set; }
 
-        internal Appdb Db { get; set; }
+        internal AppDb Db { get; set; }
 
         public Specification()
         {
         }
 
-        internal Specification(Appdb db)
+        internal Specification(AppDb db)
         {
             Db = db;
         }
@@ -70,8 +70,8 @@ namespace device_management.Models
     }
     public class insertspec
     {
-        public Appdb Db { get; }
-        public insertspec(Appdb db)
+        public AppDb Db { get; }
+        public insertspec(AppDb db)
         {
             Db = db;
         }
@@ -93,8 +93,8 @@ namespace device_management.Models
     }
     public class updatespec
     {
-        public Appdb Db { get; }
-        public updatespec(Appdb db)
+        public AppDb Db { get; }
+        public updatespec(AppDb db)
         {
             Db = db;
         }

@@ -1,18 +1,18 @@
 ﻿
 using System;
 using System.Threading.Tasks;
-using device_management.Models;
+using dm_backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 
-namespace device_management.Controllers
+namespace dm_backend.Controllers
 {
 
     [Route("dm/[controller]")]
     public class DeviceController : Controller
     {
 
-        public DeviceController(Appdb db)
+        public DeviceController(AppDb db)
         {
             Db = db;
         }
@@ -216,6 +216,6 @@ namespace device_management.Controllers
 
 
 
-        public Appdb Db { get; }
+        public AppDb Db { get; }
     }
 }

@@ -5,17 +5,18 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.Common;
 using MySql.Data.MySqlClient;
-namespace device_management.Models
+using dm_backend;
+namespace dm_backend.Models
 {
     public class spec
     {
         public int specification_id { get; set; }
-         internal Appdb Db { get; set; }
+         internal AppDb Db { get; set; }
         spec()
         {
 
         }
-        internal spec(Appdb db)
+        internal spec(AppDb db)
         {
             Db = db;
         }

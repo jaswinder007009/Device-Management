@@ -13,7 +13,7 @@ class AddDevice {
 
     brandDropdown() {
         fetch(
-            "https://localhost:5001/dm/Device/brand"
+            "http://localhost:5000/dm/Device/brand"
         )
             .then(Response => Response.json())
             .then(data => {
@@ -30,7 +30,7 @@ class AddDevice {
     }
     typeDropdown() {
         fetch(
-            "https://localhost:5001/dm/Device/type"
+            "http://localhost:5000/dm/Device/type"
         )
             .then(Response => Response.json())
             .then(data => {
@@ -47,7 +47,7 @@ class AddDevice {
     }
     specificationDropdown() {
         fetch(
-            "https://localhost:5001/dm/Device/specification"
+            "http://localhost:5000/dm/Device/specification"
         )
             .then(Response => Response.json())
             .then(data => {
@@ -68,7 +68,7 @@ class AddDevice {
     Create_device() {
         var data = this.addDataFromForm();
 
-        fetch("https://localhost:5001/dm/Device/add", {
+        fetch("http://localhost:5000/dm/Device/add", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: data,
@@ -83,7 +83,7 @@ class AddDevice {
     //     const obj = new AddDevice();
         
     //    let res = await  fetch(
-    //               "https://localhost:5001/dm/Device/device_id/" + myParam )
+    //               "http://localhost:5000/dm/Device/device_id/" + myParam )
     //         data = await res.json();
     //         console.log(data);
             
@@ -115,7 +115,7 @@ class AddDevice {
     update_device(device_id: any) {
         var data = this.addDataFromForm();
         console.log(data);
-        fetch("https://localhost:5001/dm/Device/update/" + device_id, {
+        fetch("http://localhost:5000/dm/Device/update/" + device_id, {
             method: "PUT",
             headers: { 'Content-Type': 'application/json' },
             body: data,

@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-namespace device_management.Models
+using dm_backend;
+namespace dm_backend.Models
 {
     public class val
     {
@@ -23,8 +24,8 @@ namespace device_management.Models
     }
     public class logicinsert
     {
-        public Appdb Db { get; }
-        public logicinsert(Appdb db)
+        public AppDb Db { get; }
+        public logicinsert(AppDb db)
         {
             Db = db;
         }
@@ -40,7 +41,7 @@ namespace device_management.Models
         {
             cmd.Parameters.Add(new MySqlParameter("device_type_id", v.device_type_id));
             cmd.Parameters.Add(new MySqlParameter("device_brand_id", v.device_brand_id));
-            cmd.Parameters.Add(new MySqlParameter("model", v.model));
+            cmd.Parameters.Add(new MySqlParameter("device_model_id", v.model));
             cmd.Parameters.Add(new MySqlParameter("color", v.color));
             cmd.Parameters.Add(new MySqlParameter("price", v.price));
             cmd.Parameters.Add(new MySqlParameter("serial_number", v.serial_number));
@@ -53,8 +54,8 @@ namespace device_management.Models
     }
     public class logicupdate
     {
-        public Appdb Db { get; }
-        public logicupdate(Appdb db)
+        public AppDb Db { get; }
+        public logicupdate(AppDb db)
         {
             Db = db;
         }
@@ -71,7 +72,7 @@ namespace device_management.Models
             cmd.Parameters.Add(new MySqlParameter("device_id", v1.device_id));
             cmd.Parameters.Add(new MySqlParameter("device_type_id", v1.device_type_id));
             cmd.Parameters.Add(new MySqlParameter("device_brand_id", v1.device_brand_id));
-            cmd.Parameters.Add(new MySqlParameter("model", v1.model));
+            cmd.Parameters.Add(new MySqlParameter("device_model_id", v1.model));
             cmd.Parameters.Add(new MySqlParameter("color", v1.color));
             cmd.Parameters.Add(new MySqlParameter("price", v1.price));
             cmd.Parameters.Add(new MySqlParameter("serial_number", v1.serial_number));
@@ -104,7 +105,7 @@ namespace device_management.Models
         public name assign_to { get; set; }
         public name assign_by { get; set; }
 
-        internal Appdb Db { get; set; }
+        internal AppDb Db { get; set; }
 
         public devices()
         {
@@ -113,7 +114,7 @@ namespace device_management.Models
             assign_by = new name();
         }
 
-        internal devices(Appdb db)
+        internal devices(AppDb db)
         {
             Db = db;
         }
@@ -154,14 +155,14 @@ namespace device_management.Models
                 "u1.first_name as assign_by_first_name,u1.middle_name as assign_by_middle_name," +
                 "u1.last_name as assign_by_last_name,u.first_name as assign_to_first_name, " +
                 "u.middle_name as assign_to_middle_name, u.last_name as assign_to_last_name, " +
-                "d.device_id as device_id, d.model as model, d.color as color,d.price as price," +
+                "d.device_id as device_id, dm.model as model, d.color as color,d.price as price," +
                 " d.serial_number as serial_number, d.purchase_date as purchase_date," +
                 " d.entry_date as entry_date, d.warranty_year as warranty_year, sf.RAM as RAM," +
                 " sf.connectivity as connectivity, sf.storage as storage, sf.screen_size as screen_size," +
                 "s.status as status, dt.type as type, db.brand as brand from device as d" +
-                " inner join device_type as dt inner join device_brand as db inner join status as s " +
+                " inner join device_type as dt inner join device_model as dm inner join device_brand as db inner join status as s " +
                 "inner join  specification as sf on d.device_type_id = dt.device_type_id and" +
-                " d.device_brand_id = db.device_brand_id and d.status_id = s.status_id and" +
+                " d.device_brand_id = db.device_brand_id and d.device_model_id = dm.device_model_id and d.status_id = s.status_id and" +
                 " d.specification_id = sf.specification_id left join assign_device as ad" +
                 " on d.device_id = ad.device_id left join  user as u  on ad.user_id = u.user_id" +
                 " left join user as u1 " +
@@ -234,7 +235,7 @@ namespace device_management.Models
                     post.price = GetSafeString(reader, "price");
                     post.serial_number = GetSafeString(reader, "serial_number");
                     post.warranty_year = GetSafeString(reader, "warranty_year");
-                    post.status = GetSafeString(reader, "status");
+                    post.status = GetSafeString(reader, "status_name");
                     post.purchase_date = Convert.ToDateTime(reader["purchase_date"]).ToString("dd/MM/yyyy");
                     post.specifications = ReadSpecification(reader);
                     post.assign_date = GetSafeString(reader, "assign_date");
@@ -274,7 +275,7 @@ namespace device_management.Models
                     post.device_id = GetInt(reader,"device_id");
                     post.device_type_id = GetInt(reader, "device_type_id");
                     post.device_brand_id = GetInt(reader, "device_brand_id");
-                    post.model = GetSafeString(reader, "model");
+                    post.model = GetSafeString(reader, "device_model_id");
                     post.color = GetSafeString(reader, "color");
                     post.price = GetSafeString(reader, "price");
                     post.serial_number = GetSafeString(reader, "serial_number");

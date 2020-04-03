@@ -5,18 +5,19 @@ using System.Threading.Tasks;
 using System.Data.Common;
 using MySql.Data.MySqlClient;
 using System.Data;
+using dm_backend;
 
-namespace device_management.Models
+namespace dm_backend.Models
 {
     public class type
     {
         public int device_type_id { get; set; }
         public string device_type { get; set; }
-        internal Appdb Db { get; set; }
+        internal AppDb Db { get; set; }
         public type()
         {
         }
-        internal type(Appdb db)
+        internal type(AppDb db)
         {
             Db = db;
         }
@@ -46,8 +47,8 @@ namespace device_management.Models
     }
     public class logicaddbrand
     {
-        public Appdb Db { get; }
-        public logicaddbrand(Appdb db)
+        public AppDb Db { get; }
+        public logicaddbrand(AppDb db)
         {
             Db = db;
         }
