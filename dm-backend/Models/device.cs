@@ -1,12 +1,11 @@
-﻿using eleven.Models;
+﻿using dm_backend.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace eleven.Models
+namespace dm_backend.Models
 {
-
     public class device
     {
 
@@ -15,9 +14,6 @@ namespace eleven.Models
         public string model { get; set; }
         public string assign_date { get; set; }
         public string return_date { get; set; }
-
-
-
 
     }
 }

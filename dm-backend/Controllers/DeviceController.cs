@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
-using eleven.Models;
+using dm_backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace eleven.Controllers
+namespace dm_backend.Controllers
 {
     [Route("api/[controller]")]
     public class DeviceController : ControllerBase
     {
-        public DeviceController(appDb db)
+        public DeviceController(AppDb db)
         {
             Db = db;
         }
@@ -38,7 +38,7 @@ namespace eleven.Controllers
                 return new NotFoundResult();
             return new OkObjectResult(result);
         }
-        public appDb Db { get; }
+        public AppDb Db { get; }
     }
 
 }

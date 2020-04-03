@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
-using eleven.Models;
+using dm_backend.Models;
 
 using MySql.Data.MySqlClient;
 
 
-namespace eleven
+namespace dm_backend
 {
 
     public class employee
     {
 
-        public appDb Db { get; }
+        public AppDb Db { get; }
 
-        public employee(appDb db)
+        public employee(AppDb db)
         {
             Db = db;
         }
@@ -24,9 +24,9 @@ namespace eleven
         {
             using var cmd = Db.Connection.CreateCommand();
 
-            cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device.model,assign_device.assign_date,assign_device.return_date from user,device_type,device_brand,assign_device,device
+            cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device_model.model,assign_device.assign_date,assign_device.return_date from user,device_type,device_model,device_brand,assign_device,device
 where  user.user_id=assign_device.user_id and assign_device.device_id=device.device_id and device.device_type_id=device_type.device_type_id and device.device_brand_id=device_brand.device_brand_id
- and assign_device.user_id=@id) as demo WHERE demo.type LIKE '%" + @search + "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search + "%'; ;";
+and device.device_model_id=device_model.device_model_id and assign_device.user_id=@id) as demo WHERE demo.type LIKE '%" + @search + "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search + "%'; ;";
 
             cmd.Parameters.Add(new MySqlParameter
             {
@@ -48,9 +48,9 @@ where  user.user_id=assign_device.user_id and assign_device.device_id=device.dev
         {
             using var cmd = Db.Connection.CreateCommand();
 
-            cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,model,assign_date,return_date from user,device_type,device_brand,request_history 
-where  user.user_id=request_history.employee_id and request_history.device_type=device_type.device_type_id and request_history.device_brand=device_brand.device_brand_id
- and request_history.employee_id=@id) as demo WHERE demo.type LIKE '%" +@search+ "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search  + "%';";
+            cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device_model.model,assign_date,return_date from user,device_type,device_brand,device_model,request_history 
+where  user.user_id=request_history.employee_id and request_history.device_type=device_type.device_type_id and request_history.device_brand=device_brand.device_brand_id 
+and request_history.device_model=device_brand.device_model_id and request_history.employee_id=@id) as demo WHERE demo.type LIKE '%" +@search+ "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search  + "%';";
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@id",
@@ -89,8 +89,8 @@ where  user.user_id=request_history.employee_id and request_history.device_type=
                         type = reader.GetString(0),
                         brand = reader.GetString(1),
                         model = reader.GetString(2),
-                        assign_date = reader.GetString(3),
-                        return_date = reader.GetString(4),
+                        assign_date = Convert.ToDateTime(reader["assign_date"]).ToString("yyyy-MM-dd"),
+                        return_date = Convert.ToDateTime(reader["return_date"]).ToString("yyyy-MM-dd"),
                         
 
 
@@ -101,11 +101,8 @@ where  user.user_id=request_history.employee_id and request_history.device_type=
             return posts;
         }
 
-
-
-
-
-
-
     }
+
+
+
 }
