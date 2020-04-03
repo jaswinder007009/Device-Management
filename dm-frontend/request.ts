@@ -1,28 +1,27 @@
 let adminId = 16;
+let searchBar = "<br><input type='text' class='mdl-input-field' placeholder='Enter text to Search' id='searchBar' style='margin-left:1000px'>"
+    + "</input><button class='search-button'>Search</button><br>";
+let headingArray = ['User Id', 'Model', 'Brand', 'Type', 'RAM', 'Storage',
+    'Screen Size', 'Connectivity', 'Name', 'Request Date', 'No. of Days', 'Availability'];
 
 function createTable(tableHeading, tableBody) {
     var tableData = "<br><br><table class='mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color-text--blue-grey-800'>"
         + "<thead class='mdl-color--blue-grey-400'>"
-        + "<tr class='mdl-color--blue-grey-300'>"
-        + tableHeading
-        + "</tr>"
+        + "<tr class='mdl-color--blue-grey-300'>" + tableHeading + "</tr>"
         + "</thead>"
-        + "<tbody>"
-        + tableBody
-        + "</tbody>"
+        + "<tbody>" + tableBody + "</tbody>"
         + "</table>";
     document.getElementById("content").innerHTML += tableData;
 
 }
 
 function getPendingRequests(url: string) {
-    var tableHeading = "";
-    tableHeading += "<th class='mdl-data-table__cell--non-numeric'>User Id</th>"
-        + "<th>Model</th>" + "<th>Brand</th>" + "<th>Type</th>" + "<th>RAM</th>"
-        + "<th>Storage</th>" + "<th>Screen Size</th>" + "<th>Connectivity</th>"
-        + "<th>Name</th>" + "<th>Request Date</th>" + "<th>Days</th>"
-        + "<th>Availabilty</th>" + "<th colspan ='2'>Action</th>";
-    var tableBody = "";
+    var tableHeading = "", tableBody = "";
+    for (var i = 0; i < headingArray.length; ++i) {
+        tableHeading += "<th class='mdl-data-table__cell--non-numericsort-key'>" + headingArray[i] + "</th>";
+    }
+    tableHeading += "<th colspan ='2'>Action</th>";
+
     fetch(url).then(Response => Response.json()).then(data => {
         for (var i = 0; i < data.length; i++) {
             tableBody += "<tr>";
@@ -41,7 +40,6 @@ function getPendingRequests(url: string) {
 
                         if (key == "lastName")
                             tableBody += "<td>" + name + "</td>";
-
                     }
                 }
                 else {
@@ -59,6 +57,7 @@ function getPendingRequests(url: string) {
             tableBody += "</tr>";
         }
         createTable(tableHeading, tableBody);
+        
     });
 
 }
@@ -70,35 +69,35 @@ function requestAction(requestUrl) {
 
 
 document.addEventListener("click", function (e) {
-    const data = (e.target as HTMLButtonElement).dataset.requestid;
-    let requestId = parseInt(data, 10);
 
     if ((e.target as HTMLButtonElement).className == "reject-button") {
-
+        const data = (e.target as HTMLButtonElement).dataset.requestid;
+        let requestId = parseInt(data, 10);
         requestAction(requestId + '/reject?id=' + adminId);
         alert("Request " + requestId + " rejected");
+        document.getElementById("content").innerHTML = "";
+        getPendingRequests("http://localhost:5000/api/request/pending");
 
     }
     if ((e.target as HTMLButtonElement).className == "accept-button") {
-
+        const data = (e.target as HTMLButtonElement).dataset.requestid;
+        let requestId = parseInt(data, 10);
         requestAction(requestId + '/accept');
         alert("Request " + requestId + " accepted");
+        document.getElementById("content").innerHTML = "";
+        getPendingRequests("http://localhost:5000/api/request/pending");
 
     }
-    document.getElementById("content").innerHTML = "";
-    getPendingRequests("http://localhost:5000/api/request/pending");
+    if ((e.target as HTMLButtonElement).className == "search-button") {
+        let searchField = (<HTMLInputElement>document.getElementById("searchBar")).value;
+        document.getElementById("content").innerHTML = "";
+        getPendingRequests("http://localhost:5000/api/request/pending?search=" + searchField);
+    }
 
 });
 
-
-// let searchBar = "<div class='mdl-textfield__expandable-holder mdl-color--blue-1000'>"
-// +"<input class='mdl-textfield__input' type='text' id='search-expandable2'>"
-// +"<label class='mdl-textfield__label' for='search-expandable2'>Enter search text below"
-// +"</label>"
-// +"</div>";
-
-// //document.getElementById("search").innerHTML = searchBar;
-document.getElementById("content").innerHTML =""; 
+document.getElementById("search").innerHTML = searchBar;
+document.getElementById("content").innerHTML = "";
 getPendingRequests("http://localhost:5000/api/request/pending");
 
 
