@@ -20,9 +20,11 @@ namespace eleven.Controllers
         public async Task<IActionResult> GetOne(int id)
         {
             string ToSearch = String.Empty; if (!string.IsNullOrEmpty(HttpContext.Request.Query["search"])) ToSearch = HttpContext.Request.Query["search"];
+            string ToSort = String.Empty; if (!string.IsNullOrEmpty(HttpContext.Request.Query["sort"])) ToSort = HttpContext.Request.Query["sort"];
+            string Todirection = String.Empty; if (!string.IsNullOrEmpty(HttpContext.Request.Query["direction"])) Todirection = HttpContext.Request.Query["direction"];
             await Db.Connection.OpenAsync();
-            var query = new employee(Db);
-            var result = await query.getPreviousDevice(id,ToSearch);
+            var query = new devices(Db);
+            var result = await query.getPreviousDevice(id,ToSearch,ToSort,Todirection);
             if (result is null)
                 return new NotFoundResult();
             return new OkObjectResult(result);
@@ -32,7 +34,7 @@ namespace eleven.Controllers
         {
             string ToSearch = String.Empty; if (!string.IsNullOrEmpty(HttpContext.Request.Query["search"])) ToSearch = HttpContext.Request.Query["search"];
             await Db.Connection.OpenAsync();
-            var query = new employee(Db);
+            var query = new devices(Db);
             var result = await query.getCurrentDevice(id,ToSearch);
             if (result is null)
                 return new NotFoundResult();

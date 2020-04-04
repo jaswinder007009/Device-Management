@@ -11,12 +11,12 @@ using MySql.Data.MySqlClient;
 namespace eleven
 {
 
-    public class employee
+    public class devices
     {
 
         public appDb Db { get; }
 
-        public employee(appDb db)
+        public devices(appDb db)
         {
             Db = db;
         }
@@ -44,13 +44,14 @@ where  user.user_id=assign_device.user_id and assign_device.device_id=device.dev
             return await ReadAllDevice(await cmd.ExecuteReaderAsync());
 
         }
-        public async Task<List<device>> getPreviousDevice(int id,string search)
+        public async Task<List<device>> getPreviousDevice(int id,string search="",string sort="",string direction="")
         {
             using var cmd = Db.Connection.CreateCommand();
 
-            cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,model,assign_date,return_date from user,device_type,device_brand,request_history 
+            cmd.CommandText = @"select * from(select * from(select device_type.type,device_brand.brand,model,assign_date,return_date from user,device_type,device_brand,request_history 
 where  user.user_id=request_history.employee_id and request_history.device_type=device_type.device_type_id and request_history.device_brand=device_brand.device_brand_id
- and request_history.employee_id=@id) as demo WHERE demo.type LIKE '%" +@search+ "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search  + "%';";
+ and request_history.employee_id=@id) as demo WHERE demo.type LIKE '%" +@search+ "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search  + "%')as demo1 ";
+          
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@id",
@@ -63,9 +64,33 @@ where  user.user_id=request_history.employee_id and request_history.device_type=
                 DbType = DbType.String,
                 Value = search,
             });
+            if (!string.IsNullOrEmpty(sort) && !string.IsNullOrEmpty(direction))
+            {
+                
+                
+                    cmd.CommandText += "order by " + @sort + " " + @direction + "";
+               
+
+                cmd.Parameters.Add(new MySqlParameter
+                {
+
+                    ParameterName = "@sort",
+                    DbType = DbType.String,
+                    Value = sort,
+                });
+
+                cmd.Parameters.Add(new MySqlParameter
+                {
+
+                    ParameterName = "@direction",
+                    DbType = DbType.String,
+                    Value = direction,
+                });
+            }
             Console.WriteLine(cmd.CommandText);
             Console.WriteLine("id = " + cmd.Parameters["@id"].Value);
             Console.WriteLine("Search = " + cmd.Parameters["@search"].Value);
+           // Console.WriteLine("Search = " + cmd.Parameters["@sort"].Value);
             return await ReadAllDevice(await cmd.ExecuteReaderAsync());
 
 
