@@ -14,8 +14,8 @@ export class Sort
     {
         
         let  sortType = this.checkSortType(attributeId);
-        let find = (document.getElementById( this.elements.search) as HTMLInputElement).value;
-        this.setSortingApiCall(attributeId , find  , sortType);
+        let userName = (document.getElementById(new HtmlElementsData().search)  as HTMLInputElement).getAttribute(this.elements.userName);
+        this.setSortingApiCall(attributeId , userName  , sortType);
         
     }
     checkSortType(value : string) : string
@@ -36,9 +36,9 @@ export class Sort
          
     }
 
-    setSortingApiCall(sortAttribute : string , find  : string , sortType : string)
+    setSortingApiCall(sortAttribute : string , userName  : string , sortType : string)
     {
-        const uri= new localHostUrl().uri+"?find="+encodeURI(find)+"&sort="+sortAttribute+"&sort-type="+sortType;
+        const uri= new localHostUrl().uri+"?user-name="+encodeURI(userName)+"&sort="+sortAttribute+"&sort-type="+sortType;
         
         var populateSorting = new HitApi();
         
@@ -46,5 +46,5 @@ export class Sort
     }
 
 
-    
+
 }

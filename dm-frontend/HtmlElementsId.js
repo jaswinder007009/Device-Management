@@ -19,6 +19,9 @@
             this.thead = "tableHead";
             this.sortAttributr = "sort";
             this.sortType = "sortby";
+            this.resultcount = " result-count";
+            this.requestStatus = "request-status";
+            this.userName = "find"; // set user search in userdefine search box
         }
         return HtmlElementsData;
     }());

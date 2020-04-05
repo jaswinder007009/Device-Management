@@ -1,10 +1,14 @@
 import { RequestModel } from "./RequetsDatamodel";
 import { GeneratePaging } from "./pagination";
+import { HtmlElementsData } from "./HtmlElementsId";
 
 export class PopulateData {
     historyInformation: RequestModel
+    domElement : HtmlElementsData
     fillData(data: JSON) {
         this.clearData();
+        this.domElement = new HtmlElementsData()
+        //document.getElementById("pagination").setAttribute(this.domElement.resultcount, data["resultCount"]);
         // var pages = new GeneratePaging();
         // pages.generatePage(data["resultCount"]);
         console.log(data["resultCount"]);
@@ -28,7 +32,7 @@ export class PopulateData {
             this.historyInformation.assignDays = value["assignDays"] == -1 ? 0 : value["assignDays"];
             this.historyInformation.returnDate = value["returnDate"];
             this.genearteFields(this.historyInformation);
-
+           
         }
 
 
@@ -48,17 +52,17 @@ export class PopulateData {
     public genearteFields(historyInformation: RequestModel) {
         const value = `<tr>
         <td class="requestedUserData"> ${historyInformation.userName}
-        <span class="tooltipData">E-mail = ${historyInformation.email}</spam>
+        <span class="tooltipData">E-mail = ${historyInformation.email}</span>
         </td>
         
         <td>${historyInformation.serialNumber} </td>
         <td>${historyInformation.deviceType}</td>
         <td class="requestedUserData"> ${historyInformation.deviceName}
-        <span class="tooltipData">Device Specs ${historyInformation.specifications} </spam>
+        <span class="tooltipData">Device Specs ${historyInformation.specifications} </span>
          </td>
         
         <td class="requestedUserData">${historyInformation.requestStatus} 
-        <span class="tooltipData">Assigned for ${historyInformation.assignDays} days</spam>
+        <span class="tooltipData">Assigned for ${historyInformation.assignDays} days</span>
         </td>
         <td>${historyInformation.assignDate} </td>
         <td>${historyInformation.returnDate} </td>

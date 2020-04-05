@@ -70,7 +70,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                             return [4 /*yield*/, res.json()];
                         case 4:
                             _a.RequestDeviceData = _b.sent();
-                            console.log(this.RequestDeviceData);
                             return [4 /*yield*/, new FillData_1.PopulateData().fillData(this.RequestDeviceData)];
                         case 5:
                             _b.sent();
@@ -78,6 +77,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                     }
                 });
             });
+        };
+        HitApi.prototype.geneartePage = function () {
+            var id = document.getElementById("pagination").getAttribute("pageNum");
+            if (parseInt(id) == 1) {
+                // new GeneratePaging().addPageElement();
+            }
         };
         return HitApi;
     }());

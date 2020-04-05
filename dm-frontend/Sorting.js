@@ -18,8 +18,8 @@
         }
         Sort.prototype.sortBy = function (attributeId) {
             var sortType = this.checkSortType(attributeId);
-            var find = document.getElementById(this.elements.search).value;
-            this.setSortingApiCall(attributeId, find, sortType);
+            var userName = document.getElementById(new HtmlElementsId_1.HtmlElementsData().search).getAttribute(this.elements.userName);
+            this.setSortingApiCall(attributeId, userName, sortType);
         };
         Sort.prototype.checkSortType = function (value) {
             var type = document.getElementById(value).getAttribute("class");
@@ -35,8 +35,8 @@
                 return "ASC";
             }
         };
-        Sort.prototype.setSortingApiCall = function (sortAttribute, find, sortType) {
-            var uri = new LocalHost_1.localHostUrl().uri + "?find=" + encodeURI(find) + "&sort=" + sortAttribute + "&sort-type=" + sortType;
+        Sort.prototype.setSortingApiCall = function (sortAttribute, userName, sortType) {
+            var uri = new LocalHost_1.localHostUrl().uri + "?user-name=" + encodeURI(userName) + "&sort=" + sortAttribute + "&sort-type=" + sortType;
             var populateSorting = new HitApi_1.HitApi();
             populateSorting.HitGetApi(uri);
         };

@@ -8,5 +8,7 @@ export class HtmlElementsData
     thead = "tableHead"
     sortAttributr = "sort"
     sortType = "sortby" 
-    
+    resultcount = " result-count" 
+    requestStatus =  "request-status"
+    userName = "find"    // set user search in userdefine search box
 }

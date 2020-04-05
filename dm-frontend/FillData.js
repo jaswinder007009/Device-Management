@@ -4,17 +4,20 @@
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "./RequetsDatamodel"], factory);
+        define(["require", "exports", "./RequetsDatamodel", "./HtmlElementsId"], factory);
     }
 })(function (require, exports) {
     "use strict";
     exports.__esModule = true;
     var RequetsDatamodel_1 = require("./RequetsDatamodel");
+    var HtmlElementsId_1 = require("./HtmlElementsId");
     var PopulateData = /** @class */ (function () {
         function PopulateData() {
         }
         PopulateData.prototype.fillData = function (data) {
             this.clearData();
+            this.domElement = new HtmlElementsId_1.HtmlElementsData();
+            //document.getElementById("pagination").setAttribute(this.domElement.resultcount, data["resultCount"]);
             // var pages = new GeneratePaging();
             // pages.generatePage(data["resultCount"]);
             console.log(data["resultCount"]);
@@ -50,7 +53,7 @@
                 + value[type]["middleName"] + " " + value[type]["lastname"]);
         };
         PopulateData.prototype.genearteFields = function (historyInformation) {
-            var value = "<tr>\n        <td class=\"requestedUserData\"> " + historyInformation.userName + "\n        <span class=\"tooltipData\">E-mail = " + historyInformation.email + "</spam>\n        </td>\n        \n        <td>" + historyInformation.serialNumber + " </td>\n        <td>" + historyInformation.deviceType + "</td>\n        <td class=\"requestedUserData\"> " + historyInformation.deviceName + "\n        <span class=\"tooltipData\">Device Specs " + historyInformation.specifications + " </spam>\n         </td>\n        \n        <td class=\"requestedUserData\">" + historyInformation.requestStatus + " \n        <span class=\"tooltipData\">Assigned for " + historyInformation.assignDays + " days</spam>\n        </td>\n        <td>" + historyInformation.assignDate + " </td>\n        <td>" + historyInformation.returnDate + " </td>\n        <td>" + historyInformation.adminName + " </td>\n        </tr>";
+            var value = "<tr>\n        <td class=\"requestedUserData\"> " + historyInformation.userName + "\n        <span class=\"tooltipData\">E-mail = " + historyInformation.email + "</span>\n        </td>\n        \n        <td>" + historyInformation.serialNumber + " </td>\n        <td>" + historyInformation.deviceType + "</td>\n        <td class=\"requestedUserData\"> " + historyInformation.deviceName + "\n        <span class=\"tooltipData\">Device Specs " + historyInformation.specifications + " </span>\n         </td>\n        \n        <td class=\"requestedUserData\">" + historyInformation.requestStatus + " \n        <span class=\"tooltipData\">Assigned for " + historyInformation.assignDays + " days</span>\n        </td>\n        <td>" + historyInformation.assignDate + " </td>\n        <td>" + historyInformation.returnDate + " </td>\n        <td>" + historyInformation.adminName + " </td>\n        </tr>";
             this.newMethod(value);
         };
         PopulateData.prototype.newMethod = function (value) {
