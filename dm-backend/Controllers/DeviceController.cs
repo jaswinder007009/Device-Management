@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
-using eleven.Models;
+using UserManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace eleven.Controllers
+namespace UserManagement.Controllers
 {
     [Route("api/[controller]")]
     public class DeviceController : ControllerBase
     {
-        public DeviceController(appDb db)
+        public DeviceController(AppDb db)
         {
             Db = db;
         }
@@ -24,7 +24,7 @@ namespace eleven.Controllers
             string Todirection = String.Empty; if (!string.IsNullOrEmpty(HttpContext.Request.Query["direction"])) Todirection = HttpContext.Request.Query["direction"];
             await Db.Connection.OpenAsync();
             var query = new devices(Db);
-            var result = await query.getPreviousDevice(id,ToSearch,ToSort,Todirection);
+            var result = await query.getPreviousDevice(id, ToSearch, ToSort, Todirection);
             if (result is null)
                 return new NotFoundResult();
             return new OkObjectResult(result);
@@ -35,12 +35,12 @@ namespace eleven.Controllers
             string ToSearch = String.Empty; if (!string.IsNullOrEmpty(HttpContext.Request.Query["search"])) ToSearch = HttpContext.Request.Query["search"];
             await Db.Connection.OpenAsync();
             var query = new devices(Db);
-            var result = await query.getCurrentDevice(id,ToSearch);
+            var result = await query.getCurrentDevice(id, ToSearch);
             if (result is null)
                 return new NotFoundResult();
             return new OkObjectResult(result);
         }
-        public appDb Db { get; }
+        public AppDb Db { get; }
     }
 
 }
