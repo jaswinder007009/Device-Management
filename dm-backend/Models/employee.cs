@@ -49,8 +49,8 @@ and device.device_model_id=device_model.device_model_id and assign_device.user_i
             using var cmd = Db.Connection.CreateCommand();
 
             cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device_model.model,assign_date,return_date from user,device_type,device_brand,device_model,request_history 
-where  user.user_id=request_history.employee_id and request_history.device_type=device_type.device_type_id and request_history.device_brand=device_brand.device_brand_id 
-and request_history.device_model=device_brand.device_model_id and request_history.employee_id=@id) as demo WHERE demo.type LIKE '%" +@search+ "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search  + "%';";
+where user.user_id=request_history.user_id and request_history.device_type=device_type.device_type_id and request_history.device_brand=device_brand.device_brand_id 
+and request_history.device_model=device_model.device_model_id and request_history.user_id=@id) as demo WHERE demo.type LIKE '%" +@search+ "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search  + "%';";
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@id",
@@ -74,32 +74,33 @@ and request_history.device_model=device_brand.device_model_id and request_histor
         }
 
 
-        public async Task<List<device>> ReadAllDevice(DbDataReader reader)
-        {
-            Console.WriteLine("Rows" + reader.HasRows);
-            var posts = new List<device>();
-            using (reader)
-            {
-                while (await reader.ReadAsync())
-                {
-                    Console.WriteLine("Found a row");
-                    var post = new device()
-                    {
-                        
-                        type = reader.GetString(0),
-                        brand = reader.GetString(1),
-                        model = reader.GetString(2),
-                        assign_date = Convert.ToDateTime(reader["assign_date"]).ToString("yyyy-MM-dd"),
-                        return_date = Convert.ToDateTime(reader["return_date"]).ToString("yyyy-MM-dd"),
-                        
-
-
-                    };
-                    posts.Add(post);
-                }
-            }
-            return posts;
-        }
+        public static string GetSafeString(DbDataReader reader, string colName)
+		{
+		return reader[colName] != DBNull.Value ? (string)reader[colName].ToString() : "";
+		}
+		
+		public async Task<List<device>> ReadAllDevice(DbDataReader reader)
+		{
+			Console.WriteLine("Rows" + reader.HasRows);
+			var posts = new List<device>();
+			using (reader)
+			{
+				while (await reader.ReadAsync())
+				{
+					Console.WriteLine("Found a row");
+					var post = new device()
+					{
+						type = reader.GetString(0),
+						brand = reader.GetString(1),
+						model = reader.GetString(2),
+						assign_date = GetSafeString(reader,"assign_date"),
+						return_date = GetSafeString(reader,"return_date"),
+					};
+					posts.Add(post);
+				}
+			}
+			return posts;
+		}
 
     }
 

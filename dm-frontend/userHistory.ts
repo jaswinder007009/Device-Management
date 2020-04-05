@@ -25,7 +25,7 @@ class MyDevices {
 
 
     async getPreviousDecice(search:string="") {
-        this.url = "http://localhost:50001/api/Device/previous_device/16?search="+search;
+        this.url = "http://localhost:5000/api/Device/previous_device/16?search="+search;
         let data = await this.getApiCall(this.url);
         this.data = await data;
         console.log(data);
@@ -36,7 +36,7 @@ class MyDevices {
 
     }
     async getCurrentDecice(search:string="") {
-        this.url = "http://localhost:50001/api/Device/current_device/16?search="+search;
+        this.url = "http://localhost:5000/api/Device/current_device/16?search="+search;
         let data = await this.getApiCall(this.url);
         this.data = await data;
         console.log(data);
