@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,6 @@ namespace dm_backend.Models
 {
     public class Specification
     {
-
         public int specification_id { get; set; }
 
         public string RAM { get; set; }
@@ -36,12 +35,6 @@ namespace dm_backend.Models
 
             return await ReadSpecifications(await cmd.ExecuteReaderAsync());
         }
-
-
-
-
-
-
 
         public async Task<List<Specification>> ReadSpecifications(DbDataReader reader)
         {
@@ -116,7 +109,6 @@ namespace dm_backend.Models
         }
     }
 }
-
 
 
 
