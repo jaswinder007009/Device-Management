@@ -18,7 +18,7 @@ namespace dm_backend.Models{
                Db = db;
          }
 
-        async public Task<Result<RequestDeviceHistory>> SearchDeviceRequest(string search , int low , int high)
+        async public Task<List<RequestDeviceHistory>> SearchDeviceRequest(string search , int low , int high)
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "search_request_history";
@@ -44,7 +44,8 @@ namespace dm_backend.Models{
             var count = new TotalResultCount(Db);
             var obj = new BindRequestData(Db);
             var data = await obj.BindHistoryData(await cmd.ExecuteReaderAsync());
-            return await count.FindCount(data, "count_search" , search);
+            // return await count.FindCount(data, "count_search" , search);
+            return data;
 
         }
 

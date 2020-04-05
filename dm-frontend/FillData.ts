@@ -7,11 +7,11 @@ export class PopulateData {
         this.clearData();
         // var pages = new GeneratePaging();
         // pages.generatePage(data["resultCount"]);
-        console.log(data["resultCount"]);
+        console.log(data);
 
-        var value: any
+        var value: any;
         this.historyInformation = new RequestModel();
-        for (value of data["results"]) {
+        for (value of data) {
             this.historyInformation.email = value["userMail"];
             console.log(this.historyInformation.email);
             this.historyInformation.deviceId = value["deviceId"];
@@ -36,7 +36,7 @@ export class PopulateData {
     private bindSpecs(value: any) {
         this.historyInformation.specifications = (value["specs"]["ram"] == ""?"": "RAM = "+ value["specs"]["ram"] +",") + 
         (value["specs"]["storage"]== "" ? "" : "Storage =  " + value["specs"]["storage"] +"," ) +
-        (value["specs"]["screenSize"] =="" ? "" : " Screen-Size = " + value["specs"]["screenSize"] +",") +
+        (value["specs"]["screen_size"] =="" ? "" : " Screen-Size = " + value["specs"]["screen_size"] +",") +
          ( value["specs"]["connectivity"] == "" ? "" : " connectivity =  " + value["specs"]["connectivity"] );
     }
 

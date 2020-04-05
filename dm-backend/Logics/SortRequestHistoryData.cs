@@ -22,7 +22,7 @@ namespace dm_backend.Logics
 
         public string FindSortingAttribute(string value)
         {
-            
+
             value = value.ToLower();
             var attribute = value switch
             {
@@ -33,19 +33,19 @@ namespace dm_backend.Logics
                         "order by  concat(u1.first_name , ' ', if (u1.middle_name is null, '' , concat(u1.middle_name , ' ')) , u1.last_name )",
 
                 "status" =>
-                         "order by s.status",
+                         "order by s.status_name",
 
                 "serialnumber" =>
                          "order by d.serial_number",
 
                 "device" =>
-                         "order by concat(db.brand, ' ', dm.model_name)",
+                         "order by concat(db.brand, ' ', dm.model)",
 
                 "type" =>
                          "order by dt.type",
 
                 "assigndate" =>
-                         "order by rh.assign_date" ,
+                         "order by rh.assign_date",
 
                 "returndate" =>
                          "order by  rh.return_date",
@@ -53,10 +53,10 @@ namespace dm_backend.Logics
                     ""
             };
             return attribute;
-            }
+        }
 
 
-       async public Task<Result<RequestDeviceHistory>> GetSortData(string find, string sortElement, string sortType , int low = 0, int high = 10)
+        async public Task<List<RequestDeviceHistory>> GetSortData(string find, string sortElement, string sortType, int low = 0, int high = 10)
         {
             var attribute = FindSortingAttribute(sortElement);
             // List<RequestDeviceHistory> data;
@@ -87,17 +87,18 @@ dt.type , db.brand , dm.model , sp.*, rh.assign_date ,rh.assign_days , rh.return
             // limit @high , @low;";
 
             BindLimitParams(cmd, low, high);
-                BindSearchParms(cmd, find);
-            
+            BindSearchParms(cmd, find);
+
             //var obj = new BindRequestData(Db);
-           var data = await new BindRequestData(Db).BindHistoryData(await cmd.ExecuteReaderAsync());
+            var data = await new BindRequestData(Db).BindHistoryData(await cmd.ExecuteReaderAsync());
             //var count = new TotalResultCount(Db);
-            return await new TotalResultCount(Db).FindCount(data, "count_search", find);
+            // return await new TotalResultCount(Db).FindCount(data, "count_search", find);
+            return data;
         }
 
-            
 
-        public void BindSearchParms(MySqlCommand cmd,string find)
+
+        public void BindSearchParms(MySqlCommand cmd, string find)
         {
             cmd.Parameters.Add(new MySqlParameter
             {
@@ -106,7 +107,7 @@ dt.type , db.brand , dm.model , sp.*, rh.assign_date ,rh.assign_days , rh.return
                 Value = find,
             });
         }
-            public void BindLimitParams(MySqlCommand cmd, int low , int high )
+        public void BindLimitParams(MySqlCommand cmd, int low, int high)
         {
             cmd.Parameters.Add(new MySqlParameter
             {
@@ -122,7 +123,7 @@ dt.type , db.brand , dm.model , sp.*, rh.assign_date ,rh.assign_days , rh.return
             });
         }
 
-        
+
 
 
     }
