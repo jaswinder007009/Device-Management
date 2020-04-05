@@ -39,12 +39,6 @@ export class DeviceListForUsers {
         this.assign_by_first_name = data.assign_by.first_name;
         this.assign_by_middle_name = data.assign_by.middle_name;
         this.assign_by_last_name = data.assign_by.last_name;
-       
-
-
-
-
-
     }
     getDeviceList()
     {

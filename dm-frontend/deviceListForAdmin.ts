@@ -50,43 +50,41 @@ export class DeviceListForAdmin {
         this.assign_by_middle_name = data.assign_by.middle_name;
         this.assign_by_last_name = data.assign_by.last_name;
 
-
-
-
-
-
     }
     getDeviceList() {
-        const value = `<tr>
-        <td class = "cards">${this.type} ${this.brand} ${this.model}
-                         <div class="mdl-card">
-                                <div class="mdl-card__title">
-                                   <h2 class="mdl-card__title-text">Device Details</h2>
-                                </div>
+        const value = `
+        <tr>
+            <td class = "cards">${this.type} ${this.brand} ${this.model}
+                <div class="mdl-card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Device Details</h2>
+                    </div>
 
-                                <div class="mdl-card__supporting-text">
-                               Device color: ${this.color} <br>
-                               Price:${this.price} <br>
-                               Warranty Year: ${this.warranty_year}<br>
-                               Purchase Date: ${this.purchase_date}
-                                </div> 
-                               
-                         </div> 
-                              </td>
-        <td>${this.serial_number} </td>
-        <td>${this.status} </td>
-        <td>RAM:${this.ram} Storage:${this.storage} <br>
-        Screen Size:${this.screen_size}Connectivity: ${this.connectivity}</td>
-        <td>${(this.assign_date).substring(0,10)} </td>
-        <td>${ (this.return_date).substring(0,10)} </td>
-        <td>${ this.assign_to_first_name} ${this.assign_to_middle_name} ${this.assign_to_last_name}  </td>
-        <td>${ this.assign_by_first_name} ${this.assign_by_middle_name} ${this.assign_by_last_name}  </td>
-        <td> <button class="edit-button" value=${this.device_id}>Edit </button>
-        <button class="delete-button" value=${this.device_id}>Delete </button>
-        </td>
+                    <div class="mdl-card__supporting-text">
+                        Device color: ${this.color} <br>
+                        Price:${this.price} <br>
+                        Warranty Year: ${this.warranty_year}<br>
+                        Purchase Date: ${this.purchase_date}
+                    </div> 
+                </div> 
+            </td>
+            <td>${this.serial_number} </td>
+            <td>${this.status} </td>
+            <td>RAM:${this.ram} Storage:${this.storage}
+                <br>
+                Screen Size:${this.screen_size} Connectivity: ${this.connectivity}
+            </td>
+            <td>${this.assign_date.substring(0,10)} </td>
+            <td>${this.return_date.substring(0,10)} </td>
+            <td>${this.assign_to_first_name} ${this.assign_to_middle_name} ${this.assign_to_last_name}</td>
+            <td>${this.assign_by_first_name} ${this.assign_by_middle_name} ${this.assign_by_last_name}</td>
+            <td>
+                <button class="edit-button" value=${this.device_id}>Edit </button>
+                <button class="delete-button" value=${this.device_id}>Delete </button>
+            </td>
         </tr>`;
 
-        document.getElementById("Request_data").innerHTML += value
+        document.getElementById("Request_data").innerHTML += value;
 
     }
   

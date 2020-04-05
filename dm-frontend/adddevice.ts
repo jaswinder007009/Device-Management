@@ -1,19 +1,20 @@
+import { BASEURL } from './globals';
 class AddDevice {
-    device_type_id: number;
-    device_brand_id: number;
-    status_id: number;
-    model: string;
-    color: string;
-    price: string;
-    serial_number: string;
-    warranty_year: string;
-    purchase_date: string;
-    specification_id: number;
-    entry_date: string;
+    device_type_id: number = 0;
+    device_brand_id: number = 0;
+    status_id: number = 0;
+    model: string = "";
+    color: string = "";
+    price: string = "";
+    serial_number: string = "";
+    warranty_year: string = "";
+    purchase_date: string = "";
+    specification_id: number = 0;
+    entry_date: string = "";
 
     brandDropdown() {
         fetch(
-            "http://localhost:5000/dm/Device/brand"
+            BASEURL + "/dm/Device/brand"
         )
             .then(Response => Response.json())
             .then(data => {
@@ -30,7 +31,7 @@ class AddDevice {
     }
     typeDropdown() {
         fetch(
-            "http://localhost:5000/dm/Device/type"
+            BASEURL + "/dm/Device/type"
         )
             .then(Response => Response.json())
             .then(data => {
@@ -47,7 +48,7 @@ class AddDevice {
     }
     specificationDropdown() {
         fetch(
-            "http://localhost:5000/dm/Device/specification"
+            BASEURL + "/dm/Device/specification"
         )
             .then(Response => Response.json())
             .then(data => {
@@ -68,7 +69,7 @@ class AddDevice {
     Create_device() {
         var data = this.addDataFromForm();
 
-        fetch("http://localhost:5000/dm/Device/add", {
+        fetch(BASEURL + "/dm/Device/add", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: data,
@@ -83,7 +84,7 @@ class AddDevice {
     //     const obj = new AddDevice();
         
     //    let res = await  fetch(
-    //               "http://localhost:5000/dm/Device/device_id/" + myParam )
+    //               BASEURL + "/dm/Device/device_id/" + myParam )
     //         data = await res.json();
     //         console.log(data);
             
@@ -115,7 +116,7 @@ class AddDevice {
     update_device(device_id: any) {
         var data = this.addDataFromForm();
         console.log(data);
-        fetch("http://localhost:5000/dm/Device/update/" + device_id, {
+        fetch(BASEURL + "/dm/Device/update/" + device_id, {
             method: "PUT",
             headers: { 'Content-Type': 'application/json' },
             body: data,

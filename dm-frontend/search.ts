@@ -1,7 +1,7 @@
 import { HitApi } from "./HitApi"
 import { PopulateData } from "./FillData";
-import { localHostUrl } from "./LocalHost";
 import { HtmlElementsData } from "./HtmlElementsId";
+import { BASEURL } from "./globals";
 export class findResult {
     data: any
 
@@ -9,7 +9,7 @@ export class findResult {
         let elements = new HtmlElementsData();
         (document.getElementById(elements.thead) as HTMLTableRowElement).setAttribute(elements.sortAttributr , "");       
         (document.getElementById(elements.thead) as HTMLTableRowElement).setAttribute(elements.sortType , "");
-        var uri = new localHostUrl().uri+"?find=" + encodeURI(find) + "";
+        var uri = BASEURL+"/sorting?find=" + encodeURI(find) + "";
         new HitApi().HitGetApi(uri);
 
     }

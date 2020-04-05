@@ -1,6 +1,6 @@
 import { HtmlElementsData } from "./HtmlElementsId";
 import { HitApi } from "./HitApi";
-import { localHostUrl } from "./LocalHost";
+import { BASEURL } from "./globals";
 
 export class GeneratePaging 
 {
@@ -18,7 +18,7 @@ export class GeneratePaging
 //     {   
         
 //         let find = (document.getElementById(this.elements.search) as HTMLInputElement).value;
-//         let uri = new localHostUrl().uri+"?find="+encodeURI(find)+"&sort="+sortAttribute+"&sort-type="+sortType+"page="+selectedPageNo;
+//         let uri = BASEURL+"/sorting?find="+encodeURI(find)+"&sort="+sortAttribute+"&sort-type="+sortType+"page="+selectedPageNo;
 //         new HitApi().HitGetApi(uri);         
 //     }
 

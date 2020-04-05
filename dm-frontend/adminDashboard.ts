@@ -1,3 +1,4 @@
+import { BASEURL } from './globals';
 
 function createCard(cardData) {
     var cardCreationCode: string = "<div class='demo-card-event mdl-card mdl-shadow--2dp mdl-color--blue-grey-200' id='card'>"
@@ -41,7 +42,7 @@ function getLatestAccepetedRequests(url: string) {
     fetch(url).then(Response => Response.json())
         .then(data => {
             for (var i = 0; i < data.length; i++) {
-                tempObject = data[i];
+                let tempObject = data[i];
 
                 tableBody += "<tr>"
                     + "<td class='mdl-data-table__cell--non-numeric'>" + tempObject.deviceId + "</td>"
@@ -70,7 +71,7 @@ function getLatestPendingRequests(url: string) {
     fetch(url).then(Response => Response.json())
         .then(data => {
             for (var i = 0; i < data.length; i++) {
-                tempObject = data[i];
+                let tempObject = data[i];
 
                 tableBody += "<tr>"
                     + "<td class='mdl-data-table__cell--non-numeric'>" + tempObject.deviceId + "</td>"
@@ -95,7 +96,7 @@ function getFaults(url: string) {
     fetch(url).then(Response => Response.json())
         .then(data => {
             for (var i = 0; i < data.length; i++) {
-                tempObject = data[i];
+                let tempObject = data[i];
 
                 tableBody += "<tr>"
                     + "<td class='mdl-data-table__cell--non-numeric'>" + tempObject.deviceType + "</td>"
@@ -111,7 +112,7 @@ function getRejectedRequests(url:string) {
     var cardData="Total Requests Rejected: ";
     fetch(url).then(Response => Response.json())
         .then(data => {
-                count=data[0].count;
+            let count=data[0].count;
                 cardData+=count;
                 createCard(cardData);
             });
@@ -122,7 +123,7 @@ function getTotalDevices(url:string) {
     var cardData="Total Devices:";
     fetch(url).then(Response => Response.json())
         .then(data => {
-                count=data[0].count;
+            let count=data[0].count;
                 cardData+=count;
                 createCard(cardData);
             });
@@ -133,15 +134,15 @@ function getTotalDevices(url:string) {
 function dashboardData() {
     document.getElementById("content").innerHTML = "";
 
-    getLatestAccepetedRequests("http://localhost:5000/api/dashboard/requests/accepted");
+    getLatestAccepetedRequests(BASEURL + "/api/dashboard/requests/accepted");
 
-    getLatestPendingRequests("http://localhost:5000/api/dashboard/requests/pending");
+    getLatestPendingRequests(BASEURL + "/api/dashboard/requests/pending");
 
-    getRejectedRequests("http://localhost:5000/api/dashboard/requests/rejected");
+    getRejectedRequests(BASEURL + "/api/dashboard/requests/rejected");
 
-    getTotalDevices("http://localhost:5000/api/dashboard/device/count");
+    getTotalDevices(BASEURL + "/api/dashboard/device/count");
 
-    getFaults("http://localhost:5000/api/dashboard/device/faults");
+    getFaults(BASEURL + "/api/dashboard/device/faults");
 }
 
 window.onload=()=>{

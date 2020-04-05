@@ -1,8 +1,8 @@
+import { BASEURL } from './globals';
 import { DeviceListForAdmin } from "./deviceListForAdmin";
 
-
 class GetApiForAdmin {
-    getApi(URL) {
+    getApi(URL:string) {
         fetch(
             URL
         )
@@ -20,18 +20,18 @@ class GetApiForAdmin {
 
     }
     getData() {
-        const URL = "http://localhost:5000/dm/Device/page?limit1=15&offset1=0";
+        const URL = BASEURL + "/dm/Device/page?limit1=15&offset1=0";
         this.getApi(URL);
     }
     searchByName() {
         var search = (document.getElementById("fixed-header-drawer-exp") as HTMLInputElement).value;
-        const URL = "http://localhost:5000/dm/Device/" + search;
+        const URL = BASEURL + "/dm/Device/" + search;
         this.getApi(URL);
 
     }
     sort(SortColumn, SortDirection: any) {
 
-        const URL = "http://localhost:5000/dm/Device/sort?SortColumn=" + SortColumn + "&SortDirection=" + SortDirection;
+        const URL = BASEURL + "/dm/Device/sort?SortColumn=" + SortColumn + "&SortDirection=" + SortDirection;
         this.getApi(URL);
     }
     checkSortType(value: string): string {
@@ -50,7 +50,7 @@ class GetApiForAdmin {
     deleteDevice(device_id) {
 
 
-        fetch("http://localhost:5000/dm/Device/del/" + device_id, {
+        fetch(BASEURL + "/dm/Device/del/" + device_id, {
             method: "DELETE"
         });
 
