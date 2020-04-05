@@ -36,10 +36,10 @@ namespace RequestAdmin.Controllers
             var low = ((int.Parse(page) * int.Parse(size)) - int.Parse(size));
             var high = int.Parse(size) * int.Parse(page);
             await Db.Connection.OpenAsync();
-            var result = new SearchRequestHistory(Db);
-            var data = await result.SearchDeviceRequest(find, low, high);
+            //  var result = new SearchRequestHistory(Db);
+            //  var data = await result.SearchDeviceRequest(find, low, high);
 
-            return new OkObjectResult(data);
+            //  return new OkObjectResult(data);
             /*  var  low = ((int.Parse(size) *  int.Parse(page) )- int.Parse(size));
               var high = (int.Parse(size) * int.Parse(page));
               await Db.Connection.OpenAsync();
@@ -48,8 +48,9 @@ namespace RequestAdmin.Controllers
               var data = await new TotalResultCount(Db).findCount(results, "count_request");
 
               var count = new { resultsval = "superb" };
-
+              
               return new OkObjectResult(data );*/
+            return null;
         }
 
 

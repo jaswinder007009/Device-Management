@@ -6,7 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using UserManagement;
-
+/*
 namespace RequestAdmin.Logics
 {
     public class SearchRequestHistory
@@ -46,7 +46,7 @@ namespace RequestAdmin.Logics
             var count = new TotalResultCount(Db);
             var obj = new BindRequestData(Db);
             var data = await obj.BindHistoryData(await cmd.ExecuteReaderAsync());
-            return await count.FindCount(data, "count_search" , search);
+            return await count.FindCount(data, "count_search" , search  offset, limit, serialNumber);
 
         }
 
@@ -62,7 +62,7 @@ namespace RequestAdmin.Logics
             });
             return  new TotalResultCount(Db).bindResult(await cmd.ExecuteReaderAsync(), data);
         }
-        */
+   
 
 
 
@@ -72,4 +72,4 @@ namespace RequestAdmin.Logics
 
 
     }
-}
+}*/

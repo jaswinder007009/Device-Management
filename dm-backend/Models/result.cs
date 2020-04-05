@@ -7,8 +7,9 @@ namespace RequestAdmin.Models
 {
     public class Result <T>
     {
-       public List<T> Results { get; set; }
-       public int ResultCount { get; set; }
+        public int ResultCount { get; set; }
+        public List<T> Results { get; set; }
+      
      
 
     }
