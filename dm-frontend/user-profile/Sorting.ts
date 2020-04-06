@@ -1,5 +1,5 @@
 import { GetUserApi } from "../getApi";
-
+import { BASEURL } from "../globals";
 export class Sort 
 {    
    
@@ -31,7 +31,7 @@ export class Sort
 
     setSortingApiCall(sortAttribute : string , find  : string , sortType : string,)
     {
-        const uri=  "http://localhost:5000/api/user?searchby="+encodeURI(find)+"&sortby="+sortAttribute+"&direction="+sortType;
+        const uri=  BASEURL + "/api/user?searchby="+encodeURI(find)+"&sortby="+sortAttribute+"&direction="+sortType;
       
         return new GetUserApi().getSort(uri);
 

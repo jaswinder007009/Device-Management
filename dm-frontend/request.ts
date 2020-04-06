@@ -1,3 +1,4 @@
+import { BASEURL } from "./globals";
 let adminId = 16;
 let searchBar = "<br><input type='text' class='mdl-input-field' placeholder='Enter text to Search' id='searchBar' style='margin-left:1000px'>"
     + "</input><button class='search-button'>Search</button><br>";
@@ -62,8 +63,8 @@ function getPendingRequests(url: string) {
 
 }
 function requestAction(requestUrl) {
-    console.log("http://localhost:5000/api/request/" + requestUrl);
-    fetch("http://localhost:5000/api/request/" + requestUrl);
+    console.log(BASEURL + "/api/request/" + requestUrl);
+    fetch(BASEURL + "/api/request/" + requestUrl);
 
 }
 
@@ -76,7 +77,7 @@ document.addEventListener("click", function (e) {
         requestAction(requestId + '/reject?id=' + adminId);
         alert("Request " + requestId + " rejected");
         document.getElementById("content").innerHTML = "";
-        getPendingRequests("http://localhost:5000/api/request/pending");
+        getPendingRequests(BASEURL + "/api/request/pending");
 
     }
     if ((e.target as HTMLButtonElement).className == "accept-button") {
@@ -85,19 +86,19 @@ document.addEventListener("click", function (e) {
         requestAction(requestId + '/accept');
         alert("Request " + requestId + " accepted");
         document.getElementById("content").innerHTML = "";
-        getPendingRequests("http://localhost:5000/api/request/pending");
+        getPendingRequests(BASEURL + "/api/request/pending");
 
     }
     if ((e.target as HTMLButtonElement).className == "search-button") {
         let searchField = (<HTMLInputElement>document.getElementById("searchBar")).value;
         document.getElementById("content").innerHTML = "";
-        getPendingRequests("http://localhost:5000/api/request/pending?search=" + searchField);
+        getPendingRequests(BASEURL + "/api/request/pending?search=" + searchField);
     }
 
 });
 
 document.getElementById("search").innerHTML = searchBar;
 document.getElementById("content").innerHTML = "";
-getPendingRequests("http://localhost:5000/api/request/pending");
+getPendingRequests(BASEURL + "/api/request/pending");
 
 

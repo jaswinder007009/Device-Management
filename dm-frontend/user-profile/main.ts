@@ -3,15 +3,15 @@ import { createObjectFromForm, populateFormFromObject } from './databinding';
 import * as util from "./utility";
 import { dynamicGenerate } from "./dynamic";
 import { validate } from "./validate"
+import { BASEURL } from '../globals';
 
-const globalURL = "http://localhost:5000";
 export class UserData {
     data: any;
     url: string;
     body: any;
 
     async getOneUser() {
-        this.url = globalURL + "/api/user/30";
+        this.url = BASEURL + "/api/user/30";
         let data = await this.getApiCall(this.url);
         this.data = await data;
         dynamicGenerate(this.data);
@@ -19,25 +19,25 @@ export class UserData {
 
     }
     async getCountry() {
-        this.url = globalURL + "/api/Dropdown/country";
+        this.url = BASEURL + "/api/Dropdown/country";
         this.dropdownApiCall(this.url, document.querySelector("#addresses1 .country"));
         this.dropdownApiCall(this.url, document.querySelector("#addresses2 .country"));
 
     }
     async getState() {
-        this.url = globalURL + "/api/Dropdown/state";
+        this.url = BASEURL + "/api/Dropdown/state";
         this.dropdownApiCall(this.url, document.querySelector("#addresses1 .state"));
         this.dropdownApiCall(this.url, document.querySelector("#addresses2 .state"));
 
     }
     async getCity() {
-        this.url = globalURL + "/api/Dropdown/city";
+        this.url = BASEURL + "/api/Dropdown/city";
         this.dropdownApiCall(this.url, document.querySelector("#addresses1 .city"));
         this.dropdownApiCall(this.url, document.querySelector("#addresses2 .city"));
 
     }
     async updateData(data) {
-        return fetch(globalURL + "/api/user/30/update", {
+        return fetch(BASEURL + "/api/user/30/update", {
             method: 'PUT',
             headers: new Headers({ 'content-type': 'application/json' }),
             body: JSON.stringify(data)

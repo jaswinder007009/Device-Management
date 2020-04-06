@@ -21,16 +21,16 @@ class GetApi {
 
 	}
 	getData() {
-		const URL = BASEURL + "/dm/Device/page?limit1=6&offset1=0";
+		const URL = BASEURL + "/api/Device/page?limit1=6&offset1=0";
 		this.getApi(URL);
 	}
 	searchByName() {
 		var search = (document.getElementById("fixed-header-drawer-exp") as HTMLInputElement).value;
-		const URL = BASEURL + "/dm/Device/" + search;
+		const URL = BASEURL + "/api/Device/" + search;
 		this.getApi(URL);
 	}
 	sort(SortColumn,SortDirection: any) {
-		const URL = BASEURL + "/dm/Device/sort?SortColumn="+SortColumn + "&SortDirection=" + SortDirection;
+		const URL = BASEURL + "/api/Device/sort?SortColumn="+SortColumn + "&SortDirection=" + SortDirection;
 		this.getApi(URL);
 	}
 	checkSortType(value: string): string {
@@ -86,7 +86,7 @@ export class GetUserApi
 			}
 /////API GET		
 	getRequest() {
-		return fetch("http://localhost:5000/api/user")
+		return fetch(BASEURL + "/api/user")
 			.then(Response => {
 				return Response.json();
 			})
@@ -102,7 +102,7 @@ export class GetUserApi
 	}
 	////API TO MAKE ACTIVE INACTIVE
 	userInactive(userId: number,jass : string) {
-		return fetch("http://localhost:5000/api/user/" + userId + "/" + jass + "")
+		return fetch(BASEURL + "/api/user/" + userId + "/" + jass + "")
 			.then(res =>
 				console.log(res.status))
 			
@@ -110,7 +110,7 @@ export class GetUserApi
 	}
 /////API TO DELETE
 	deleteData(userId: number) {
-		fetch("http://localhost:5000/api/user/" + userId + "/remove", {
+		fetch(BASEURL + "/api/user/" + userId + "/remove", {
 			method: "DELETE"
 		});
 	}

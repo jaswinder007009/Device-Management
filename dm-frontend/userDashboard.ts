@@ -1,3 +1,4 @@
+import { BASEURL } from "./globals";
 var email = "abc@gmail.com";
 var userId=16;
 function createCard(cardData) {
@@ -97,13 +98,13 @@ function getCurrentDeviceCount(url: string) {
 function dashboardData() {
     document.getElementById("content").innerHTML = "";
 
-    getTotalDevices("http://localhost:5000/api/dashboard/device/count");
+    getTotalDevices(BASEURL + "/api/dashboard/device/count");
 	
-	getHistory("http://localhost:5000/api/device/previous_device/"+userId);
+	getHistory(BASEURL + "/api/device/previous_device/"+userId);
 	
-	getCurrentDeviceCount("http://localhost:5000/api/device/current_device/"+userId);
+	getCurrentDeviceCount(BASEURL + "/api/device/current_device/"+userId);
 	
-	getDeviceReturnDates("http://localhost:5000/api/dashboard/" + email + "/devices/returndates");
+	getDeviceReturnDates(BASEURL + "/api/dashboard/" + email + "/devices/returndates");
 
 }
 
