@@ -1,7 +1,7 @@
 import { GetUserApi } from "./getApi";
 import * as util from "./utilities";
 import { UserModel } from "./UserModel";
-import { Sort } from "./sorting";
+import { Sort } from "./user-profile/Sorting";
 
 let form_mode: "create" | "edit";
 
@@ -17,10 +17,8 @@ function populateTable(array: UserModel[]){
 	table.innerHTML = htmlString;
 }
 	 function jass() {
-		console.log("rgeehehe");
 		const temp = new GetUserApi();
 		temp.getRequest().then(function(){
-			console.log(temp.array,"asdfghjkloiuytrewqazxcvbnmlpoiuytrewqazxcvbnm,klpoiuytrewqasdfghj");
 			populateTable(temp.array );
 		});
 		

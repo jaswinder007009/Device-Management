@@ -1,41 +1,50 @@
-import { GetUserApi } from "./getApi";
+import { HitApi } from "./HitApi";
+import { HtmlElementsData } from "./HtmlElementsId";
+import { BASEURL } from "./globals";
+
 
 export class Sort 
 {    
-   
+    elements : HtmlElementsData
+    constructor()
+    {
+        this.elements = new HtmlElementsData();
+    }
     sortBy(attributeId : string)
     {
         
         let  sortType = this.checkSortType(attributeId);
-        let find = (document.getElementById("fixed-header-drawer-exp") as HTMLInputElement).value;
-        return this.setSortingApiCall(attributeId , find  , sortType);
+        let find = (document.getElementById( this.elements.search) as HTMLInputElement).value;
+        this.setSortingApiCall(attributeId , find  , sortType);
         
     }
     checkSortType(value : string) : string
     {
-        const type = (document.getElementById(value) as HTMLTableRowElement).getAttribute("class");
-       
-        if (type ==="mdl-data-table__header--sorted-descending")
+        const type = document.getElementById(value).getAttribute("class");
+        (document.getElementById(this.elements.thead) as HTMLTableRowElement).setAttribute("sort", value);
+        if (type ===  this.elements.upArrow)
         {
-         document.getElementById(value).setAttribute("class" ,  "mdl-data-table__header--sorted-ascending");
-      
-         return "-1";
+         document.getElementById(value).setAttribute("class" ,  this.elements.downArrow);
+         (document.getElementById(this.elements.thead) as HTMLTableRowElement).setAttribute("sortby", "DESC");
+         return "DESC";
         }
         else{
-         document.getElementById(value).setAttribute("class" ,  "mdl-data-table__header--sorted-descending");
-      
-         return "1";
+         document.getElementById(value).setAttribute("class" ,  this.elements.upArrow);
+         (document.getElementById(this.elements.thead) as HTMLTableRowElement).setAttribute("sortby", "ASC")
+         return "ASC";
         }
          
     }
 
-    setSortingApiCall(sortAttribute : string , find  : string , sortType : string,)
+    setSortingApiCall(sortAttribute : string , find  : string , sortType : string)
     {
-        const uri=  "http://localhost:5000/api/user?searchby="+encodeURI(find)+"&sortby="+sortAttribute+"&direction="+sortType;
-      
-        return new GetUserApi().getSort(uri);
-
-
-
+        const uri= BASEURL+"/sorting?find="+encodeURI(find)+"&sort="+sortAttribute+"&sort-type="+sortType;
+        
+        var populateSorting = new HitApi();
+        
+        populateSorting.HitGetApi(uri);
     }
+
+
+    
 }

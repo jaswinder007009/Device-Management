@@ -1,7 +1,7 @@
 import { PopulateData } from "./FillData";
 import { HitApi } from "./HitApi";
 import { findResult } from "./search"
-import { Sort } from "./Sorting";
+import { Sort } from "./sorting";
 import { HtmlElementsData } from "./HtmlElementsId";
 
 new findResult().find();
