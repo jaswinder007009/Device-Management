@@ -11,16 +11,16 @@ using MySql.Data.MySqlClient;
 namespace dm_backend
 {
 
-    public class employee
+    public class devices
     {
 
         public AppDb Db { get; }
 
-        public employee(AppDb db)
+        public devices(AppDb db)
         {
             Db = db;
         }
-        public async Task<List<device>> getCurrentDevice(int id,string search)
+        public async Task<List<device>> getCurrentDevice(int id, string search)
         {
             using var cmd = Db.Connection.CreateCommand();
 
@@ -44,7 +44,7 @@ and device.device_model_id=device_model.device_model_id and assign_device.user_i
             return await ReadAllDevice(await cmd.ExecuteReaderAsync());
 
         }
-        public async Task<List<device>> getPreviousDevice(int id,string search)
+        public async Task<List<device>> getPreviousDevice(int id, string search = "", string sort = "", string direction = "")
         {
             using var cmd = Db.Connection.CreateCommand();
 
@@ -63,16 +63,39 @@ and request_history.device_model=device_model.device_model_id and request_histor
                 DbType = DbType.String,
                 Value = search,
             });
+            if (!string.IsNullOrEmpty(sort) && !string.IsNullOrEmpty(direction))
+            {
+
+
+                cmd.CommandText += "order by " + @sort + " " + @direction + "";
+
+
+                cmd.Parameters.Add(new MySqlParameter
+                {
+
+                    ParameterName = "@sort",
+                    DbType = DbType.String,
+                    Value = sort,
+                });
+
+                cmd.Parameters.Add(new MySqlParameter
+                {
+
+                    ParameterName = "@direction",
+                    DbType = DbType.String,
+                    Value = direction,
+                });
+            }
             Console.WriteLine(cmd.CommandText);
             Console.WriteLine("id = " + cmd.Parameters["@id"].Value);
             Console.WriteLine("Search = " + cmd.Parameters["@search"].Value);
+            // Console.WriteLine("Search = " + cmd.Parameters["@sort"].Value);
             return await ReadAllDevice(await cmd.ExecuteReaderAsync());
 
 
 
 
         }
-
 
         public static string GetSafeString(DbDataReader reader, string colName)
 		{

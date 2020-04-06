@@ -29,9 +29,12 @@ namespace dm_backend.Controllers
             var result = query.getUserByuser_id(user_id);
                   result.SetSerializableProperties(String.Empty);
             Db.Connection.Close();
-              return Json(result);
-                       
+             return Json(result, new JsonSerializerSettings()
+            {
+                ContractResolver = new ShouldSerializeContractResolver()
+            });           
         }
+       
        
         
         [HttpGet]
@@ -110,6 +113,7 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return  Ok();
          }
+       
         public AppDb Db { get; }
     }
 

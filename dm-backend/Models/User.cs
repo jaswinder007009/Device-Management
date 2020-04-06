@@ -190,13 +190,13 @@ public int whatIs(String jass1)
 
             return contact1;
         }
-        
-        public User getUserByuser_id(string user_id)//////////////////////
+
+        public User getUserByuser_id(string user_id)
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "get_users_by_id";
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@user_id", user_id);////////////////////////
+            cmd.Parameters.AddWithValue("@user_id", user_id);
             return ReadUser(cmd.ExecuteReader());
         }
         private List<User> ReadAll(MySqlDataReader reader)
@@ -315,8 +315,19 @@ public int whatIs(String jass1)
             cmd.Parameters.Add(new MySqlParameter("l_name", LastName));
             cmd.Parameters.Add(new MySqlParameter("dept_name", DepartmentName));
             cmd.Parameters.Add(new MySqlParameter("desig", DesignationName));
-            cmd.Parameters.Add(new MySqlParameter("email", Email ));
-            cmd.Parameters.Add(new MySqlParameter("pass", Password));
+            //cmd.Parameters.Add(new MySqlParameter("role_name", RoleName));
+            //cmd.Parameters.Add(new MySqlParameter("userr_id", UserId));
+            cmd.Parameters.Add(new MySqlParameter("email", Email));
+            /*cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@password",
+                DbType = DbType.String,
+                Value = Password,
+            });*/
+            if(string.IsNullOrEmpty(Password))
+            cmd.Parameters.AddWithValue("password", DBNull.Value);
+            else
+                cmd.Parameters.Add(new MySqlParameter("password", Password));
             cmd.Parameters.Add(new MySqlParameter("dob", DateTime.Parse(DOB).ToString("yyyy-MM-dd")));
             cmd.Parameters.Add(new MySqlParameter("gend", Gender));
             cmd.Parameters.Add(new MySqlParameter("doj", DateTime.Parse(DOJ).ToString("yyyy-MM-dd")));
@@ -331,7 +342,7 @@ public int whatIs(String jass1)
             }
             else
             {
-                cmd.Parameters.Add(user_idParam);//////////////////
+                cmd.Parameters.Add(user_idParam);
             }
         }
         private MySqlParameter BindOutputuser_id(MySqlCommand cmd)

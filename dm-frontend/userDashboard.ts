@@ -56,7 +56,7 @@ function getDeviceReturnDates(url: string) {
 }
 
 function getHistory(url: string) {
-    var tableTitle = "<TH COLSPAN='5'><center>DEVICE RETURN DATES</center></th>";
+    var tableTitle = "<TH COLSPAN='5'><center>MY HISTORY</center></th>";
     var tableHeading = "";
     tableHeading += "<th class='mdl-data-table__cell--non-numeric'>Type</th>"
 		+ "<th>Brand</th>"
