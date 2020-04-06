@@ -4,18 +4,25 @@ import { localHostUrl } from "./LocalHost";
 import { HtmlElementsData } from "./HtmlElementsId";
 export class findResult {
     data: any
-    public findByUser(userName: string = "") 
+    elements : HtmlElementsData
+    constructor()
     {
-        let elements = new HtmlElementsData();
-        (document.getElementById(elements.thead) as HTMLTableRowElement).setAttribute(elements.sortAttributr , "");       
-        (document.getElementById(elements.thead) as HTMLTableRowElement).setAttribute(elements.sortType , "");
-        var uri = new localHostUrl().uri+"?user-name=" + encodeURI(userName) + "";
+        this.elements = new HtmlElementsData();
+    }
+    public findByUser() 
+    {
+        var uri = this.searchUser();
         new HitApi().HitGetApi(uri);
     }
 
-    public findBySerailNumber()
-    {
-        
+    public searchUser() {
+        let userName=(document.getElementById(this.elements.search) as HTMLTableRowElement).getAttribute(this.elements.userName);
+        let serialNumber = (document.getElementById(this.elements.devicesearch) as HTMLTableRowElement).getAttribute(this.elements.deviceSerial);
+        (document.getElementById(this.elements.thead) as HTMLTableRowElement).setAttribute(this.elements.sortAttributr, "");
+        (document.getElementById(this.elements.thead) as HTMLTableRowElement).setAttribute(this.elements.sortType, "");
+        var uri = new localHostUrl().uri + "?user-name=" + encodeURI(userName) + "&serial-number=" + encodeURI(serialNumber) + "";;
+        return uri;
     }
+
 }
 

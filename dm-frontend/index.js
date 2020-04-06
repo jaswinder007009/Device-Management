@@ -16,19 +16,38 @@
     var RequestStatus_1 = require("./RequestStatus");
     new search_1.findResult().findByUser(); // for get all data 
     var domElement = new HtmlElementsId_1.HtmlElementsData();
-    document.addEventListener("keypress", function (e) {
+    document.querySelector("#waterfall-exp").addEventListener("keypress", function (e) {
         if (e.key == "Enter") {
             var id = e.target.id;
             document.getElementById("request-status").selectedIndex = 0; // assign , reject , all 
             var search = document.getElementById(id).value;
-            document.getElementById(id).setAttribute("find", search);
-            new search_1.findResult().findByUser(search);
+            document.getElementById(id).setAttribute("user", search);
+            new search_1.findResult().findByUser();
+        }
+    });
+    document.querySelector("#device").addEventListener("keypress", function (e) {
+        if (e.key == "Enter") {
+            var id = e.target.id;
+            document.getElementById("request-status").selectedIndex = 0; // assign , reject , all 
+            var search = document.getElementById(id).value;
+            document.getElementById(id).setAttribute("serialNumber", search);
+            new search_1.findResult().findByUser();
+        }
+    });
+    document.querySelector("#waterfall-exp").addEventListener("keypress", function (e) {
+        if (e.key == "Enter") {
+            var id = e.target.id;
+            document.getElementById("request-status").selectedIndex = 0; // assign , reject , all 
+            var search = document.getElementById(id).value;
+            document.getElementById(id).setAttribute("user", search);
+            new search_1.findResult().findByUser();
         }
     });
     document.querySelector("#getdata").addEventListener("click", function (e) {
         document.getElementById("waterfall-exp").value = "";
         document.getElementById("request-status").selectedIndex = 0; // assign , reject , all 
-        document.getElementById(new HtmlElementsId_1.HtmlElementsData().search).setAttribute("find", "");
+        document.getElementById(domElement.search).setAttribute("user", "");
+        document.getElementById(domElement.devicesearch).setAttribute(domElement.deviceSerial, "");
         new search_1.findResult().findByUser();
         document.getElementById("pagination").setAttribute("page", "1"); // set page to 1
     });

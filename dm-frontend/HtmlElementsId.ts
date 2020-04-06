@@ -10,5 +10,7 @@ export class HtmlElementsData
     sortType = "sortby" 
     resultcount = " result-count" 
     requestStatus =  "request-status"
-    userName = "find"    // set user search in userdefine search box
+    userName = "user"    // set user search in userdefine search box
+    devicesearch="device"
+    deviceSerial = "serialNumber"
 }

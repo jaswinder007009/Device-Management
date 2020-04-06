@@ -40,12 +40,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "./FillData"], factory);
+        define(["require", "exports", "./FillData", "./paging"], factory);
     }
 })(function (require, exports) {
     "use strict";
     exports.__esModule = true;
     var FillData_1 = require("./FillData");
+    var paging_1 = require("./paging");
     var HitApi = /** @class */ (function () {
         function HitApi() {
         }
@@ -73,6 +74,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                             return [4 /*yield*/, new FillData_1.PopulateData().fillData(this.RequestDeviceData)];
                         case 5:
                             _b.sent();
+                            this.geneartePage();
                             return [2 /*return*/, res];
                     }
                 });
@@ -81,7 +83,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         HitApi.prototype.geneartePage = function () {
             var id = document.getElementById("pagination").getAttribute("pageNum");
             if (parseInt(id) == 1) {
-                // new GeneratePaging().addPageElement();
+                new paging_1.page().setPages(this.RequestDeviceData["resultCount"]);
             }
         };
         return HitApi;

@@ -21,7 +21,9 @@
             this.sortType = "sortby";
             this.resultcount = " result-count";
             this.requestStatus = "request-status";
-            this.userName = "find"; // set user search in userdefine search box
+            this.userName = "user"; // set user search in userdefine search box
+            this.devicesearch = "device";
+            this.deviceSerial = "serialNumber";
         }
         return HtmlElementsData;
     }());

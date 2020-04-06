@@ -1,6 +1,7 @@
 import { localHostUrl } from "./LocalHost";
 import { HtmlElementsData } from "./HtmlElementsId";
 import { HitApi } from "./HitApi";
+import { findResult } from "./search";
 
 export class UserRequestStatus
 {
@@ -10,7 +11,7 @@ export class UserRequestStatus
         let userName  = (document.getElementById(new HtmlElementsData().search)  as HTMLInputElement).getAttribute(this.domElements.userName);
         var sortAttribute = (document.getElementById(this.domElements.thead) as HTMLTableRowElement).getAttribute(this.domElements.sortAttributr);       
         var sortType  =  (document.getElementById(this.domElements.thead) as HTMLTableRowElement).getAttribute(this.domElements.sortType);
-        let uri = new localHostUrl().uri+"?user-name="+encodeURI(userName)+"&sort="+sortAttribute+"&sort-type="+sortType+"&status="+requestStatus;
+        let uri = new findResult().searchUser() + "&sort="+sortAttribute+"&sort-type="+sortType+"&status="+requestStatus;
         return uri ;
     }
 

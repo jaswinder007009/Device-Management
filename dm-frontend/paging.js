@@ -26,14 +26,20 @@
             console.log(uri);
             new HitApi_1.HitApi().HitGetApi(uri);
         };
-        page.prototype.addPageElement = function (start, end) {
+        page.prototype.addPageElement = function (end, start) {
             if (start === void 0) { start = 1; }
-            if (end === void 0) { end = this.totalRowsInTable; }
-            // this.clearData();
+            this.clearData();
             document.getElementById("pagination").innerHTML += "<input type=\"submit\" class=\"page\" id=\"\" value=\"<<\" >";
             for (var loop = start; loop <= end; loop++)
                 document.getElementById("pagination").innerHTML += "<input type=\"submit\" class=\"page\" id=\"" + loop + "\" value=\"" + loop + "\" >";
             document.getElementById("pagination").innerHTML += "<input type=\"submit\" class=\"page\" id=\"\" value=\">>\" >";
+        };
+        page.prototype.setPages = function (size) {
+            var high = Math.ceil(size / this.totalRowsInTable);
+            this.addPageElement(high);
+        };
+        page.prototype.clearData = function () {
+            document.getElementById("pagination").innerHTML = "";
         };
         return page;
     }());

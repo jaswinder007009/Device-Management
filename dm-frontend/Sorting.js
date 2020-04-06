@@ -4,22 +4,22 @@
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "./HitApi", "./HtmlElementsId", "./LocalHost"], factory);
+        define(["require", "exports", "./HitApi", "./HtmlElementsId", "./search"], factory);
     }
 })(function (require, exports) {
     "use strict";
     exports.__esModule = true;
     var HitApi_1 = require("./HitApi");
     var HtmlElementsId_1 = require("./HtmlElementsId");
-    var LocalHost_1 = require("./LocalHost");
+    var search_1 = require("./search");
     var Sort = /** @class */ (function () {
         function Sort() {
             this.elements = new HtmlElementsId_1.HtmlElementsData();
         }
         Sort.prototype.sortBy = function (attributeId) {
             var sortType = this.checkSortType(attributeId);
-            var userName = document.getElementById(new HtmlElementsId_1.HtmlElementsData().search).getAttribute(this.elements.userName);
-            this.setSortingApiCall(attributeId, userName, sortType);
+            //  let userName = (document.getElementById(new HtmlElementsData().search)  as HTMLInputElement).getAttribute(this.elements.userName);
+            this.setSortingApiCall(attributeId, sortType);
         };
         Sort.prototype.checkSortType = function (value) {
             var type = document.getElementById(value).getAttribute("class");
@@ -35,8 +35,8 @@
                 return "ASC";
             }
         };
-        Sort.prototype.setSortingApiCall = function (sortAttribute, userName, sortType) {
-            var uri = new LocalHost_1.localHostUrl().uri + "?user-name=" + encodeURI(userName) + "&sort=" + sortAttribute + "&sort-type=" + sortType;
+        Sort.prototype.setSortingApiCall = function (sortAttribute, sortType) {
+            var uri = new search_1.findResult().searchUser() + "&sort=" + sortAttribute + "&sort-type=" + sortType;
             var populateSorting = new HitApi_1.HitApi();
             populateSorting.HitGetApi(uri);
         };

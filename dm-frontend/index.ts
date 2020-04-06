@@ -9,21 +9,45 @@ import { UserRequestStatus } from "./RequestStatus";
 new findResult().findByUser(); // for get all data 
 
 var domElement =  new HtmlElementsData();
-document.addEventListener("keypress", function (e) {
+(document.querySelector("#waterfall-exp") as HTMLInputElement).addEventListener("keypress", function (e) {
     if (e.key == "Enter") {
         let id = (e.target as HTMLInputElement).id;
         (document.getElementById("request-status") as HTMLSelectElement).selectedIndex = 0;     // assign , reject , all 
         let search = (document.getElementById(id) as HTMLInputElement).value;
-        (document.getElementById(id) as HTMLInputElement).setAttribute("find" , search)
-        new findResult().findByUser(search);
+        (document.getElementById(id) as HTMLInputElement).setAttribute("user" , search)
+        new findResult().findByUser();
     }});
 
+(document.querySelector("#device") as HTMLInputElement).addEventListener("keypress", function (e) {
+    if (e.key == "Enter") {
+        let id = (e.target as HTMLInputElement).id;
+        (document.getElementById("request-status") as HTMLSelectElement).selectedIndex = 0;     // assign , reject , all 
+        let search = (document.getElementById(id) as HTMLInputElement).value;
+        (document.getElementById(id) as HTMLInputElement).setAttribute("serialNumber" , search)
+        new findResult().findByUser();
+    }});
+
+
+
+
+
+
+    (document.querySelector("#waterfall-exp") as HTMLInputElement).addEventListener("keypress", function (e) {
+        if (e.key == "Enter") {
+            let id = (e.target as HTMLInputElement).id;
+            (document.getElementById("request-status") as HTMLSelectElement).selectedIndex = 0;     // assign , reject , all 
+            let search = (document.getElementById(id) as HTMLInputElement).value;
+            (document.getElementById(id) as HTMLInputElement).setAttribute("user" , search)
+            new findResult().findByUser();
+        }});
+    
 
 (document.querySelector("#getdata") as HTMLButtonElement).addEventListener("click" ,e =>
 {   
     (document.getElementById("waterfall-exp") as HTMLInputElement).value = "";
     (document.getElementById("request-status") as HTMLSelectElement).selectedIndex = 0;               // assign , reject , all 
-    (document.getElementById(new HtmlElementsData().search)  as HTMLInputElement).setAttribute("find" , "");
+    (document.getElementById(domElement.search)  as HTMLInputElement).setAttribute("user" , "");
+    (document.getElementById(domElement.devicesearch)  as HTMLInputElement).setAttribute(domElement.deviceSerial , "");
     new findResult().findByUser();
     (document.getElementById("pagination") as HTMLDivElement).setAttribute("page" , "1");    // set page to 1
 });

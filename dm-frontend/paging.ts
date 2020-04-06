@@ -22,13 +22,23 @@ export class page
     }
 
 
-    public addPageElement(start : number =1, end : number  = this.totalRowsInTable)
+    public addPageElement( end : number , start : number =1,)
         {
-           // this.clearData();
+
+            this.clearData();
            (document.getElementById("pagination") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="" value="<<" >`;
             for (let loop = start ; loop <= end ; loop++)
             (document.getElementById("pagination") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="${loop}" value="${loop}" >`;
             (document.getElementById("pagination") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="" value=">>" >`;
         }
         
+        public setPages(size : number)
+        {
+            var high =  Math.ceil(size/this.totalRowsInTable);
+            this.addPageElement(high);
+        }
+        clearData()
+        {
+            (document.getElementById("pagination") as HTMLDivElement).innerHTML = "";
+        }
 }

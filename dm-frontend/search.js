@@ -14,16 +14,20 @@
     var HtmlElementsId_1 = require("./HtmlElementsId");
     var findResult = /** @class */ (function () {
         function findResult() {
+            this.elements = new HtmlElementsId_1.HtmlElementsData();
         }
-        findResult.prototype.findByUser = function (userName) {
-            if (userName === void 0) { userName = ""; }
-            var elements = new HtmlElementsId_1.HtmlElementsData();
-            document.getElementById(elements.thead).setAttribute(elements.sortAttributr, "");
-            document.getElementById(elements.thead).setAttribute(elements.sortType, "");
-            var uri = new LocalHost_1.localHostUrl().uri + "?user-name=" + encodeURI(userName) + "";
+        findResult.prototype.findByUser = function () {
+            var uri = this.searchUser();
             new HitApi_1.HitApi().HitGetApi(uri);
         };
-        findResult.prototype.findBySerailNumber = function () {
+        findResult.prototype.searchUser = function () {
+            var userName = document.getElementById(this.elements.search).getAttribute(this.elements.userName);
+            var serialNumber = document.getElementById(this.elements.devicesearch).getAttribute(this.elements.deviceSerial);
+            document.getElementById(this.elements.thead).setAttribute(this.elements.sortAttributr, "");
+            document.getElementById(this.elements.thead).setAttribute(this.elements.sortType, "");
+            var uri = new LocalHost_1.localHostUrl().uri + "?user-name=" + encodeURI(userName) + "&serial-number=" + encodeURI(serialNumber) + "";
+            ;
+            return uri;
         };
         return findResult;
     }());
