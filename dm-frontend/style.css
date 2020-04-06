@@ -1,0 +1,9 @@
+#card,table{
+    margin-top: 10px;
+    margin-right: 15px;
+}
+#card{
+    font-size: small;
+    font: 1em sans-serif;
+    color: slategray;
+}
