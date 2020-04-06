@@ -38,9 +38,11 @@ namespace dm_backend
             {
                 app.UseDeveloperExceptionPage();
             }
-            //app.UseHttpsRedirection();
+            // Uncomment when using HTTPS at frontend
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
+
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthorization();
