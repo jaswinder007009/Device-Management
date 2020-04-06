@@ -1,8 +1,13 @@
 let adminId = 16;
+let sortDirection=1;
 let searchBar = "<br><input type='text' class='mdl-input-field' placeholder='Enter text to Search' id='searchBar' style='margin-left:1000px'>"
     + "</input><button class='search-button'>Search</button><br>";
+	
 let headingArray = ['User Id', 'Model', 'Brand', 'Type', 'RAM', 'Storage',
     'Screen Size', 'Connectivity', 'Name', 'Request Date', 'No. of Days', 'Availability'];
+	
+let columnNames = ['user_id','model','brand','type','specification_id','specification_id',
+'specification_id','specification_id','first_name','request_date','no_of_days','availability'];
 
 function createTable(tableHeading, tableBody) {
     var tableData = "<br><br><table class='mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color-text--blue-grey-800'>"
@@ -18,7 +23,7 @@ function createTable(tableHeading, tableBody) {
 function getPendingRequests(url: string) {
     var tableHeading = "", tableBody = "";
     for (var i = 0; i < headingArray.length; ++i) {
-        tableHeading += "<th class='mdl-data-table__cell--non-numericsort-key'>" + headingArray[i] + "</th>";
+        tableHeading += "<th class='mdl-data-table__cell--non-numeric sort-table'>" +"<button class='mdl-button mdl-js-button' id='sort' data-sortkey=\"" + headingArray[i] + "\">" +headingArray[i] + "</button></th>";
     }
     tableHeading += "<th colspan ='2'>Action</th>";
 
@@ -61,6 +66,7 @@ function getPendingRequests(url: string) {
     });
 
 }
+
 function requestAction(requestUrl) {
     console.log("http://localhost:5000/api/request/" + requestUrl);
     fetch("http://localhost:5000/api/request/" + requestUrl);
@@ -94,7 +100,24 @@ document.addEventListener("click", function (e) {
         getPendingRequests("http://localhost:5000/api/request/pending?search=" + searchField);
     }
 
+    if ((e.target as HTMLButtonElement).id == "sort") {
+        const sortKey = (e.target as HTMLButtonElement).dataset.sortkey;
+        for(var i=0;i<headingArray.length;++i){
+            if(headingArray[i]==sortKey){
+                var sortField =columnNames[i];
+            }
+        }
+        if(sortDirection==1)
+            sortDirection=-1;
+        else
+            sortDirection=1; 
+        document.getElementById("content").innerHTML = "";
+        getPendingRequests("http://localhost:5000/api/request/pending?sort=" + sortField+"&direction="+sortDirection);
+    }
+
 });
+
+
 
 document.getElementById("search").innerHTML = searchBar;
 document.getElementById("content").innerHTML = "";
