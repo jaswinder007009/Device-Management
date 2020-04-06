@@ -2,7 +2,7 @@ import { BASEURL } from './globals';
 import { UserModel } from "./UserModel";
 import { DeviceListForUsers } from "./deviceListForUsers";
 
-class GetApi {
+export class GetApi {
 	getApi(URL:string) {
 		fetch(
 			URL
@@ -61,7 +61,6 @@ document.querySelector('#fixed-header-drawer-exp').addEventListener('change', fu
 	temp.searchByName();
 });
 
-
 window.addEventListener(
 	"load",
 	function () {
@@ -70,48 +69,3 @@ window.addEventListener(
 		temp.getData();
 
 	});
-
-export class GetUserApi 
-{
-	array: any = [];
-/////API TO SORT
-	getSort(uri : string) {
-		return fetch(uri)
-			.then(Response => {
-				return Response.json();
-			})
-			.then(data => {
-				return data.map(obj => new UserModel(obj));
-			});
-			}
-/////API GET		
-	getRequest() {
-		return fetch(BASEURL + "/api/user")
-			.then(Response => {
-				return Response.json();
-			})
-			.then(data => {
-				console.log(data);
-				data.forEach((userObject: any) => {
-					this.array.push(new UserModel(userObject));  
-				});
-				console.log('Array', this.array);
-				
-			})
-			.catch(err => console.log(err));
-	}
-	////API TO MAKE ACTIVE INACTIVE
-	userInactive(userId: number,jass : string) {
-		return fetch(BASEURL + "/api/user/" + userId + "/" + jass + "")
-			.then(res =>
-				console.log(res.status))
-			
-			.catch(err => console.error(err));
-	}
-/////API TO DELETE
-	deleteData(userId: number) {
-		fetch(BASEURL + "/api/user/" + userId + "/remove", {
-			method: "DELETE"
-		});
-	}
-}

@@ -139,7 +139,7 @@ namespace dm_backend
                     cmd.CommandText += @" and get_full_name(user.user_id) like CONCAT('%', '" + @searchby + "', '%') or user.email like CONCAT('%', '" + @searchby + "', '%') or status_name like CONCAT('%', '" + @searchby + "', '%')";
                     cmd.Parameters.AddWithValue("@searchby", searchby);
                 }
-                    cmd.CommandText += " group by user_id order by "+sortby+(direction==-1 ? " desc" :" asc");
+                    cmd.CommandText += " order by "+sortby+(direction==-1 ? " desc" :" asc");
                     //cmd.Parameters.AddWithValue("@sortby", sortby);
                 Console.WriteLine(cmd.CommandText);
 
@@ -359,7 +359,7 @@ public int whatIs(String jass1)
           group_concat(distinct if(address_type='Current',state_name,NULL)) as 'current_state',
           group_concat(distinct if(address_type='Current',c.country_name,NULL)) as 'current_country',
           group_concat(distinct if(address_type='Current',pin,NULL)) as 'current_pin',
-           group_concat(distinct if(address_type='Permanant',address_Line1,NULL)) AS 'permanant_address_Line1',
+          group_concat(distinct if(address_type='Permanant',address_Line1,NULL)) AS 'permanant_address_Line1',
           group_concat(distinct if(address_type='Permanant',address_Line2,NULL)) AS 'permanant_address_Line2',
           group_concat(distinct if(address_type='Permanant',city_name,NULL)) as 'permanant_city',
           group_concat(distinct if(address_type='Permanant',state_name,NULL)) as 'permanant_state',
@@ -381,6 +381,8 @@ public int whatIs(String jass1)
           inner join designation using(designation_id)
           inner join gender using(gender_id)
           inner join status on status.status_id=user.status
+          inner join user_to_role using(user_id)
+          inner join role using(role_id)
           left join address using(user_id)
           inner join address_type using(address_type_id)
           inner join city using(city_id)
@@ -389,7 +391,7 @@ public int whatIs(String jass1)
           left join contact_number using(user_id)
           inner join contact_type using(contact_type_id)
           inner join country ca on ca.country_id=contact_number.country_id
-          inner join user_to_role using(user_id)
-          inner join role using(role_id) ";
+          group by user_id, role_id
+          ";
     }
 }

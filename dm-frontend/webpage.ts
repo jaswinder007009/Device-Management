@@ -1,4 +1,4 @@
-import { GetUserApi } from "./getApi";
+import { GetUserApi } from "./user-profile/getUserApi";
 import * as util from "./utilities";
 import { UserModel } from "./UserModel";
 import { Sort } from "./user-profile/Sorting";

@@ -1,5 +1,4 @@
 export function validateForm() {
-    usernamevalidation();
     console.log("4");
     passwordvalidation();
     console.log("5");
@@ -16,7 +15,7 @@ export function validateForm() {
     phone1validation();
     console.log("11");
     // return false;
-    if(usernamevalidation()==true &&passwordvalidation()==true&&confirmpasswordvalidation()==true
+    if(passwordvalidation()==true&&confirmpasswordvalidation()==true
     &&departmentvalidation()==true&&designationvalidation()==true&&emailvalidation()==true
     &&altemailvalidation==true()&&phone1validation()==true)
     {
