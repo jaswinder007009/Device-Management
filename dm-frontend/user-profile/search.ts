@@ -13,9 +13,8 @@ export class findResult {
         let elements = new HtmlElementsData();
         (document.getElementById(elements.thead) as HTMLTableRowElement).setAttribute(elements.sortAttributr , "");       
         (document.getElementById(elements.thead) as HTMLTableRowElement).setAttribute(elements.sortType , "");
-        var uri = BASEURL+"/sorting?find=" + encodeURI(find) + "";
-        new HitApi().HitGetApi(uri);
-        //new GetUserApi().HitGetApi(uri);
+        var uri = BASEURL+"?find=" + encodeURI(find) + "";
+        new GetUserApi().HitGetApi(uri);
 
     }
 }

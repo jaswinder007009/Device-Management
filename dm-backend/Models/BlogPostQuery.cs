@@ -634,9 +634,9 @@ namespace dm_backend.Models
                     var post = new User()
                     {
 
-                        id = reader.GetInt32(0),
-                        firstName = reader.GetString(1),
-                        lastName = reader.GetString(2),
+                        UserId = reader.GetInt32(0),
+                        FirstName = reader.GetString(1),
+                        LastName = reader.GetString(2),
 
 
 

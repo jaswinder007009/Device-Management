@@ -1,7 +1,8 @@
 import { BASEURL } from './globals';
+import { UserModel } from "./UserModel";
 import { DeviceListForUsers } from "./deviceListForUsers";
 
-class GetApi {
+export class GetApi {
 	getApi(URL:string) {
 		fetch(
 			URL
@@ -20,16 +21,16 @@ class GetApi {
 
 	}
 	getData() {
-		const URL = BASEURL + "/dm/Device/page?limit1=6&offset1=0";
+		const URL = BASEURL + "/api/Device/page?limit1=6&offset1=0";
 		this.getApi(URL);
 	}
 	searchByName() {
 		var search = (document.getElementById("fixed-header-drawer-exp") as HTMLInputElement).value;
-		const URL = BASEURL + "/dm/Device/" + search;
+		const URL = BASEURL + "/api/Device/" + search;
 		this.getApi(URL);
 	}
 	sort(SortColumn,SortDirection: any) {
-		const URL = BASEURL + "/dm/Device/sort?SortColumn="+SortColumn + "&SortDirection=" + SortDirection;
+		const URL = BASEURL + "/api/Device/sort?SortColumn="+SortColumn + "&SortDirection=" + SortDirection;
 		this.getApi(URL);
 	}
 	checkSortType(value: string): string {
@@ -60,7 +61,6 @@ document.querySelector('#fixed-header-drawer-exp').addEventListener('change', fu
 	temp.searchByName();
 });
 
-
 window.addEventListener(
 	"load",
 	function () {
@@ -69,4 +69,3 @@ window.addEventListener(
 		temp.getData();
 
 	});
-
