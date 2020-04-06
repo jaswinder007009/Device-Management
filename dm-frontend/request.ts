@@ -1,35 +1,13 @@
 let adminId = 16;
-let sortDirection=1;
-let searchBar = "<br><input type='text' class='mdl-input-field' placeholder='Enter text to Search' id='searchBar' style='margin-left:1000px'>"
-    + "</input><button class='search-button'>Search</button><br>";
-	
-let headingArray = ['User Id', 'Model', 'Brand', 'Type', 'RAM', 'Storage',
-    'Screen Size', 'Connectivity', 'Name', 'Request Date', 'No. of Days', 'Availability'];
-	
-let columnNames = ['user_id','model','brand','type','specification_id','specification_id',
-'specification_id','specification_id','first_name','request_date','no_of_days','availability'];
-
-function createTable(tableHeading, tableBody) {
-    var tableData = "<br><br><table class='mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color-text--blue-grey-800'>"
-        + "<thead class='mdl-color--blue-grey-400'>"
-        + "<tr class='mdl-color--blue-grey-300'>" + tableHeading + "</tr>"
-        + "</thead>"
-        + "<tbody>" + tableBody + "</tbody>"
-        + "</table>";
-    document.getElementById("content").innerHTML += tableData;
-
-}
+let sortDirection = 1;
+let globalUrl = "http://localhost:5000/api/request/";
 
 function getPendingRequests(url: string) {
-    var tableHeading = "", tableBody = "";
-    for (var i = 0; i < headingArray.length; ++i) {
-        tableHeading += "<th class='mdl-data-table__cell--non-numeric sort-table'>" +"<button class='mdl-button mdl-js-button' id='sort' data-sortkey=\"" + headingArray[i] + "\">" +headingArray[i] + "</button></th>";
-    }
-    tableHeading += "<th colspan ='2'>Action</th>";
 
+    var tableData = '';
     fetch(url).then(Response => Response.json()).then(data => {
         for (var i = 0; i < data.length; i++) {
-            tableBody += "<tr>";
+            tableData += "<tr>";
             var key, name = "";
             for (var prop in data[i]) {
                 var requestId: number = data[i]['requestId'];
@@ -41,37 +19,64 @@ function getPendingRequests(url: string) {
                             name += val + " ";
 
                         if (prop != "requestedBy")
-                            tableBody += "<td>" + val + "</td>";
+                            tableData += "<td>" + val + "</td>";
 
                         if (key == "lastName")
-                            tableBody += "<td>" + name + "</td>";
+                            tableData += "<td>" + name + "</td>";
                     }
                 }
                 else {
                     key = prop;
                     if (key != "comment" && key != "requestId")
-                        tableBody += "<td>" + value + "</td>";
+                        tableData += "<td>" + value + "</td>";
 
                     if (key == "availability" && value == true)
-                        tableBody += "<td>" + "<button class=\"accept-button\" data-requestid=\"" + requestId + "\" >Accept</button>" + "</td>";
+                        tableData += "<td>" + "<button class=\"accept-button\" data-requestid=\"" + requestId + "\" >Accept</button>" + "</td>";
                 }
             }
 
-            tableBody += "<td>" + "<button class=\"reject-button\" data-requestid=" + requestId + " >Reject</button>" + "</td>";
+            tableData += "<td>" + "<button class=\"reject-button\" data-requestid=" + requestId + " >Reject</button>" + "</td>";
 
-            tableBody += "</tr>";
+            tableData += "</tr>";
         }
-        createTable(tableHeading, tableBody);
-        
+        document.getElementById("content").innerHTML = tableData;
+
     });
 
 }
 
-function requestAction(requestUrl) {
-    console.log("http://localhost:5000/api/request/" + requestUrl);
-    fetch("http://localhost:5000/api/request/" + requestUrl);
+function requestAction(requestUrl, requestId, action) {
+    fetch(globalUrl + requestUrl);
+    alert("Request " + requestId + " " + action);
+    document.getElementById("content").innerHTML = "";
+    getPendingRequests(globalUrl + "pending");
 
 }
+
+function getDirection(className, sortField) {
+    if (className === "mdl-data-table__header--sorted-descending") {
+        document.getElementById(sortField).setAttribute("class", "mdl-data-table__header--sorted-ascending");
+        return -1;
+    }
+    else {
+        document.getElementById(sortField).setAttribute("class", "mdl-data-table__header--sorted-descending");
+        return 1;
+    }
+}
+
+document.addEventListener("click", function (e) {
+    const sortField = (e.target as HTMLElement).getAttribute('name');
+    const className = (document.getElementById(sortField) as HTMLTableRowElement).getAttribute("class");
+    sortDirection = getDirection(className, sortField);
+    document.getElementById("content").innerHTML = "";
+    getPendingRequests(globalUrl + "pending?sort=" + sortField + "&direction=" + sortDirection);
+
+});
+
+document.querySelector('#fixed-header-drawer-exp').addEventListener('input', function (e) {
+    var searchField = (document.getElementById("fixed-header-drawer-exp") as HTMLInputElement).value;
+    getPendingRequests(globalUrl + "pending?search=" + searchField);
+});
 
 
 document.addEventListener("click", function (e) {
@@ -79,48 +84,19 @@ document.addEventListener("click", function (e) {
     if ((e.target as HTMLButtonElement).className == "reject-button") {
         const data = (e.target as HTMLButtonElement).dataset.requestid;
         let requestId = parseInt(data, 10);
-        requestAction(requestId + '/reject?id=' + adminId);
-        alert("Request " + requestId + " rejected");
-        document.getElementById("content").innerHTML = "";
-        getPendingRequests("http://localhost:5000/api/request/pending");
+        requestAction(requestId + '/reject?id=' + adminId, requestId, 'rejected');
 
     }
     if ((e.target as HTMLButtonElement).className == "accept-button") {
         const data = (e.target as HTMLButtonElement).dataset.requestid;
         let requestId = parseInt(data, 10);
-        requestAction(requestId + '/accept');
-        alert("Request " + requestId + " accepted");
-        document.getElementById("content").innerHTML = "";
-        getPendingRequests("http://localhost:5000/api/request/pending");
+        requestAction(requestId + '/accept', requestId, 'accepted');
 
-    }
-    if ((e.target as HTMLButtonElement).className == "search-button") {
-        let searchField = (<HTMLInputElement>document.getElementById("searchBar")).value;
-        document.getElementById("content").innerHTML = "";
-        getPendingRequests("http://localhost:5000/api/request/pending?search=" + searchField);
-    }
-
-    if ((e.target as HTMLButtonElement).id == "sort") {
-        const sortKey = (e.target as HTMLButtonElement).dataset.sortkey;
-        for(var i=0;i<headingArray.length;++i){
-            if(headingArray[i]==sortKey){
-                var sortField =columnNames[i];
-            }
-        }
-        if(sortDirection==1)
-            sortDirection=-1;
-        else
-            sortDirection=1; 
-        document.getElementById("content").innerHTML = "";
-        getPendingRequests("http://localhost:5000/api/request/pending?sort=" + sortField+"&direction="+sortDirection);
     }
 
 });
 
-
-
-document.getElementById("search").innerHTML = searchBar;
 document.getElementById("content").innerHTML = "";
-getPendingRequests("http://localhost:5000/api/request/pending");
+getPendingRequests(globalUrl + "pending");
 
 
