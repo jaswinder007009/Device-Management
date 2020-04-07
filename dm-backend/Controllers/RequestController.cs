@@ -18,7 +18,7 @@ namespace dm_backend.Models{
         {
             Db = db;
         }
-
+/*
         [HttpGet]
        async public Task<IActionResult> Get()
         {
@@ -38,18 +38,8 @@ namespace dm_backend.Models{
             var data = await result.SearchDeviceRequest(find, low, high);
 
             return new OkObjectResult(data);
-            /*  var  low = ((int.Parse(size) *  int.Parse(page) )- int.Parse(size));
-              var high = (int.Parse(size) * int.Parse(page));
-              await Db.Connection.OpenAsync();
-              var reqDevvice = new AllDeviceRequest(Db);
-              var results = await reqDevvice.deviceRequest(low , high);
-              var data = await new TotalResultCount(Db).findCount(results, "count_request");
-
-              var count = new { resultsval = "superb" };
-
-              return new OkObjectResult(data );*/
         }
-
+        */
         [HttpPost]
         public IActionResult PostRequest([FromBody]RequestModel req)
         {

@@ -8,5 +8,9 @@ export class HtmlElementsData
     thead = "tableHead"
     sortAttributr = "sort"
     sortType = "sortby" 
-    
+    resultcount = " result-count" 
+    requestStatus =  "request-status"
+    userName = "user"    // set user search in userdefine search box
+    devicesearch="device"
+    deviceSerial = "serialNumber"
 }
