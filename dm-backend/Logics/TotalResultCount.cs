@@ -5,7 +5,6 @@ using System.Data.Common;
 using System;
 using System.Data;
 using MySql.Data.MySqlClient;
-using dm_backend.Logics;
 
 namespace dm_backend.Models{
     public class TotalResultCount
@@ -16,15 +15,18 @@ namespace dm_backend.Models{
         {
             Db = db;
         }
-        public async Task<Result<RequestDeviceHistory>> FindCount( List<RequestDeviceHistory> data, string querry , string find , int offset , int limit , string serialNumber , string sortType , string attribute, string status)
+        public async Task<Result<RequestDeviceHistory>> FindCount( List<RequestDeviceHistory> data, string querry , string find)
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"select count(*)  as total_count from (" + querry + ") as history ;";
-            var bind = new SortRequestHistoryData(Db);
-            bind.BindLimitParams( cmd , offset , limit);
-            bind.BindSearchParms(cmd, find, serialNumber);
+            cmd.CommandText = querry;
 
-            cmd.CommandType = CommandType.Text;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@id",
+                DbType = DbType.String,
+                Value = find,
+            });
             return BindResult(await cmd.ExecuteReaderAsync(), data);
         }
 
