@@ -1,6 +1,7 @@
 import { HitApi } from "./HitApi";
 import { HtmlElementsData } from "./HtmlElementsId";
 import { BASEURL } from "./globals";
+import { findResult } from "./search";
 
 
 export class Sort 
@@ -38,7 +39,7 @@ export class Sort
 
     setSortingApiCall(sortAttribute : string , find  : string , sortType : string)
     {
-        const uri= BASEURL+"/sorting?find="+encodeURI(find)+"&sort="+sortAttribute+"&sort-type="+sortType;
+        const uri= new findResult().searchUser() +"&sort="+sortAttribute+"&sort-type="+sortType;
         
         var populateSorting = new HitApi();
         

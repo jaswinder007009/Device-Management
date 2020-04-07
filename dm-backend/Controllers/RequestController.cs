@@ -18,7 +18,7 @@ namespace dm_backend.Models{
         {
             Db = db;
         }
-
+/*
         [HttpGet]
        async public Task<IActionResult> Get()
         {
@@ -39,7 +39,7 @@ namespace dm_backend.Models{
 
             return new OkObjectResult(data);
         }
-
+        */
         [HttpPost]
         public IActionResult PostRequest([FromBody]RequestModel req)
         {

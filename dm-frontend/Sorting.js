@@ -18,8 +18,8 @@
         }
         Sort.prototype.sortBy = function (attributeId) {
             var sortType = this.checkSortType(attributeId);
-            //  let userName = (document.getElementById(new HtmlElementsData().search)  as HTMLInputElement).getAttribute(this.elements.userName);
-            this.setSortingApiCall(attributeId, sortType);
+            var find = document.getElementById(this.elements.search).value;
+            this.setSortingApiCall(attributeId, find, sortType);
         };
         Sort.prototype.checkSortType = function (value) {
             var type = document.getElementById(value).getAttribute("class");
@@ -35,7 +35,7 @@
                 return "ASC";
             }
         };
-        Sort.prototype.setSortingApiCall = function (sortAttribute, sortType) {
+        Sort.prototype.setSortingApiCall = function (sortAttribute, find, sortType) {
             var uri = new search_1.findResult().searchUser() + "&sort=" + sortAttribute + "&sort-type=" + sortType;
             var populateSorting = new HitApi_1.HitApi();
             populateSorting.HitGetApi(uri);

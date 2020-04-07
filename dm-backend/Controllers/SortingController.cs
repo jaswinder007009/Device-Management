@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace dm_backend.Models{
+namespace dm_backend.Models
+{
     [Route("[controller]")]
     [ApiController]
     public class SortingController : Controller
@@ -19,10 +20,10 @@ namespace dm_backend.Models{
         async public Task<IActionResult> Sorting()
         {
             await Db.Connection.OpenAsync();
-           string status= HttpContext.Request.Query["status"];
+            string status = HttpContext.Request.Query["status"];
             string sort = HttpContext.Request.Query["sort"];
             string find = HttpContext.Request.Query["user-name"];
-            string deviceserialNumber= HttpContext.Request.Query["serial-number"];
+            string deviceserialNumber = HttpContext.Request.Query["serial-number"];
             string sortType = HttpContext.Request.Query["sort-type"];
             string page = (HttpContext.Request.Query["page"]);
             string limit = (HttpContext.Request.Query["page-size"]);
@@ -41,7 +42,8 @@ namespace dm_backend.Models{
             if (status == null)
                 status = "";
             var result = new SortRequestHistoryData(Db);
-            return new OkObjectResult(await result.GetSortData(find, deviceserialNumber , status ,  sort, sortType, page , (limit)));
+            return new OkObjectResult(await result.GetSortData(find, deviceserialNumber, status, sort, sortType, page, (limit)));
 
+        }
     }
 }

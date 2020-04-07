@@ -5,6 +5,7 @@ using System.Data.Common;
 using System;
 using System.Data;
 using MySql.Data.MySqlClient;
+using dm_backend.Logics;
 
 namespace dm_backend.Models{
     public class TotalResultCount

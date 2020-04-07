@@ -51,7 +51,7 @@
         new search_1.findResult().findByUser();
         document.getElementById("pagination").setAttribute("page", "1"); // set page to 1
     });
-    document.addEventListener("click", function (e) {
+    document.querySelector("#tableHead").addEventListener("click", function (e) {
         var id = e.target.id;
         if (id === "user" || id === "admin" || id === "serialNumber" || id === "device") {
             new Sorting_1.Sort().sortBy(id);
@@ -67,10 +67,10 @@
     });
     document.querySelector("#request-status").addEventListener("change", function (e) {
         var requestStatus = e.target.value;
-        if (requestStatus == "Assigned" || requestStatus == "assigned")
-            requestStatus = "assigned";
+        if (requestStatus == "Returned" || requestStatus == "returned")
+            requestStatus = "ret";
         if (requestStatus == "Rejected" || requestStatus == "reject")
-            requestStatus = "reject";
+            requestStatus = "rej";
         console.log(requestStatus);
         new RequestStatus_1.UserRequestStatus().requestStatusResult(requestStatus);
     });

@@ -20,7 +20,7 @@ export class findResult {
         let serialNumber = (document.getElementById(this.elements.devicesearch) as HTMLTableRowElement).getAttribute(this.elements.deviceSerial);
         (document.getElementById(this.elements.thead) as HTMLTableRowElement).setAttribute(this.elements.sortAttributr, "");
         (document.getElementById(this.elements.thead) as HTMLTableRowElement).setAttribute(this.elements.sortType, "");
-        var uri = BASEURL + "?user-name=" + encodeURI(userName) + "&serial-number=" + encodeURI(serialNumber) + "";;
+        var uri = BASEURL + "/sorting?user-name=" + encodeURI(userName) + "&serial-number=" + encodeURI(serialNumber) + "";;
         return uri;
     }
 

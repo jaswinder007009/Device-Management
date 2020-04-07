@@ -53,7 +53,7 @@ var domElement =  new HtmlElementsData();
 });
 
 
-document.addEventListener("click", function (e) {
+(document.querySelector("#tableHead") as HTMLTableHeaderCellElement).addEventListener("click", function (e) {
     let id = (e.target as HTMLInputElement).id;
     if (id === "user"|| id === "admin" ||  id === "serialNumber" || id === "device") 
              {
@@ -74,10 +74,10 @@ document.addEventListener("click", function (e) {
 (document.querySelector("#request-status") as HTMLSelectElement).addEventListener("change" ,e =>
 {
     var requestStatus = (e.target as HTMLOptionElement).value;
-    if (requestStatus ==  "Assigned" || requestStatus == "assigned")
-        requestStatus = "assigned"
+    if (requestStatus ==  "Returned" || requestStatus == "returned")
+        requestStatus = "ret"
         if (requestStatus ==  "Rejected" || requestStatus ==  "reject")
-        requestStatus = "reject"
+        requestStatus = "rej"
     console.log(requestStatus);
     new UserRequestStatus().requestStatusResult(requestStatus);
     
