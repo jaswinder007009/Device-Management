@@ -8,20 +8,20 @@ class MyDevices {
     table2:HTMLTableElement=document.getElementById("tab2") as HTMLTableElement;
    tab1:HTMLLIElement=document.getElementById("one") as HTMLLIElement;
    tab2:HTMLLIElement=document.getElementById("two") as HTMLLIElement;
-   choice:HTMLLIElement;
-   search()
-   { 
+   //choice:HTMLLIElement;
+//    search()
+//    { 
             
-            if(document.querySelector(".mdl-layout__tab.is-active")==this.tab1)
-            {
+//             if(document.querySelector(".mdl-layout__tab.is-active")==this.tab1)
+//             {
 
-                 this.getCurrentDecice(document.getElementById("waterfall-exp").value)             }
-            else{
+//                  this.getCurrentDecice(document.getElementById("waterfall-exp").value)             }
+//             else{
                 
-   this.getPreviousDecice(document.getElementById("waterfall-exp").value);
+//    this.getPreviousDecice(document.getElementById("waterfall-exp").value);
             
-            }
-}
+//             }
+// }
 
 
 
@@ -95,7 +95,8 @@ class MyDevices {
         while (switching) { 
             switching = false; 
              rows= table.rows; 
-            for (i = 1; i < (rows.length - 1); i++) { 
+            for (i = 1; i < (rows.length - 1); i++) {
+                 
                 var Switch = false; 
                 x = rows[i].getElementsByTagName("TD")[n]; 
                 y = rows[i + 1].getElementsByTagName("TD")[n];  
@@ -128,3 +129,24 @@ class MyDevices {
     } 
 }
 var mydevices =new MyDevices();
+
+document.getElementById("one").addEventListener('click', function () {
+    
+
+       mydevices.getCurrentDecice();
+        });
+        document.getElementById("two").addEventListener('click', function () {
+    
+
+            mydevices.getPreviousDecice();
+             });
+
+             document.getElementById("search1").addEventListener('keyup', function () {
+    
+                mydevices.getCurrentDecice(document.getElementById("search1").value);
+                 });
+                 document.getElementById("search2").addEventListener('keyup', function () {
+             
+         
+                     mydevices.getPreviousDecice(document.getElementById("search2").value);
+                      });
