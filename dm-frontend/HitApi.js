@@ -44,7 +44,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 })(function (require, exports) {
     "use strict";
-    exports.__esModule = true;
+    Object.defineProperty(exports, "__esModule", { value: true });
     var FillData_1 = require("./FillData");
     var paging_1 = require("./paging");
     var HitApi = /** @class */ (function () {

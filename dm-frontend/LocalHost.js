@@ -8,7 +8,7 @@
     }
 })(function (require, exports) {
     "use strict";
-    exports.__esModule = true;
+    Object.defineProperty(exports, "__esModule", { value: true });
     var localHostUrl = /** @class */ (function () {
         function localHostUrl() {
             this.uri = "https://localhost:44368/sorting";

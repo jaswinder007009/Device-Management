@@ -8,7 +8,7 @@
     }
 })(function (require, exports) {
     "use strict";
-    exports.__esModule = true;
+    Object.defineProperty(exports, "__esModule", { value: true });
     var HtmlElementsData = /** @class */ (function () {
         function HtmlElementsData() {
             this.upArrow = "mdl-data-table__header--sorted-descending";

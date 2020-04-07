@@ -8,7 +8,7 @@
     }
 })(function (require, exports) {
     "use strict";
-    exports.__esModule = true;
+    Object.defineProperty(exports, "__esModule", { value: true });
     var search_1 = require("./search");
     var Sorting_1 = require("./Sorting");
     var HtmlElementsId_1 = require("./HtmlElementsId");

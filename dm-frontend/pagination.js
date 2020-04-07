@@ -11,7 +11,7 @@
     }
 })(function (require, exports) {
     "use strict";
-    exports.__esModule = true;
+    Object.defineProperty(exports, "__esModule", { value: true });
     var GeneratePaging = /** @class */ (function () {
         function GeneratePaging() {
         }

@@ -8,7 +8,7 @@
     }
 })(function (require, exports) {
     "use strict";
-    exports.__esModule = true;
+    Object.defineProperty(exports, "__esModule", { value: true });
     var RequetsDatamodel_1 = require("./RequetsDatamodel");
     var HtmlElementsId_1 = require("./HtmlElementsId");
     var PopulateData = /** @class */ (function () {

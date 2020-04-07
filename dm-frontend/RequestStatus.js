@@ -8,7 +8,7 @@
     }
 })(function (require, exports) {
     "use strict";
-    exports.__esModule = true;
+    Object.defineProperty(exports, "__esModule", { value: true });
     var HitApi_1 = require("./HitApi");
     var HtmlElementsId_1 = require("./HtmlElementsId");
     var globals_1 = require("./globals");

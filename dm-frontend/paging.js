@@ -8,7 +8,7 @@
     }
 })(function (require, exports) {
     "use strict";
-    exports.__esModule = true;
+    Object.defineProperty(exports, "__esModule", { value: true });
     var HtmlElementsId_1 = require("./HtmlElementsId");
     var LocalHost_1 = require("./LocalHost");
     var HitApi_1 = require("./HitApi");
