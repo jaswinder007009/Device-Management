@@ -1,0 +1,60 @@
+
+.header
+{
+    padding-top: 20px;
+    padding-right: 10px;
+    background-color: rgba(201, 55, 189, 0.87);
+    height: 80px;
+    width: left;
+}
+.search
+{
+    float: left;
+}
+.search_bar
+{
+    float: right;
+}
+ .page{
+     background-color: transparent;
+     border: 0;
+     /* border-radius: 25px; */
+     border-color: transparent;
+
+ }
+.page:hover
+{
+    background-color: rgba(78, 81, 85, 0.472);
+    border-radius: 25px;
+    border-color: transparent;
+}
+.requestdata
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+
+.requestedUserData .tooltipData {
+    margin: 5px;
+    visibility: hidden;
+   max-width:  auto;
+    height: auto;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+   
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+  }
+  
+  .requestedUserData:hover .tooltipData {
+    visibility: visible;
+  }
+  

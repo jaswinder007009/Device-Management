@@ -1,6 +1,5 @@
-bin/
-obj/
 node_modules/
-*.swp
-*.swps
+bin
+obj
+.vs
 *.js

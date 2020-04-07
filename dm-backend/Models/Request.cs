@@ -49,14 +49,15 @@ namespace dm_backend.Models
             }
         }
 
-        public List<RequestModel> GetAllPendingRequests()
+        public List<RequestModel> GetAllPendingRequests(string sortField,int sortDirection,string searchField)
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "get_all_pending_requests";
-            cmd.CommandType = CommandType.StoredProcedure;
-            using( MySqlDataReader reader =  cmd.ExecuteReader())
-                return ReadAll(reader);
+            cmd.CommandText = get_all_pending_requests+searchQuery+sortQuery+sortField+(sortDirection==-1 ? " desc":" asc");; 
+            cmd.Parameters.AddWithValue("@search_field", searchField); 
+            using MySqlDataReader reader =  cmd.ExecuteReader();
+            return ReadAll(reader);
         }
+
         public void RejectDeviceRequest(int id){
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "reject_request";
@@ -134,6 +135,32 @@ namespace dm_backend.Models
             }
             
         }
+    internal string get_all_pending_requests=@"select request_device_id, user_id, device_model.model, device_type.type, device_brand.brand, specification.*, request_date, no_of_days, comment, salutation, first_name, middle_name, last_name, department_name, designation_name, email, date_of_birth, date_of_joining, gender,
+    if(count(available_devices.device_id) =1, TRUE, FALSE) as availability
+    from request_device
+    inner join user using(user_id)
+    inner join department_designation using(department_designation_id)
+    inner join department using(department_id)
+    inner join designation using(designation_id)
+    inner join device_brand using(device_brand_id)
+    inner join device_model using(device_model_id)
+    inner join device_type using(device_type_id)
+    inner join specification using(specification_id)
+    inner join salutation using(salutation_id)
+    inner join gender using(gender_id)
+    left join (
+		select * from device
+        inner join status
+        using(status_id)
+        where status_name='Free'
+    ) as available_devices
+    on available_devices.device_model_id = request_device.device_model_id
+    and available_devices.specification_id = request_device.specification_id
+    and available_devices.device_type_id = request_device.device_type_id
+	and available_devices.device_brand_id = request_device.device_brand_id";
+
+    internal string searchQuery=@" where device_type.type like CONCAT('%', @search_field, '%') or device_model.model like CONCAT('%', @search_field, '%') or device_brand.brand like CONCAT('%', @search_field, '%') or get_full_name(user.user_id) like CONCAT('%', @search_field, '%') ";       
+    internal string sortQuery=@" group by request_device_id order by ";
 
     }   
 }
