@@ -218,6 +218,7 @@ public int whatIs(String jass1)
                     post.DesignationName = GetSafeString(reader, "designation_name");
                     post.Email = GetSafeString(reader, "email");
                     post.Gender = GetSafeString(reader, "gender");
+                    post.Password=GetSafeString(reader,"password");
                     post.Status = GetSafeString(reader, "status_name");
                     post.DOB = Convert.ToDateTime(reader["date_of_birth"]).ToString("dd/MM/yyyy");
                     post.DOJ = Convert.ToDateTime(reader["date_of_joining"]).ToString("dd/MM/yyyy");
@@ -318,12 +319,7 @@ public int whatIs(String jass1)
             //cmd.Parameters.Add(new MySqlParameter("role_name", RoleName));
             //cmd.Parameters.Add(new MySqlParameter("userr_id", UserId));
             cmd.Parameters.Add(new MySqlParameter("email", Email));
-            /*cmd.Parameters.Add(new MySqlParameter
-            {
-                ParameterName = "@password",
-                DbType = DbType.String,
-                Value = Password,
-            });*/
+           
             if(string.IsNullOrEmpty(Password))
             cmd.Parameters.AddWithValue("password", DBNull.Value);
             else

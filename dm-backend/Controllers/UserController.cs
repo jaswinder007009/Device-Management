@@ -29,10 +29,7 @@ namespace dm_backend.Controllers
             var result = query.getUserByuser_id(user_id);
                   result.SetSerializableProperties(String.Empty);
             Db.Connection.Close();
-             return Json(result, new JsonSerializerSettings()
-            {
-                ContractResolver = new ShouldSerializeContractResolver()
-            });           
+             return Json(result);
         }
        
        
