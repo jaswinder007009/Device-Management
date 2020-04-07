@@ -161,14 +161,14 @@ namespace dm_backend.Models
                 " d.serial_number as serial_number, d.purchase_date as purchase_date," +
                 " d.entry_date as entry_date, d.warranty_year as warranty_year, sf.RAM as RAM," +
                 " sf.connectivity as connectivity, sf.storage as storage, sf.screen_size as screen_size," +
-                "s.status as status, dt.type as type, db.brand as brand from device as d" +
+                "s.status_name, dt.type as type, db.brand as brand from device as d" +
                 " inner join device_type as dt inner join device_model as dm inner join device_brand as db inner join status as s " +
                 "inner join  specification as sf on d.device_type_id = dt.device_type_id and" +
                 " d.device_brand_id = db.device_brand_id and d.device_model_id = dm.device_model_id and d.status_id = s.status_id and" +
                 " d.specification_id = sf.specification_id left join assign_device as ad" +
                 " on d.device_id = ad.device_id left join  user as u  on ad.user_id = u.user_id" +
                 " left join user as u1 " +
-                "on  u1.user_id = ad.assign_by order by " + SortColumn + " " + SortDirection + ";";
+                "on  u1.user_id = ad.assigned_by order by " + SortColumn + " " + SortDirection + ";";
             // BindColumn(cmd,SortColumn);
 
             return ReadAll(cmd.ExecuteReader());
