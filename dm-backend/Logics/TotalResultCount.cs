@@ -16,7 +16,7 @@ namespace dm_backend.Models{
         {
             Db = db;
         }
-        public async Task<Result<RequestDeviceHistory>> FindCount( List<RequestDeviceHistory> data, string querry , string find , int offset , int limit , string serialNumber , string sortType , string attribute, string status)
+        public async Task<Result<RequestDeviceHistory>> FindCount( List<RequestDeviceHistory> data, string querry , string find , int offset , int limit , string serialNumber )
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"select count(*)  as total_count from (" + querry + ") as history ;";

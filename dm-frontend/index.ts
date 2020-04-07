@@ -29,9 +29,6 @@ var domElement =  new HtmlElementsData();
 
 
 
-
-
-
     (document.querySelector("#waterfall-exp") as HTMLInputElement).addEventListener("keypress", function (e) {
         if (e.key == "Enter") {
             let id = (e.target as HTMLInputElement).id;
