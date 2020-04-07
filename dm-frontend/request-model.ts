@@ -3,22 +3,22 @@ const TextField = mdc.textField.MDCTextField;
 
 
 
-
 class RequestDevice
 {
-    deviceModel : string
-    deviceBrand : string
-    deviceType : string
-    specs : Specification
-    noOfDays : number
+    deviceModel : string =""
+    deviceBrand : string =""
+    deviceType : string =""
+    specs : Specification | undefined 
+    noOfDays : number = 0
     comment : string = ""
 }
+
 class Specification
 {
-    RAM : String 
-    Storage : String
-    ScreenSize : String
-    Connectivity :  String
+    RAM : String | undefined 
+    Storage : String | undefined
+    ScreenSize : String | undefined
+    Connectivity :  String | undefined
 }
 
 console.log(Select);
@@ -42,10 +42,12 @@ const textField = new TextField(document.querySelector('.mdc-text-field'));
 // })
 
 
-function  submitForm()
+function  hitPostApi(data : RequestDevice)
 {
     const url = 'https://localhost:44392/api/Request'
-    let data = fun()
+    
+    
+    console.log(JSON.stringify(data));
     fetch(url , {
         method : "post",
         headers: {
@@ -61,10 +63,8 @@ function  submitForm()
 }
 
 function initialiseDropdowns(){
-   // const url = 'http://localhost:5000/api/dropdown/';
-    const url = 'https://localhost:44392/api/Dropdown/';
-
-    // Iterate over all the dropdown elements
+    const url = 'http://localhost:5000/api/dropdown/';
+    //const url = 'https://localhost:44392/api/Dropdown/';
     selects.forEach(selectElement => {
         const urlSnip = selectElement.root_.dataset.urlSnip;  // Gets the `data-url-snip` attribute and add it with the url to make a fetch request
         
@@ -72,23 +72,35 @@ function initialiseDropdowns(){
         .then(res => res.json())
         .then(data => populateDropdown(urlSnip, data));
     });
-
 }
 
 
-function  fun () :  RequestDevice
+function  submitForm() :  null
 {
+    for (let val of selects)
+    {
+        if(val.value == "")
+        {
+            alert("please fill all fields");
+            return null;
+        }
+    }    
     let specs = new Specification();
     let request = new RequestDevice();
+    request.noOfDays =parseInt((document.getElementById("no-of-days") as HTMLInputElement).value);
+   
     request.deviceType = selects[0].value;
     request.deviceBrand = selects[1].value;
     request.deviceModel = selects[2].value;
-    specs.RAM = selects[2].value;
-    specs.Storage = selects[2].value;
-    specs.ScreenSize = selects[2].value;
-    specs.Connectivity = selects[2].value;
+    specs.RAM = selects[3].value;
+    specs.Storage = selects[4].value;
+    specs.ScreenSize = selects[5].value;
+    specs.Connectivity = selects[6].value;
     request.specs =  specs;
-    return request;
+    
+
+
+    hitPostApi(request);
 }
 
             // selects[0].listen('MDCSelect:change', ev => {
@@ -110,7 +122,7 @@ function populateDropdown(id : string, dataArray: any)
     clear(id);
     for(let data of dataArray)
     {
-        document.getElementById(id).innerHTML += `<li class="mdc-list-item" data-value="${data["value"]}">
+        (document.getElementById(id) as HTMLDivElement).innerHTML += `<li class="mdc-list-item" data-value="${data["value"]}">
                                                     <span class="mdc-list-item__text">
                                                     ${data["value"]}
                                                     </span>
@@ -122,7 +134,7 @@ function populateDropdown(id : string, dataArray: any)
 function clear(id : string)
 {
 
-    document.getElementById(id).innerHTML = '';
+    (document.getElementById(id) as HTMLDivElement).innerHTML = '';
 }
 
 

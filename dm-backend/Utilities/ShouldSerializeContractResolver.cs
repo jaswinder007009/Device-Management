@@ -19,7 +19,7 @@ namespace dm_backend.Utilities
             // };
         }
 
-
+/*
 
         protected override JsonProperty CreateProperty(System.Reflection.MemberInfo member, Newtonsoft.Json.MemberSerialization memberSerialization)
         {
@@ -40,6 +40,6 @@ namespace dm_backend.Utilities
                 }
             }
             return property;
-        }
+        }*/
     }
 }
