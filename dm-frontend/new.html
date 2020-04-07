@@ -20,7 +20,7 @@
     <div class="demo-layout-waterfall mdl-layout mdl-js-layout">
         <header class="mdl-layout__header mdl-layout__header--waterfall">
             <!-- Top row, always visible -->
-            <button id="getdata">Get Data</button>
+           
             <div class="mdl-layout__header-row">
                 <!-- Title -->
                 <span class="mdl-layout-title">Title</span>
@@ -42,34 +42,52 @@
         <main class="mdl-layout__content">
             <div class="page-content">
                 <div class="requestdata">
+                    <button class="getAll Requestbutton" id="getdata">Get Data</button>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                 mdl-textfield--floating-label mdl-textfield--align-right">
                         <label class="mdl-button mdl-js-button mdl-button--icon" for="waterfall-exp">
                             <i class="material-icons">search</i>
                         </label>
                         <div class="mdl-textfield__expandable-holder">
-                            <input class="mdl-textfield__input" type="text" name="sample" id="waterfall-exp" value="">
+                            <input class="mdl-textfield__input" type="text" name="sample" user="" id="waterfall-exp" value="">
                         </div>
+                        <div class="mdl-layout-spacer"></div>     
+                    <span>                  
+                          <input type="text" class="serial-number" id="device"  name="search"  serialNumber="" placeholder="enter device serial number...">
+                    </span>
+
+                    </div>
+                    
+                    <div>
+                          <select id="request-status">
+                            <option class="status" id="All">All</option>
+                            <option class="status"  id ="ret">Returned</option>
+                            <option class="status" id="rej">Rejected</option>
+                          </select>
                     </div>
                     <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                         <thead id="tableHead" sort="" sortby="">
                             <tr>
                                 <th class="mdl-js-data-table mdl-data-table__header--sorted-ascending" id="user">
                                     User Name</th>
+
                                 <th class="mdl-data-table__header--sorted-ascending" id="serialNumber">
                                     Device Serial number</th>
-                                <th class="mdl-data-table__header--sorted-ascending" id="type"
-                                    id="">Device Type</th>
-                                <th class="mdl-data-table__header--sorted-ascending" id="device"
-                                    id="deviceName">Device Name</th>
-                                    <th class="mdl-data-table__header--sorted-ascending" id="status"
-                                    id="deviceName">Device Status</th>
-                                <th class="mdl-data-table__header--sorted-ascending" id="assigndate"
-                                    id="">Assign Date</th>
-                                <th class="mdl-data-table__header--sorted-ascending" id="returndate"
-                                    id="">Device Return Date</th>
-                                <th class="mdl-data-table__header--sorted-ascending" id="admin"
-                                    id="">Admin Handler Name</th>
+
+                                <th > Device Type</th>
+
+                                <th class="mdl-data-table__header--sorted-ascending" id="device">
+                                    Device Name</th>
+
+                                <th >Device Status</th>
+
+                                <th >Assign Date</th>
+
+                                <th>Device Return Date</th>
+
+                                <th class="mdl-data-table__header--sorted-ascending" id="admin">
+                                    Admin Handler Name</th>
+
                             </tr>
                         </thead>
                         <tbody id="Request_data">
@@ -79,9 +97,11 @@
                    
                 </div>
                 <br />
-                <div class="paging" id="pagination" currentpage="1">
+                <div class="paging" id="pagination" pageNum = "1" result-count="0">
                     
-
+                    <!-- <input type="submit" class="page" id="1" value="1" >
+                    <input type="submit" class="page" id="2" value="2" >
+                    <input type="submit" class="page" id="3" value="3" > -->
 
                 </div>
             </div>
