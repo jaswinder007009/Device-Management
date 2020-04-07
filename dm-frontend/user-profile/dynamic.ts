@@ -22,7 +22,7 @@ export function dynamicGenerate(data) {
         let headerTag1HTML: string = '';
         for (let address of this.data.addresses) {
             headerTag1HTML +=
-                ` <span>${address.addressType.toUpperCase()} ADDRESS :</span><br>
+                ` <span>${address.addressType} ADDRESS :</span><br>
             <span>ADDRESS   ${address.addressLine1},
              ${address.addressLine2}</span><br>
             <span>CITY:    ${address.city}</span><br>
@@ -37,7 +37,7 @@ export function dynamicGenerate(data) {
         let headerTag2HTML: string = '';
         for (let phone of this.data.phones) {
             headerTag2HTML +=
-                ` <span>${phone.contactNumberType.toUpperCase()}:</span><br>
+                ` <span>${phone.contactNumberType}:</span><br>
             <span>NUMBER:    ${phone.number}&nbsp;&nbsp;
             COUNTRY CODE:    ${phone.countryCode}&nbsp;&nbsp;
            AREA CODE:     ${phone.areaCode}</span><br>`;

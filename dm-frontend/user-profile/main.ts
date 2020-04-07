@@ -81,10 +81,10 @@ document.querySelector('form').addEventListener('click', function (ev) {
 
     }
     else if (ev.target.id == "savemydata") {
-        if (validate() == false) {
-            return;
+        // if (validate() == false) {
+        //     return;
 
-        }
+        // }
         user.updateData(createObjectFromForm(this)).then(function () { user.getOneUser(); })
 
         util.closeForm();

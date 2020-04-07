@@ -9,7 +9,7 @@ class GetApiForAdmin {
             .then(Response => Response.json())
             .then(data => {
                 console.log(data);
-                document.getElementById("Request_data").innerHTML = "";
+                (document.getElementById("Request_data") as HTMLTableElement).innerHTML = "";
                 for (let i = 0; i < data.length; i++) {
                     let res = new DeviceListForAdmin(data[i]);
                     res.getDeviceList();
@@ -27,9 +27,9 @@ class GetApiForAdmin {
         var search = (document.getElementById("fixed-header-drawer-exp") as HTMLInputElement).value;
         const URL = BASEURL + "/api/Device/" + search;
         this.getApi(URL);
-
+        (document.getElementById("fixed-header-drawer-exp") as HTMLInputElement).value="";
     }
-    sort(SortColumn, SortDirection: any) {
+    sort(SortColumn:string, SortDirection: any) {
 
         const URL = BASEURL + "/api/Device/sort?SortColumn=" + SortColumn + "&SortDirection=" + SortDirection;
         this.getApi(URL);
@@ -38,16 +38,16 @@ class GetApiForAdmin {
         const type = (document.getElementById(value) as HTMLTableRowElement).getAttribute("class");
         // (document.getElementById(this.elements.thead) as HTMLTableRowElement).setAttribute("sort", value);
         if (type === "mdl-data-table__header--sorted-descending") {
-            document.getElementById(value).setAttribute("class", "mdl-data-table__header--sorted-ascending");
+            (document.getElementById(value) as HTMLTableElement).setAttribute("class", "mdl-data-table__header--sorted-ascending");
             return "a";
         }
         else {
-            document.getElementById(value).setAttribute("class", "mdl-data-table__header--sorted-descending");
+            (document.getElementById(value) as HTMLTableElement).setAttribute("class", "mdl-data-table__header--sorted-descending");
             return "d";
         }
     }
 
-    deleteDevice(device_id) {
+    deleteDevice(device_id:number) {
 
 
         fetch(BASEURL + "/api/Device/del/" + device_id, {
@@ -83,15 +83,14 @@ document.addEventListener("click", function (e) {
 
     }
 });
-
-document.addEventListener("click", function (e) {
+(document.querySelector('#Request_data1') as HTMLTableElement).addEventListener("click", function (e) {
     const col = (e.target as HTMLElement).getAttribute('name');
     const temp = new GetApiForAdmin();
     var pos = temp.checkSortType(col);
     console.log(pos);
     temp.sort(col, pos);
 });
-document.querySelector('#fixed-header-drawer-exp').addEventListener('change', function (e) {
+(document.querySelector('#fixed-header-drawer-exp')as HTMLInputElement).addEventListener('change', function (e) {
 
     console.log("test");
     const temp = new GetApiForAdmin();

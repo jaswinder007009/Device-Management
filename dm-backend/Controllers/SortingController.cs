@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace dm_backend.Models{
+namespace dm_backend.Models
+{
     [Route("[controller]")]
     [ApiController]
     public class SortingController : Controller
@@ -19,42 +20,15 @@ namespace dm_backend.Models{
         async public Task<IActionResult> Sorting()
         {
             await Db.Connection.OpenAsync();
+            string status = HttpContext.Request.Query["status"];
             string sort = HttpContext.Request.Query["sort"];
-            string find = (string)HttpContext.Request.Query["find"] ?? String.Empty;
-            string sortType = HttpContext.Request.Query["sort-type"];
-            string page = (string)HttpContext.Request.Query["page"] ?? "0";
-            string size = (string)HttpContext.Request.Query["pagesize"] ?? "9";
-            if (sortType == null)
-                sortType = "";
-            if (sort == null)
-                sort = "";
-            // if (find == null)
-            //     find = "";
-            // if (page == null)
-            //     page = "0";
-            // if (size == null)
-            //     size = "9";
-            Console.WriteLine("Page : " + page + " -- size : " + size);
-            var result = new SortRequestHistoryData(Db);
-
-            return new OkObjectResult(await result.GetSortData(find, sort, sortType, int.Parse(page), int.Parse(size)));
-
-        }
-
-        [HttpGet("/{status}")]
-        async public Task<IActionResult> getStatus( string status )
-        {
-            if(status == null || status == "")
-            {
-                status = "";
-            }
-
-            await Db.Connection.OpenAsync();
-            string sort = HttpContext.Request.Query["sort"];
-            string find = HttpContext.Request.Query["find"];
+            string find = HttpContext.Request.Query["user-name"];
+            string deviceserialNumber = HttpContext.Request.Query["serial-number"];
             string sortType = HttpContext.Request.Query["sort-type"];
             string page = (HttpContext.Request.Query["page"]);
-            string size = (HttpContext.Request.Query["pagesize"]);
+            string limit = (HttpContext.Request.Query["page-size"]);
+            if (deviceserialNumber == null)
+                deviceserialNumber = "";
             if (sortType == null)
                 sortType = "";
             if (sort == null)
@@ -62,14 +36,14 @@ namespace dm_backend.Models{
             if (find == null)
                 find = "";
             if (page == null)
-                page = "0";
-            if (size == null)
-                size = "9";
+                page = "";
+            if (limit == null)
+                limit = "";
+            if (status == null)
+                status = "";
             var result = new SortRequestHistoryData(Db);
-
-            return new OkObjectResult(await result.GetSortData(find, sort, sortType, int.Parse(page), int.Parse(size)));
+            return new OkObjectResult(await result.GetSortData(find, deviceserialNumber, status, sort, sortType, page, (limit)));
 
         }
-
     }
 }

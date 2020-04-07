@@ -32,7 +32,7 @@ namespace dm_backend.Controllers
         {
             Db.Connection.Open();
             var query = new devices(Db);
-            var result = query.getdevicebyid(Int32.Parse( device_id));
+            var result = query.getdevicebyid(Int32.Parse(device_id));
             Db.Connection.Close();
             return Ok(result);
         }
@@ -75,6 +75,9 @@ namespace dm_backend.Controllers
                     break;
                 case "serial_number":
                     SortColumn = "serial_number*1";
+                    break;
+                case "status":
+                    SortColumn = "s.status_name";
                     break;
                 default:
                     break;
@@ -147,6 +150,19 @@ namespace dm_backend.Controllers
             return new OkObjectResult(result);
         }
 
+        [HttpGet]
+        [Route("spec/{specification_id}")]
+        public IActionResult GetSpec(int specification_id)
+        {
+            Db.Connection.Open();
+            var query = new Specification(Db);
+            var result = query.getspecbyid(specification_id);
+            Db.Connection.Close();
+            return Ok(result);
+        }
+
+
+
 
         [HttpPost]
         [Route("addspecification")]
@@ -179,6 +195,14 @@ namespace dm_backend.Controllers
             var result = await query.getalltypes();
             return new OkObjectResult(result);
         }
+        [HttpGet("model")]
+        public async Task<IActionResult> GetAllmodel()
+        {
+            await Db.Connection.OpenAsync();
+            var query = new Model(Db);
+            var result = await query.getallmodel();
+            return new OkObjectResult(result);
+        }
         [HttpGet("brand")]
         public async Task<IActionResult> GetAllbrands()
         {
@@ -207,6 +231,17 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok();
         }
+        [HttpPost]
+        [Route("model")]
+        async public Task<IActionResult> Postmodel([FromBody]Model body)
+        {
+            Db.Connection.Open();
+            var que = new logicaddmodel(Db);
+            await que.addmodel(body);
+            Db.Connection.Close();
+            return Ok();
+        }
+
 
 
         [HttpGet]

@@ -9,63 +9,122 @@ using dm_backend;
 
 namespace dm_backend.Models
 {
-    public class type
+    public class Model
     {
-        public int device_type_id { get; set; }
-        public string device_type { get; set; }
+        public int device_model_id { get; set; }
+        public string model { get; set; }
         internal AppDb Db { get; set; }
-        public type()
+        public Model()
         {
         }
-        internal type(AppDb db)
+        internal Model(AppDb db)
         {
             Db = db;
         }
-        public async Task<List<type>> getalltypes()
+
+        public async Task<List<Model>> getallmodel()
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"select * from device_type;";
-            return await Readtype(await cmd.ExecuteReaderAsync());
+            cmd.CommandText = @"select * from device_model;";
+            return await Readmodel(await cmd.ExecuteReaderAsync());
         }
-        async public Task<List<type>> Readtype(DbDataReader reader)
+        async public Task<List<Model>> Readmodel(DbDataReader reader)
         {
-            var types = new List<type>();
+            var models = new List<Model>();
             using (reader)
             {
                 while (await reader.ReadAsync())
                 {
-                    var type1 = new type()
+                    var model1 = new Model()
                     {
-                        device_type_id = reader.GetInt32(0),
-                        device_type = reader.GetString(1),
+                        device_model_id = reader.GetInt32(0),
+                        model = reader.GetString(1),
                     };
-                    types.Add(type1);
+                    models.Add(model1);
                 }
             }
-            return types;
+            return models;
         }
     }
-    public class logicaddbrand
-    {
-        public AppDb Db { get; }
-        public logicaddbrand(AppDb db)
+        public class logicaddmodel
         {
-            Db = db;
+            public AppDb Db { get; }
+            public logicaddmodel(AppDb db)
+            {
+                Db = db;
+            }
+            async public Task addmodel(Model m)
+            {
+                using var cmd = Db.Connection.CreateCommand();
+                cmd.CommandText = @"insert into device_model (model) values (@model);";
+                
+                BindDevice(cmd, m);
+                await cmd.ExecuteNonQueryAsync();
+            }
+            private void BindDevice(MySqlCommand cmd, Model m)
+            {
+                cmd.Parameters.Add(new MySqlParameter("device_model_id", m.device_model_id));
+                cmd.Parameters.Add(new MySqlParameter("model", m.model));
+            }
         }
-        async public Task addbrand(brand b)
+        public class type
         {
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = " addbrand";
-            cmd.CommandType = CommandType.StoredProcedure;
-            BindDevice(cmd, b);
-            await cmd.ExecuteNonQueryAsync();
+            public int device_type_id { get; set; }
+            public string device_type { get; set; }
+            internal AppDb Db { get; set; }
+            public type()
+            {
+            }
+            internal type(AppDb db)
+            {
+                Db = db;
+            }
+            public async Task<List<type>> getalltypes()
+            {
+                using var cmd = Db.Connection.CreateCommand();
+                cmd.CommandText = @"select * from device_type;";
+                return await Readtype(await cmd.ExecuteReaderAsync());
+            }
+            async public Task<List<type>> Readtype(DbDataReader reader)
+            {
+                var types = new List<type>();
+                using (reader)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        var type1 = new type()
+                        {
+                            device_type_id = reader.GetInt32(0),
+                            device_type = reader.GetString(1),
+                        };
+                        types.Add(type1);
+                    }
+                }
+                return types;
+            }
+
         }
-        private void BindDevice(MySqlCommand cmd, brand b)
+        public class logicaddbrand
         {
-            // cmd.Parameters.Add(new MySqlParameter("device_brand_id", b.device_brand_id));
-            cmd.Parameters.Add(new MySqlParameter("brand", b.device_brand));
+            public AppDb Db { get; }
+            public logicaddbrand(AppDb db)
+            {
+                Db = db;
+            }
+            async public Task addbrand(brand b)
+            {
+                using var cmd = Db.Connection.CreateCommand();
+                cmd.CommandText = " addbrand";
+                cmd.CommandType = CommandType.StoredProcedure;
+                BindDevice(cmd, b);
+                await cmd.ExecuteNonQueryAsync();
+            }
+            private void BindDevice(MySqlCommand cmd, brand b)
+            {
+                // cmd.Parameters.Add(new MySqlParameter("device_brand_id", b.device_brand_id));
+                cmd.Parameters.Add(new MySqlParameter("brand", b.device_brand));
+            }
         }
+
+
     }
-
-
-}

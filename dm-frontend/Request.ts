@@ -1,6 +1,7 @@
 import { BASEURL } from "./globals";
 let adminId = 16;
 let sortDirection = 1;
+
 let globalUrl = BASEURL + "/request/";
 
 function getPendingRequests(url: string) {
