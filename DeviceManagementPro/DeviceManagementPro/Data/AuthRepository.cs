@@ -13,11 +13,6 @@ namespace DeviceManagementPro.Data
             _context = context;
         }
 
-
-
-
-
-
         public async Task<UserAuth> Register(UserAuth user, string password)
         {
             byte[] passwordHash, passwordSalt;
@@ -42,10 +37,10 @@ namespace DeviceManagementPro.Data
             passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
 
-        public async Task<UserAuth> Login(string name, string password)
+        public async Task<UserAuth> Login(string email, string password)
         {
 
-            var user = await _context.UserAuth.FirstOrDefaultAsync(x => x.Name == name);
+            var user = await _context.UserAuth.FirstOrDefaultAsync(x => x.Email == email);
 
             if (user == null)
             {
@@ -81,9 +76,9 @@ namespace DeviceManagementPro.Data
             return true;
         }
 
-        public async Task<bool> UserExists(string name)
+        public async Task<bool> UserExists(string email)
         {
-            if (await _context.UserAuth.AnyAsync(x => x.Name == name))
+            if (await _context.User.AnyAsync(x => x.Email == email))
                 return true;
             return false;
         }

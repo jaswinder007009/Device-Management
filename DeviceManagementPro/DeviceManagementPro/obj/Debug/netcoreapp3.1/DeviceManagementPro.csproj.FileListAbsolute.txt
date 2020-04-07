@@ -73,9 +73,6 @@ C:\Users\MESSI\source\repos\DeviceManagementPro\DeviceManagementPro\bin\Debug\ne
 C:\Users\MESSI\source\repos\DeviceManagementPro\DeviceManagementPro\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
 C:\Users\MESSI\source\repos\DeviceManagementPro\DeviceManagementPro\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\MESSI\source\repos\DeviceManagementPro\DeviceManagementPro\bin\Debug\netcoreapp3.1\Microsoft.AspNet.Identity.Core.dll
-C:\Users\MESSI\source\repos\DeviceManagementPro\devicemanagementpro\obj\Debug\netcoreapp3.1\DeviceManagementPro.csproj.CoreCompileInputs.cache
-C:\Users\MESSI\source\repos\DeviceManagementPro\devicemanagementpro\obj\Debug\netcoreapp3.1\DeviceManagementPro.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\MESSI\source\repos\DeviceManagementPro\devicemanagementpro\obj\Debug\netcoreapp3.1\DeviceManagementPro.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\MESSI\source\repos\DeviceManagementPro\DeviceManagementPro\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Configuration.dll
 C:\Users\MESSI\source\repos\DeviceManagementPro\DeviceManagementPro\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Console.dll
 C:\Users\MESSI\source\repos\DeviceManagementPro\DeviceManagementPro\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.ConfigurationExtensions.dll
@@ -94,3 +91,9 @@ C:\Users\MESSI\source\repos\DeviceManagementPro\devicemanagementpro\obj\Debug\ne
 C:\Users\MESSI\source\repos\DeviceManagementPro\devicemanagementpro\obj\Debug\netcoreapp3.1\DeviceManagementPro.dll
 C:\Users\MESSI\source\repos\DeviceManagementPro\devicemanagementpro\obj\Debug\netcoreapp3.1\DeviceManagementPro.pdb
 C:\Users\MESSI\source\repos\DeviceManagementPro\devicemanagementpro\obj\Debug\netcoreapp3.1\DeviceManagementPro.genruntimeconfig.cache
+C:\Users\MESSI\source\repos\DeviceManagementPro\devicemanagementpro\obj\Debug\netcoreapp3.1\DeviceManagementPro.csproj.CoreCompileInputs.cache
+C:\Users\MESSI\source\repos\DeviceManagementPro\devicemanagementpro\obj\Debug\netcoreapp3.1\DeviceManagementPro.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\MESSI\source\repos\DeviceManagementPro\devicemanagementpro\obj\Debug\netcoreapp3.1\DeviceManagementPro.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\MESSI\source\repos\DeviceManagementPro\devicemanagementpro\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\MESSI\source\repos\DeviceManagementPro\devicemanagementpro\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Users\MESSI\source\repos\DeviceManagementPro\devicemanagementpro\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll

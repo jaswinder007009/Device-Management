@@ -6,6 +6,9 @@ using Microsoft.Extensions.Hosting;
 using DeviceManagementPro.Models;
 using DeviceManagementPro.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace DeviceManagementPro
 {
@@ -26,9 +29,21 @@ namespace DeviceManagementPro
             services.AddDbContext<SagardbContext>(x => x.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddControllersWithViews();
+
             
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey=true,
+                    IssuerSigningKey=new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSetting:Token").Value)),
+                    ValidateIssuer=false,
+                    ValidateAudience=false
+                };
 
+            });
 
         }
 
@@ -45,13 +60,16 @@ namespace DeviceManagementPro
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
+             app.UseHttpsRedirection();
+             app.UseStaticFiles();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+           
+           
+           
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

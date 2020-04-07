@@ -1080,8 +1080,8 @@ namespace DeviceManagementPro.Models
                     .HasColumnName("hashpassword")
                     .HasMaxLength(500);
 
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
+                entity.Property(e => e.Email)
+                    .HasColumnName("email")
                     .HasMaxLength(45);
 
                 entity.Property(e => e.Saltpassword)
