@@ -16,6 +16,7 @@ namespace dm_backend.Models
 
 
         public AppDb Db { get; }
+        internal AppDb abc { get; }
 
         public BlogPostQuery(AppDb db)
         {
