@@ -107,11 +107,7 @@ export class GeneratePaging {}
 //         else if((selectPage - mid)<1  && (selectPage - mid)<=totalPages )
 //         {
 //             start = 1;
-//             end = this.totalResultCount ;
 //         }
-//         else{
-//             start = 1;
-//             end = totalPages;
 //         }
 //        this.addPageElement(start , end);
 

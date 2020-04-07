@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using MySql.Data.MySqlClient;
 
-namespace UserManagement
+namespace dm_backend
 {
     public class AppDb : IDisposable
     {

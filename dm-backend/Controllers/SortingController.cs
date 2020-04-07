@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RequestAdmin.Logics;
+using dm_backend.Logics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UserManagement;
 
-namespace RequestAdmin.Controllers
-{
+namespace dm_backend.Models{
     [Route("[controller]")]
     [ApiController]
     public class SortingController : Controller
@@ -21,7 +19,7 @@ namespace RequestAdmin.Controllers
         async public Task<IActionResult> Sorting()
         {
             await Db.Connection.OpenAsync();
-            string status= HttpContext.Request.Query["status"];
+           string status= HttpContext.Request.Query["status"];
             string sort = HttpContext.Request.Query["sort"];
             string find = HttpContext.Request.Query["user-name"];
             string deviceserialNumber= HttpContext.Request.Query["serial-number"];
@@ -44,8 +42,6 @@ namespace RequestAdmin.Controllers
                 status = "";
             var result = new SortRequestHistoryData(Db);
             return new OkObjectResult(await result.GetSortData(find, deviceserialNumber , status ,  sort, sortType, page , (limit)));
-
-        }
 
     }
 }

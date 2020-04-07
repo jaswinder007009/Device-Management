@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using UserManagement;
-using RequestAdmin.Models;
+using dm_backend.Models;
 using System.Data.Common;
 using System;
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace RequestAdmin.Logics
-{
+namespace dm_backend.Models{
     public class TotalResultCount
     {
         public AppDb Db { get; }

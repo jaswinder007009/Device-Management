@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RequestAdmin.Logics
-{
+namespace dm_backend.Models{
     public class Paging
     {
         public int PageValue(int page , int size)

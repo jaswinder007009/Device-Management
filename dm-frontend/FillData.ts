@@ -5,7 +5,7 @@ import { HtmlElementsData } from "./HtmlElementsId";
 export class PopulateData {
     historyInformation: RequestModel
     domElement : HtmlElementsData
-    fillData(data: JSON) {
+    fillData(data: any) {
         this.clearData();
         this.domElement = new HtmlElementsData()
         //document.getElementById("pagination").setAttribute(this.domElement.resultcount, data["resultCount"]);

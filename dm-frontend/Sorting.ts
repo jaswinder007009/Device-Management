@@ -1,7 +1,6 @@
 import { HitApi } from "./HitApi";
 import { HtmlElementsData } from "./HtmlElementsId";
-import { localHostUrl } from "./LocalHost";
-import { findResult } from "./search";
+import { BASEURL } from "./globals";
 
 
 export class Sort 
@@ -15,8 +14,8 @@ export class Sort
     {
         
         let  sortType = this.checkSortType(attributeId);
-      //  let userName = (document.getElementById(new HtmlElementsData().search)  as HTMLInputElement).getAttribute(this.elements.userName);
-        this.setSortingApiCall(attributeId , sortType);
+        let find = (document.getElementById( this.elements.search) as HTMLInputElement).value;
+        this.setSortingApiCall(attributeId , find  , sortType);
         
     }
     checkSortType(value : string) : string
@@ -37,9 +36,9 @@ export class Sort
          
     }
 
-    setSortingApiCall(sortAttribute : string  , sortType : string)
+    setSortingApiCall(sortAttribute : string , find  : string , sortType : string)
     {
-        const uri= new findResult().searchUser() + "&sort="+sortAttribute+"&sort-type="+sortType;
+        const uri= BASEURL+"/sorting?find="+encodeURI(find)+"&sort="+sortAttribute+"&sort-type="+sortType;
         
         var populateSorting = new HitApi();
         
@@ -47,5 +46,5 @@ export class Sort
     }
 
 
-
+    
 }

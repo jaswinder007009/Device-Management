@@ -4,10 +4,11 @@ import { page } from "./paging";
 export class HitApi
 {
     RequestDeviceData : any
-    public async HitGetApi(uri)
+    public async HitGetApi(uri : string)
     {
+        var res  : any
         try{
-        var res =  await fetch(uri); 
+        res =  await fetch(uri); 
 
         }
         catch(e)
