@@ -1,21 +1,17 @@
 import { RequestModel } from "./RequetsDatamodel";
 import { GeneratePaging } from "./pagination";
-import { HtmlElementsData } from "./HtmlElementsId";
 
 export class PopulateData {
     historyInformation: RequestModel
-    domElement : HtmlElementsData
-    fillData(data: any) {
+    fillData(data: JSON) {
         this.clearData();
-        this.domElement = new HtmlElementsData()
-        //document.getElementById("pagination").setAttribute(this.domElement.resultcount, data["resultCount"]);
         // var pages = new GeneratePaging();
         // pages.generatePage(data["resultCount"]);
-        console.log(data["resultCount"]);
+        console.log(data);
 
-        var value: any
+        var value: any;
         this.historyInformation = new RequestModel();
-        for (value of data["results"]) {
+        for (value of data) {
             this.historyInformation.email = value["userMail"];
             console.log(this.historyInformation.email);
             this.historyInformation.deviceId = value["deviceId"];
@@ -32,7 +28,7 @@ export class PopulateData {
             this.historyInformation.assignDays = value["assignDays"] == -1 ? 0 : value["assignDays"];
             this.historyInformation.returnDate = value["returnDate"];
             this.genearteFields(this.historyInformation);
-           
+
         }
 
 
@@ -40,7 +36,7 @@ export class PopulateData {
     private bindSpecs(value: any) {
         this.historyInformation.specifications = (value["specs"]["ram"] == ""?"": "RAM = "+ value["specs"]["ram"] +",") + 
         (value["specs"]["storage"]== "" ? "" : "Storage =  " + value["specs"]["storage"] +"," ) +
-        (value["specs"]["screenSize"] =="" ? "" : " Screen-Size = " + value["specs"]["screenSize"] +",") +
+        (value["specs"]["screen_size"] =="" ? "" : " Screen-Size = " + value["specs"]["screen_size"] +",") +
          ( value["specs"]["connectivity"] == "" ? "" : " connectivity =  " + value["specs"]["connectivity"] );
     }
 
@@ -58,7 +54,7 @@ export class PopulateData {
         <td>${historyInformation.serialNumber} </td>
         <td>${historyInformation.deviceType}</td>
         <td class="requestedUserData"> ${historyInformation.deviceName}
-        <span class="tooltipData">Device Specs ${historyInformation.specifications} </span>
+        <span class="tooltipData">Device Specs ${historyInformation.specifications} </spam>
          </td>
         
         <td class="requestedUserData">${historyInformation.requestStatus} 

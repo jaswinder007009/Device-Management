@@ -15,7 +15,30 @@ namespace dm_backend.Models{
         {
             Db = db;
         }
-               
+
+     /*   async public Task<List<RequestDeviceHistory>> deviceRequest(int low, int high)
+        {
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "get_all_device_history";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@low",
+                DbType = DbType.String,
+                Value = low,
+            });
+            cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@high",
+                DbType = DbType.String,
+                Value = high,
+            });
+            return await bindHistoryData(await cmd.ExecuteReaderAsync());
+        }*/
+ 
+
+
+       
         async public Task<List<RequestDeviceHistory>> BindHistoryData(DbDataReader reader)
         {
             var posts = new List<RequestDeviceHistory>();   // create an array of blogpost
