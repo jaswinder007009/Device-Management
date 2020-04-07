@@ -1,6 +1,6 @@
 let adminId = 16;
 let sortDirection = 1;
-let globalUrl = "http://localhost:5000/api/request/";
+let globalUrl = "http://localhost:5000/request/";
 
 function getPendingRequests(url: string) {
 
