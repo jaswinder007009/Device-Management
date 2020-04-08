@@ -7,9 +7,9 @@ using MySql.Data.MySqlClient;
 using dm_backend;
 using System.Data.Common;
 using System.Data;
+using DeviceManagement.Models;
 
-namespace dm_backend.Models
-{
+namespace dm_backend.Model {
     public class BlogPostQuery
     {
 

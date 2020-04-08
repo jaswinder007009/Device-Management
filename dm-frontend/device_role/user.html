@@ -7,24 +7,34 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script data-main="user.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
    
     </head>
     <body style="background-color: moccasin;">
         <button id="output" class="btn btn-primary" onclick="ab.getAllPermission()">USER ROLE</button>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered" style="width:50%">
+            <thead>
+                <tr style="background-color: #CFB53B;">
+                  <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">User Id</td>
+                  <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">First Name</td>
+                  <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">Last Role</td>
+                  <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">See Role</td>
+                  <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">Assign Role</td>
+                     </tr>
+              </thead>
             <tbody id="get_user_role"></tbody>
         </table>
-        <table class="table table-bordered">
+        <table class="table table-bordered" style="width:50%">
         <tbody id="getUserinfo" onclick="u_role.getAllUserRole()"></tbody>
 
 
         </table>
-        <table class="table table-bordered">
+        <table class="table table-bordered" style="width:50%">
         <tbody id="assignrole"></tbody>
 
     </table>
         <div id="showassign"></div>
     </body>
-    <script src="user.js"></script>
+    
 </html>

@@ -1,4 +1,3 @@
-import { BASEURL } from "../globals";
 // class populateData1
 // {
 //     getheaderData(value,data)
@@ -33,10 +32,10 @@ class user{
   
 
 
-    async getAllPermission() {
+    async getAllUser() {
         
 
-        this.url = BASEURL + "/api/device/user";
+        this.url = "https://localhost:5001/api/device/user";
         let data = await this.getApiCall(this.url);
         this.data = await data;
         console.log(data);
@@ -72,24 +71,24 @@ class user{
 
 
             <tr style="background-color: #CFB53B;">
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <strong id="id${loop}">User ID := ${this.data[loop]["id"]}</strong>
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
+            <strong id="id${loop}"> ${this.data[loop]["userId"]}</strong>
             </td>
 
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <strong id="firstName${loop}">First Name := ${this.data[loop]["firstName"]}</strong>
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
+            <strong id="firstName${loop}"> ${this.data[loop]["firstName"]}</strong>
             </td>
            
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <strong id="lastname${loop}"  >LastName${this.data[loop]["lastName"]}</strong>
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
+            <strong id="lastname${loop}"  >${this.data[loop]["lastName"]}</strong>
             </td>
 
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <button id="id${loop}" onclick="u_role.getAllUserRole(${this.data[loop]["id"]})" >SEE ROLES</button>
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">
+            <button id="id${loop}" onclick="u_role.getAllUserRole(${this.data[loop]["userId"]})" >SEE ROLES</button>
             </td>
 
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <button id="id${loop}" onclick="ass_role.assignRole(${this.data[loop]["id"]})" >ASSIGN ROLES</button>
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">
+            <button id="id${loop}" onclick="ass_role.assignRole(${this.data[loop]["userId"]})" >ASSIGN ROLES</button>
             </td>
             
             
@@ -114,7 +113,7 @@ class user{
 
 
 }
-var ab=new user();
+var u=new user();
 
 
 
@@ -141,7 +140,7 @@ class user_role{
         let x=id
         
 
-        this.url = BASEURL + "/api/device/get_role_with_user/"+x;
+        this.url = "https://localhost:5001/api/device/get_role_with_user/"+x;
         let data = await this.getApiRoleCall(this.url);
         this.data = await data;
         console.log(data);
@@ -175,6 +174,10 @@ class user_role{
        this.getdata.innerHTML = "";
         for (loop = 0; loop < this.data.length; loop++) {
             this.getdata.innerHTML += `
+
+            
+
+
 
 
             <tr style="background-color: #FADA5E;">
@@ -213,7 +216,7 @@ class user_role{
     async DeleteRoleByUser(id:number,id1:number) {
         let x = id;
         let y=id1;
-        let uri = BASEURL + "/api/device/get_role_with_user/" + x+"/"+y;
+        let uri = "https://localhost:5001/api/device/get_role_with_user/" + x+"/"+y;
         console.log(uri);
         let response = await fetch(uri,
             {
@@ -273,7 +276,7 @@ class assign_role{
         console.log(x);
         
 
-        this.url = BASEURL + "/api/device/assign_role_to_user/"+x;
+        this.url = "https://localhost:5001/api/device/assign_role_to_user/"+x;
         let data = await this.getApiRoleAssign(this.url);
         this.data = await data;
         console.log(data);
@@ -327,7 +330,7 @@ class assign_role{
             </td>
             
             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <input type="checkbox" value="${this.data[loop]["id"]}">${this.data[loop]["roleName"]}
+            <input type="checkbox"  onclick="check1.updateRolePermission(${x},${this.data[loop]["id"]})" value="${this.data[loop]["id"]}">${this.data[loop]["roleName"]}
             </td>
             
             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
@@ -393,7 +396,7 @@ class checkbox1{
     postData(id:number)
         {
             console.log("lll");
-        let url=BASEURL + "/api/device/role_user/insert";
+        let url="https://localhost:5001/api/device/role_user/insert";
               fetch( url , {
                 method : "POST" , 
                
@@ -421,3 +424,5 @@ var check1=new checkbox1();
 
 
 
+const  temp2=new user();
+   temp2.getAllUser();

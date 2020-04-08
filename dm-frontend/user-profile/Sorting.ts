@@ -1,4 +1,4 @@
-import { GetUserApi } from "./getUserApi";
+import { GetUserApi } from "../getApi";
 import { BASEURL } from "../globals";
 export class Sort 
 {    

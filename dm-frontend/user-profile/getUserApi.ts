@@ -29,17 +29,9 @@ export class GetUserApi
 			})
 			.catch(err => console.log(err));
 	}
-	getUserById(userId: number) {
-		return fetch(BASEURL + "/api/user/" + userId)
-			.then(res => res.json())
-			.then(data => {
-				return data;
-			})
-			.catch(err => console.error(err));
-	}
 	////API TO MAKE ACTIVE INACTIVE
-	userInactive(userId: number,data : string) {
-		return fetch(BASEURL + "/api/user/" + userId + "/" + data + "")
+	userInactive(userId: number,jass : string) {
+		return fetch(BASEURL + "/api/user/" + userId + "/" + jass + "")
 			.then(res =>
 				console.log(res.status))
 			
@@ -51,11 +43,4 @@ export class GetUserApi
 			method: "DELETE"
 		});
 	}
-}
-function populateDropdown(selectElement: HTMLSelectElement, data) {
-    let htmlString = '';
-    for (let dataPair of data) {
-        htmlString += '<option data-id="' + dataPair.id + '" value="' + dataPair.name + '">' + dataPair.name + '</option>';
-    }
-    selectElement.innerHTML = htmlString;
 }

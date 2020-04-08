@@ -7,7 +7,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <style>
+    
+<style>
       #popup{
       display:none;
       margin-top:60px;
@@ -78,13 +79,26 @@
 
  
 
-<div class="container" style="margin-top:60px; margin-left:20px;">
+<div class="container" style="margin-top:60px;">
 <button class="btn btn-success" onclick="openForm()">ADD ROLE</button>
-<button type="submit"  class="btn btn-warning"  id="output" onclick="get_role.getAllRoles();" >ROLES</button>
+<!-- <button type="submit"  class="btn btn-warning"  id="output" onclick="get_role.getAllRoles();" >ROLES</button> -->
+<a href="table1.html"><button class="btn btn-warning">Permission</button></a>
+<a href="user.html"><button class="btn btn-warning">Assign Role to user</button></a>
+
 </div>
+<div id="output"></div>
 
-
-<table class="table table-bordered" style="margin-left:30px;margin-right:30px;">
+<table class="table table-bordered" style="width:70%" >
+  <thead>
+    <tr style="background-color: #74B72E;">
+      <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">RoleId</td>
+      <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">Role Name</td>
+      <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">Delete Role</td>
+      <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">Update Role</td>
+      <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">Role Permission</td>
+      <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">Assign Permission</td>
+    </tr>
+  </thead>
   <tbody id="get_role_info">
     
   </tbody>
@@ -93,11 +107,11 @@
 
 
 
-<table class="table table-bordered" style="margin-left:30px;margin-right:30px;">
+<table class="table table-bordered" style="width:70%" >
 <tbody id="getperm"  onclick="r_permission.getAllRolePermission()"></tbody>
 
 </table>
-<table class="table table-bordered" style="margin-left:30px;margin-right:30px;">
+<table class="table table-bordered" style="width:70%" >
 <tbody id="assign_perm" ></tbody>
 </table>
 
@@ -113,7 +127,11 @@
 
 
 </body>
-<script src="role_permission.js"></script>
+
+
+
+<!-- //<script src="role_permission.js" ></script> -->
+
 
 <script>
  function openForm() {
@@ -130,5 +148,6 @@
 //   }  
 
 </script>
+<script data-main="role_permission.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
 </html>
 

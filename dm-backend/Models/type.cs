@@ -9,36 +9,36 @@ using dm_backend;
 
 namespace dm_backend.Models
 {
-    public class Model
+    public class model
     {
         public int device_model_id { get; set; }
-        public string model { get; set; }
+        public string models { get; set; }
         internal AppDb Db { get; set; }
-        public Model()
+        public model()
         {
         }
-        internal Model(AppDb db)
+        internal model(AppDb db)
         {
             Db = db;
         }
 
-        public async Task<List<Model>> getallmodel()
+        public async Task<List<model>> getallmodel()
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"select * from device_model;";
             return await Readmodel(await cmd.ExecuteReaderAsync());
         }
-        async public Task<List<Model>> Readmodel(DbDataReader reader)
+        async public Task<List<model>> Readmodel(DbDataReader reader)
         {
-            var models = new List<Model>();
+            var models = new List<model>();
             using (reader)
             {
                 while (await reader.ReadAsync())
                 {
-                    var model1 = new Model()
+                    var model1 = new model()
                     {
                         device_model_id = reader.GetInt32(0),
-                        model = reader.GetString(1),
+                        models = reader.GetString(1),
                     };
                     models.Add(model1);
                 }
@@ -53,7 +53,7 @@ namespace dm_backend.Models
             {
                 Db = db;
             }
-            async public Task addmodel(Model m)
+            async public Task addmodel(model m)
             {
                 using var cmd = Db.Connection.CreateCommand();
                 cmd.CommandText = @"insert into device_model (model) values (@model);";
@@ -61,10 +61,10 @@ namespace dm_backend.Models
                 BindDevice(cmd, m);
                 await cmd.ExecuteNonQueryAsync();
             }
-            private void BindDevice(MySqlCommand cmd, Model m)
+            private void BindDevice(MySqlCommand cmd, model m)
             {
                 cmd.Parameters.Add(new MySqlParameter("device_model_id", m.device_model_id));
-                cmd.Parameters.Add(new MySqlParameter("model", m.model));
+                cmd.Parameters.Add(new MySqlParameter("model", m.models));
             }
         }
         public class type

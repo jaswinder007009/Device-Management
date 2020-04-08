@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using dm_backend.Models;
+using dm_backend.Model;
+using DeviceManagement.Models;
 
 namespace dm_backend.Controllers
 {
@@ -290,21 +292,17 @@ namespace dm_backend.Controllers
             return new OkObjectResult(result);
         }
 
-        [HttpPut("permission/{id}")]
-        public async Task<IActionResult> PutPermission(int id, [FromBody]UpdatePermission body)
-        {
-            await Db.Connection.OpenAsync();
-            var query = new BlogPostQuery(Db);
-            var result = await query.FindOnePermission(id);
-            if (result is null)
-                return new NotFoundResult();
-            result.permission_name = body.permission_name;
-            
-            
-            await query.UpdatePermission1(body);
-            return new OkObjectResult(result);
-        }
-
+       [HttpPut]
+[Route("permission/{id}")]
+async public Task<IActionResult> Putpermission(int id, [FromBody]UpdatePermission body)
+{
+Db.Connection.Open();
+var query = new updatepermission(Db);
+body.id = id;
+await query.updatePermission(body);
+Db.Connection.Close();
+return Ok();
+}
         public AppDb Db { get; }
     }
 }

@@ -1,9 +1,7 @@
-import { BASEURL } from "../globals";
 class role_permission{
      
     id:Number
-    firstName:string
-    lastName:string
+   
     url:any
 
     bodyData: any
@@ -13,10 +11,17 @@ class role_permission{
   
     headerTag = (document.getElementById("output") as HTMLInputElement);
     headerTag1 = (document.getElementById("get_role_info") as HTMLInputElement);
+    
+ 
+  
+
+  
+
 
     async getAllRoles() {
         
-        this.url = BASEURL + "/api/device/role";
+
+        this.url = "https://localhost:5001/api/device/role";
         let data = await this.getApiRoleCall(this.url);
         this.data = await data;
         console.log(data);
@@ -40,7 +45,7 @@ class role_permission{
 
     async DeleteRoleById(id1:number) {
     let x=id1;
-        let uri = BASEURL + "/api/device/role/" + x;
+        let uri = "https://localhost:5001/api/device/role/" + x;
         console.log(uri);
         let response = await fetch(uri,
             {
@@ -68,21 +73,21 @@ class role_permission{
            
 
             <tr style="background-color: #74B72E;">
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <strong id="id${loop}">Role ID := ${this.data[loop]["id"]}</strong>
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
+            <strong id="id${loop}">${this.data[loop]["id"]}</strong>
             </td>
-
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <strong id="roleName${loop}">Role Name := ${this.data[loop]["roleName"]}</strong>
-            </td>
-
 
             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
+            <strong id="roleName${loop}"> ${this.data[loop]["roleName"]}</strong>
+            </td>
+
+
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">
             <button class="btn btn-info"  onclick="up. update_data(${this.data[loop]["id"]})"><span class="glyphicon glyphicon-pencil">UPDATE</span></button>
             </td>
 
 
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">
             <button class="btn btn-danger" id="roleName${loop}" onclick="get_role.DeleteRoleById(${this.data[loop]["id"]})"><span class="glyphicon glyphicon-trash">DELETE</span></button>
             </td>
 
@@ -90,11 +95,11 @@ class role_permission{
 
            
             
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
             <button id="roleName${loop}" onclick="r_permission.getAllRolePermission(${this.data[loop]["id"]})">VIEW PERMISSION</button>
             </td>
 
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
             <button id="roleName${loop}" onclick="permission_role.assignPermission(${this.data[loop]["id"]})" >ASSIGN PERMISSION</button>
             </td>
            
@@ -139,10 +144,10 @@ class update1{
     get_role.headerTag1.innerHTML="";
         console.log("hello");
         this.headerTag3.innerHTML+=`
-    s
+      
         <input type="text" id="RoleName11"  name="RoleName11" value=""  style="margin-top:300px; style="margin-left:100px; ">
         <button   class="btn btn-danger"  onclick="role_update.updateRole(${x})">SUBMIT</button>
-        
+       
         `
        
     }
@@ -160,8 +165,7 @@ var up =new update1();
 class assign_permission{
      
     id:Number
-    firstName:string
-    lastName:string
+   
     url:any
 
     bodyData: any
@@ -182,7 +186,7 @@ class assign_permission{
         console.log(x);
         
 
-        this.url = BASEURL + "/api/device/get_permission_without_role/"+x;
+        this.url = "https://localhost:5001/api/device/get_permission_without_role/"+x;
         let data = await this.getApiPermissionAssign(this.url);
         this.data = await data;
         console.log(data);
@@ -286,8 +290,7 @@ var permission_role=new assign_permission();
 class role_permission1{
      
     id:Number
-    firstName:string
-    lastName:string
+  
     url:any
 
     bodyData: any
@@ -304,9 +307,9 @@ class role_permission1{
     async getAllRolePermission(id:number) {
         
         var x=id;
-        var y=name;
+        
 
-        this.url = BASEURL + "/api/device/get_permission_with_role/"+x;
+        this.url = "https://localhost:5001/api/device/get_permission_with_role/"+x;
         let data = await this.getApiPermissionCall(this.url);
         this.data = await data;
         console.log(data);
@@ -337,6 +340,7 @@ class role_permission1{
 
     RolePermInfo(id:number) {
         let x=id;
+        
        
         let loop = 0;
        // let populate11=new populateData1();
@@ -384,7 +388,7 @@ class role_permission1{
     async DeleteRoleByPermission(id1:number,id:number) {
         let x = id1;
         let y=id;
-        let uri = BASEURL + "/api/device/get_permission_with_role/" + x+"/"+y;
+        let uri = "https://localhost:5001/api/device/get_permission_with_role/" + x+"/"+y;
         console.log(uri);
         let response = await fetch(uri,
             {
@@ -451,7 +455,7 @@ class checkbox{
     postData(id:number,id1:number)
         {
             console.log("lll");
-        let url=BASEURL + "/api/device/role_permission/insert";
+        let url="https://localhost:5001/api/device/role_permission/insert";
               fetch( url , {
                 method : "POST" , 
                
@@ -505,7 +509,7 @@ class insert_Role{
     postData()
         {
             console.log("lll");
-        let url=BASEURL + "/api/device/role/insert";
+        let url="https://localhost:5001/api/device/role/insert";
               fetch( url , {
                 method : "POST" , 
                
@@ -559,7 +563,7 @@ class update_Role{
     postData(x:number)
         {
             console.log("lll");
-        let url=BASEURL + "/api/device/role/"+x;
+        let url="https://localhost:5001/api/device/role/"+x;
               fetch( url , {
                 method : "PUT" , 
                
@@ -575,10 +579,19 @@ class update_Role{
                   
                 }
               });
-             
-    
+
+     up.headerTag3.innerHTML="";
+    get_role.getAllRoles();
         }
     }
-var role_update=new update_Role();
+    var role_update=new update_Role();
 
 ///////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+ 
+
+
+ const  temp=new role_permission();
+    temp.getAllRoles();

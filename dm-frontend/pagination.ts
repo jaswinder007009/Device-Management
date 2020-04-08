@@ -1,33 +1,25 @@
-// import { HtmlElementsData } from "./HtmlElementsId";
-// import { HitApi } from "./HitApi";
-// import { localHostUrl } from "./LocalHost";
+import { HtmlElementsData } from "./HtmlElementsId";
+import { HitApi } from "./HitApi";
+import { BASEURL } from "./globals";
 
-export class GeneratePaging {}
-// {
+export class GeneratePaging 
+{
 //     currentPage : number
-//     totalResultCount  : number
+//     maxSize = 5 
+//    // selectPage : number
 //     elements : HtmlElementsData
-//     totalRowsInTable : number =10
-//     totalPages : number
 
-//     constructor( totalCount : number)
+//     constructor()
 //     {
-//         this.totalResultCount = parseInt((document.getElementById("pagination") as HTMLDivElement).getAttribute(this.elements.resultcount));
-//         this.totalPages = Math.ceil(this.totalResultCount / this.totalRowsInTable) 
 //         this.elements = new HtmlElementsData();
 //     }
-
-
-
-
 
 //     private generatePage(selectedPageNo : string, sortAttribute : string= "" , sortType : string = "")
 //     {   
         
 //         let find = (document.getElementById(this.elements.search) as HTMLInputElement).value;
-//         let uri = new localHostUrl().uri+"?find="+encodeURI(find)+"&sort="+sortAttribute+"&sort-type="+sortType+"page="+selectedPageNo+"page-size="+this.pageSize;
-//         new HitApi().HitGetApi(uri);     
-            
+//         let uri = BASEURL+"/sorting?find="+encodeURI(find)+"&sort="+sortAttribute+"&sort-type="+sortType+"page="+selectedPageNo;
+//         new HitApi().HitGetApi(uri);         
 //     }
 
 //     selectPage(pageNumber)
@@ -40,48 +32,46 @@ export class GeneratePaging {}
 //     }
 
 
+//     pagging( totalcount : number , page = 1 , pagesize = 2 )
+//     {   this.clearData();
+//         let temp : number  = Math.ceil(totalcount / 2); 
+//         const maxSize = 5
+//         let size : number ;
+//         //  if (temp > maxSize )
+//         //  {
+//         //      size = maxSize ;
+//              this.navigateButton( this.elements.previous , size , "previous")
+//         //  }
+//         //  else{
+//         //  let size =page;
+//         //  }
 
-//     // pagging( totalcount : number , page = 1 , pagesize = 2 )
-//     // {   this.clearData();
-//     //     let temp : number  = Math.ceil(totalcount / 2); 
-//     //     const totalResultCount = 5
-//     //     let size : number ;
-//     //     //  if (temp > totalResultCount )
-//     //     //  {
-//     //     //      size = totalResultCount ;
-//     //          this.navigateButton( this.elements.previous , size , "previous")
-//     //     //  }
-//     //     //  else{
-//     //     //  let size =page;
-//     //     //  }
-
-//     //     // this.clearPages();
-//     //    for(let loop=0 ; loop < size ; loop++)
-//     //        this.addPageElement(loop+1)
-//     //        this.navigateButton(this.elements.next , )
-
-//     //     if (temp > totalResultCount )
-//     //     {
-//     //         size = totalResultCount ;
-//     //         this.addPageElement( ">>" )
-//     //     }
-//     // }
+//         // this.clearPages();
+//        for(let loop=0 ; loop < size ; loop++){
+//            this.addPageElement(loop+1)
+//            this.navigateButton(this.elements.next , size, "next")
+//         }
+//         if (temp > maxSize )
+//         {
+//             size = maxSize ;
+//             this.addPageElement( ">>" )
+//         }
+//     }
 
 //    private navigateButton(value  , size , state)
 //     {
-//         (document.getElementById("pagination") as HTMLDivElement).innerHTML = `<input type="submit" class="page" id="${state}" value="${value}" > `;
-//         //if (state == "previous" && )
+//         (document.getElementById("pages") as HTMLDivElement).innerHTML = `<input type="submit" class="page" id="${state}" value="${value}" > `;
+//         // if (state == "previous" && )
 //     }
-//     public addPageElement(start : number  =1, end : number  = this.totalResultCount)
+//     private addPageElement(start : number , end : number )
 //     {
-//         this.clearData();
 //         for (let loop = start ; loop <= end ; loop++)
-//         (document.getElementById("pagination") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="${loop}" value="${loop}" >`;
+//             (document.getElementById("pages") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="${loop}" value="${loop}" >`;
 //     }
     
 //     private clearData()
 //     {
-//         document.getElementById("pagination").innerHTML = "";
+//         document.getElementById("pages").innerHTML = "";
 //     }
    
 
@@ -92,7 +82,7 @@ export class GeneratePaging {}
 //     {
         
 //         let totalPages  = Math.ceil(size/2);
-//         let mid = Math.floor(this.totalResultCount/2) ; 
+//         let mid = Math.floor(this.maxSize/2) ; 
 //         let start : number , end :number;
 //         if ((selectPage - mid)>=1  && (selectPage - mid)<=totalPages )
 //         {   
@@ -101,17 +91,21 @@ export class GeneratePaging {}
 //         }
 //         else if((selectPage - mid)>=1  && (selectPage - mid)>totalPages )
 //         {
-//             start = (totalPages - this.totalResultCount)-1;
+//             start = (totalPages - this.maxSize)-1;
 //             end = totalPages;
 //         }
 //         else if((selectPage - mid)<1  && (selectPage - mid)<=totalPages )
 //         {
 //             start = 1;
+//             end = this.maxSize ;
 //         }
+//         else{
+//             start = 1;
+//             end = totalPages;
 //         }
 //        this.addPageElement(start , end);
 
-//     }
-// }
+    // }
+}
 
 

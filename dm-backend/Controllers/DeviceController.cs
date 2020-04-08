@@ -4,6 +4,7 @@ using dm_backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
+
 namespace dm_backend.Controllers
 {
     [Route("api/[controller]")]
@@ -199,7 +200,7 @@ namespace dm_backend.Controllers
         public async Task<IActionResult> GetAllmodel()
         {
             await Db.Connection.OpenAsync();
-            var query = new Model(Db);
+            var query = new model(Db);
             var result = await query.getallmodel();
             return new OkObjectResult(result);
         }
@@ -233,7 +234,7 @@ namespace dm_backend.Controllers
         }
         [HttpPost]
         [Route("model")]
-        async public Task<IActionResult> Postmodel([FromBody]Model body)
+        async public Task<IActionResult> Postmodel([FromBody]model body)
         {
             Db.Connection.Open();
             var que = new logicaddmodel(Db);
