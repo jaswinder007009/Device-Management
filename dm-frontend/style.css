@@ -11,6 +11,10 @@
     text-align: center;
 }
 
+:any-link{
+	color: #000;
+}
+
 html,
 
 body {
