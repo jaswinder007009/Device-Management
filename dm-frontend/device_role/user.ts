@@ -1,3 +1,4 @@
+import { BASEURL } from "../globals";
 class user{
      
     id:Number
@@ -21,7 +22,7 @@ class user{
     async getAllUser() {
         
 
-        this.url = "https://localhost:5001/api/device/user";
+        this.url = BASEURL + "/api/device/user";
         let data = await this.getApiCall(this.url);
         this.data = await data;
         console.log(data);
@@ -126,7 +127,7 @@ class user_role{
         let x=id
         
 
-        this.url = "https://localhost:5001/api/device/get_role_with_user/"+x;
+        this.url = BASEURL + "/api/device/get_role_with_user/"+x;
         let data = await this.getApiRoleCall(this.url);
         this.data = await data;
         console.log(data);
@@ -198,7 +199,7 @@ class user_role{
     async DeleteRoleByUser(id:number,id1:number) {
         let x = id;
         let y=id1;
-        let uri = "https://localhost:5001/api/device/get_role_with_user/" + x+"/"+y;
+        let uri = BASEURL + "/api/device/get_role_with_user/" + x+"/"+y;
         console.log(uri);
         let response = await fetch(uri,
             {
@@ -258,7 +259,7 @@ class assign_role{
         console.log(x);
         
 
-        this.url = "https://localhost:5001/api/device/assign_role_to_user/"+x;
+        this.url = BASEURL + "/api/device/assign_role_to_user/"+x;
         let data = await this.getApiRoleAssign(this.url);
         this.data = await data;
         console.log(data);
@@ -378,7 +379,7 @@ class checkbox1{
     postData(id:number)
         {
             console.log("lll");
-        let url="https://localhost:5001/api/device/role_user/insert";
+        let url=BASEURL + "/api/device/role_user/insert";
               fetch( url , {
                 method : "POST" , 
                

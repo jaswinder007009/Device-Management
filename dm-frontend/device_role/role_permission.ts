@@ -1,3 +1,4 @@
+import { BASEURL } from "../globals";
 class role_permission{
      
     id:Number
@@ -21,7 +22,7 @@ class role_permission{
     async getAllRoles() {
         
 
-        this.url = "https://localhost:5001/api/device/role";
+        this.url = BASEURL + "/api/device/role";
         let data = await this.getApiRoleCall(this.url);
         this.data = await data;
         console.log(data);
@@ -45,7 +46,7 @@ class role_permission{
 
     async DeleteRoleById(id1:number) {
     let x=id1;
-        let uri = "https://localhost:5001/api/device/role/" + x;
+    let uri = BASEURL + "/api/device/role/" + x;
         console.log(uri);
         let response = await fetch(uri,
             {
@@ -186,7 +187,7 @@ class assign_permission{
         console.log(x);
         
 
-        this.url = "https://localhost:5001/api/device/get_permission_without_role/"+x;
+        this.url = BASEURL + "/api/device/get_permission_without_role/"+x;
         let data = await this.getApiPermissionAssign(this.url);
         this.data = await data;
         console.log(data);
@@ -309,7 +310,7 @@ class role_permission1{
         var x=id;
         
 
-        this.url = "https://localhost:5001/api/device/get_permission_with_role/"+x;
+        this.url = BASEURL + "/api/device/get_permission_with_role/"+x;
         let data = await this.getApiPermissionCall(this.url);
         this.data = await data;
         console.log(data);
@@ -388,7 +389,7 @@ class role_permission1{
     async DeleteRoleByPermission(id1:number,id:number) {
         let x = id1;
         let y=id;
-        let uri = "https://localhost:5001/api/device/get_permission_with_role/" + x+"/"+y;
+        let uri = BASEURL + "/api/device/get_permission_with_role/" + x+"/"+y;
         console.log(uri);
         let response = await fetch(uri,
             {
@@ -455,7 +456,7 @@ class checkbox{
     postData(id:number,id1:number)
         {
             console.log("lll");
-        let url="https://localhost:5001/api/device/role_permission/insert";
+        let url=BASEURL + "/api/device/role_permission/insert";
               fetch( url , {
                 method : "POST" , 
                
@@ -509,7 +510,7 @@ class insert_Role{
     postData()
         {
             console.log("lll");
-        let url="https://localhost:5001/api/device/role/insert";
+        let url=BASEURL + "/api/device/role/insert";
               fetch( url , {
                 method : "POST" , 
                
@@ -563,7 +564,7 @@ class update_Role{
     postData(x:number)
         {
             console.log("lll");
-        let url="https://localhost:5001/api/device/role/"+x;
+        let url=BASEURL + "/api/device/role/"+x;
               fetch( url , {
                 method : "PUT" , 
                

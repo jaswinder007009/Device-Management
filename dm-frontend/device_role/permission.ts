@@ -1,3 +1,5 @@
+import { BASEURL } from "../globals";
+
 class abc{
      
     id:Number
@@ -18,7 +20,7 @@ class abc{
 
     async getAllPermission() {
 
-        this.url = "https://localhost:5001/api/device/permission";
+        this.url = BASEURL + "/api/device/permission";
         let data = await this.getApiCall(this.url);
         this.data = await data;
         console.log(data);
@@ -43,7 +45,7 @@ class abc{
 
     async DeletePermissionById(id1:number) {
         let x = id1;
-        let uri = "https://localhost:5001/api/device/permission/" + x;
+        let uri = BASEURL + "/api/device/permission/" + x;
         console.log(uri);
         let response = await fetch(uri,
             {
@@ -165,7 +167,7 @@ class AddPermission{
     postData()
         {
             console.log("lll");
-        let url="https://localhost:5001/api/device/permission/insert";
+        let url=BASEURL + "/api/device/permission/insert";
               fetch( url , {
                 method : "POST" , 
                 headers : {
@@ -216,7 +218,7 @@ class update_Permission{
     postData(x:number)
         {
             console.log("lll");
-        let url="https://localhost:5001/api/device/permission/"+x;
+        let url=BASEURL + "/api/device/permission/"+x;
               fetch( url , {
                 method : "PUT" , 
                
