@@ -20,6 +20,10 @@ export class UserModel
 	
 	constructor(data: any | null = null) 
 	{
+		this.addresses = new Array<addresses>();
+		this.phones = new Array<phones>();
+		if(data){
+					
 		  this.salutation=data.salutation;
           this.firstName=data.firstName;
           this.middleName=data.middleName;
@@ -45,6 +49,7 @@ export class UserModel
 			{
 			  this.addresses.push(new addresses(addressObject));
 			}
+		}	
     }
 
    getName()
@@ -76,7 +81,7 @@ export class UserModel
 							<span class="slider round"></span>
 						</label>
 					</td>
-					<td><input class="edit" type="button" id="${this.userId}" class="userEditData" value="Edit" /></td>
+					<td><input  type="button" id="${this.userId}" class="userEditData" value="Edit" /></td>
 					<td><input  type="button" data-id="${this.userId}" class="userDeleteData" value="Delete" /></td>
 		        </tr>`;
 

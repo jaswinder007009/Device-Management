@@ -19,6 +19,41 @@ namespace dm_backend.Controllers
         }
 
         [HttpGet]
+        [Route("statistics")]
+        public IActionResult getStatistics()
+        {   
+            int totalDevices,freeDevices,faults,assignedDevices,deviceRequests,rejectedRequests;
+           Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            
+            cmd.CommandText = "select count(*) from device;";
+            totalDevices = Convert.ToInt32(cmd.ExecuteScalar());
+            cmd.CommandText ="select count(*) from device inner join status using (status_id) where status_name='Free';";
+            freeDevices = Convert.ToInt32(cmd.ExecuteScalar());
+            cmd.CommandText = "select count(*) from complaints;";
+            faults = Convert.ToInt32(cmd.ExecuteScalar());
+            cmd.CommandText ="select count(*) from assign_device;";
+            assignedDevices = Convert.ToInt32(cmd.ExecuteScalar());
+            cmd.CommandText = "select count(*) from request_device;";
+            deviceRequests = Convert.ToInt32(cmd.ExecuteScalar());
+            cmd.CommandText ="select count(*) from request_history inner join status using (status_id) where status_name='Rejected';";
+            rejectedRequests= Convert.ToInt32(cmd.ExecuteScalar());
+            Statistics statisticsObject = new Statistics();
+           
+           
+            statisticsObject.totalDevices=totalDevices;
+            statisticsObject.freeDevices=freeDevices;
+            statisticsObject.faults=faults;
+            statisticsObject.assignedDevices=assignedDevices;
+            statisticsObject.deviceRequests=deviceRequests;
+            statisticsObject.rejectedRequests=rejectedRequests;
+
+            Db.Connection.Close();
+            return Ok(statisticsObject);
+            
+        }
+
+        [HttpGet]
         [Route("{email}/devices/returndates")]
         public IActionResult getDeviceReturnDates(string email)
         {
@@ -37,7 +72,7 @@ namespace dm_backend.Controllers
                     returnDateOverview.Add(new Overview(){
                     deviceType = reader.GetString(0),
                     deviceModel = reader.GetString(1),
-                    returnDate = reader.GetDateTime(2)
+                    returnDate = Convert.ToDateTime(reader.GetDateTime(2)).ToString("dd/mm/yyyy")
                  
                 });
                 }
@@ -52,141 +87,7 @@ namespace dm_backend.Controllers
         }
 
         [HttpGet]
-        [Route("device/count")]
-        public IActionResult getDeviceCount()
-        {
-            List<Overview> deviceCount = new List<Overview>();
-            Db.Connection.Open();
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "all_devices";
-            cmd.CommandType = CommandType.StoredProcedure;
-            var reader = cmd.ExecuteReader();
-
-            using (reader)
-            {
-                while (reader.Read())
-                {
-                    deviceCount.Add(new Overview()
-                    {
-                        count = reader.GetInt32(0)
-                    });
-                }
-            }
-            Db.Connection.Close();
-            if (deviceCount.Count > 0)
-            {
-                return Ok(deviceCount);
-            }
-            else
-                return NoContent();
-
-        }
-
-        [HttpGet]
-        [Route("requests/accepted")]
-        public IActionResult getAcceptedRequestStatistics()
-        {
-            List<Overview> acceptedRequestsOverview = new List<Overview>();
-            Db.Connection.Open();
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "latest_accepted_requests";
-            cmd.CommandType = CommandType.StoredProcedure;
-            var reader = cmd.ExecuteReader();
-
-            using (reader)
-            {
-                while (reader.Read())
-                {
-                    acceptedRequestsOverview.Add(new Overview()
-                    {
-                        deviceId = reader.GetInt32(0),
-                        deviceType=reader.GetString(1),
-                        deviceModel=reader.GetString(2),
-                        userId=reader.GetInt32(3),
-                        assignDate=reader.GetDateTime(4)
-
-                    });
-                }
-            }
-            Db.Connection.Close();
-            if (acceptedRequestsOverview.Count > 0)
-            {
-                return Ok(acceptedRequestsOverview);
-            }
-            else
-                return NoContent();
-
-        }
-
-        [HttpGet]
-        [Route("requests/pending")]
-        public IActionResult getPendingRequestStatistics()
-        {
-            List<Overview> pendingRequestsOverview = new List<Overview>();
-            Db.Connection.Open();
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "latest_pending_requests";
-            cmd.CommandType = CommandType.StoredProcedure;
-            var reader = cmd.ExecuteReader();
-
-            using (reader)
-            {
-                while (reader.Read())
-                {
-                    pendingRequestsOverview.Add(new Overview()
-                    {
-                        deviceId = reader.GetInt32(0),
-                        deviceType=reader.GetString(1),
-                        deviceModel=reader.GetString(2),
-                        userId=reader.GetInt32(3)
-
-                    });
-                }
-            }
-            Db.Connection.Close();
-            if (pendingRequestsOverview.Count > 0)
-            {
-                return Ok(pendingRequestsOverview);
-            }
-            else
-                return NoContent();
-
-        }
-
-        [HttpGet]
-        [Route("requests/rejected")]
-        public IActionResult getRejectedRequestStatistics()
-        {
-            List<Overview> rejectedRequestsCount = new List<Overview>();
-            Db.Connection.Open();
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "rejected_requests_count";
-            cmd.CommandType = CommandType.StoredProcedure;
-            var reader = cmd.ExecuteReader();
-
-            using (reader)
-            {
-                while (reader.Read())
-                {
-                    rejectedRequestsCount.Add(new Overview()
-                    {
-                        count=reader.GetInt32(0)
-
-                    });
-                }
-            }
-            Db.Connection.Close();
-            if (rejectedRequestsCount.Count > 0)
-            {
-                return Ok(rejectedRequestsCount);
-            }
-            else
-                return NoContent();
-
-        }
-
-        [HttpGet]
-        [Route("device/faults")]
+        [Route("faults")]
         public IActionResult getFaultStatistics()
         {
             List<Overview> faultOverview = new List<Overview>();
@@ -220,19 +121,30 @@ namespace dm_backend.Controllers
         
         }
 
-    public AppDb Db { get; }
+        public AppDb Db { get; }
     }  
 
+    public class Statistics
+    {
+        public int totalDevices { get; set; }
+        public int freeDevices { get; set; }
+        public int faults { get; set; }
+        public int assignedDevices { get; set; }
+        public int deviceRequests { get; set; }
+        public int rejectedRequests { get; set; }
+
+    }
     public class Overview
     {
-        public int deviceId { get; set; }
-        public int userId { get; set; }
+        // public int deviceId { get; set; }
+        // public int userId { get; set; }
         public string deviceType { get; set; }
         public string deviceModel { get; set; }
-        public DateTime assignDate { get; set; }
-        public DateTime returnDate { get; set; }
+        // public string assignDate { get; set; }
+        public string returnDate { get; set; }
         public string faultDescription { get; set; }
-        public int count { get; set; }
+        // public int count { get; set; }
     }
+        
 
 }
