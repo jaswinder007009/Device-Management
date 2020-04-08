@@ -292,13 +292,13 @@ namespace dm_backend.Models
             return posts;
         }
 
-        public async Task<List<device>> getCurrentDevice(int id, string search)
+        public async Task<List<device>> getCurrentDevice(int id, string search, string sort = "", string direction = "")
         {
             using var cmd = Db.Connection.CreateCommand();
 
             cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device_model.model,assign_device.assign_date,assign_device.return_date from user,device_type,device_model,device_brand,assign_device,device
 where  user.user_id=assign_device.user_id and assign_device.device_id=device.device_id and device.device_type_id=device_type.device_type_id and device.device_brand_id=device_brand.device_brand_id
-and device.device_model_id=device_model.device_model_id and assign_device.user_id=@id) as demo WHERE demo.type LIKE '%" + @search + "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search + "%'; ;";
+and device.device_model_id=device_model.device_model_id and assign_device.user_id="+@id+") as demo WHERE demo.type LIKE '%" + @search + "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search + "%' ";
 
             cmd.Parameters.Add(new MySqlParameter
             {
@@ -312,6 +312,17 @@ and device.device_model_id=device_model.device_model_id and assign_device.user_i
                 DbType = DbType.String,
                 Value = search,
             });
+             if (!string.IsNullOrEmpty(sort) && !string.IsNullOrEmpty(direction))
+            {
+
+
+                cmd.CommandText += "order by " + sort + " " + direction + "";
+
+            }
+            Console.WriteLine(cmd.CommandText);
+            Console.WriteLine("id = " + cmd.Parameters["@id"].Value);
+            Console.WriteLine("Search = " + cmd.Parameters["@search"].Value);
+            // Console.WriteLine("Search = " + cmd.Parameters["@sort"].Value);
 
             return await ReadAllDevice(await cmd.ExecuteReaderAsync());
 
@@ -322,7 +333,7 @@ and device.device_model_id=device_model.device_model_id and assign_device.user_i
 
             cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device_model.model,assign_date,return_date from user,device_type,device_brand,device_model,request_history 
 where user.user_id=request_history.user_id and request_history.device_type=device_type.device_type_id and request_history.device_brand=device_brand.device_brand_id 
-and request_history.device_model=device_model.device_model_id and request_history.user_id=@id) as demo WHERE demo.type LIKE '%" +@search+ "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search  + "%';";
+and request_history.device_model=device_model.device_model_id and request_history.user_id="+@id+") as demo WHERE demo.type LIKE '%" +@search+ "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search  + "%' ";
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@id",
@@ -339,24 +350,8 @@ and request_history.device_model=device_model.device_model_id and request_histor
             {
 
 
-                cmd.CommandText += "order by " + @sort + " " + @direction + "";
+                cmd.CommandText += "order by " + sort + " " + direction + "";
 
-
-                cmd.Parameters.Add(new MySqlParameter
-                {
-
-                    ParameterName = "@sort",
-                    DbType = DbType.String,
-                    Value = sort,
-                });
-
-                cmd.Parameters.Add(new MySqlParameter
-                {
-
-                    ParameterName = "@direction",
-                    DbType = DbType.String,
-                    Value = direction,
-                });
             }
             Console.WriteLine(cmd.CommandText);
             Console.WriteLine("id = " + cmd.Parameters["@id"].Value);

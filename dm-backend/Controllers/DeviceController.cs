@@ -249,7 +249,7 @@ namespace dm_backend.Controllers
         public async Task<IActionResult> GetOne(int id)
         {
             string ToSearch = String.Empty; if (!string.IsNullOrEmpty(HttpContext.Request.Query["search"])) ToSearch = HttpContext.Request.Query["search"];
-            string ToSort = String.Empty; if (!string.IsNullOrEmpty(HttpContext.Request.Query["sort"])) ToSort = HttpContext.Request.Query["sort"];
+            string ToSort = String.Empty; if (!string.IsNullOrEmpty(HttpContext.Request.Query["sortby"])) ToSort = HttpContext.Request.Query["sortby"];
             string Todirection = String.Empty; if (!string.IsNullOrEmpty(HttpContext.Request.Query["direction"])) Todirection = HttpContext.Request.Query["direction"];
             await Db.Connection.OpenAsync();
             var query = new devices(Db);
@@ -262,9 +262,11 @@ namespace dm_backend.Controllers
         public async Task<IActionResult> Get(int id)
         {
             string ToSearch = String.Empty; if (!string.IsNullOrEmpty(HttpContext.Request.Query["search"])) ToSearch = HttpContext.Request.Query["search"];
+            string ToSort = String.Empty; if (!string.IsNullOrEmpty(HttpContext.Request.Query["sortby"])) ToSort = HttpContext.Request.Query["sortby"];
+            string Todirection = String.Empty; if (!string.IsNullOrEmpty(HttpContext.Request.Query["direction"])) Todirection = HttpContext.Request.Query["direction"];
             await Db.Connection.OpenAsync();
             var query = new devices(Db);
-            var result = await query.getCurrentDevice(id, ToSearch);
+            var result = await query.getCurrentDevice(id, ToSearch,ToSort, Todirection);
             if (result is null)
                 return new NotFoundResult();
             return new OkObjectResult(result);
