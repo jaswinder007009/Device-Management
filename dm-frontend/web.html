@@ -1,0 +1,351 @@
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- Material Design Lite -->
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <!-- Material Design icon font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="userForm"><!--form division--> 
+                    <form class="form-popup" id="myForm">
+                        <h1 id="headingText" class="text-success text-center">User Registration</h1>
+                        <div class="col-lg-7 m-auto d-block">
+                            <!-- <form action="#"> -->
+                                <div class="form-group">
+                                </div>
+                                
+                                <button type="button" class="collapsible">User Basic Details</button>
+                                <div class="content">
+    
+                                    <div class="form-group">
+    
+                                        <label> Name: </label>
+    
+                                        <select style="height: 29px;" id="salutation" name="Salutation">
+                                            <option value="Mr">Mr</option>
+                                            <option value="Mrs">Mrs</option>
+                                            <option value="Miss">Miss</option>
+                                            <option value="Dr">Dr</option>
+                                        </select>
+                                        <input type="text" placeholder="Enter First Name" id="firstName" size="20">
+                                        <input type="text" placeholder="Enter Middle Name" id="middleName" size="20">
+                                        <input type="text" placeholder="Enter Last Name" id="lastName" size="20">
+                                        <span id="usernames" class="text-danger font-weight-bold"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Email: </label>
+                                        <input type="text" name="email" class="form-control" id="email">
+                                        <span id="emails" class="text-danger font-weight-bold"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Password: </label>
+                                        <input type="password" name="password" class="form-control" id="password">
+                                        <span id="passwords" class="text-danger font-weight-bold"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Confirm Password: </label>
+                                        <input type="password" name="confirmpass" class="form-control" id="confirmpass">
+                                        <span id="confirmpasss" class="text-danger font-weight-bold"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <!----Role-->
+                                        <input type="text" hidden name="Role" class="form-control" id="roleName">
+    
+                                    </div>
+                                    <div class="form-group">
+                                        <!----Role-->
+                                        <input type="text" hidden name="User" class="form-control" id="userId">
+    
+                                    </div>
+                                    <div class="form-group">
+                                        <!----Role-->
+                                        <input type="text" hidden name="Status" class="form-control" id="status">
+    
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Department: </label>
+                                        <input type="text" name="departmentName" class="form-control" id="department">
+                                        <span id="departments" class="text-danger font-weight-bold"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Designation: </label>
+                                        <input type="text" name="designation" class="form-control" id="designationName">
+                                        <span id="designations" class="text-danger font-weight-bold"></span>
+                                    </div><br>
+                                    <div><label for="DOB">Date Of Birth:</label>
+                                        <input type="text" id="dob" name="DOB" class="form-control">
+                                    </div><br>
+                                    <div>
+                                        <label> Gender: </label>
+                                        <select id="gender" name="Gender" class="form-control">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Others">Others</option>
+    
+                                        </select><br>
+    
+                                    </div>
+    
+                                    <div><label for="DOJ">Date Of Joining:</label>
+                                        <input type="text" id="doj" name="DOJ" class="form-control">
+                                    </div><br>
+                                </div>
+    
+                                <button type="button" class="collapsible">Contact 1 Details</button>
+                                <div class="content">
+    
+                                    <div id="phones1">
+                                        <label> Contact 1: </label><br>
+                                        <select style="height: 29px;" class="contactNumberType" name="Contact">
+                                            <option value="mobile">Mobile</option>
+                                            <option value="home">Home</option>
+                                            <option value="work">Home</option>
+    
+                                        </select>
+                                        <input type="text" name="phone_number1" class="number" maxlength="10">
+                                        <span id="phone_number1s" class="text-danger font-weight-bold"></span>
+                                        <label>Country Code</label>
+                                        <select style="height: 29px;" class="countryCode" name="CountryCode">
+                                            <option value="91">India</option>
+                                            <option value="b">b</option>
+                                        </select>
+    
+                                        <label>Area Code</label>
+                                        <select style="height: 29px;" class="areaCode"
+                                            name="AreaCode">
+                                            <option value="0129">Faridabad</option>
+                                            <option value="b">b</option>
+                                        </select>
+    
+                                    </div>
+                                </div>
+    
+                                <button type="button" class="collapsible">Contact 2 Details</button>
+                                <div class="content">
+                                    <div id="phones2">
+                                        <label> Contact 2: </label><br>
+                                        <select style="height: 29px;" class="contactNumberType" name="Contact">
+                                            <option value="mobile">Mobile</option>
+                                            <option value="home">Home</option>
+    
+                                        </select>
+                                        <input type="text" name="phone_number1" class="number" maxlength="10">
+                                        <span id="phone_number1s" class="text-danger font-weight-bold"></span>
+                                        <label>Country Code</label>
+                                        <select style="height: 29px;" class="countryCode" name="CountryCode">
+                                            <option value="91">India</option>
+                                            <option value="b">b</option>
+                                        </select>
+    
+                                        <label>Area Code</label>
+                                        <select style="height: 29px;" style="height: 29px;" class="areaCode"
+                                            name="AreaCode">
+                                            <option value="0129">Faridabad</option>
+                                            <option value="b">b</option>
+                                        </select>
+    
+                                    </div>
+                                </div>
+                                <button type="button" class="collapsible">Contact 3 Details</button>
+                                <div class="content">
+                                    <div id="phones3">
+                                        <label> Contact 3: </label><br>
+                                        <select style="height: 29px;" class="contactNumberType" name="Contact">
+                                            <option value="mobile">Mobile</option>
+                                            <option value="home">Home</option>
+    
+                                        </select>
+                                        <input type="text" name="phone_number1" class="number" maxlength="10">
+                                        <span id="phone_number1s" class="text-danger font-weight-bold"></span>
+                                        <label>Country Code</label>
+                                        <select style="height: 29px;" class="countryCode" name="CountryCode">
+                                            <option value="91">India</option>
+                                            <option value="b">b</option>
+                                        </select>
+    
+                                        <label>Area Code</label>
+                                        <select style="height: 29px;" style="height: 29px;" class="areaCode"
+                                            name="AreaCode">
+                                            <option value="0129">Faridabad</option>
+                                            <option value="b">b</option>
+                                        </select>
+    
+                                    </div>
+                                </div>
+    
+                                <button type="button" class="collapsible">Current Address Information</button>
+                                <div class="content">
+    
+                                    <br>
+                                    <div id="addresses1">
+    
+                                        <input type="text" class="addressType" value="Current">
+                                        <br>
+                                        <label>Adddress Line 1:</label><input type="text" name="CurrentAddress1"
+                                            class="addressLine1" size="50" maxlength="50"><br>
+    
+                                        <label> Adddress Line 2: </label><input type="text" name="CurrentAddress2"
+                                            class="addressLine2" size="50" maxlength="50"><br>
+    
+                                        <label> City: </label>
+                                        <select style="height: 29px;" class="city" name="city1">
+                                            <option value="Faridabad">Faridabad</option>
+                                            <option value="Home">Home</option>
+                                            <option value="Bombuflat">Bombuflat</option>
+                                        </select><br>
+                                        <label> State: </label>
+                                        <select style="height: 29px;" class="state" name="State1">
+                                            <option value="Haryana">Haryana</option>
+                                            <option value="Home">Home</option>
+                                            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                        </select><br>
+                                        <label> Country: </label>
+                                        <select style="height: 29px;" class="country" name="Country1">
+                                            <option value="India">India</option>
+                                            <option value="Home">Home</option>
+    
+                                        </select><br>
+                                        <label>Pincode</label>
+                                        <input type="text" name="pincode1" class="pin" maxlength="6">
+    
+                                    </div><br><input type="checkbox" name="sameaddress" id="sameaddress"> Current Address
+                                    Same as Permanent Address?
+    
+                                </div>
+    
+                                <button type="button" class="collapsible">Permanent Address Information</button>
+                                <div class="content">
+                                    <div id="addresses2">
+                                        <br>
+                                        <input type="text" class="addressType" value="Permanant">
+                                        <br>
+    
+                                        <label>Adddress Line 1 :</label><input type="text" name="PermanentAddress1"
+                                            class="addressLine1" size="50" maxlength="50"><br>
+    
+                                        <label> Adddress Line 2: </label><input type="text" name="PermanentAddress2"
+                                            class="addressLine2" size="50" maxlength="50"><br>
+    
+                                        <label> City: </label>
+                                        <select style="height: 29px;" class="city" name="city2">
+                                            <option value="Faridabad">Faridabad</option>
+                                            <option value="Home">Home</option>
+                                        </select>
+                                        <br>
+                                        <label> State: </label>
+                                        <select style="height: 29px;" class="state" name="State2">
+                                            <option value="Haryana">Haryana</option>
+                                            <option value="Home">Home</option>
+    
+                                        </select><br>
+                                        <label> Country: </label>
+                                        <select style="height: 29px;" class="country" name="Country2">
+                                            <option value="India">India</option>
+                                            <option value="Home">Home</option>
+    
+                                        </select>
+                                        <br>
+                                        <label>Pincode</label>
+                                        <input type="text" name="pincode2" class="pin" maxlength="6">
+    
+                                    </div><br>
+                                </div>
+    
+                                <input type="submit" name="submit" value="submit" class="btn btn-success">
+                                <button id="closeFormButton">Close</button>
+    
+                        </div>
+                    </form>
+                    
+    </div><!--form closing div-->
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title">Welcome To Admin User Page</span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <div class="mdl-layout-spacer"></div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                  mdl-textfield--floating-label mdl-textfield--align-right">
+                    <label class="mdl-button mdl-js-button mdl-button--icon"  for="fixed-header-drawer-exp">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" name="sample" value=""
+                            id="fixed-header-drawer-exp">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Go To</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="">Role & Permission</a>
+                <a class="mdl-navigation__link" href="">Home Page</a>
+                <a class="mdl-navigation__link" href="">Device Dashboard</a>
+                <a class="mdl-navigation__link" href="">About</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <!-- Your content goes here -->
+                <button id="popup">Add New User</button> <!-- onclick="openForm()"-->
+
+            
+                    <div position : relative;>
+                        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="Request_data" position : relative>
+
+                            <thead>
+                                <tr>
+                                    <th class="mdl-data-table__header--sorted-descending" id="first_name">Name</th>
+                                    <th class="mdl-data-table__header--sorted-descending" id="email">Email</th>
+                                    <th class="" id="role1">Role</th>
+                                    <th class="">Status</th>
+                                    <th class="">Contact Number</th>
+                                    <th class="">Make Active/Inactive</th>
+                                    <th class="bullet">Update User</th>
+                                    <th class="">Delete User</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="Request_data_body">
+
+                            </tbody>
+                        </table>
+                     </div>
+        </div><!--Main closing division-->
+    
+    </main>
+</div>
+  
+
+
+<script data-main="webpage.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js">
+    //Function To Display Popup
+
+
+    // function openForm() {
+    //     document.getElementById("myForm").style.display = "block";
+
+    // }
+
+
+</script>
+</body>
+</html>

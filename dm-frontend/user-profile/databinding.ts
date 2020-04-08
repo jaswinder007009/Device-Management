@@ -1,4 +1,4 @@
-import * as models from "./UserModel";
+import * as models from "../UserModel";
 
 export function createObjectFromForm(formElement: HTMLFormElement) {
 	let modelObject = new models.UserModel();
@@ -9,6 +9,7 @@ export function createObjectFromForm(formElement: HTMLFormElement) {
 	modelObject.departmentName = (formElement["department"] as HTMLInputElement).value;
 	modelObject.designationName = (formElement["designation"] as HTMLInputElement).value;
 	modelObject.email = (formElement["email"] as HTMLInputElement).value;
+	modelObject.userId = parseInt((formElement["userId"] as HTMLInputElement).value);
 	//modelObject.altEmail =(formElement["altEmail"] as HTMLInputElement).value || null;
 	//modelObject.userName = (formElement["userName"] as HTMLInputElement).value;
 	modelObject.password = (formElement["password"] as HTMLInputElement).value;
