@@ -60,9 +60,13 @@ namespace dm_backend.Models{
         [Route("pending")]
         public IActionResult GetRequest()
         {
+            int userId=-1;
             string searchField = "";
             string sortField = "request_device_id";
             int sortDirection = 0;
+            if (!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
+                userId = Convert.ToInt32(HttpContext.Request.Query["id"]);
+
             if (!string.IsNullOrEmpty(HttpContext.Request.Query["search"]))
                 searchField = HttpContext.Request.Query["search"];
             
@@ -74,10 +78,11 @@ namespace dm_backend.Models{
 
             Db.Connection.Open();
             var requestObject = new RequestModel(Db);
-            var result = requestObject.GetAllPendingRequests(sortField,sortDirection,searchField);
+            var result = requestObject.GetAllPendingRequests(userId,sortField,sortDirection,searchField);
             Db.Connection.Close();
             return Ok(result);
         }
+
 
         [HttpGet]
         [Route("{requestId}/reject")]

@@ -49,10 +49,13 @@ namespace dm_backend.Models
             }
         }
 
-        public List<RequestModel> GetAllPendingRequests(string sortField,int sortDirection,string searchField)
+        public List<RequestModel> GetAllPendingRequests(int userId,string sortField,int sortDirection,string searchField)
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = get_all_pending_requests+searchQuery+sortQuery+sortField+(sortDirection==-1 ? " desc":" asc");; 
+            cmd.CommandText = get_all_pending_requests+searchQuery;
+            if(userId!=-1)
+                cmd.CommandText +=@" having user_id="+userId;
+            cmd.CommandText +=@" order by "+sortField+(sortDirection==-1 ? " desc":" asc");; 
             cmd.Parameters.AddWithValue("@search_field", searchField); 
             using MySqlDataReader reader =  cmd.ExecuteReader();
             return ReadAll(reader);
@@ -159,8 +162,7 @@ namespace dm_backend.Models
     and available_devices.device_type_id = request_device.device_type_id
 	and available_devices.device_brand_id = request_device.device_brand_id";
 
-    internal string searchQuery=@" where device_type.type like CONCAT('%', @search_field, '%') or device_model.model like CONCAT('%', @search_field, '%') or device_brand.brand like CONCAT('%', @search_field, '%') or get_full_name(user.user_id) like CONCAT('%', @search_field, '%') ";       
-    internal string sortQuery=@" group by request_device_id order by ";
+    internal string searchQuery=@" where device_type.type like CONCAT('%', @search_field, '%') or device_model.model like CONCAT('%', @search_field, '%') or device_brand.brand like CONCAT('%', @search_field, '%') or get_full_name(user.user_id) like CONCAT('%', @search_field, '%') group by request_device_id";       
 
     }   
 }
