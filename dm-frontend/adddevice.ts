@@ -164,18 +164,18 @@ class AddDevice {
         data.device_brand = (document.getElementById("brands")as HTMLInputElement).value;
         return JSON.stringify(data);
     }
-    addNewBrand()
+    async addNewBrand()
     {
     
          let data1=this.addDataToBrand();
         console.log(data1);
-        fetch("https://localhost:5001/api/Device/brand", {
+       let data=await fetch("https://localhost:5001/api/Device/brand", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: data1,
-        })
-        .catch(Error => console.log(Error));
-
+        });
+       
+        return null;
     }
     addDataToType()
     {
@@ -185,18 +185,17 @@ class AddDevice {
         data.device_type = (document.getElementById("types")as HTMLInputElement).value;
         return JSON.stringify(data);
     }
-    addNewType()
+    async addNewType()
     {
     
          let data1=this.addDataToType();
         console.log(data1);
-        fetch("https://localhost:5001/api/Device/type", {
+       let data = await fetch("https://localhost:5001/api/Device/type", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: data1,
-        })
-        .catch(Error => console.log(Error));
-
+        });
+        return null;
     }
     addDataToModel()
     {
@@ -206,18 +205,17 @@ class AddDevice {
         data.model = (document.getElementById("models")as HTMLInputElement).value;
         return JSON.stringify(data);
     }
-    addNewModel()
+    async addNewModel()
     {
     
          let data1=this.addDataToModel();
         console.log(data1);
-        fetch("https://localhost:5001/api/Device/model", {
+       let data=await fetch("https://localhost:5001/api/Device/model", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: data1,
-        })
-        .catch(Error => console.log(Error));
-
+        });
+        return null;
     }
 
 
@@ -232,18 +230,17 @@ class AddDevice {
         data.connectivity = (document.getElementById("Connectivity")as HTMLInputElement).value;
         return JSON.stringify(data);
     }
-    addNewSpecification()
+    async addNewSpecification()
     {
     
          let data1=this.addDataToSpecification();
         console.log(data1);
-        fetch("https://localhost:5001/api/Device/addspecification", {
+        let data = await fetch("https://localhost:5001/api/Device/addspecification", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: data1,
-        })
-        .catch(Error => console.log(Error));
-
+        });
+        return null;
     }
  
  
@@ -267,7 +264,7 @@ class AddDevice {
     temp.addNewModel();
     (document.getElementById("popupForm3") as HTMLFormElement).style.display = "none";
     
-    temp.brandDropdown();
+    temp.modelDropdown();
   });
 
   

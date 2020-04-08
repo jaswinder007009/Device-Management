@@ -1,3 +1,4 @@
+var token=1;
 export class DeviceListForAdmin {
     device_id: number;
     type: string;
@@ -52,7 +53,19 @@ export class DeviceListForAdmin {
 
     }
     getDeviceList() {
-        const value = `
+         
+            if(token==1){
+                var element = document.createElement('button');
+                //var divs = document.getElementById("t");
+               // console.log(divs);
+              //  divs.appendChild(element);
+                `<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="">
+                     <a href = "./AddDevice.html" style="color: black;">
+                        Add Device</a>
+                      </button>`;
+                      
+          const value = `
+           
         <tr>
             <td class = "cards">${this.type} ${this.brand} ${this.model}
                 <div class="mdl-card">
@@ -78,14 +91,44 @@ export class DeviceListForAdmin {
             <td>${this.return_date.substring(0,10)} </td>
             <td>${this.assign_to_first_name} ${this.assign_to_middle_name} ${this.assign_to_last_name}</td>
             <td>${this.assign_by_first_name} ${this.assign_by_middle_name} ${this.assign_by_last_name}</td>
-            <td>
+             <td>
                 <button class="edit-button" value=${this.device_id}>Edit </button>
                 <button class="delete-button" value=${this.device_id}>Delete </button>
             </td>
         </tr>`;
+        (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value;
+            }
+            else{
+               const value =  `
+        <tr>
+            <td class = "cards">${this.type} ${this.brand} ${this.model}
+                <div class="mdl-card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Device Details</h2>
+                    </div>
 
-        document.getElementById("Request_data").innerHTML += value;
+                    <div class="mdl-card__supporting-text">
+                        Device color: ${this.color} <br>
+                        Price:${this.price} <br>
+                        Warranty Year: ${this.warranty_year}<br>
+                        Purchase Date: ${this.purchase_date}
+                    </div> 
+                </div> 
+            </td>
+            <td>${this.serial_number} </td>
+            <td>${this.status} </td>
+            <td>RAM:${this.ram} Storage:${this.storage}
+                <br>
+                Screen Size:${this.screen_size} Connectivity: ${this.connectivity}
+            </td>
+            <td>${this.assign_date.substring(0,10)} </td>
+            <td>${this.return_date.substring(0,10)} </td>
+            <td>${this.assign_to_first_name} ${this.assign_to_middle_name} ${this.assign_to_last_name}</td>
+            <td>${this.assign_by_first_name} ${this.assign_by_middle_name} ${this.assign_by_last_name}</td>
+            </tr>`;
+            (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value;
+            }
+        // (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value;
 
     }
-  
 }
