@@ -41,6 +41,7 @@
                                             <option value="Dr">Dr</option>
                                         </select>
                                         <input type="text" placeholder="Enter First Name" id="firstName" size="20">
+                                        <span id="firstNames" class="text-danger font-weight-bold"></span>
                                         <input type="text" placeholder="Enter Middle Name" id="middleName" size="20">
                                         <input type="text" placeholder="Enter Last Name" id="lastName" size="20">
                                         <span id="usernames" class="text-danger font-weight-bold"></span>
@@ -115,7 +116,7 @@
                                             <option value="work">Home</option>
     
                                         </select>
-                                        <input type="text" name="phone_number1" class="number" maxlength="10">
+                                        <input type="text" id="phone_number1" name="phone_number1" class="number" maxlength="10">
                                         <span id="phone_number1s" class="text-danger font-weight-bold"></span>
                                         <label>Country Code</label>
                                         <select style="height: 29px;" class="countryCode" name="CountryCode">
@@ -195,33 +196,33 @@
                                         <input type="text" class="addressType" value="Current">
                                         <br>
                                         <label>Adddress Line 1:</label><input type="text" name="CurrentAddress1"
-                                            class="addressLine1" size="50" maxlength="50"><br>
+                                            class="addressLine1" id="c1" size="50" maxlength="50"><br>
     
                                         <label> Adddress Line 2: </label><input type="text" name="CurrentAddress2"
-                                            class="addressLine2" size="50" maxlength="50"><br>
+                                            class="addressLine2" id="c2" size="50" maxlength="50"><br>
     
                                         <label> City: </label>
-                                        <select style="height: 29px;" class="city" name="city1">
+                                        <select style="height: 29px;" class="city" id="c4" name="city1">
                                             <option value="Faridabad">Faridabad</option>
                                             <option value="Home">Home</option>
                                             <option value="Bombuflat">Bombuflat</option>
                                         </select><br>
                                         <label> State: </label>
-                                        <select style="height: 29px;" class="state" name="State1">
+                                        <select style="height: 29px;" class="state" id="c5"  name="State1">
                                             <option value="Haryana">Haryana</option>
                                             <option value="Home">Home</option>
                                             <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
                                         </select><br>
                                         <label> Country: </label>
-                                        <select style="height: 29px;" class="country" name="Country1">
+                                        <select style="height: 29px;" class="country" id="c6" name="Country1">
                                             <option value="India">India</option>
                                             <option value="Home">Home</option>
     
                                         </select><br>
                                         <label>Pincode</label>
-                                        <input type="text" name="pincode1" class="pin" maxlength="6">
+                                        <input type="text" name="pincode1" id="c3" class="pin" maxlength="6">
     
-                                    </div><br><input type="checkbox" name="sameaddress" id="sameaddress"> Current Address
+                                    </div><br><input type="checkbox" name="sameaddress" id="sameaddress" class="sameaddress"> Current Address
                                     Same as Permanent Address?
     
                                 </div>
@@ -234,38 +235,38 @@
                                         <br>
     
                                         <label>Adddress Line 1 :</label><input type="text" name="PermanentAddress1"
-                                            class="addressLine1" size="50" maxlength="50"><br>
+                                            class="addressLine1" id="p1" size="50" maxlength="50"><br>
     
                                         <label> Adddress Line 2: </label><input type="text" name="PermanentAddress2"
-                                            class="addressLine2" size="50" maxlength="50"><br>
+                                            class="addressLine2" id="p2" size="50" maxlength="50"><br>
     
                                         <label> City: </label>
-                                        <select style="height: 29px;" class="city" name="city2">
+                                        <select style="height: 29px;" id="p4" class="city" name="city2">
                                             <option value="Faridabad">Faridabad</option>
                                             <option value="Home">Home</option>
                                         </select>
                                         <br>
                                         <label> State: </label>
-                                        <select style="height: 29px;" class="state" name="State2">
+                                        <select style="height: 29px;" id="p5" class="state" name="State2">
                                             <option value="Haryana">Haryana</option>
                                             <option value="Home">Home</option>
     
                                         </select><br>
                                         <label> Country: </label>
-                                        <select style="height: 29px;" class="country" name="Country2">
+                                        <select style="height: 29px;" id="p6" class="country" name="Country2">
                                             <option value="India">India</option>
                                             <option value="Home">Home</option>
     
                                         </select>
                                         <br>
                                         <label>Pincode</label>
-                                        <input type="text" name="pincode2" class="pin" maxlength="6">
+                                        <input type="text" id="p3" name="pincode2" class="pin" maxlength="6">
     
                                     </div><br>
                                 </div>
     
                                 <input type="submit" name="submit" value="submit" class="btn btn-success">
-                                <button id="closeFormButton">Close</button>
+                                <button id="closeFormButton" class="btn btn-danger">Close</button>
     
                         </div>
                     </form>
@@ -313,8 +314,8 @@
 
                             <thead>
                                 <tr>
-                                    <th class="mdl-data-table__header--sorted-descending" id="first_name">Name</th>
-                                    <th class="mdl-data-table__header--sorted-descending" id="email">Email</th>
+                                    <th class="mdl-data-table__header--sorted-descending" data-id="first_name">Name</th>
+                                    <th class="mdl-data-table__header--sorted-descending" data-id="email">Email</th>
                                     <th class="" id="role1">Role</th>
                                     <th class="">Status</th>
                                     <th class="">Contact Number</th>
@@ -337,14 +338,6 @@
 
 
 <script data-main="webpage.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js">
-    //Function To Display Popup
-
-
-    // function openForm() {
-    //     document.getElementById("myForm").style.display = "block";
-
-    // }
-
 
 </script>
 </body>
