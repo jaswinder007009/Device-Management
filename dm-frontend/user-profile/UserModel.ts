@@ -29,18 +29,18 @@ export class UserModel {
 				this.addresses.push(new addresses(addressObject));
 			}
 
-			this.salutation = data.Salutation;
-			this.firstName = data.FirstName;
-			this.middleName = data.MiddleName;
-			this.lastName = data.LastName;
-			this.departmentName = data.DepartmentName;
-			this.designationName = data.DesignationName;
-			this.dob = data.DOB;
-			this.doj = data.DOJ;
-			this.email = data.Email;
-			this.roleName = data.Role_Name;
-			this.gender = data.Gender;
-			this.status = data.Status;
+			this.salutation = data.salutation;
+			this.firstName = data.firstName;
+			this.middleName = data.middleName;
+			this.lastName = data.lastName;
+			this.departmentName = data.departmentName;
+			this.designationName = data.designationName;
+			this.dob = data.dob;
+			this.doj = data.doj;
+			this.email = data.email;
+			this.roleName = data.role_Name;
+			this.gender = data.gender;
+			this.status = data.status;
 		}
 	}
 
@@ -51,10 +51,10 @@ export class phones {
 	countryCode: string;
 	areaCode: string;
 	constructor(phoneObject: any) {
-		this.contactNumberType = phoneObject.ContactNumberType;
-		this.number = phoneObject.Number;
-		this.countryCode = phoneObject.CountryCode;
-		this.areaCode = phoneObject.AreaCode;
+		this.contactNumberType = phoneObject.contactNumberType;
+		this.number = phoneObject.number;
+		this.countryCode = phoneObject.countryCode;
+		this.areaCode = phoneObject.areaCode;
 	}
 }
 export class addresses {
@@ -66,12 +66,12 @@ export class addresses {
 	country: string;
 	pin: string;
 	constructor(addressObject: any) {
-		this.addressType = addressObject.AddressType;
-		this.addressLine1 = addressObject.AddressLine1;
-		this.addressLine2 = addressObject.AddressLine2;
-		this.city = addressObject.City;
-		this.state = addressObject.State;
-		this.country = addressObject.Country;
-		this.pin = addressObject.PIN;
+		this.addressType = addressObject.addressType;
+		this.addressLine1 = addressObject.addressLine1;
+		this.addressLine2 = addressObject.addressLine2;
+		this.city = addressObject.city;
+		this.state = addressObject.state;
+		this.country = addressObject.country;
+		this.pin = addressObject.pin;
 	}
 }

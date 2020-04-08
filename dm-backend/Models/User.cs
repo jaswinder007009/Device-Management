@@ -148,15 +148,15 @@ namespace dm_backend
 
             }
         }
-public int whatIs(String jass1)
+public int whatIs(String data1)
 {
- return jass1=="inactive"?1:2;
+ return data1=="inactive"?1:2;
 
 }
-         public void MarkUserInactive(int jass)
+         public void MarkUserInactive(int data)
           {
               using var cmd = Db.Connection.CreateCommand();
-              cmd.CommandText = @"UPDATE `user` SET `status`="+ jass +" WHERE `user_id` = @userr_id;";
+              cmd.CommandText = @"UPDATE `user` SET `status`="+ data +" WHERE `user_id` = @userr_id;";
               Binduser_id(cmd);
               cmd.ExecuteNonQuery();
           }
@@ -218,6 +218,7 @@ public int whatIs(String jass1)
                     post.DesignationName = GetSafeString(reader, "designation_name");
                     post.Email = GetSafeString(reader, "email");
                     post.Gender = GetSafeString(reader, "gender");
+                    post.Password=GetSafeString(reader,"password");
                     post.Status = GetSafeString(reader, "status_name");
                     post.DOB = Convert.ToDateTime(reader["date_of_birth"]).ToString("dd/MM/yyyy");
                     post.DOJ = Convert.ToDateTime(reader["date_of_joining"]).ToString("dd/MM/yyyy");
@@ -318,12 +319,7 @@ public int whatIs(String jass1)
             //cmd.Parameters.Add(new MySqlParameter("role_name", RoleName));
             //cmd.Parameters.Add(new MySqlParameter("userr_id", UserId));
             cmd.Parameters.Add(new MySqlParameter("email", Email));
-            /*cmd.Parameters.Add(new MySqlParameter
-            {
-                ParameterName = "@password",
-                DbType = DbType.String,
-                Value = Password,
-            });*/
+           
             if(string.IsNullOrEmpty(Password))
             cmd.Parameters.AddWithValue("password", DBNull.Value);
             else
@@ -347,12 +343,12 @@ public int whatIs(String jass1)
         }
         private MySqlParameter BindOutputuser_id(MySqlCommand cmd)
         {
-            MySqlParameter outputEmailParam = new MySqlParameter("@user_id_out", MySqlDbType.VarChar) { Direction = ParameterDirection.Output };
+            MySqlParameter outputEmailParam = new MySqlParameter("@user_id_out", MySqlDbType.Int32) { Direction = ParameterDirection.Output };
             cmd.Parameters.Add(outputEmailParam);
             return outputEmailParam;
         }
 
-        internal string GetAllUsersquery = @"select user_id,salutation,first_name,middle_name,last_name,role_name,department_name,designation_name,email,gender,date_of_birth,date_of_joining,status.status_name,
+        internal string GetAllUsersquery = @"select user_id,salutation,first_name,middle_name,last_name,password,role_name,department_name,designation_name,email,gender,date_of_birth,date_of_joining,status.status_name,
           group_concat(distinct if(address_type='Current',address_Line1,NULL)) as 'current_address_Line1',
           group_concat(distinct if(address_type='Current',address_Line2,NULL)) as 'current_address_Line2',
           group_concat(distinct if(address_type='Current',city_name,NULL)) as 'current_city',

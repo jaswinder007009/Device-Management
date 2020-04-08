@@ -5,10 +5,6 @@ export function openForm() {
 ​
 export function closeForm() {
 	// document.getElementsByClassName("RegisterForm")[0].classList.remove("active");
-	document.querySelector("#myForm").style.display="none";
-}
-export function disableEditing() {
-	(<HTMLInputElement>document.getElementById("password")).disabled = true;
-	(<HTMLInputElement>document.getElementById("userName")).disabled = true;
-	(<HTMLInputElement>document.getElementById("confirmpass")).disabled = true;
+    document.querySelector("#myForm").style.display="none";
+    document.querySelector("#myForm").reset();
 }

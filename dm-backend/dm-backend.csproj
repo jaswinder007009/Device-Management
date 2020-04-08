@@ -9,7 +9,7 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
-    <PackageReference Include="MySqlConnector" Version="0.63.0" />
+    <PackageReference Include="MySqlConnector" Version="0.63.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
      <!-- <PackageReference Include="System.Data.SqlClient" Version="4.6.1" /> -->
   </ItemGroup>
