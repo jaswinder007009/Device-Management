@@ -1,15 +1,14 @@
 import {PopulateData} from "./FillData"
-import { GeneratePaging } from "./pagination";
 import { page } from "./paging";
 export class HitApi
 {
     RequestDeviceData : any
     public async HitGetApi(uri : string)
     {
+        (document.getElementById("loading") as HTMLDivElement).style.display = "flex";    // loading start 
         var res  : any
         try{
-        res =  await fetch(uri); 
-
+        res =  await fetch(uri);
         }
         catch(e)
         {
@@ -19,6 +18,7 @@ export class HitApi
         this.RequestDeviceData  = await res.json();
         await new PopulateData().fillData(this.RequestDeviceData);
         this.geneartePage();
+        (document.getElementById("loading") as HTMLDivElement).style.display = "none";    //  loading end
         return res;
     }
 

@@ -73,8 +73,8 @@ var domElement =  new HtmlElementsData();
     var requestStatus = (e.target as HTMLOptionElement).value;
     if (requestStatus ==  "Returned" || requestStatus == "returned")
         requestStatus = "ret"
-        if (requestStatus ==  "Rejected" || requestStatus ==  "reject")
-        requestStatus = "rej"
+    if (requestStatus ==  "Rejected" || requestStatus ==  "reject")
+    requestStatus = "rej"
     console.log(requestStatus);
     new UserRequestStatus().requestStatusResult(requestStatus);
     
@@ -83,3 +83,4 @@ var domElement =  new HtmlElementsData();
 
 
 console.log((document.getElementById("request-status") as HTMLSelectElement).value);
+

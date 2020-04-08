@@ -56,25 +56,29 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0:
-                            _b.trys.push([0, 2, , 3]);
-                            return [4 /*yield*/, fetch(uri)];
+                            document.getElementById("loading").style.display = "flex"; // loading start 
+                            _b.label = 1;
                         case 1:
-                            res = _b.sent();
-                            return [3 /*break*/, 3];
+                            _b.trys.push([1, 3, , 4]);
+                            return [4 /*yield*/, fetch(uri)];
                         case 2:
+                            res = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 3:
                             e_1 = _b.sent();
                             console.log(e_1, "error while  hitting api");
-                            return [3 /*break*/, 3];
-                        case 3:
+                            return [3 /*break*/, 4];
+                        case 4:
                             console.log(res.status);
                             _a = this;
                             return [4 /*yield*/, res.json()];
-                        case 4:
+                        case 5:
                             _a.RequestDeviceData = _b.sent();
                             return [4 /*yield*/, new FillData_1.PopulateData().fillData(this.RequestDeviceData)];
-                        case 5:
+                        case 6:
                             _b.sent();
                             this.geneartePage();
+                            document.getElementById("loading").style.display = "none"; //  loading end
                             return [2 /*return*/, res];
                     }
                 });

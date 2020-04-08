@@ -78,14 +78,16 @@ namespace dm_backend.Logics
         }
 
 
-        private void  getStatus(string  status)
+        private void getStatus(string status)
         {
 
-            
-            if (status == "ret")
+
+            if (status == "ret" || status == "Returned")
                 status = " and  s.status_name = 'Returned'";
-            else if (status == "rej")
+            else if (status == "rej" || status == "Rejected")
                 status = " and  s.status_name = 'Rejected'";
+            else
+                status = "";
 
             this.command += " " + status;
 

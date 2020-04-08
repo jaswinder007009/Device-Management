@@ -4,6 +4,7 @@
   "description": "",
   "main": "adminDashboard.js",
   "dependencies": {
+    "@types/jquery": "^3.3.34",
     "commonjs": "^0.0.1"
   },
   "devDependencies": {},
