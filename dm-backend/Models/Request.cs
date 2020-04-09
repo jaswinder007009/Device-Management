@@ -107,13 +107,14 @@ namespace dm_backend.Models
             return requests;
         }
 
-        public string AcceptDeviceRequest(int  requestId)
+        public string AcceptDeviceRequest(int id)
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "accept_request";
             cmd.CommandType = CommandType.StoredProcedure; 
             try{
                 cmd.Parameters.AddWithValue("@request_id", requestId);
+                cmd.Parameters.Add(new MySqlParameter("var_admin_id", id));
                 cmd.ExecuteNonQuery();
                 return "Request accepted";
             }

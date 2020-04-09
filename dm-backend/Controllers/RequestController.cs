@@ -103,13 +103,14 @@ namespace dm_backend.Models{
         
         [HttpGet]
         [Route("{requestId}/accept")]
-        public IActionResult AcceptRequest(int requestId)
+        public IActionResult AcceptRequest(int requestId, [System.Web.Http.FromUri]int id)
         {
             Db.Connection.Open();
             RequestModel query = new RequestModel(Db);
+            query.requestId = requestId;
             string result = null;
             try{
-                result =query.AcceptDeviceRequest(requestId);
+                result =query.AcceptDeviceRequest(id);
             }
             catch(Exception e){
                 result="Device unavailable";
