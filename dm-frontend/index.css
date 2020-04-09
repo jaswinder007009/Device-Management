@@ -103,3 +103,38 @@
     background-repeat: no-repeat;
     padding: 12px 20px 12px 40px;
   }
+
+
+  .user_data_table
+  {
+    justify-content: center;
+    float : center;
+  }
+  .load{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    background-color: #41434436;
+    align-items: center;
+}
+.loader {
+border: 8px solid #f3f3f3; /* Light grey */
+border-top: 8px solid #232544; /* Blue */
+border-radius: 50%;
+width: 40px;
+height: 40px;
+display: flex;
+animation: spin 2s linear infinite;
+
+align-content : center;
+}
+
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}

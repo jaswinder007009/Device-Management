@@ -24,7 +24,6 @@ export class page
 
     public addPageElement( end : number , start : number =1,)
         {
-
             this.clearData();
            (document.getElementById("pagination") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="" value="<<" >`;
             for (let loop = start ; loop <= end ; loop++)
