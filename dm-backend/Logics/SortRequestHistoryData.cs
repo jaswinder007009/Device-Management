@@ -24,7 +24,8 @@ namespace dm_backend.Logics
             sl.salutation_id = u.salutation_id and  dt.device_type_id = rh.device_type and  sp.specification_id =  rh.specification_id and
              s.status_id =  rh.status_id and  u.user_id = rh.user_id left join user u1  on  rh.return_to = u1.user_id  left join salutation as s1 on
             s1.salutation_id = u1.salutation_id  left join device as d  on d.device_id  = rh.device_id 
-            where  concat(u.first_name , ' ', if (u.middle_name is null, '' ,  concat(u.middle_name, ' ')) , u.last_name ) like concat('%' ,@find ,'%')";
+            where  concat(u.first_name , ' ', if (u.middle_name is null, '' ,  concat(u.middle_name, ' ')) , u.last_name ) like concat('%' ,@find ,'%') 
+             and  if(@status is null ,  s.status_name like '%' OR s.status_name is null  , s.status_name = @status)  and if(@serialNumber is null , d.serial_number like '%'  OR d.serial_number is null ,  d.serial_number = @serialNumber )";
 
         public SortRequestHistoryData(AppDb db)
         {
@@ -78,7 +79,7 @@ namespace dm_backend.Logics
         }
 
 
-        private void getStatus(string status)
+    /*    private void getStatus(string status)
         {
 
 
@@ -91,58 +92,48 @@ namespace dm_backend.Logics
 
             this.command += " " + status;
 
-        }
+        }*/
 
-        private void getSerialNumber()
-        {
-            this.command = "select * from (" + this.command + ") as history where history.serial_number = @serialnumber";
-        }
+      
 
 
         async public Task<Result<RequestDeviceHistory>> GetSortData(string find, string serialNumber, string status , string sortElement, string sortType, string page, string limit)
         {
            
             using var cmd = Db.Connection.CreateCommand();
-            if (status != "" || status != null)
-                getStatus(status);
+          /*  if (status != "" || status != null)
+                getStatus(status);*/
             FindSortingAttribute(sortElement);
             this.command += " " + sortType;
             int pageValue = page_limit(page, 1);
             int limitValue = page_limit(limit, 10);
             int offset = ((pageValue-1) * limitValue);
 
-            if (serialNumber != null && serialNumber != "")
-                getSerialNumber();
-               
-
-
-
-
 
             cmd.CommandText = command + " limit @offset , @limit ;";
             
             cmd.CommandType = CommandType.Text;
 
-            BindLimitParams(cmd, offset, limitValue);
-            BindSearchParms(cmd, find , serialNumber);
+            BindLimitParams(cmd, offset, limitValue );
+            BindSearchParms(cmd, find , serialNumber , status );
 
-            try
+          //  try
             {
 
                 var data = await new BindRequestData(Db).BindHistoryData(await cmd.ExecuteReaderAsync());
 
-                return await new TotalResultCount(Db).FindCount(data, command, find, offset, limitValue, serialNumber);
+                return await new TotalResultCount(Db).FindCount(data, command, find, offset, limitValue, serialNumber , status);
 
             }
-            catch (Exception e)
+            //catch (Exception e)
             {
-                throw e;
+             //   throw e;
             }
         }
 
 
 
-        public void BindSearchParms(MySqlCommand cmd, string find , string serialNumber)
+        public void BindSearchParms(MySqlCommand cmd, string find , string serialNumber , string status)
         {
             cmd.Parameters.Add(new MySqlParameter
             {
@@ -150,14 +141,11 @@ namespace dm_backend.Logics
                 DbType = DbType.String,
                 Value = find,
             });
-            cmd.Parameters.Add(new MySqlParameter
-            {
-                ParameterName = "@serialnumber",
-                DbType = DbType.String,
-                Value = serialNumber,
-            });
+            cmd.Parameters.Add(new MySqlParameter("@serialnumber", serialNumber));
+            cmd.Parameters.Add(new MySqlParameter("@status", status));
+           
         } 
-            public void BindLimitParams(MySqlCommand cmd, int low , int high )
+            public void BindLimitParams(MySqlCommand cmd, int low , int high  )
         {
             cmd.Parameters.Add(new MySqlParameter
             {

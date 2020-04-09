@@ -18,7 +18,9 @@ namespace dm_backend.Models{
         {
             Db = db;
         }
+
         [HttpPost]
+        [Route("add")]
         public IActionResult PostRequest([FromBody]RequestModel req)
         {
             Db.Connection.Open();

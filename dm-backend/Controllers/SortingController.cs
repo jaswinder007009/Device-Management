@@ -27,10 +27,12 @@ namespace dm_backend.Models
             string sortType = HttpContext.Request.Query["sort-type"];
             string page = (HttpContext.Request.Query["page"]);
             string limit = (HttpContext.Request.Query["page-size"]);
-            if (deviceserialNumber == null)
-                deviceserialNumber = "";
+            if (status == "" || status == null)
+                status = null;
+            if (deviceserialNumber == "" || deviceserialNumber == null)
+                deviceserialNumber = null;
             if (sortType == null)
-                sortType = "";
+                sortType = null;
             if (sort == null)
                 sort = "";
             if (find == null)
@@ -39,14 +41,13 @@ namespace dm_backend.Models
                 page = "";
             if (limit == null)
                 limit = "";
-            if (status == null)
-                status = "";
+          
             var result = new SortRequestHistoryData(Db);
-            try
+          //  try
             {
                 return new OkObjectResult(await result.GetSortData(find, deviceserialNumber, status, sort, sortType, page, (limit)));
             }
-            catch
+           // catch
             {
                 return BadRequest();
             }

@@ -16,13 +16,13 @@ namespace dm_backend.Models{
         {
             Db = db;
         }
-        public async Task<Result<RequestDeviceHistory>> FindCount( List<RequestDeviceHistory> data, string querry , string find , int offset , int limit , string serialNumber )
+        public async Task<Result<RequestDeviceHistory>> FindCount( List<RequestDeviceHistory> data, string querry , string find , int offset , int limit , string serialNumber , string status )
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"select count(*)  as total_count from (" + querry + ") as history ;";
             var bind = new SortRequestHistoryData(Db);
             bind.BindLimitParams( cmd , offset , limit);
-            bind.BindSearchParms(cmd, find, serialNumber);
+            bind.BindSearchParms(cmd, find, serialNumber , status);
 
             cmd.CommandType = CommandType.Text;
             return BindResult(await cmd.ExecuteReaderAsync(), data);
