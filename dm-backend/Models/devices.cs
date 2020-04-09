@@ -53,38 +53,21 @@ namespace dm_backend.Models
             cmd.Parameters.Add(new MySqlParameter("specification_id", v.specification_id));
             cmd.Parameters.Add(new MySqlParameter("entry_date", v.entry_date));
         }
-    }
-    public class logicupdate
-    {
-        public AppDb Db { get; }
-        public logicupdate(AppDb db)
-        {
-            Db = db;
-        }
-        async public Task updateDevice(val v1)
+         async public Task updateDevice(val v)
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "updatedevice";
             cmd.CommandType = CommandType.StoredProcedure;
-            BindDeviceput(cmd, v1);
+            BindDeviceId(cmd,v);
+            BindDevice(cmd, v);
             await cmd.ExecuteNonQueryAsync();
         }
-        private void BindDeviceput(MySqlCommand cmd, val v1)
+        private void BindDeviceId(MySqlCommand cmd, val v)
         {
-            cmd.Parameters.Add(new MySqlParameter("device_id", v1.device_id));
-            cmd.Parameters.Add(new MySqlParameter("device_type_id", v1.device_type_id));
-            cmd.Parameters.Add(new MySqlParameter("device_brand_id", v1.device_brand_id));
-            cmd.Parameters.Add(new MySqlParameter("device_model_id", v1.model));
-            cmd.Parameters.Add(new MySqlParameter("color", v1.color));
-            cmd.Parameters.Add(new MySqlParameter("price", v1.price));
-            cmd.Parameters.Add(new MySqlParameter("serial_number", v1.serial_number));
-            cmd.Parameters.Add(new MySqlParameter("warranty_year", v1.warranty_year));
-            cmd.Parameters.Add(new MySqlParameter("purchase_date", v1.purchase_date));
-            cmd.Parameters.Add(new MySqlParameter("status_id", v1.status_id));
-            cmd.Parameters.Add(new MySqlParameter("specification_id", v1.specification_id));
-            cmd.Parameters.Add(new MySqlParameter("entry_date", v1.entry_date));
+            cmd.Parameters.Add(new MySqlParameter("device_id", v.device_id));
         }
     }
+    
 
     public class devices
     {
@@ -185,13 +168,16 @@ namespace dm_backend.Models
             return ReadAll(cmd.ExecuteReader());
 
         }
-        public List<devices> getDeviceBySearch(string search)
+        public List<devices> getDeviceBySearch(string device_name,string serial_number,string status_name)
         {
             using (var cmd = Db.Connection.CreateCommand())
             {
 
-                cmd.CommandText = "call getDevicesBySearch(@search)";
-                cmd.Parameters.AddWithValue("@search", search);
+                cmd.CommandText = "call getDevicesBySearch(@device_name,@serial_number,@status_name)";
+                cmd.Parameters.AddWithValue("@device_name", device_name);
+                cmd.Parameters.AddWithValue("@serial_number",serial_number);
+                cmd.Parameters.AddWithValue("@status_name",status_name);
+
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                     return ReadAll(reader);
             }
@@ -261,10 +247,7 @@ namespace dm_backend.Models
                 DbType = DbType.Int32,
                 Value = device_id,
             });
-
-            // cmd.CommandType = CommandType.StoredProcedure;
-            // cmd.Parameters.AddWithValue("@device_id", device_id);
-            return Read(cmd.ExecuteReader());
+        return Read(cmd.ExecuteReader());
         }
         private List<val> Read(MySqlDataReader reader)
         {
