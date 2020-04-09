@@ -55,10 +55,7 @@ export class DeviceListForAdmin {
     getDeviceList() {
          
             if(token==1){
-                var element = document.createElement('button');
-                //var divs = document.getElementById("t");
-               // console.log(divs);
-              //  divs.appendChild(element);
+
                 `<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="">
                      <a href = "./AddDevice.html" style="color: black;">
                         Add Device</a>
@@ -82,7 +79,6 @@ export class DeviceListForAdmin {
                 </div> 
             </td>
             <td>${this.serial_number} </td>
-            <td>${this.status} </td>
             <td>RAM:${this.ram} Storage:${this.storage}
                 <br>
                 Screen Size:${this.screen_size} Connectivity: ${this.connectivity}
@@ -116,7 +112,7 @@ export class DeviceListForAdmin {
                 </div> 
             </td>
             <td>${this.serial_number} </td>
-            <td>${this.status} </td>
+            
             <td>RAM:${this.ram} Storage:${this.storage}
                 <br>
                 Screen Size:${this.screen_size} Connectivity: ${this.connectivity}

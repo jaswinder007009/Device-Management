@@ -1,4 +1,6 @@
-
+.devices{
+	 cursor: pointer; 
+}
   .mdl-layout__content {
     overflow-x: auto;
 }

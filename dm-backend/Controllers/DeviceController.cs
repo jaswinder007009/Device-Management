@@ -39,13 +39,20 @@ namespace dm_backend.Controllers
 
 
         [HttpGet]
-        [Route("{search}")]
+        [Route("search")]
 
-        public IActionResult getDeviceswithSearch(String search)
+        public IActionResult getDeviceswithSearch()
         {
+            string device_name = (HttpContext.Request.Query["device_name"]);
+            string serial_number = (HttpContext.Request.Query["serial_number"]);
+            string status_name = (HttpContext.Request.Query["status_name"]);
+            if(device_name==null)
+            {
+                device_name = "";
+            }
             Db.Connection.Open();
             var query = new devices(Db);
-            var result = query.getDeviceBySearch(search);
+            var result = query.getDeviceBySearch(device_name,serial_number,status_name);
             Db.Connection.Close();
             return Ok(result);
 

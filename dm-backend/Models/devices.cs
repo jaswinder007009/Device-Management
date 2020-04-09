@@ -168,13 +168,16 @@ namespace dm_backend.Models
             return ReadAll(cmd.ExecuteReader());
 
         }
-        public List<devices> getDeviceBySearch(string search)
+        public List<devices> getDeviceBySearch(string device_name,string serial_number,string status_name)
         {
             using (var cmd = Db.Connection.CreateCommand())
             {
 
-                cmd.CommandText = "call getDevicesBySearch(@search)";
-                cmd.Parameters.AddWithValue("@search", search);
+                cmd.CommandText = "call getDevicesBySearch(@device_name,@serial_number,@status_name)";
+                cmd.Parameters.AddWithValue("@device_name", device_name);
+                cmd.Parameters.AddWithValue("@serial_number",serial_number);
+                cmd.Parameters.AddWithValue("@status_name",status_name);
+
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                     return ReadAll(reader);
             }
