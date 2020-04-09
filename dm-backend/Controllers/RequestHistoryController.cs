@@ -17,15 +17,15 @@ namespace dm_backend.Controllers
 
  
         [HttpGet]
-        [Route("{deviceAssignmentId}/accept")]
-        public IActionResult AcceptReturn(int deviceAssignmentId)
+        [Route("{returnId}/accept")]
+        public IActionResult AcceptReturn(int returnId)
         {
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "accept_return";
             cmd.CommandType = CommandType.StoredProcedure; 
             try{
-                cmd.Parameters.AddWithValue("@assigned_id", deviceAssignmentId);
+                cmd.Parameters.AddWithValue("@return_id", returnId);
                 cmd.ExecuteNonQuery();
             }
             catch(Exception e){

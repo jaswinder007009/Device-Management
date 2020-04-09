@@ -54,5 +54,17 @@ namespace dm_backend.Utilities
             request.availability = GetSafeInt<Int64>(reader, "availability") == 1 ? true : false;
             return request;
         }
+         public static NotificationModel ReadNotification(MySqlDataReader reader){
+            var notify = new NotificationModel();
+            notify.notificationId = GetSafeInt<int>(reader, "notification_id");
+            notify.userId = (int)reader["user_id"];
+            notify.deviceModel = (string)reader["model"];
+            notify.deviceBrand = (string)reader["brand"];
+            notify.deviceType = (string)reader["type"];
+            notify.notificationDate = Convert.ToDateTime(reader["notification_date"]).ToString("yyyy-MM-dd");
+            notify.message = GetSafeString(reader, "message");
+            notify.status = (string)reader["status_name"];
+            return notify;
+        }
     }
 }
