@@ -11,6 +11,6 @@ export class HtmlElementsData
     resultcount = " result-count" 
     requestStatus =  "request-status"
     userName = "user"    // set user search in userdefine search box
-    devicesearch="device"
+    devicesearch="device_serial_number"
     deviceSerial = "serialNumber"
 }

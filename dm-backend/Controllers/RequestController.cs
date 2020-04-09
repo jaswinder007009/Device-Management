@@ -18,29 +18,9 @@ namespace dm_backend.Models{
         {
             Db = db;
         }
-/*
-        [HttpGet]
-       async public Task<IActionResult> Get()
-        {
-            string find = (HttpContext.Request.Query["find"]);
-            string page = (HttpContext.Request.Query["page"]);
-            string size = (HttpContext.Request.Query["pagesize"]);
-            if (find == null)
-                find = "";
-            if (page == null)           
-                page = "1";
-            if (size == null)
-               size = "10";
-            var low = ((int.Parse(page) * int.Parse(size)) - int.Parse(size));
-            var high = int.Parse(size) * int.Parse(page);
-            await Db.Connection.OpenAsync();
-            var result = new SearchRequestHistory(Db);
-            var data = await result.SearchDeviceRequest(find, low, high);
 
-            return new OkObjectResult(data);
-        }
-        */
         [HttpPost]
+        [Route("add")]
         public IActionResult PostRequest([FromBody]RequestModel req)
         {
             Db.Connection.Open();
@@ -60,9 +40,13 @@ namespace dm_backend.Models{
         [Route("pending")]
         public IActionResult GetRequest()
         {
+            int userId=-1;
             string searchField = "";
             string sortField = "request_device_id";
             int sortDirection = 0;
+            if (!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
+                userId = Convert.ToInt32(HttpContext.Request.Query["id"]);
+
             if (!string.IsNullOrEmpty(HttpContext.Request.Query["search"]))
                 searchField = HttpContext.Request.Query["search"];
             
@@ -74,10 +58,11 @@ namespace dm_backend.Models{
 
             Db.Connection.Open();
             var requestObject = new RequestModel(Db);
-            var result = requestObject.GetAllPendingRequests(sortField,sortDirection,searchField);
+            var result = requestObject.GetAllPendingRequests(userId,sortField,sortDirection,searchField);
             Db.Connection.Close();
             return Ok(result);
         }
+
 
         [HttpGet]
         [Route("{requestId}/reject")]
@@ -98,13 +83,14 @@ namespace dm_backend.Models{
         
         [HttpGet]
         [Route("{requestId}/accept")]
-        public IActionResult AcceptRequest(int requestId)
+        public IActionResult AcceptRequest(int requestId, [System.Web.Http.FromUri]int id)
         {
             Db.Connection.Open();
             RequestModel query = new RequestModel(Db);
+            query.requestId = requestId;
             string result = null;
             try{
-                result =query.AcceptDeviceRequest(requestId);
+                result =query.AcceptDeviceRequest(id);
             }
             catch(Exception e){
                 result="Device unavailable";

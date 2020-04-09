@@ -14,7 +14,7 @@ export class UserRequestStatus
         this.domElements = new HtmlElementsData();
     }
 
-    generateRequestData(requestStatus : string = "ALL")
+    generateRequestData(requestStatus : string)
     {   let userName  = (document.getElementById(new HtmlElementsData().search)  as HTMLInputElement).getAttribute(this.domElements.userName);
         var sortAttribute = (document.getElementById(this.domElements.thead) as HTMLTableRowElement).getAttribute(this.domElements.sortAttributr);       
         var sortType  =  (document.getElementById(this.domElements.thead) as HTMLTableRowElement).getAttribute(this.domElements.sortType);

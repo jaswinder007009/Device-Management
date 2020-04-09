@@ -16,8 +16,8 @@ export class findResult {
     }
 
     public searchUser() {
-        let userName=(document.getElementById(this.elements.search) as HTMLTableRowElement).getAttribute(this.elements.userName);
-        let serialNumber = (document.getElementById(this.elements.devicesearch) as HTMLTableRowElement).getAttribute(this.elements.deviceSerial);
+        let userName=(document.getElementById(this.elements.search) as HTMLInputElement).getAttribute(this.elements.userName);
+        let serialNumber = (document.getElementById(this.elements.devicesearch) as HTMLInputElement).getAttribute(this.elements.deviceSerial);
         (document.getElementById(this.elements.thead) as HTMLTableRowElement).setAttribute(this.elements.sortAttributr, "");
         (document.getElementById(this.elements.thead) as HTMLTableRowElement).setAttribute(this.elements.sortType, "");
         var uri = BASEURL + "/sorting?user-name=" + encodeURI(userName) + "&serial-number=" + encodeURI(serialNumber) + "";;

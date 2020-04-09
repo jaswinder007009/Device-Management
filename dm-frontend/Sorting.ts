@@ -2,6 +2,7 @@ import { HitApi } from "./HitApi";
 import { HtmlElementsData } from "./HtmlElementsId";
 import { BASEURL } from "./globals";
 import { findResult } from "./search";
+import { getStatus } from "./index";
 
 
 export class Sort 
@@ -38,8 +39,10 @@ export class Sort
     }
 
     setSortingApiCall(sortAttribute : string , find  : string , sortType : string)
+    
     {
-        const uri= new findResult().searchUser() +"&sort="+sortAttribute+"&sort-type="+sortType;
+        const status = getStatus((document.getElementById("request-status") as HTMLSelectElement).value);
+        const uri= new findResult().searchUser() +"&status="+status+"&sort="+sortAttribute+"&sort-type="+sortType;
         
         var populateSorting = new HitApi();
         
