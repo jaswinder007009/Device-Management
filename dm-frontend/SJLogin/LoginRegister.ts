@@ -1,3 +1,6 @@
+import { validationRegister} from "./loginvalidation";
+import { validationLogin} from "./loginvalidation";
+//import { remove1} from "./loginvalidation";
 function parseJwt (token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -52,13 +55,28 @@ function RegisterUser()
 document.querySelector("#mybtn").addEventListener('click',function(e) 
 {
 e.preventDefault();
-LoginUser();
+if(validationLogin()==true)
+{
+    LoginUser();
+}
+else {
+    return false;
+}
+
 });
 document.querySelector("#rmybtn").addEventListener('click',function(e) 
 {
 e.preventDefault();
-RegisterUser();
+if(validationRegister()==true)
+{
+    RegisterUser();
+  
+}
+else {
+    return false;
+}
 });
+
 document.querySelector("#fp").addEventListener('click', function (e) {
     e.preventDefault();
     document.querySelector('.bg-model').style.display = 'flex' ;
@@ -66,4 +84,40 @@ document.querySelector("#fp").addEventListener('click', function (e) {
 document.querySelector('.x').addEventListener('click',
 function(){
     document.querySelector('.bg-model').style.display='none';
+});
+
+
+
+
+
+
+let password = document.querySelector('input[type="password"]');
+
+password.addEventListener('focus', (a) => {
+ document.getElementById('userpasswords').innerHTML = ""; 
+});
+
+
+
+let email = document.querySelector('input[type="text"]');
+
+email.addEventListener('focus', (b) => {
+ document.getElementById('useremails').innerHTML = ""; });
+
+
+
+
+ let remail = document.querySelector('input[type="text"]');
+
+ remail.addEventListener('focus', (c) => {
+ document.getElementById('emails').innerHTML = ""; });
+
+
+
+ 
+ let rpassword = document.querySelector('input[type="password"]');
+
+ rpassword.addEventListener('focus', (d) => {
+ document.getElementById('passwords').innerHTML = ""; 
+ document.getElementById('confirmpasss').innerHTML = ""; 
 });
