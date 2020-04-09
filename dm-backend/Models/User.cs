@@ -127,7 +127,7 @@ namespace dm_backend
                     return ReadAll(reader);
             }
         }
-        public List<User> SortUserbyName(string sortby, int direction, string searchby = "")
+        public List<User> SortUserbyName(string sortby, string direction, string searchby = "")
         {
             Console.WriteLine(sortby);
             using (var cmd = Db.Connection.CreateCommand())
@@ -139,7 +139,7 @@ namespace dm_backend
                     cmd.CommandText += @" and get_full_name(user.user_id) like CONCAT('%', '" + @searchby + "', '%') or user.email like CONCAT('%', '" + @searchby + "', '%') or status_name like CONCAT('%', '" + @searchby + "', '%')";
                     cmd.Parameters.AddWithValue("@searchby", searchby);
                 }
-                    cmd.CommandText += " order by "+sortby+" " +  direction;
+                    cmd.CommandText += " order by "+sortby+ " " +  direction;
                     //cmd.Parameters.AddWithValue("@sortby", sortby);
                 Console.WriteLine(cmd.CommandText);
 

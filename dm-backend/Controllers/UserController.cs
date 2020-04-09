@@ -41,7 +41,7 @@ namespace dm_backend.Controllers
             string namesToSearch = HttpContext.Request.Query["search"];
 
             string ToSort = (string)HttpContext.Request.Query["sortby"] ?? "first_name";
-            int direction = Convert.ToInt32(HttpContext.Request.Query["direction"]);
+            string direction = (string)HttpContext.Request.Query["direction"]  ?? "ASC" ;
              Db.Connection.Open();
             var query = new User(Db);
             var result = query.SortUserbyName(ToSort, direction, namesToSearch);//names To Sort

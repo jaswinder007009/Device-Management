@@ -69,14 +69,13 @@ form.addEventListener('submit', function (e) {
 		var userData1=createObjectFromForm(this);
 		console.log(userData1);
 			if(validateForm(form_mode)==true){
-					new UpdateUserApi().updateUserData(userData1);}
+					new UpdateUserApi().updateUserData(userData1).then(function(){setData();});}
 				else
 				{
 					return false;
 				}
 	}
 util.closeForm();
-{setData();}
 return false;
 
 });
@@ -85,13 +84,13 @@ return false;
 document.addEventListener("click", function (ea) {
 	if((ea.target as HTMLButtonElement).className == "userDeleteData"){
 		const id = parseInt((ea.target as HTMLButtonElement).dataset["id"]);
-		new GetUserApi().deleteData(id);
-		{setData();}
+		new GetUserApi().deleteData(id).then(function(){setData();});
+		
 	}
 	else if(ea.target.tagName == 'TH')
 	{
-		let id = (ea.target as HTMLInputElement).id;
-	    const returned = new Sort().sortBy(id);
+	  
+	    const returned = new Sort().sortBy(ea.target as HTMLTableHeaderCellElement);
 		        returned.then(data => {
 				console.log(data);
 				populateTable(data)

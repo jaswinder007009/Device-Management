@@ -47,7 +47,7 @@ export class GetUserApi
 	}
 /////API TO DELETE
 	deleteData(userId: number) {
-		fetch(BASEURL + "/api/user/" + userId + "/remove", {
+	 return fetch(BASEURL + "/api/user/" + userId + "/remove", {
 			method: "DELETE"
 		});
 	}
