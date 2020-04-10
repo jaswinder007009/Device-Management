@@ -29,7 +29,7 @@ function getPendingRequests(url: string) {
                 }
                 else {
                     key = prop;
-                    if (key != "comment" && key != "requestId")
+                    if (key != "comment" && key != "requestId" && key != "noOfDays")
                         tableData += "<td>" + value + "</td>";
 
                     if (key == "availability" && value == true)
@@ -48,7 +48,7 @@ function getPendingRequests(url: string) {
 }
 
 function requestAction(requestUrl, requestId, action) {
-    fetch(globalUrl + requestUrl);
+    fetch(globalUrl + requestId+requestUrl);
     alert("Request " + requestId + " " + action);
     document.getElementById("content").innerHTML = "";
     getPendingRequests(globalUrl + "pending");
@@ -86,13 +86,13 @@ document.addEventListener("click", function (e) {
     if ((e.target as HTMLButtonElement).className == "reject-button") {
         const data = (e.target as HTMLButtonElement).dataset.requestid;
         let requestId = parseInt(data, 10);
-        requestAction(requestId + '/reject?id=' + adminId, requestId, 'rejected');
+        requestAction('/reject?id=' + adminId, requestId, 'rejected');
 
     }
     if ((e.target as HTMLButtonElement).className == "accept-button") {
         const data = (e.target as HTMLButtonElement).dataset.requestid;
         let requestId = parseInt(data, 10);
-        requestAction(requestId + '/accept', requestId, 'accepted');
+        requestAction('/accept?id=' + adminId, requestId, 'accepted');
 
     }
 
