@@ -13,6 +13,7 @@ namespace dm_backend.Models
     {
         public int? returnRequestId { get; set; }
         public int userId { get; set; }
+        public int deviceId { get; set; }
         public string deviceModel { get; set; }
         public string deviceBrand { get; set; }
         public string deviceType { get; set; }  
@@ -31,7 +32,7 @@ namespace dm_backend.Models
         public string AddReturnRequest()
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "insert_return_request";
+            cmd.CommandText = @"insert_return_request";
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
@@ -60,11 +61,7 @@ namespace dm_backend.Models
         private void BindReturnProcedureParams(MySqlCommand cmd){
            
             cmd.Parameters.Add(new MySqlParameter("var_user_id", userId));
-            cmd.Parameters.Add(new MySqlParameter("var_device_model", deviceModel));
-            cmd.Parameters.Add(new MySqlParameter("var_device_brand", deviceBrand));
-            cmd.Parameters.Add(new MySqlParameter("var_device_type", deviceType));
-            cmd.Parameters.Add(new MySqlParameter("var_specification_id", specs.GetSpecificationID(Db)));
-            cmd.Parameters.Add(new MySqlParameter("var_return_date", returnDate));
+            cmd.Parameters.Add(new MySqlParameter("var_device_id", deviceId));
             
         }
 
@@ -76,19 +73,21 @@ namespace dm_backend.Models
                 while (reader.Read())
                 {
                     var request = ReadReturnRequests(reader);
+                    request.specs = ReadSpecifications(reader);
                     requests.Add(request);
                 }
             }
             return requests;
         }
-        internal string get_return_requests=@"select return_request_id, user_id, device_model.model, 
-        device_type.type, device_brand.brand, return_date
+        internal string get_return_requests=@"select return_request_id, user_id,device_id, device_model.model, 
+        device_type.type, device_brand.brand,specification.*, return_date
         from return_request
         inner join user using(user_id)
         inner join device using(device_id)
         inner join device_brand using(device_brand_id)
         inner join device_model using(device_model_id)
-        inner join device_type using(device_type_id)";
+        inner join device_type using(device_type_id)
+        inner join specification using(specification_id)";
 
         internal string searchQuery=@" where device_type.type like CONCAT('%', @search_field, '%') or device_model.model like CONCAT('%', @search_field, '%') or device_brand.brand like CONCAT('%', @search_field, '%') group by return_request_id";       
 
