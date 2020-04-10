@@ -43,11 +43,11 @@ namespace dm_backend.Models
                 limit = "";
           
             var result = new SortRequestHistoryData(Db);
-          //  try
+            try
             {
                 return new OkObjectResult(await result.GetSortData(find, deviceserialNumber, status, sort, sortType, page, (limit)));
             }
-           // catch
+            catch
             {
                 return BadRequest();
             }

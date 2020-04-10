@@ -1,112 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Devicelist</title>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <title>Document</title>
-</head>
-
+    <!-- Material Design icon font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="./styling.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
 <body>
+    <!-- Always shows a header, even in smaller screens. -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
             <div class="mdl-layout__header-row">
                 <!-- Title -->
-                <span class="mdl-layout-title">Title</span>
+                <div class="devices">
+                    <span class="mdl-layout-title">Notification</span>
+                </div>
                 <!-- Add spacer, to align navigation to the right -->
                 <div class="mdl-layout-spacer"></div>
-                <!-- Navigation. We hide it in small screens. -->
-
+                <div class="mdl-layout-spacer"></div>
             </div>
         </header>
         <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">Title</span>
+            <span class="mdl-layout-title">Notification</span>
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" href="">Request Page</a>
+                <a class="mdl-navigation__link" href="">Device History</a>
+                <a class="mdl-navigation__link" href="">User List</a>
                 <a class="mdl-navigation__link" href="">Link</a>
             </nav>
         </div>
         <main class="mdl-layout__content">
-            <div class="page-content">
-                <!-- Your content goes here -->
-
-                <table class="mdl-data-table mdl-js-data-table">
+            <div class="page-content" data-table>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                mdl-textfield--floating-label mdl-textfield--align-right">
+                             <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
+                                 <i class="material-icons">search</i>
+                             </label>
+                             <div class="mdl-textfield__expandable-holder">
+                                 <input class="mdl-textfield__input" type="text" name="search"
+                                     id="fixed-header-drawer-exp">
+                             </div>
+                         </div>
+                <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" data-id="notification"
+                    style="overflow: auto;">
                     <thead>
-                      <tr>
-                        <th class="mdl-data-table__cell--non-numeric">Name</th>
-                        <th class="mdl-data-table__cell--non-numeric">Nickname</th>
-                        <th>Age</th>
-                        <th class="mdl-data-table__cell--non-numeric">Living?</th>
-                      </tr>
+                        <tr>
+                            <th class="mdl-data-table__header--sorted-descending" name="device_name" data-id="device_name">
+                                Device Name </th>
+                            <th class="mdl-data-table__header--sorted-descending" name="specification"
+                                data-id="specification">
+                                Specifications </th>
+                                <th class="mdl-data-table__header--sorted-descending" name="notification_date"
+                                data-id="notification_date">
+                                Notification Date </th>
+                                <th class="mdl-data-table__header--sorted-descending" name="status"
+                                data-id="status">
+                                Status </th>
+                                <th class="mdl-data-table__header--sorted-descending" name="message"
+                                data-id="message">
+                                Message </th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td class="mdl-data-table__cell--non-numeric">John Lennon</td>
-                        <td class="mdl-data-table__cell--non-numeric">The smart one</td>
-                        <td>40</td>
-                        <td class="mdl-data-table__cell--non-numeric"><button  class="submitt">
-                            accept 
-                        </button>
-                        <button class="submitt">
-                            reject
-                        </button></td>
-                      </tr>
-                      <tr>
-                        <td class="mdl-data-table__cell--non-numeric">Paul McCartney</td>
-                        <td class="mdl-data-table__cell--non-numeric">The cute one</td>
-                        <td>73</td>
-                        <td class="mdl-data-table__cell--non-numeric"><button class="submitt">
-                            accept 
-                        </button>
-                        <button class="submitt">
-                            reject
-                        </button></td>
-                      </tr>
-                      <tr>
-                        <td class="mdl-data-table__cell--non-numeric">George Harrison</td>
-                        <td class="mdl-data-table__cell--non-numeric">The shy one</td>
-                        <td>58</td>
-                        <td class="mdl-data-table__cell--non-numeric">
-                            <button class="submitt">
-                                accept 
-                            </button>
-                            <button class="submitt">
-                                reject
-                            </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="mdl-data-table__cell--non-numeric">Ringo Starr</td>
-                        <td class="mdl-data-table__cell--non-numeric">The funny one</td>
-                        <td>74</td>
-                        <td class="mdl-data-table__cell--non-numeric">
-                            <button class="submitt">
-                                accept 
-                            </button>
-                            <button class="submitt">
-                                reject
-                            </button>
-                        </td>
-                      </tr>
+                    <tbody id="notification_data">
                     </tbody>
-                  </table>
-
-
-
-
-
-
-
+                </table>
+                <!-- Your content goes here -->
             </div>
         </main>
     </div>
-    <script data-main="submissionRequest.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
 </body>
-
+<script data-main="getNotification.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
 </html>

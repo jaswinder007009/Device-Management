@@ -9,7 +9,7 @@ using dm_backend.Models;
 
 namespace dm_backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ReturnRequestController : ControllerBase
     {
         public AppDb Db { get; }
