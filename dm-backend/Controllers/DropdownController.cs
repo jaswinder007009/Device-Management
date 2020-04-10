@@ -139,6 +139,37 @@ namespace dm_backend.Controllers
             else
                 return NoContent();
         }
+        [HttpGet]
+        [Route("country_code")]
+        public IActionResult CountryCodes()
+        {
+
+            List<DropdownModel> countries = new List<DropdownModel>();
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "select country_code, country_name from country";
+            var reader = cmd.ExecuteReader();
+
+            using (reader)
+            {
+                while (reader.Read())
+                {
+                    countries.Add(new DropdownModel()
+                    {
+                        id = Convert.ToInt32(reader.GetString(0)),
+                        name = reader.GetString(1),
+
+                    });
+                }
+            }
+            Db.Connection.Close();
+            if (countries.Count > 0)
+            {
+                return Ok(countries);
+            }
+            else
+                return NoContent();
+        }
 
         [Route("addressType")]
         public IActionResult addressTypes()
@@ -187,7 +218,7 @@ namespace dm_backend.Controllers
                     phoneTypes.Add(new DropdownModel()
                     {
                         id = reader.GetInt32(0),
-                        name = reader.GetString(1)
+                        name = reader.GetString(1),
                     });
                 }
             }

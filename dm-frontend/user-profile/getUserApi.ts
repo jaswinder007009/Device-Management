@@ -47,9 +47,26 @@ export class GetUserApi
 	}
 /////API TO DELETE
 	deleteData(userId: number) {
-		fetch(BASEURL + "/api/user/" + userId + "/remove", {
+	 return fetch(BASEURL + "/api/user/" + userId + "/remove", {
 			method: "DELETE"
 		});
+	}
+
+	searchUser() {
+		let search = (document.getElementById("fixed-header-drawer-exp")as HTMLInputElement).value;
+		return fetch(BASEURL+ "/api/user?search=" + search)
+			.then(Response => {
+				return Response.json();
+			})
+			.then(data => {
+				console.log(data);
+				data.forEach((userObject: any) => {
+					this.array.push(new UserModel(userObject));  
+				});
+				console.log('Array', this.array);
+				return this.array;
+			})
+			.catch(err => console.log(err));
 	}
 }
 function populateDropdown(selectElement: HTMLSelectElement, data) {
