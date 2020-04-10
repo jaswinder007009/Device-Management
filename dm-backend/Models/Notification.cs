@@ -30,7 +30,23 @@ namespace dm_backend.Models
             Db = db;
         }
 
-
+        public string AddNotification()
+        {
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "insert_notification";
+            cmd.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                BindNotificationProcedureParams(cmd);
+                cmd.ExecuteNonQuery();
+                return "Notification sent";
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+		
 
         public List<NotificationModel> GetNotifications(int userId,string sortField,string sortDirection,string searchField)
         {
@@ -44,6 +60,13 @@ namespace dm_backend.Models
             return ReadAll(reader);
         }
 
+         private void BindNotificationProcedureParams(MySqlCommand cmd){
+            cmd.Parameters.Add(new MySqlParameter("var_device_model", deviceModel));
+            cmd.Parameters.Add(new MySqlParameter("var_device_brand", deviceBrand));
+            cmd.Parameters.Add(new MySqlParameter("var_device_type", deviceType));
+            cmd.Parameters.Add(new MySqlParameter("specification_id", specs.GetSpecificationID(Db)));
+            
+        }
 
         private List<NotificationModel> ReadAll(MySqlDataReader reader)
         {
