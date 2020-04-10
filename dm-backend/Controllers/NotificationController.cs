@@ -19,7 +19,21 @@ namespace dm_backend.Models{
             Db = db;
         }
 
-        
+        [HttpPost]
+        public IActionResult PostNotification([FromBody]NotificationModel notify)
+        {
+            Db.Connection.Open();
+            notify.Db = Db;
+            string result = null;
+            try{
+                result = notify.AddNotification();
+            }
+            catch(NullReferenceException){
+                return NoContent();
+            }
+            Db.Connection.Close();
+            return Ok(result);
+        }
 
         [HttpGet]
         public IActionResult GetNotification()
@@ -46,6 +60,8 @@ namespace dm_backend.Models{
             Db.Connection.Close();
             return Ok(result);
         }
+
+
 
     }
 
