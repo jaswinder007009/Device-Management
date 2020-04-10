@@ -13,5 +13,7 @@ namespace dm_backend.Models
         public string model { get; set; }
         public string assign_date { get; set; }
         public string return_date { get; set; }
+        public int device_id {get; set;}
+        public int user_id {get; set;}
     }
 }
