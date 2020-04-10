@@ -15,7 +15,8 @@ namespace dm_backend.Models
         public int userId { get; set; }
         public string deviceModel { get; set; }
         public string deviceBrand { get; set; }
-        public string deviceType { get; set; }       
+        public string deviceType { get; set; }  
+        public SpecificationModel specs { get; set;}     
         public string returnDate { get; set; }
         internal AppDb Db { get; set; }
 
@@ -26,6 +27,24 @@ namespace dm_backend.Models
         {
             Db = db;
         }
+
+        public string AddReturnRequest()
+        {
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "insert_return_request";
+            cmd.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                BindReturnProcedureParams(cmd);
+                cmd.ExecuteNonQuery();
+                return "Request sent";
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public List<ReturnRequestModel> GetReturnRequests(int userId,string sortField,int sortDirection,string searchField)
         {
             using var cmd = Db.Connection.CreateCommand();
@@ -37,6 +56,18 @@ namespace dm_backend.Models
             using MySqlDataReader reader =  cmd.ExecuteReader();
             return ReadAll(reader);
         }
+
+        private void BindReturnProcedureParams(MySqlCommand cmd){
+           
+            cmd.Parameters.Add(new MySqlParameter("var_user_id", userId));
+            cmd.Parameters.Add(new MySqlParameter("var_device_model", deviceModel));
+            cmd.Parameters.Add(new MySqlParameter("var_device_brand", deviceBrand));
+            cmd.Parameters.Add(new MySqlParameter("var_device_type", deviceType));
+            cmd.Parameters.Add(new MySqlParameter("var_specification_id", specs.GetSpecificationID(Db)));
+            cmd.Parameters.Add(new MySqlParameter("var_return_date", returnDate));
+            
+        }
+
         private List<ReturnRequestModel> ReadAll(MySqlDataReader reader)
         {
             var requests = new List<ReturnRequestModel>();
