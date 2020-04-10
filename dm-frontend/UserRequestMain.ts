@@ -59,6 +59,6 @@ function bindData()
     body.deviceType = device[0].value
     body.deviceBrand = device[1].value;
     body.deviceModel = device[2].value;
-    body.specs = document.getElementById()
+  //body.specs = document.getElementById()
 
 }
