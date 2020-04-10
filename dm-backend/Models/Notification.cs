@@ -32,13 +32,13 @@ namespace dm_backend.Models
 
 
 
-        public List<NotificationModel> GetNotifications(int userId,string sortField,int sortDirection,string searchField)
+        public List<NotificationModel> GetNotifications(int userId,string sortField,string sortDirection,string searchField)
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = get_all_notifications+searchQuery;
             if(userId!=-1)
                 cmd.CommandText +=@" having user_id="+userId;
-            cmd.CommandText +=@" order by "+sortField+(sortDirection==-1 ? " desc":" asc");; 
+            cmd.CommandText +=@" order by "+sortField+" "+sortDirection+";"; 
             cmd.Parameters.AddWithValue("@search_field", searchField); 
             using MySqlDataReader reader =  cmd.ExecuteReader();
             return ReadAll(reader);

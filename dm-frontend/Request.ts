@@ -34,7 +34,11 @@ function getPendingRequests(url: string) {
 
                     if (key == "availability" && value == true)
                         tableData += "<td>" + "<button class=\"accept-button\" data-requestid=\"" + requestId + "\" >Accept</button>" + "</td>";
-                }
+                     else if(key =="availability" && value == false)
+                     tableData += "<td>" + "<button class=\"notify-button\" data-requestid=\"" + requestId + "\" >Notify</button>" + "</td>";
+                   
+
+                    }
             }
 
             tableData += "<td>" + "<button class=\"reject-button\" data-requestid=" + requestId + " >Reject</button>" + "</td>";

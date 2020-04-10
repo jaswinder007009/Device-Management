@@ -1,5 +1,6 @@
 import { BASEURL } from './globals';
 import { DeviceListForAdmin } from "./deviceListForAdmin";
+import { Sort } from './user-profile/SortingUser';
 
 class GetApiForAdmin {
     getApi(URL:string) {
@@ -10,8 +11,8 @@ class GetApiForAdmin {
             .then(data => {
                 console.log(data);
                 (document.getElementById("Request_data") as HTMLTableElement).innerHTML = "";
-                for (let i = 0; i < data.length; i++) {
-                    let res = new DeviceListForAdmin(data[i]);
+                for (let element in data) {
+                    let res = new DeviceListForAdmin(data[element]);
                     res.getDeviceList();
                 }
             })
@@ -54,19 +55,7 @@ class GetApiForAdmin {
         const URL = BASEURL + "/api/Device/sort?SortColumn=" + SortColumn + "&SortDirection=" + SortDirection;
         this.getApi(URL);
     }
-    checkSortType(value: string): string {
-        const type = (document.getElementById(value) as HTMLTableRowElement).getAttribute("class");
-        
-        if (type === "mdl-data-table__header--sorted-descending") {
-            (document.getElementById(value) as HTMLTableElement).setAttribute("class", "mdl-data-table__header--sorted-ascending");
-            return "a";
-        }
-        else {
-            (document.getElementById(value) as HTMLTableElement).setAttribute("class", "mdl-data-table__header--sorted-descending");
-            return "d";
-        }
-    }
-
+    
     deleteDevice(device_id:number) {
 
 
@@ -106,10 +95,10 @@ document.addEventListener("click", function (e) {
 });
 (document.querySelector('#Request_data1') as HTMLTableElement).addEventListener("click", function (e) {
     const col = (e.target as HTMLElement).getAttribute('name');
-    // const temp = new GetApiForAdmin();
-    var pos = temp.checkSortType(col);
-    console.log(pos);
-    temp.sort(col, pos);
+    let id = (e.target as HTMLTableHeaderCellElement);
+    let sorts = new Sort();
+    let direction =sorts.checkSortType(id);
+    temp.sort(col, direction);
 });
 (document.querySelector('#fixed-header-drawer-exp')as HTMLInputElement).addEventListener('change', function (e) {
 

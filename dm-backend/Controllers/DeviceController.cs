@@ -64,7 +64,7 @@ namespace dm_backend.Controllers
         {
             string SortColumn = (HttpContext.Request.Query["SortColumn"]);
             string SortDirection = (HttpContext.Request.Query["SortDirection"]);
-            SortDirection = (SortDirection.ToLower()) == "d" ? "DESC" : "ASC";
+            SortDirection = (SortDirection.ToLower()) == "desc" ? "DESC" : "ASC";
             switch (SortColumn.ToLower())
             {
                 case "device_name":
