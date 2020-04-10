@@ -41,7 +41,7 @@ export function createObjectFromForm(formElement: HTMLFormElement) {
 		let state = (container.querySelector(".state") as HTMLInputElement).value;
 		let country = (container.querySelector(".country") as HTMLInputElement).value;
 		let pin = (container.querySelector(".pin") as HTMLInputElement).value;
-		if (addressType)modelObject.addresses.push
+		if (addressLine1)modelObject.addresses.push
 		({addressType,addressLine1,addressLine2,city,state,country,pin});
 	}
 

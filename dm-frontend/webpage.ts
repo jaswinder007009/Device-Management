@@ -8,6 +8,8 @@ import { AllListerers } from "EventListeners";
 import { remove} from "validation";
 import { validateForm} from "validation";
 import { Sort } from "./user-profile/SortingUser";
+import { BASEURL } from "./globals";
+import { UserData }  from "./dropdown";
 
 let form_mode: "create" | "edit";
 
@@ -58,7 +60,9 @@ form.addEventListener('submit', function (e) {
 	{
 		var userData=createObjectFromForm(this);
 		if(validateForm(form_mode)==true){
-		new CreateUserApi().createUserData(userData).then(function(){setData();});}
+		new CreateUserApi().createUserData(userData).then(function(){setData();});
+		new UserData();
+	}
 		else 
 		{
 			return false;
@@ -68,8 +72,11 @@ form.addEventListener('submit', function (e) {
 	{
 		var userData1=createObjectFromForm(this);
 		console.log(userData1);
-			if(validateForm(form_mode)==true){
-					new UpdateUserApi().updateUserData(userData1).then(function(){setData();});}
+			 if(validateForm(form_mode)==true){
+					new UpdateUserApi().updateUserData(userData1).then(function(){
+						setData();
+					});
+				}
 				else
 				{
 					return false;
@@ -116,6 +123,7 @@ document.addEventListener("click", function (ea) {
 	}
 });
 
+//document.querySelector("#addresses1.city").addEventListener("")
 function changeheadingText()
 		{
          document.getElementById('headingText').innerHTML='Update User Details';
@@ -186,4 +194,11 @@ if ((e.target as HTMLButtonElement).className == "userEditData") {
 		(container1.querySelector(".country")as HTMLInputElement).value=  "";
 		(container1.querySelector(".pin")as HTMLInputElement).value= "";
     }
+});
+(document.querySelector('#fixed-header-drawer-exp')as HTMLInputElement).addEventListener('change', function (e) {
+	console.log("test");
+	const temp = new GetUserApi();
+	temp.searchUser().then(function(data){
+		populateTable(data);
+	});
 });

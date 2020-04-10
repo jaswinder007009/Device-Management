@@ -30,7 +30,7 @@
                                 <button type="button" class="collapsible">User Basic Details</button>
                                 <div class="content">
     
-                                    <div class="form-group">
+                                    <div class="form-group" id="form-group">
     
                                         <label> Name: </label>
     
@@ -38,7 +38,7 @@
                                             <option value="Mr">Mr</option>
                                             <option value="Mrs">Mrs</option>
                                             <option value="Ms">Ms</option>
-                                            <option value="Dr">Dr</option>
+                                            <option value="Dr">Dr</option>!
                                         </select>
                                         <input type="text" placeholder="Enter First Name" id="firstName" size="20">
                                         <span id="firstNames" class="text-danger font-weight-bold"></span>
@@ -62,17 +62,17 @@
                                         <span id="confirmpasss" class="text-danger font-weight-bold"></span>
                                     </div>
                                     <div class="form-group">
-                                        <!----Role-->
+                                        
                                         <input type="text" hidden name="Role" class="form-control" id="roleName">
     
                                     </div>
                                     <div class="form-group">
-                                        <!----Role-->
+                                        
                                         <input type="text" hidden name="User" class="form-control" id="userId">
     
                                     </div>
                                     <div class="form-group">
-                                        <!----Role-->
+                                       
                                         <input type="text" hidden name="Status" class="form-control" id="status">
     
                                     </div>
@@ -103,97 +103,107 @@
                                     <div><label for="DOJ">Date Of Joining:</label>
                                         <input type="text" id="doj" name="DOJ" class="form-control">
                                     </div><br>
-                                </div>
-    
-                                <button type="button" class="collapsible">Contact 1 Details</button>
+                                </div><br>
+                                <label> Contact 1 Details </label><br>
                                 <div class="content">
     
                                     <div id="phones1">
                                         <label> Contact 1: </label><br>
                                         <select style="height: 29px;" class="contactNumberType" name="Contact">
-                                            <option value="mobile">Mobile</option>
-                                            <option value="home">Home</option>
-                                            <option value="work">Home</option>
-    
+                                        <option value="home">Home</option>
+                                        <option value="mobile">Mobile</option>
+                                        <option value="work">Work</option>          
                                         </select>
                                         <input type="text" id="phone_number1" name="phone_number1" class="number" maxlength="10">
                                         <span id="phone_number1s" class="text-danger font-weight-bold"></span>
                                         <label>Country Code</label>
                                         <select style="height: 29px;" class="countryCode" name="CountryCode">
                                             <option value="91">India</option>
-                                            <option value="b">b</option>
+                                            <option value="93">Afghanistan</option>
                                         </select>
     
                                         <label>Area Code</label>
-                                        <select style="height: 29px;" class="areaCode"
+                                        <input type="text" name="AreaCode" class="areaCode">
+                                        <!-- <select style="height: 29px;" class="areaCode"
                                             name="AreaCode">
                                             <option value="0129">Faridabad</option>
                                             <option value="b">b</option>
-                                        </select>
+                                        </select> -->
     
                                     </div>
                                 </div>
-    
-                                <button type="button" class="collapsible">Contact 2 Details</button>
+                                <br>
+                                <label> Contact 2 Details </label><br>
+                                
                                 <div class="content">
                                     <div id="phones2">
                                         <label> Contact 2: </label><br>
                                         <select style="height: 29px;" class="contactNumberType" name="Contact">
-                                            <option value="mobile">Mobile</option>
                                             <option value="home">Home</option>
-    
+                                            <option value="mobile">Mobile</option>
+                                            <option value="work">Work</option>       
                                         </select>
-                                        <input type="text" name="phone_number1" class="number" maxlength="10">
-                                        <span id="phone_number1s" class="text-danger font-weight-bold"></span>
-                                        <label>Country Code</label>
-                                        <select style="height: 29px;" class="countryCode" name="CountryCode">
+                                        <input type="text" name="phone_number2" class="number" maxlength="10">
+                                        <label> Country Code: </label>
+                                        <select style="height: 29px;" class="countryCode" name="Country1">
                                             <option value="91">India</option>
-                                            <option value="b">b</option>
+                                            <option value="93">Afghanistan</option>    
                                         </select>
-    
+
+                                        <span id="phone_number1s" class="text-danger font-weight-bold"></span>
+                                           
                                         <label>Area Code</label>
-                                        <select style="height: 29px;" style="height: 29px;" class="areaCode"
+                                        <input type="text" name="AreaCode" class="areaCode">
+                                        <!-- <select style="height: 29px;" style="height: 29px;" class="areaCode"
                                             name="AreaCode">
                                             <option value="0129">Faridabad</option>
                                             <option value="b">b</option>
-                                        </select>
+                                        </select> -->
     
                                     </div>
-                                </div>
-                                <button type="button" class="collapsible">Contact 3 Details</button>
+                                </div><br>
+                                <label> Contact 3 Details </label><br>
                                 <div class="content">
                                     <div id="phones3">
                                         <label> Contact 3: </label><br>
                                         <select style="height: 29px;" class="contactNumberType" name="Contact">
-                                            <option value="mobile">Mobile</option>
                                             <option value="home">Home</option>
-    
+                                            <option value="mobile">Mobile</option>
+                                            <option value="work">Work</option>           
                                         </select>
-                                        <input type="text" name="phone_number1" class="number" maxlength="10">
+                                        <input type="text" name="phone_number3" class="number" maxlength="10">
                                         <span id="phone_number1s" class="text-danger font-weight-bold"></span>
                                         <label>Country Code</label>
                                         <select style="height: 29px;" class="countryCode" name="CountryCode">
                                             <option value="91">India</option>
-                                            <option value="b">b</option>
+                                            <option value="93">Afghanistan</option>
                                         </select>
     
                                         <label>Area Code</label>
-                                        <select style="height: 29px;" style="height: 29px;" class="areaCode"
+                                        <input type="text" name="AreaCode" class="areaCode">
+                                        <!-- <select style="height: 29px;" style="height: 29px;" class="areaCode"
                                             name="AreaCode">
                                             <option value="0129">Faridabad</option>
                                             <option value="b">b</option>
-                                        </select>
+                                        </select> -->
     
                                     </div>
                                 </div>
-    
-                                <button type="button" class="collapsible">Current Address Information</button>
-                                <div class="content">
+                                <br><br>
+                                <label > Current Address Information </label>
+                                <!-- <button type="button" class="collapsible">Current Address Information</button> -->
+                                <div class="content" >
     
                                     <br>
                                     <div id="addresses1">
-    
-                                        <input type="text" class="addressType" value="Current">
+                                        <label>Select Address Type: </label>
+                                        <select style="height: 29x" class=addressType>
+                                            <option value="current">Current</option>
+                                            <option value="permanant">Permanent</option>
+                                        </select>
+
+
+                                        <!-- <input type="text" class="addressType" value="Current"> -->
                                         <br>
                                         <label>Adddress Line 1:</label><input type="text" name="CurrentAddress1"
                                             class="addressLine1" id="c1" size="50" maxlength="50"><br>
@@ -203,21 +213,15 @@
     
                                         <label> City: </label>
                                         <select style="height: 29px;" class="city" id="c4" name="city1">
-                                            <option value="Faridabad">Faridabad</option>
-                                            <option value="Home">Home</option>
-                                            <option value="Bombuflat">Bombuflat</option>
+                                            <option value=""></option>
                                         </select><br>
                                         <label> State: </label>
-                                        <select style="height: 29px;" class="state" id="c5"  name="State1">
-                                            <option value="Haryana">Haryana</option>
-                                            <option value="Home">Home</option>
-                                            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                        <select style="height: 29px;" class="state" id="c5" name="State1">
+                                            
                                         </select><br>
                                         <label> Country: </label>
                                         <select style="height: 29px;" class="country" id="c6" name="Country1">
-                                            <option value="India">India</option>
-                                            <option value="Home">Home</option>
-    
+                                                
                                         </select><br>
                                         <label>Pincode</label>
                                         <input type="text" name="pincode1" id="c3" class="pin" maxlength="6">
@@ -225,13 +229,18 @@
                                     </div><br><input type="checkbox" name="sameaddress" id="sameaddress" class="sameaddress"> Current Address
                                     Same as Permanent Address?
     
-                                </div>
-    
-                                <button type="button" class="collapsible">Permanent Address Information</button>
+                                </div><br><br>
+    <label> Permanent Address Information </label>
+                                <!-- <button type="button" class="collapsible">Permanent Address Information</button> -->
                                 <div class="content">
                                     <div id="addresses2">
                                         <br>
-                                        <input type="text" class="addressType" value="Permanant">
+                                        <label>Select Address Type: </label>
+                                        <select style="height: 29x" class=addressType>
+                                            <option value="current">Current</option>
+                                            <option value="permanant">Permanent</option>
+                                        </select>
+                                        <!-- <input type="text" class="addressType" value="Permanant"> -->
                                         <br>
     
                                         <label>Adddress Line 1 :</label><input type="text" name="PermanentAddress1"
