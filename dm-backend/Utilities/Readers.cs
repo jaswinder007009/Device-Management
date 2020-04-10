@@ -66,5 +66,16 @@ namespace dm_backend.Utilities
             notify.status = (string)reader["status_name"];
             return notify;
         }
+        public static ReturnRequestModel ReadReturnRequests(MySqlDataReader reader){
+            var request = new ReturnRequestModel();
+            request.returnRequestId = GetSafeInt<int>(reader, "return_request_id");
+            request.userId = (int)reader["user_id"];
+            request.deviceId = (int)reader["device_id"];
+            request.deviceModel = (string)reader["model"];
+            request.deviceBrand = (string)reader["brand"];
+            request.deviceType = (string)reader["type"];
+            request.returnDate = Convert.ToDateTime(reader["return_date"]).ToString("yyyy-MM-dd");
+            return request;
+        }
     }
 }

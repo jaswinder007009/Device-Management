@@ -5,28 +5,28 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using dm_backend.Logics;
+using dm_backend.Models;
 
-namespace dm_backend.Models{
-
+namespace dm_backend.Controllers
+{
     [Route("api/[controller]")]
-    public class NotificationController : Controller
+    public class ReturnRequestController : ControllerBase
     {
         public AppDb Db { get; }
 
-        public NotificationController(AppDb db)
+        public ReturnRequestController(AppDb db)
         {
             Db = db;
         }
 
         [HttpPost]
-        public IActionResult PostNotification([FromBody]NotificationModel notify)
+        public IActionResult PostReturnRequest([FromBody]ReturnRequestModel request)
         {
             Db.Connection.Open();
-            notify.Db = Db;
+            request.Db = Db;
             string result = null;
             try{
-                result = notify.AddNotification();
+                result = request.AddReturnRequest();
             }
             catch(NullReferenceException){
                 return NoContent();
@@ -36,11 +36,11 @@ namespace dm_backend.Models{
         }
 
         [HttpGet]
-        public IActionResult GetNotification()
+        public IActionResult GetReturnRequest()
         {
             int userId=-1;
             string searchField = "";
-            string sortField = "notification_id";
+            string sortField = "return_request_id";
             int sortDirection = 0;
             if (!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
                 userId = Convert.ToInt32(HttpContext.Request.Query["id"]);
@@ -55,14 +55,11 @@ namespace dm_backend.Models{
                 sortDirection = Convert.ToInt32(HttpContext.Request.Query["direction"]);
 
             Db.Connection.Open();
-            var NotificationObject = new NotificationModel(Db);
-            var result = NotificationObject.GetNotifications(userId,sortField,sortDirection,searchField);
+            var returnObject = new ReturnRequestModel(Db);
+            var result = returnObject.GetReturnRequests(userId,sortField,sortDirection,searchField);
             Db.Connection.Close();
             return Ok(result);
         }
-
-
-
     }
 
 }
