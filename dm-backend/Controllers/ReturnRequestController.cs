@@ -18,6 +18,23 @@ namespace dm_backend.Controllers
         {
             Db = db;
         }
+
+        [HttpPost]
+        public IActionResult PostReturnRequest([FromBody]ReturnRequestModel request)
+        {
+            Db.Connection.Open();
+            request.Db = Db;
+            string result = null;
+            try{
+                result = request.AddReturnRequest();
+            }
+            catch(NullReferenceException){
+                return NoContent();
+            }
+            Db.Connection.Close();
+            return Ok(result);
+        }
+
         [HttpGet]
         public IActionResult GetReturnRequest()
         {
