@@ -22,13 +22,13 @@ export class UserData {
         this.url = BASEURL + "/api/Dropdown/country";
         this.dropdownApiCall(this.url, document.querySelector("#addresses1 .country"));
         this.dropdownApiCall(this.url, document.querySelector("#addresses2 .country"));
-
+        return null;
     }
     async getState() {
         this.url = BASEURL + "/api/Dropdown/state";
         this.dropdownApiCall(this.url, document.querySelector("#addresses1 .state"));
         this.dropdownApiCall(this.url, document.querySelector("#addresses2 .state"));
-
+        return null;
     }
     async getCity() {
         this.url = BASEURL + "/api/Dropdown/city";
@@ -36,8 +36,14 @@ export class UserData {
         this.dropdownApiCall(this.url, document.querySelector("#addresses2 .city"));
 
     }
+    async getSalutation() {
+        this.url = BASEURL + "/api/Dropdown/salutation";
+        this.dropdownApiCall(this.url, document.querySelector("#form-group #salutation"));
+        console.log(document.querySelector("#form-group .salutation"));
+        
+    }
     async updateData(data) {
-        return fetch(BASEURL + "/api/user/30/update", {
+        return fetch(BASEURL + "/api/user/"+userId+"/update", {
             method: 'PUT',
             headers: new Headers({ 'content-type': 'application/json' }),
             body: JSON.stringify(data)
@@ -63,8 +69,8 @@ var user = new UserData()
 user.getCountry();
 user.getState();
 user.getCity();
+user.getSalutation();
 user.getOneUser();
-
 
 
 document.querySelector('form').addEventListener('click', function (ev) {
@@ -77,6 +83,7 @@ document.querySelector('form').addEventListener('click', function (ev) {
             userObject = data;
             const form = document.querySelector('form') as HTMLFormElement;
             populateFormFromObject(userObject, form);
+            
         });
 
     }
@@ -102,11 +109,10 @@ function populateDropdown(selectElement: HTMLSelectElement, data) {
     }
     selectElement.innerHTML = htmlString;
 }
-
-
-
-
-
-
-
-
+function populateDropdownforCountryCode(selectElement: HTMLSelectElement, data) {
+    let htmlString = '';
+    for (let dataPair of data) {
+        htmlString += '<option data-id="' + dataPair.id + '" value="' + dataPair.id + '">' + dataPair.name + '</option>';
+    }
+    selectElement.innerHTML = htmlString;
+}
