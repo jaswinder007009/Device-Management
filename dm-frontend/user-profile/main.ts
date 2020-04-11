@@ -36,14 +36,9 @@ export class UserData {
         this.dropdownApiCall(this.url, document.querySelector("#addresses2 .city"));
 
     }
-    async getSalutation() {
-        this.url = BASEURL + "/api/Dropdown/salutation";
-        this.dropdownApiCall(this.url, document.querySelector("#form-group #salutation"));
-        console.log(document.querySelector("#form-group .salutation"));
-        
-    }
+  
     async updateData(data) {
-        return fetch(BASEURL + "/api/user/"+userId+"/update", {
+        return fetch(BASEURL + "/api/user/30/update", {
             method: 'PUT',
             headers: new Headers({ 'content-type': 'application/json' }),
             body: JSON.stringify(data)
@@ -69,7 +64,6 @@ var user = new UserData()
 user.getCountry();
 user.getState();
 user.getCity();
-user.getSalutation();
 user.getOneUser();
 
 
@@ -106,13 +100,6 @@ function populateDropdown(selectElement: HTMLSelectElement, data) {
     let htmlString = '';
     for (let dataPair of data) {
         htmlString += '<option data-id="' + dataPair.id + '" value="' + dataPair.name + '">' + dataPair.name + '</option>';
-    }
-    selectElement.innerHTML = htmlString;
-}
-function populateDropdownforCountryCode(selectElement: HTMLSelectElement, data) {
-    let htmlString = '';
-    for (let dataPair of data) {
-        htmlString += '<option data-id="' + dataPair.id + '" value="' + dataPair.id + '">' + dataPair.name + '</option>';
     }
     selectElement.innerHTML = htmlString;
 }
