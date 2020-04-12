@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using dm_backend.Models;
-using dm_backend.Utilities;
-using System.Web.Http.Results;
-using System.Text.Json;
 
 namespace dm_backend.Controllers
 {
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
 
         public UserController(AppDb db)
@@ -24,6 +17,18 @@ namespace dm_backend.Controllers
         [Route("{user_id}")]
         public  JsonResult GetOneUser(string user_id)
         {
+            /*
+                **** Get the user Id as (int)
+                Console.WriteLine("User id: " + GetUserId());
+
+                **** Get the user email as (string)
+                Console.WriteLine("User name: " + GetUserName());
+
+                **** Get the user roles as (List of strings)
+                foreach(string roleName in GetUserRoles()){
+                    Console.WriteLine("Role: ", roleName);
+                }
+            */
             Db.Connection.Open();
             var query = new User(Db);
             var result = query.getUserByuser_id(user_id);
@@ -33,7 +38,7 @@ namespace dm_backend.Controllers
         }
        
        
-        
+
         [HttpGet]
         public JsonResult GetAllUsersInCustomFormat()
         {
