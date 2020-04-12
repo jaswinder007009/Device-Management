@@ -35,9 +35,9 @@ namespace dm_backend.Models{
                         RequestStatus = reader.GetString("status_name"),
                         Serial_number = reader.IsDBNull("serial_number") ? "" : reader.GetString("serial_number"),
                         DeviceSubmittedAdmin = FillAdminName(reader),
-                        AssignedDate = reader.IsDBNull("assign_date") ? DateTime.MinValue : reader.GetDateTime("assign_date"),
-                        RequestDate = (reader.IsDBNull("request_date")) ? DateTime.MinValue : reader.GetDateTime("request_date"),
-                        ReturnDate = (reader.IsDBNull("return_date")) ? DateTime.MinValue : reader.GetDateTime("return_date"),
+                        AssignedDate = reader.IsDBNull("assign_date") ?" " : reader.GetDateTime("assign_date").ToString("dd-MM-yyyy"),
+                        RequestDate = (reader.IsDBNull("request_date")) ? " " : reader.GetDateTime("request_date").ToString("dd-MM-yyyy"),
+                        ReturnDate = (reader.IsDBNull("return_date")) ? " " : reader.GetDateTime("return_date").ToString("dd-MM-yyyy"),
                         AssignDays = reader.IsDBNull("assign_days") ? 0 : (int)(sbyte)reader["assign_days"],
                     }
             );

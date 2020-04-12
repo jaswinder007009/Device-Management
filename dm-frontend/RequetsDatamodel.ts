@@ -10,10 +10,10 @@ export class RequestModel
     public deviceName : string = "";
     public requestStatus : string = "" ;
     public specifications : string = "";
-    public requestDate : Date|undefined =  undefined ;
+    public requestDate :string = "" ;
     public AssignedAdmminName : string = "" ;
-    public assignDate : Date|undefined =  undefined ;
+    public assignDate :string = "" ;
     public assignDays : number = 0;
-    public returnDate : Date|undefined =  undefined ; 
+    public returnDate :string = "" ; 
     public adminName  : string = "";
 }

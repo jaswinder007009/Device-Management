@@ -1,101 +1,117 @@
 <html>
-  <head>
-    <!-- Material Design Lite -->
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <!-- Material Design icon font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  </head>
-  <body>
-   
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+
+<head>
+  <!-- Material Design Lite -->
+  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <!-- Material Design icon font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
                 mdl-layout--fixed-tabs">
-      <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row" >
-            
-          <!-- Title -->
-               
-              <span class="mdl-layout-title"><h4>MY DEVICES</h4></span>
-              <!-- <div class="mdl-layout-spacer"></div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                          mdl-textfield--floating-label mdl-textfield--align-right">
-                <label class="mdl-button mdl-js-button mdl-button--icon"
-                       for="waterfall-exp">
-                  <i class="material-icons">search</i>
-                </label>
-                <div class="mdl-textfield__expandable-holder">
-                  <input class="mdl-textfield__input" type="text" name="sample"
-                         id="waterfall-exp" onkeyup="mydevices.search()">
-                </div>
-              </div> -->
-            </div>
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+
+        <!-- Title -->
+
+        <span class="mdl-layout-title">
+          <h4>MY DEVICES</h4>
+        </span>
        
-        
-        <!-- Tabs -->
-        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-          <a href="#fixed-tab-1" class="mdl-layout__tab is-active" id="one" >CURRENT DEVICE</a>
-          <a href="#fixed-tab-2" class="mdl-layout__tab" id="two">PREVIOUS DEVICE</a>        
-        </div>
-      </header>
-     
-      <main class="mdl-layout__content">
-        <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
-          <div class="page-content">
-            <div class="mdl-layout-spacer"></div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+      </div>
+
+
+      <!-- Tabs -->
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+        <a href="#fixed-tab-1" class="mdl-layout__tab is-active" id="one">CURRENT DEVICE</a>
+        <a href="#fixed-tab-2" class="mdl-layout__tab" id="two">PREVIOUS DEVICE</a>
+        <a href="#fixed-tab-3" class="mdl-layout__tab" id="three">REQUEST HISTORY</a>
+      </div>
+    </header>
+
+    <main class="mdl-layout__content">
+      <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+        <div class="page-content">
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
             mdl-textfield--floating-label mdl-textfield--align-right">
-  <label class="mdl-button mdl-js-button mdl-button--icon"
-         for="search1">
-    <i class="material-icons">search</i>
-  </label>
-  <div class="mdl-textfield__expandable-holder">
-    <input class="mdl-textfield__input" type="text" name="sample"
-           id="search1" >
-  </div>
-</div>
-            <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp" id="tab1">
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="search1">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="text" name="sample" id="search1">
+            </div>
+          </div>
+          <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp" id="tab1">
             <thead>
               <tr>
-                <th onclick="mydevices.sortTable(0,tab1)">DEVICE TYPE</th>
-                <th onclick="mydevices.sortTable(1,tab1)">DEVICE BRAND</th>
-                <th onclick="mydevices.sortTable(2,tab1)">DEVICE MODEL</th>
-                <th onclick="mydevices.sortTable(3,tab1)">ASSIGN_DATE</th>
-                <th  onclick="mydevices.sortTable(4,tab1)">RETURN_DATE</th>
+                <th class="mdl-data-table__header--sorted-descending" data-id="type"  data-sortable=true>DEVICE TYPE</th>
+                <th class="mdl-data-table__header--sorted-descending" data-id="brand" data-sortable=true>DEVICE BRAND</th>
+                <th class="mdl-data-table__header--sorted-descending" data-id="model" data-sortable=true>DEVICE MODEL</th>
+                <th class="mdl-data-table__header--sorted-descending" data-id="assign_date" data-sortable=true>ASSIGN_DATE</th>
+                <th class="mdl-data-table__header--sorted-descending" data-id="return_date" data-sortable=true>RETURN_DATE</th>
+                <th data-id="action" data-sortable=false>ACTION</th>
               </tr>
             </thead>
-           
-          </table></div>
-        </section>
-        <section class="mdl-layout__tab-panel" id="fixed-tab-2">
-          <div class="page-content">
-            <div class="mdl-layout-spacer"></div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+
+          </table>
+        </div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+        <div class="page-content">
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
             mdl-textfield--floating-label mdl-textfield--align-right">
-  <label class="mdl-button mdl-js-button mdl-button--icon"
-         for="search2">
-    <i class="material-icons">search</i>
-  </label>
-  <div class="mdl-textfield__expandable-holder">
-    <input class="mdl-textfield__input" type="text" name="sample"
-           id="search2" >
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="search2">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="text" name="sample" id="search2">
+            </div>
+          </div>
+          <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp" id="tab2">
+            <tr>
+              <th class="mdl-data-table__header--sorted-descending" data-id="type"  data-sortable=true>DEVICE TYPE</th>
+              <th class="mdl-data-table__header--sorted-descending" data-id="brand" data-sortable=true>DEVICE BRAND</th>
+              <th class="mdl-data-table__header--sorted-descending" data-id="model" data-sortable=true>DEVICE MODEL</th>
+              <th class="mdl-data-table__header--sorted-descending" data-id="assign_date" data-sortable=true>ASSIGN_DATE</th>
+              <th class="mdl-data-table__header--sorted-descending" data-id="return_date" data-sortable=true>RETURN_DATE</th>
+            </tr>
+
+          </table>
+        </div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="fixed-tab-3">
+        <div class="page-content">
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+            mdl-textfield--floating-label mdl-textfield--align-right">
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="search3">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="text" name="sample" id="search3">
+            </div>
+          </div>
+          <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp" id="tab3">
+            <tr>
+              <th class="mdl-data-table__header--sorted-descending" data-id="type" data-sortable=true>DEVICE TYPE</th>
+              <th class="mdl-data-table__header--sorted-descending" data-id="brand" data-sortable=true >DEVICE BRAND</th>
+              <th class="mdl-data-table__header--sorted-descending" data-id="model" data-sortable=true>DEVICE MODEL</th>
+              <th  data-id="assign_date">REQUEST DATE</th>
+              <th  data-id="return_date">NO OF DAYS</th>
+              <th data-sortable=false>ACTION</th>
+            </tr>
+
+          </table>
+        </div>
+      </section>
+    </main>
   </div>
-</div>
-            <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp" id="tab2">
-              <tr>
-                <th onclick="mydevices.sortTable(0,tab2)">DEVICE TYPE</th>
-                <th onclick="mydevices.sortTable(1,tab2)">DEVICE BRAND</th>
-                <th onclick="mydevices.sortTable(2,tab2)">DEVICE MODEL</th>
-                <th onclick="mydevices.sortTable(3,tab2)">ASSIGN_DATE</th>
-                <th  onclick="mydevices.sortTable(4,tab2)">RETURN_DATE</th>
-              </tr>
-           
-          </table></div>
-        </section>
-      </main>
-    </div>
-    <script
-  data-main="userHistory.js"
-  src="https://requirejs.org/docs/release/2.3.6/minified/require.js"
-></script>
-  </body>
+  <script data-main="userHistory.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+</body>
+
 </html>

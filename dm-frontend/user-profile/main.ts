@@ -22,13 +22,13 @@ export class UserData {
         this.url = BASEURL + "/api/Dropdown/country";
         this.dropdownApiCall(this.url, document.querySelector("#addresses1 .country"));
         this.dropdownApiCall(this.url, document.querySelector("#addresses2 .country"));
-
+        return null;
     }
     async getState() {
         this.url = BASEURL + "/api/Dropdown/state";
         this.dropdownApiCall(this.url, document.querySelector("#addresses1 .state"));
         this.dropdownApiCall(this.url, document.querySelector("#addresses2 .state"));
-
+        return null;
     }
     async getCity() {
         this.url = BASEURL + "/api/Dropdown/city";
@@ -36,6 +36,7 @@ export class UserData {
         this.dropdownApiCall(this.url, document.querySelector("#addresses2 .city"));
 
     }
+  
     async updateData(data) {
         return fetch(BASEURL + "/api/user/30/update", {
             method: 'PUT',
@@ -66,7 +67,6 @@ user.getCity();
 user.getOneUser();
 
 
-
 document.querySelector('form').addEventListener('click', function (ev) {
     ev.preventDefault();
     if (ev.target.classList.contains("edit")) {
@@ -77,14 +77,15 @@ document.querySelector('form').addEventListener('click', function (ev) {
             userObject = data;
             const form = document.querySelector('form') as HTMLFormElement;
             populateFormFromObject(userObject, form);
+            
         });
 
     }
     else if (ev.target.id == "savemydata") {
-        // if (validate() == false) {
-        //     return;
+        if (validate() == false) {
+            return;
 
-        // }
+        }
         user.updateData(createObjectFromForm(this)).then(function () { user.getOneUser(); })
 
         util.closeForm();
@@ -102,11 +103,3 @@ function populateDropdown(selectElement: HTMLSelectElement, data) {
     }
     selectElement.innerHTML = htmlString;
 }
-
-
-
-
-
-
-
-

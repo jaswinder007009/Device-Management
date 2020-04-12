@@ -49,11 +49,15 @@ namespace dm_backend.Models
             }
         }
 
-        public List<RequestModel> GetAllPendingRequests(string sortField,int sortDirection,string searchField)
+        public List<RequestModel> GetAllPendingRequests(int userId,string sortField,string sortDirection,string searchField)
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = get_all_pending_requests+searchQuery+sortQuery+sortField+(sortDirection==-1 ? " desc":" asc");; 
+            cmd.CommandText = get_all_pending_requests+searchQuery;
+            if(userId!=-1)
+                cmd.CommandText +=" and user_id="+userId;
+            cmd.CommandText +=" order by "+sortField+ " "+sortDirection; 
             cmd.Parameters.AddWithValue("@search_field", searchField); 
+            Console.WriteLine(cmd.CommandText);
             using MySqlDataReader reader =  cmd.ExecuteReader();
             return ReadAll(reader);
         }
@@ -104,13 +108,14 @@ namespace dm_backend.Models
             return requests;
         }
 
-        public string AcceptDeviceRequest(int  requestId)
+        public string AcceptDeviceRequest(int id)
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "accept_request";
             cmd.CommandType = CommandType.StoredProcedure; 
             try{
                 cmd.Parameters.AddWithValue("@request_id", requestId);
+                cmd.Parameters.Add(new MySqlParameter("var_admin_id", id));
                 cmd.ExecuteNonQuery();
                 return "Request accepted";
             }
@@ -135,7 +140,7 @@ namespace dm_backend.Models
             }
             
         }
-    internal string get_all_pending_requests=@"select request_device_id, user_id, device_model.model, device_type.type, device_brand.brand, specification.*, request_date, no_of_days, comment, salutation, first_name, middle_name, last_name, department_name, designation_name, email, date_of_birth, date_of_joining, gender,
+    internal string get_all_pending_requests=@"select * from(select request_device_id, user_id, device_model.model, device_type.type, device_brand.brand, specification.*, request_date, no_of_days, comment, salutation, first_name, middle_name, last_name, department_name, designation_name, email, date_of_birth, date_of_joining, gender,
     if(count(available_devices.device_id) =1, TRUE, FALSE) as availability
     from request_device
     inner join user using(user_id)
@@ -157,10 +162,10 @@ namespace dm_backend.Models
     on available_devices.device_model_id = request_device.device_model_id
     and available_devices.specification_id = request_device.specification_id
     and available_devices.device_type_id = request_device.device_type_id
-	and available_devices.device_brand_id = request_device.device_brand_id";
+	and available_devices.device_brand_id = request_device.device_brand_id
+    group by request_device_id) as demo";
 
-    internal string searchQuery=@" where device_type.type like CONCAT('%', @search_field, '%') or device_model.model like CONCAT('%', @search_field, '%') or device_brand.brand like CONCAT('%', @search_field, '%') or get_full_name(user.user_id) like CONCAT('%', @search_field, '%') ";       
-    internal string sortQuery=@" group by request_device_id order by ";
+    internal string searchQuery=@" having (type like CONCAT('%', @search_field, '%') or model like CONCAT('%', @search_field, '%') or brand like CONCAT('%', @search_field, '%') or get_full_name(user_id) like CONCAT('%', @search_field, '%')) ";       
 
     }   
 }

@@ -18,29 +18,9 @@ namespace dm_backend.Models{
         {
             Db = db;
         }
-/*
-        [HttpGet]
-       async public Task<IActionResult> Get()
-        {
-            string find = (HttpContext.Request.Query["find"]);
-            string page = (HttpContext.Request.Query["page"]);
-            string size = (HttpContext.Request.Query["pagesize"]);
-            if (find == null)
-                find = "";
-            if (page == null)           
-                page = "1";
-            if (size == null)
-               size = "10";
-            var low = ((int.Parse(page) * int.Parse(size)) - int.Parse(size));
-            var high = int.Parse(size) * int.Parse(page);
-            await Db.Connection.OpenAsync();
-            var result = new SearchRequestHistory(Db);
-            var data = await result.SearchDeviceRequest(find, low, high);
 
-            return new OkObjectResult(data);
-        }
-        */
         [HttpPost]
+        [Route("add")]
         public IActionResult PostRequest([FromBody]RequestModel req)
         {
             Db.Connection.Open();
@@ -60,24 +40,20 @@ namespace dm_backend.Models{
         [Route("pending")]
         public IActionResult GetRequest()
         {
-            string searchField = "";
-            string sortField = "request_device_id";
-            int sortDirection = 0;
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["search"]))
-                searchField = HttpContext.Request.Query["search"];
-            
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["sort"]))
-                sortField = HttpContext.Request.Query["sort"];
-
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["direction"]))
-                sortDirection = Convert.ToInt32(HttpContext.Request.Query["direction"]);
-
+            int userId=  -1;
+            string searchField=(string) HttpContext.Request.Query["search"] ?? "";
+            string sortField=(string) HttpContext.Request.Query["sortby"] ?? "request_device_id";
+            string sortDirection=(string)HttpContext.Request.Query["direction"] ?? "asc";
+            if(!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
+            userId=Convert.ToInt32((string)HttpContext.Request.Query["id"]);
+    
             Db.Connection.Open();
             var requestObject = new RequestModel(Db);
-            var result = requestObject.GetAllPendingRequests(sortField,sortDirection,searchField);
+            var result = requestObject.GetAllPendingRequests(userId,sortField,sortDirection,searchField);
             Db.Connection.Close();
             return Ok(result);
         }
+
 
         [HttpGet]
         [Route("{requestId}/reject")]
@@ -98,13 +74,14 @@ namespace dm_backend.Models{
         
         [HttpGet]
         [Route("{requestId}/accept")]
-        public IActionResult AcceptRequest(int requestId)
+        public IActionResult AcceptRequest(int requestId, [System.Web.Http.FromUri]int id)
         {
             Db.Connection.Open();
             RequestModel query = new RequestModel(Db);
+            query.requestId = requestId;
             string result = null;
             try{
-                result =query.AcceptDeviceRequest(requestId);
+                result =query.AcceptDeviceRequest(id);
             }
             catch(Exception e){
                 result="Device unavailable";
@@ -124,6 +101,7 @@ namespace dm_backend.Models{
                 result =query.CancelRequest(requestId);
             }
             catch(Exception e){
+                Console.WriteLine(e.Message);
                 return NoContent();
             }
             Db.Connection.Close();
