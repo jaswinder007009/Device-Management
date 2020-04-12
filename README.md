@@ -14,18 +14,18 @@
 
 ### Request
 
-1. POST `/api/request`
-2. GET `/api/request/pending?search={searchField}&sort={sortField}&direction={sortDirection}`
+1. POST `/request`
+2. GET `/request/pending?search={searchField}&sort={sortField}&direction={sortDirection}`
     * Returns all pending requests (meant to be used by admin)
-3. GET `/api/request/{requestId}/reject`
-4. DELETE `/api/request/{requestId}/cancel`
-5. GET `/api/request/{requestId}/accept`
+3. GET `/request/{requestId}/reject`
+4. DELETE `/request/{requestId}/cancel`
+5. GET `/request/{requestId}/accept`
 
 ### Return
 
 1. GET `/api/requesthistory/{assignedId}/accept`
 
-### User Dashboard:
+### User Dashboard
 
 1. GET `/api/dashboard/device/count`
 2. GET `/api/dashboard/{email}/devices/returndates`
@@ -35,29 +35,52 @@
 1. GET `/api/device/current_device/{userId}`
 2. GET `/api/device/previous_device/{userId}`
 
-
 ### User
 
-# Get All Device
-api/user
+1. GET `api/user`
+2. GET `api/user/{user_id}`
+3. GET `api/user?searchby=[column_name]&?sortby=[column_name]`
+4. GET `api/user/{user_id}/remove`
+5. POST `api/user/add`
+6. PUT `api/user/{user_id}/update`
 
-# Get User By ID
-api/user/[user_id]
+### Security
 
-# Add User
-api/user/add
+1. Use the `[Authorize]` attribute for the route the need to be secured (i.e your routes need a token to be accessed)
 
-# Remove User
-api/user/[user_id]/remove
+Eg.
+```cs
 
-# Update User
-api/user/[user_id]/update
+[Authorize]
+[HttpGet]
+public IActionResult MethodName(){}
+```
 
-# Searching for a specific field
-api/user?searchby=[column_name]
+2. You can use the `[Authorize]` attribute on the controller itself to secure all routes in the controller
 
-# Sorting in a specific field
-api/user?sortby=[column_name]
+Eg.
+```cs
 
-# Searching and sorting together
-api/user?sortby=[column_name]&searchby=[coumn_name]
+[Authorize]
+[Route("api/[controller]")]
+[ApiController]
+public class ControllerName(){}
+```
+
+3. Use the `Roles` attribute along with Authorize if the route needs role specification
+
+Eg.
+```cs
+
+[Authorize(Roles="admin")]
+[HttpGet]
+public IActionResult MethodName(){}
+```
+
+Roles supported currently are *admin*, *user*, *superadmin*
+
+#### Reading data from token
+
+Step 1. Inherit your controller from BaseController class (*present in Utilities/*)
+
+Step 2. Refer [this file on using the methods](https://github.com/rishikant05/Device-Management/blob/cc526302d41d36bbd1749c5c233d99565a6826ba/dm-backend/Controllers/UserController.cs#L21)
