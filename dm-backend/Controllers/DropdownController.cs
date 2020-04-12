@@ -139,6 +139,37 @@ namespace dm_backend.Controllers
             else
                 return NoContent();
         }
+        [HttpGet]
+        [Route("country_code")]
+        public IActionResult CountryCodes()
+        {
+
+            List<DropdownModel> countries = new List<DropdownModel>();
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "select country_code, country_name from country";
+            var reader = cmd.ExecuteReader();
+
+            using (reader)
+            {
+                while (reader.Read())
+                {
+                    countries.Add(new DropdownModel()
+                    {
+                        id = Convert.ToInt32(reader.GetString(0)),
+                        name = reader.GetString(1),
+
+                    });
+                }
+            }
+            Db.Connection.Close();
+            if (countries.Count > 0)
+            {
+                return Ok(countries);
+            }
+            else
+                return NoContent();
+        }
 
         [Route("addressType")]
         public IActionResult addressTypes()
@@ -187,7 +218,7 @@ namespace dm_backend.Controllers
                     phoneTypes.Add(new DropdownModel()
                     {
                         id = reader.GetInt32(0),
-                        name = reader.GetString(1)
+                        name = reader.GetString(1),
                     });
                 }
             }
@@ -200,7 +231,86 @@ namespace dm_backend.Controllers
                 return NoContent();
         }
 
+        [HttpGet]
+        [Route("brands")]
+        public IActionResult GetAllDeviceBrands()
+        {
+            var result = GetListFromQuery("select brand from device_brand");
+            if (result.Count < 1)
+                return NoContent();
+            return Ok(result);
+        }
 
+        [HttpGet]
+        [Route("models")]
+        public IActionResult GetAllDeviceModels()
+        {
+            var result = GetListFromQuery("select model from device_model");
+            if (result.Count < 1)
+                return NoContent();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("types")]
+        public IActionResult GetAllDeviceTypes()
+        {
+            var result = GetListFromQuery("select type from device_type");
+            if (result.Count < 1)
+                return NoContent();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("rams")]
+        public IActionResult GetAllSpecificationRAM()
+        {
+            var result = GetListFromQuery("select distinct RAM from specification");
+            if (result.Count < 1)
+                return NoContent();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("storages")]
+        public IActionResult GetAllSpecificationStorage()
+        {
+            var result = GetListFromQuery("select distinct storage from specification");
+            if (result.Count < 1)
+                return NoContent();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("screensizes")]
+        public IActionResult GetAllSpecificationScreenSize()
+        {
+            var result = GetListFromQuery("select distinct screen_size from specification");
+            if (result.Count < 1)
+                return NoContent();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("connectivities")]
+        public IActionResult GetAllSpecificationConnectivity()
+        {
+            var result = GetListFromQuery("select distinct connectivity from specification");
+            if (result.Count < 1)
+                return NoContent();
+            return Ok(result);
+        }
+
+        private List<DropdownModel> GetListFromQuery(string queryString)
+        {
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = queryString;
+            var reader = cmd.ExecuteReader();
+            var result = new DropdownModel().ReadAllDropdowns(reader);
+            Db.Connection.Close();
+            return result;
+        }
         public AppDb Db { get; }
     }
 
@@ -209,5 +319,19 @@ namespace dm_backend.Controllers
     {
         public int id { get; set; }
         public string name { get; set; }
+
+        public List<DropdownModel> ReadAllDropdowns(MySqlDataReader reader)
+        {
+            var list = new List<DropdownModel>();
+            while (reader.Read())
+            {
+                list.Add(new DropdownModel()
+                {
+                    // id = reader.GetInt32(0),
+                    name = reader.GetString(0)
+                });
+            }
+            return list;
+        }
     }
 }

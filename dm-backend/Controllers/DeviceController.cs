@@ -39,13 +39,20 @@ namespace dm_backend.Controllers
 
 
         [HttpGet]
-        [Route("{search}")]
+        [Route("search")]
 
-        public IActionResult getDeviceswithSearch(String search)
+        public IActionResult getDeviceswithSearch()
         {
+            string device_name = (HttpContext.Request.Query["device_name"]);
+            string serial_number = (HttpContext.Request.Query["serial_number"]);
+            string status_name = (HttpContext.Request.Query["status_name"]);
+            if(device_name==null)
+            {
+                device_name = "";
+            }
             Db.Connection.Open();
             var query = new devices(Db);
-            var result = query.getDeviceBySearch(search);
+            var result = query.getDeviceBySearch(device_name,serial_number,status_name);
             Db.Connection.Close();
             return Ok(result);
 
@@ -118,7 +125,7 @@ namespace dm_backend.Controllers
         async public Task<IActionResult> Put(int device_id, [FromBody]val body)
         {
             Db.Connection.Open();
-            var query = new logicupdate(Db);
+            var query = new logicinsert(Db);
             body.device_id = device_id;
             await query.updateDevice(body);
             Db.Connection.Close();
@@ -207,7 +214,7 @@ namespace dm_backend.Controllers
         public async Task<IActionResult> GetAllbrands()
         {
             await Db.Connection.OpenAsync();
-            var query = new brand(Db);
+            var query = new Brand(Db);
             var result = await query.getallbrands();
             return new OkObjectResult(result);
         }
@@ -216,17 +223,17 @@ namespace dm_backend.Controllers
         async public Task<IActionResult> PostTYPE([FromBody]type body)
         {
             Db.Connection.Open();
-            var que = new logicaddtype(Db);
+            var que = new type(Db);
             await que.addType(body);
             Db.Connection.Close();
             return Ok();
         }
         [HttpPost]
         [Route("brand")]
-        async public Task<IActionResult> PostBrand([FromBody]brand body)
+        async public Task<IActionResult> PostBrand([FromBody]Brand body)
         {
             Db.Connection.Open();
-            var que = new logicaddbrand(Db);
+            var que = new Brand(Db);
             await que.addbrand(body);
             Db.Connection.Close();
             return Ok();
@@ -236,7 +243,7 @@ namespace dm_backend.Controllers
         async public Task<IActionResult> Postmodel([FromBody]Model body)
         {
             Db.Connection.Open();
-            var que = new logicaddmodel(Db);
+            var que = new Model(Db);
             await que.addmodel(body);
             Db.Connection.Close();
             return Ok();

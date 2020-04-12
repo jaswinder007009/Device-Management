@@ -115,7 +115,6 @@ namespace dm_backend
         {
             using (var cmd = Db.Connection.CreateCommand())
             {
-                //Console.WriteLine("------------------" + names);
                 if (names != "" || names != null || names != String.Empty)
                 {
                     cmd.CommandText = "call get_users_by_name(@namee)";
@@ -127,22 +126,20 @@ namespace dm_backend
                     return ReadAll(reader);
             }
         }
-        public List<User> SortUserbyName(string sortby, int direction, string searchby = "")
+        public List<User> SortUserbyName(string sortby, string direction, string searchby = "")
         {
-            Console.WriteLine(sortby);
             using (var cmd = Db.Connection.CreateCommand())
             {
                 
                 cmd.CommandText = GetAllUsersquery;
                 if(!string.IsNullOrEmpty(searchby))
                 {
-                    cmd.CommandText += @" and get_full_name(user.user_id) like CONCAT('%', '" + @searchby + "', '%') or user.email like CONCAT('%', '" + @searchby + "', '%') or status_name like CONCAT('%', '" + @searchby + "', '%')";
+                    cmd.CommandText += @" where get_full_name(user.user_id) like CONCAT('%', '" + @searchby + "', '%') or user.email like CONCAT('%', '" + @searchby + "', '%') or status_name like CONCAT('%', '" + @searchby + "', '%')";
+                    
                     cmd.Parameters.AddWithValue("@searchby", searchby);
                 }
-                    cmd.CommandText += " order by "+sortby+(direction==-1 ? " desc" :" asc");
-                    //cmd.Parameters.AddWithValue("@sortby", sortby);
-                Console.WriteLine(cmd.CommandText);
-
+                    cmd.CommandText += " group by user_id,role_id order by " + sortby + " " + direction; //" " + direction
+                cmd.Parameters.AddWithValue("@sortby", sortby);
                 using MySqlDataReader reader = cmd.ExecuteReader();
                 return ReadAll(reader);
 
@@ -386,8 +383,6 @@ public int whatIs(String data1)
           inner join country c on c.country_id=state.country_id
           left join contact_number using(user_id)
           inner join contact_type using(contact_type_id)
-          inner join country ca on ca.country_id=contact_number.country_id
-          group by user_id, role_id
-          ";
+          inner join country ca on ca.country_id=contact_number.country_id ";
     }
 }

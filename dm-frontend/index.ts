@@ -18,7 +18,7 @@ var domElement =  new HtmlElementsData();
         new findResult().findByUser();
     }});
 
-(document.querySelector("#device") as HTMLInputElement).addEventListener("keypress", function (e) {
+(document.querySelector("#device_serial_number") as HTMLInputElement).addEventListener("keypress", function (e) {
     if (e.key == "Enter") {
         let id = (e.target as HTMLInputElement).id;
         (document.getElementById("request-status") as HTMLSelectElement).selectedIndex = 0;     // assign , reject , all 
@@ -29,24 +29,12 @@ var domElement =  new HtmlElementsData();
 
 
 
-
-
-
-    (document.querySelector("#waterfall-exp") as HTMLInputElement).addEventListener("keypress", function (e) {
-        if (e.key == "Enter") {
-            let id = (e.target as HTMLInputElement).id;
-            (document.getElementById("request-status") as HTMLSelectElement).selectedIndex = 0;     // assign , reject , all 
-            let search = (document.getElementById(id) as HTMLInputElement).value;
-            (document.getElementById(id) as HTMLInputElement).setAttribute("user" , search)
-            new findResult().findByUser();
-        }});
-    
-
 (document.querySelector("#getdata") as HTMLButtonElement).addEventListener("click" ,e =>
 {   
     (document.getElementById("waterfall-exp") as HTMLInputElement).value = "";
+    (document.getElementById("device_serial_number") as HTMLInputElement).value = "";
     (document.getElementById("request-status") as HTMLSelectElement).selectedIndex = 0;               // assign , reject , all 
-    (document.getElementById(domElement.search)  as HTMLInputElement).setAttribute("user" , "");
+    (document.getElementById(domElement.search)  as HTMLInputElement).setAttribute(domElement.userName , "");
     (document.getElementById(domElement.devicesearch)  as HTMLInputElement).setAttribute(domElement.deviceSerial , "");
     new findResult().findByUser();
     (document.getElementById("pagination") as HTMLDivElement).setAttribute("page" , "1");    // set page to 1
@@ -55,7 +43,7 @@ var domElement =  new HtmlElementsData();
 
 (document.querySelector("#tableHead") as HTMLTableHeaderCellElement).addEventListener("click", function (e) {
     let id = (e.target as HTMLInputElement).id;
-    if (id === "user"|| id === "admin" ||  id === "serialNumber" || id === "device") 
+    if (id === "user"|| id === "admin" ||  id === "serialNumber" || id === "device_name") 
              {
         new Sort().sortBy(id);
         (document.getElementById("pagination") as HTMLDivElement).setAttribute("page" , "1");    // set page to 1
@@ -73,16 +61,38 @@ var domElement =  new HtmlElementsData();
 
 (document.querySelector("#request-status") as HTMLSelectElement).addEventListener("change" ,e =>
 {
+
+   // console.log((document.getElementById("request-status") as HTMLSelectElement).value);
     var requestStatus = (e.target as HTMLOptionElement).value;
-    if (requestStatus ==  "Returned" || requestStatus == "returned")
-        requestStatus = "ret"
-        if (requestStatus ==  "Rejected" || requestStatus ==  "reject")
-        requestStatus = "rej"
-    console.log(requestStatus);
+    
+    requestStatus = getStatus(requestStatus) ;
+    if( requestStatus == "")
+   { 
+       
+    (document.getElementById(domElement.search)  as HTMLInputElement).setAttribute(domElement.userName , "");
+    (document.getElementById(domElement.devicesearch)  as HTMLInputElement).setAttribute(domElement.deviceSerial , "");
+    }
+    
     new UserRequestStatus().requestStatusResult(requestStatus);
     
-
+    // console.log(requestStatus);
 });
+
+export function getStatus( requestStatus : string) : string
+{
+    
+    if (requestStatus ==  "Returned" || requestStatus == "returned")
+        requestStatus = "Returned";
+    
+    else if (requestStatus ==  "Rejected" || requestStatus ==  "reject")
+     requestStatus = "Rejected";
+
+    else 
+    requestStatus = "";
+    return requestStatus;
+}
+
 
 
 console.log((document.getElementById("request-status") as HTMLSelectElement).value);
+
