@@ -110,6 +110,7 @@ namespace dm_backend.Models
     {
         public int device_id { get; set; }
         public string type { get; set; }
+       
         public string brand { get; set; }
         public string model { get; set; }
         public string color { get; set; }
@@ -316,7 +317,7 @@ namespace dm_backend.Models
         {
             using var cmd = Db.Connection.CreateCommand();
 
-            cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device_model.model,assign_device.assign_date,assign_device.return_date from user,device_type,device_model,device_brand,assign_device,device
+            cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device_model.model,assign_device.assign_date,assign_device.return_date,assign_device.device_id,assign_device.user_id from user,device_type,device_model,device_brand,assign_device,device
 where  user.user_id=assign_device.user_id and assign_device.device_id=device.device_id and device.device_type_id=device_type.device_type_id and device.device_brand_id=device_brand.device_brand_id
 and device.device_model_id=device_model.device_model_id and assign_device.user_id=" + @id + ") as demo WHERE demo.type LIKE '%" + @search + "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search + "%' ";
 
@@ -351,7 +352,7 @@ and device.device_model_id=device_model.device_model_id and assign_device.user_i
         {
             using var cmd = Db.Connection.CreateCommand();
 
-            cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device_model.model,assign_date,return_date from user,device_type,device_brand,device_model,request_history 
+            cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device_model.model,assign_date,return_date,request_history.device_id,request_history.user_id from user,device_type,device_brand,device_model,request_history 
 where user.user_id=request_history.user_id and request_history.device_type=device_type.device_type_id and request_history.device_brand=device_brand.device_brand_id 
 and request_history.device_model=device_model.device_model_id and request_history.user_id=" + @id + ") as demo WHERE demo.type LIKE '%" + @search + "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search + "%' ";
             cmd.Parameters.Add(new MySqlParameter
@@ -385,6 +386,7 @@ and request_history.device_model=device_model.device_model_id and request_histor
         }
 
         public static string GetSafeString(DbDataReader reader, string colName)
+<<<<<<< HEAD
         {
             return reader[colName] != DBNull.Value ? (string)reader[colName].ToString() : "";
         }
@@ -411,6 +413,40 @@ and request_history.device_model=device_model.device_model_id and request_histor
             }
             return posts;
         }
+=======
+		{
+		return reader[colName] != DBNull.Value ? (string)reader[colName].ToString() : "";
+		}
+         public static int GetInt1(DbDataReader reader, string colName)
+        {
+            return reader[colName] != DBNull.Value ? (int)reader[colName] : default;
+        }
+		
+		public async Task<List<device>> ReadAllDevice(DbDataReader reader)
+		{
+			Console.WriteLine("Rows" + reader.HasRows);
+			var posts = new List<device>();
+			using (reader)
+			{
+				while (await reader.ReadAsync())
+				{
+					Console.WriteLine("Found a row");
+					var post = new device()
+					{
+						type = reader.GetString(0),
+						brand = reader.GetString(1),
+						model = reader.GetString(2),
+						assign_date = GetSafeString(reader,"assign_date"),
+						return_date = GetSafeString(reader,"return_date"),
+                        device_id = GetInt1(reader,"device_id"),
+                        user_id =GetInt1(reader,"user_id")
+					};
+					posts.Add(post);
+				}
+			}
+			return posts;
+		}
+>>>>>>> dfcd08958b4897a17a2abe5f8cd8247ac599c245
 
     }
 
