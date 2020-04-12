@@ -68,25 +68,18 @@ namespace dm_backend.Controllers
             switch (SortColumn.ToLower())
             {
                 case "device_name":
-                    SortColumn = "type , brand ,  model";
+                    SortColumn = "concat(type ,'', brand , '' ,  model)";
                     break;
                 case "specification":
-                    SortColumn = "RAM , storage , screen_size , connectivity";
+                    SortColumn = "concat(RAM , ' ',storage ,' ',screen_size , ' ',connectivity)";
                     break;
-                case "assign_to_name":
-                    SortColumn = "assign_to_first_name , assign_to_middle_name , assign_to_last_name";
-                    break;
-
-                case "assign_by_name":
-                    SortColumn = "assign_by_first_name , assign_by_middle_name , assign_by_last_name";
-                    break;
+              
                 case "serial_number":
                     SortColumn = "serial_number*1";
                     break;
-                case "status":
-                    SortColumn = "s.status_name";
-                    break;
-                default:
+               
+                default:  SortColumn = "concat(type ,'', brand , '' ,  model)";
+                
                     break;
             }
             Db.Connection.Open();
@@ -119,6 +112,18 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok();
         }
+
+        [HttpPost]
+        [Route("assign")]
+        async public Task<IActionResult> AssignDevice([FromBody]Assign body)
+        {
+            Db.Connection.Open();
+            var que = new Assign(Db);
+            await que.assignDevice(body);
+            Db.Connection.Close();
+            return Ok();
+        }
+
 
         [HttpPut]
         [Route("update/{device_id}")]

@@ -1,17 +1,24 @@
 import { BASEURL } from "./globals";
+import { Requests,Specification } from "./RequestModel";
 let adminId = 16;
 let sortDirection = 1;
 
 let globalUrl = BASEURL + "/request/";
-
 function getPendingRequests(url: string) {
 
     var tableData = '';
+    var specs = new Specification();
     fetch(url).then(Response => Response.json()).then(data => {
         for (var i = 0; i < data.length; i++) {
             tableData += "<tr>";
             var key, name = "";
+            specs = data[i]['specs'];
+            var deviceModel = data[i]['deviceModel'];
+            var deviceType = data[i]['deviceType'];
+            var deviceBrand = data[i]['deviceBrand'];
+        
             for (var prop in data[i]) {
+               
                 var requestId: number = data[i]['requestId'];
                 var value = data[i][prop];
                 if (typeof (value) == 'object') {
@@ -35,7 +42,12 @@ function getPendingRequests(url: string) {
                     if (key == "availability" && value == true)
                         tableData += "<td>" + "<button class=\"accept-button\" data-requestid=\"" + requestId + "\" >Accept</button>" + "</td>";
                      else if(key =="availability" && value == false)
-                     tableData += "<td>" + "<button class=\"notify-button\" data-requestid=\"" + requestId + "\" >Notify</button>" + "</td>";
+                     tableData += "<td>" + "<button class=\"notify-button\" data-devicemodel=\"" + deviceModel 
+                   +"\"data-devicetype=\"" + deviceType + "\" data-devicebrand=\"" + deviceBrand 
+                   +"\"data-ram=\"" + specs.ram
+                   +"\"data-connectivity=\"" + specs.connectivity
+                   +"\"data-screensize=\"" + specs.screenSize
+                   +"\"data-storage=\"" + specs.storage +"\" >Notify</button>" + "</td>";
                    
 
                     }
@@ -70,6 +82,17 @@ function getDirection(className, sortField) {
     }
 }
 
+function postNotification(data:Requests)
+{
+
+    let data1 = JSON.stringify(data);
+    fetch(BASEURL + "/api/Notification", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: data1,
+    }).catch(Error => console.log(Error));
+    alert("Notification sent");
+}
 document.addEventListener("click", function (e) {
     const sortField = (e.target as HTMLElement).getAttribute('name');
     const className = (document.getElementById(sortField) as HTMLTableRowElement).getAttribute("class");
@@ -99,10 +122,25 @@ document.addEventListener("click", function (e) {
         requestAction('/accept?id=' + adminId, requestId, 'accepted');
 
     }
+    if((e.target as HTMLButtonElement).className == "notify-button")
+    {
+        let request = new Requests();
+        request.deviceModel = (e.target as HTMLButtonElement).dataset.devicemodel;
+        request.deviceBrand = (e.target as HTMLButtonElement).dataset.devicebrand;
+        request.deviceType = (e.target as HTMLButtonElement).dataset.devicetype;
+        request.specs.ram = ((e.target as HTMLButtonElement).dataset.ram);
+        request.specs.connectivity = ((e.target as HTMLButtonElement).dataset.connectivity);
+        request.specs.screenSize = ((e.target as HTMLButtonElement).dataset.screensize);
+        request.specs.storage = ((e.target as HTMLButtonElement).dataset.storage);
+         postNotification(request);
+
+        (e.target as HTMLButtonElement).remove();
+        
+    }
 
 });
 
-document.getElementById("content").innerHTML = "";
+// document.getElementById("content").innerHTML = "";
 getPendingRequests(globalUrl + "pending");
 
 

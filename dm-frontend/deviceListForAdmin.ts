@@ -19,7 +19,6 @@ export class DeviceListForAdmin {
 
     assign_date: string;
     return_date: string;
-
     assign_to_first_name: string;
     assign_to_middle_name: string;
     assign_to_last_name: string;
@@ -56,11 +55,11 @@ export class DeviceListForAdmin {
          
             if(token==1){
 
-                `<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="">
+               const buttons =  `<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="">
                      <a href = "./AddDevice.html" style="color: black;">
                         Add Device</a>
                       </button>`;
-                      
+                      (document.getElementById("buttons") as HTMLStyleElement).innerHTML = buttons;    
           const value = `
            
         <tr>
@@ -90,10 +89,26 @@ export class DeviceListForAdmin {
              <td>
                 <button class="edit-button" value=${this.device_id}>Edit </button>
                 <button class="delete-button" value=${this.device_id}>Delete </button>
-            </td>
-        </tr>`;
-        (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value;
-            }
+            </td>`;
+    
+            if(this.status=="Allocated")
+              var val = `<td>  <button class="notify-button" data-devicemodel=${this.model} 
+              data-devicetype= ${this.type} data-devicebrand= ${this.brand} 
+              data-ram= ${this.ram}
+              data-connectivity= ${this.connectivity}
+              data-screensize= ${this.screen_size}
+              data-storage= ${this.storage}
+              >Notify</button></td> </tr>`;
+              else 
+              val = `<td>  <button class="assign-button" data-id=${this.device_id}>Assign Device</button></td> </tr> `;
+        (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value + val;
+                
+
+    }
+           
+           
+           
+           
             else{
                const value =  `
         <tr>
@@ -124,7 +139,7 @@ export class DeviceListForAdmin {
             </tr>`;
             (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value;
             }
-        // (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value;
 
     }
+     
 }

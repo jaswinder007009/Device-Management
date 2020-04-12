@@ -1,5 +1,6 @@
 export class Notifications {
     device_id: number;
+    user_id:number;
     type: string;
     brand: string;
     model: string;
@@ -11,7 +12,8 @@ export class Notifications {
     status:string;
     message:string;
     constructor(data: any) {
-        this.device_id = data.device_id;
+        this.user_id = data.userId;
+        this.device_id = data.deviceId;
         this.type = data.deviceType;
         this.brand = data.deviceBrand;
         this.model = data.deviceModel;
@@ -37,8 +39,8 @@ export class Notifications {
             <td>${this.status}</td>
               <td>${this.message}</td>
              <td>
-               <button class="accept-button" value=${this.device_id}>Accept </button>
-                <button class="reject-button" value=${this.device_id}>Reject </button>
+               <button class="accept-button" data-userid = ${this.user_id} data-value=${this.device_id}>Accept </button>
+                <button class="reject-button" data-userid = ${this.user_id} data-value=${this.device_id}>Reject </button>
             </td>
         </tr>`;
         (document.getElementById("notification_data") as HTMLStyleElement).innerHTML += value;

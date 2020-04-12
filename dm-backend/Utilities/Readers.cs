@@ -58,6 +58,7 @@ namespace dm_backend.Utilities
             var notify = new NotificationModel();
             notify.notificationId = GetSafeInt<int>(reader, "notification_id");
             notify.userId = (int)reader["user_id"];
+            notify.deviceId =(int)reader["device_id"];
             notify.deviceModel = (string)reader["model"];
             notify.deviceBrand = (string)reader["brand"];
             notify.deviceType = (string)reader["type"];

@@ -21,6 +21,26 @@
 </head>
 
 <body>
+    <div class="login-popup">
+        <div class="form-popup" id="popupForm2">
+            <form class="form-container" id="assign_popup">
+                <h5><b><u>Assign Device </b></u></h5>
+                <label for="">
+                    <strong>Device Id:</strong><div id="device_id" ></div>
+                </label><br>
+                <label>Return Date</label>
+                <input type="text" id="return_date" placeholder="Enter return date" data-name="date">
+                <label>First Name</label>
+                <input type="text" id="first_name"  name="first_name">
+                <label>Middle Name</label>
+                <input type="text" id="middle_name" name="middle_name">
+                <label>Last Name</label>
+                <input type="text" id="last_name"  name="last_name">
+                <button type="button" class="assigndevice-btn">Assign</button>
+                <button type="button" class="cancel-button" >Close</button>
+            </form>
+        </div>
+    </div>
     <!-- Always shows a header, even in smaller screens. -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
@@ -54,70 +74,55 @@
                     <i class="material-icons">search</i>
                     <input class="search" type="text" name="search_serial_number" id="search_serial_number"
                         placeholder=" Search Serial number">
-                           <b>Device Status</b>   <select id="status">
-                            <option value="all">All</option>
+                    <b>Device Status</b> <select id="status">
+                        <option value="all">All</option>
                         <option value="allocated">Allocated</option>
                         <option value="free">Free</option>
-                        </select>
-                        <div style="float:right ">
+                    </select>
+                    <div id="buttons" style="float:right;"></div>
+                    <div style="float:right;">
 
 
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                   mdl-textfield--floating-label mdl-textfield--align-right">
-                                <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
-                                    <i class="material-icons">search</i>
-                                </label>
-                                <div class="mdl-textfield__expandable-holder">
-                                    <input class="mdl-textfield__input" type="text" name="search"
-                                        id="fixed-header-drawer-exp">
-                                </div>
-                            </div id="t">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="">
-                                <a href="./AddDevice.html" style="color: black;">
-                                    Add Device</a>
-                            </button><br>
-                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                                    mdl-textfield--floating-label mdl-textfield--align-right">
+                            <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
+                                <i class="material-icons">search</i>
+                            </label>
+                            <div class="mdl-textfield__expandable-holder">
+                                <input class="mdl-textfield__input" type="text" name="search"
+                                    id="fixed-header-drawer-exp">
+                            </div>
+                        </div id="t">
+                        
+                    </div>
+                </div>  <br><br>
+                <div>
+                    <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" id="Request_data1"
+                        style="overflow: auto;">
+                        <thead id="tablecol">
+                            <tr>
+                                <th class="mdl-data-table__header--sorted-descending" name="device_name"
+                                    data-id="device_name">
+                                    Device Name </th>
+                                <th class="mdl-data-table__header--sorted-descending" name="serial_number"
+                                    data-id="serial_number">
+                                    Serial Number </th>
+
+                                <th class="mdl-data-table__header--sorted-descending" name="specification"
+                                    data-id="specification">
+                                    Specifications </th>
+                                <th>Assign Date</th>
+                                <th>Return Date</th>
+                                <th>Assign To</th>
+                                <th>Assign By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tbody id="Request_data">
+                        </tbody>
+                    </table>
                 </div>
-                <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" id="Request_data1"
-                    style="overflow: auto;">
-                    <thead>
-                        <tr>
-                            <th class="mdl-data-table__header--sorted-descending" name="device_name" data-id="device_name">
-                                Device Name </th>
-                            <th class="mdl-data-table__header--sorted-descending" name="serial_number"
-                                data-id="serial_number">
-                                Serial Number </th>
-                            
-                            <th class="mdl-data-table__header--sorted-descending" name="specification"
-                                data-id="specification">
-                                Specifications </th>
-                            <th>Assign Date
-
-                            </th>
-                            <th>Return Date
-
-                            </th>
-                            <th>Assign To
-
-                            </th>
-                            <th>Assign By
-
-                            </th>
-                        </tr>
-
-                    </thead>
-                    <tbody>
-                    <tbody id="Request_data">
-
-
-
-
-                    </tbody>
-                </table>
-
-
-                <!-- Your content goes here -->
-            </div>
+    </div>
         </main>
     </div>
 

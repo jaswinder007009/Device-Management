@@ -54,15 +54,18 @@ namespace dm_backend.Controllers
 
             if (!string.IsNullOrEmpty(HttpContext.Request.Query["direction"]))
                 sortDirection = HttpContext.Request.Query["direction"];
-            sortDirection = (sortDirection.ToLower()) == "desc" ? "DESC" : "ASC";
+            sortDirection = (sortDirection.ToLower()) == "asc" ? "ASC" : "DESC";
             switch (sortField.ToLower())
             {
-                case "device_name":
-                    sortField = "type , brand ,  model";
+                 case "device_name":
+                    sortField = "concat(type ,'', brand , '' ,  model)";
                     break;
                 case "specification":
-                    sortField = "RAM , storage , screen_size , connectivity";
+                    sortField = "concat(RAM,'', storage ,'' ,screen_size ,'',connectivity)";
                     break;
+                default:  sortField = "concat(type ,'', brand , '' ,  model)";
+
+                break;
               
             }
             Db.Connection.Open();

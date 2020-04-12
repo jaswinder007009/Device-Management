@@ -3,6 +3,8 @@ import { Sort } from "./user-profile/SortingUser";
 import {Notifications} from "./notification";
 class Notify
 {
+    deviceId:number =0;
+    userId:number= 0;
     getNotification(URL:any)
     {
         fetch(
@@ -36,6 +38,24 @@ class Notify
         let URL = "?sort="+sort +"&direction=" +direction;
         this.getNotification(URL);
     }
+    acceptNotification(data:Notify)
+    {
+        fetch(BASEURL + "/api/ReturnRequest", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        }).catch(Error => console.log(Error));   
+    }   
+    rejectNotification(data:Notify)
+    {
+        let  data1 = JSON.stringify(data);
+        console.log(data);
+        fetch(BASEURL + "/api/ReturnRequest/reject", {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: data1,
+        }).catch(Error => console.log(Error));   
+    }   
 }
 document.getElementById("fixed-header-drawer-exp").addEventListener("keyup",function(e)
 {
@@ -58,11 +78,27 @@ document.addEventListener("click", function (e) {
         }
         
             if ((e.target as HTMLButtonElement).className == "accept-button") {
-               confirm("Are you sure you want to submit the device?");
+               if(confirm("Are you sure you want to submit the device?"))
+               {
+                   
+                    notify.deviceId = +(e.target as HTMLButtonElement).dataset.value;
+                    notify.userId = +(e.target as HTMLButtonElement).dataset.userid;
+                    notify.acceptNotification(notify);
+                    (e.target as HTMLButtonElement).setAttribute("visibility","false");   
 
+                 console.log("notification accepted");
+               }
             }
         if ((e.target as HTMLButtonElement).className == "reject-button") {
-               confirm("Are you sure you donot want to submit the device?");
+               if(confirm("Are you sure you donot want to submit the device?"))
+               {
+                
+                notify.deviceId = +((e.target as HTMLButtonElement).dataset.value);
+                notify.userId = +(e.target as HTMLButtonElement).dataset.userid;
+                notify.rejectNotification(notify);
+              // window.location.reload();
+
+               }
                
             }
         

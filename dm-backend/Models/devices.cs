@@ -53,12 +53,12 @@ namespace dm_backend.Models
             cmd.Parameters.Add(new MySqlParameter("specification_id", v.specification_id));
             cmd.Parameters.Add(new MySqlParameter("entry_date", v.entry_date));
         }
-         async public Task updateDevice(val v)
+        async public Task updateDevice(val v)
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "updatedevice";
             cmd.CommandType = CommandType.StoredProcedure;
-            BindDeviceId(cmd,v);
+            BindDeviceId(cmd, v);
             BindDevice(cmd, v);
             await cmd.ExecuteNonQueryAsync();
         }
@@ -67,7 +67,44 @@ namespace dm_backend.Models
             cmd.Parameters.Add(new MySqlParameter("device_id", v.device_id));
         }
     }
-    
+    public class Assign
+    {
+        public int device_id { get; set; }
+        public string return_date { get; set; }
+        public string first_name { get; set; }
+        public string middle_name { get; set; }
+        public string last_name { get; set; }
+        internal AppDb Db { get; set; }
+
+        public Assign()
+        {
+        }
+
+        internal Assign(AppDb db)
+        {
+            Db = db;
+        }
+
+
+
+        async public Task assignDevice(Assign d)
+        {
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "admin_assign_device";
+            cmd.CommandType = CommandType.StoredProcedure;
+            BindAssignDevice(cmd, d);
+            await cmd.ExecuteNonQueryAsync();
+        }
+        private void BindAssignDevice(MySqlCommand cmd, Assign d)
+        {
+            cmd.Parameters.Add(new MySqlParameter("device_id", d.device_id));
+            cmd.Parameters.Add(new MySqlParameter("return_date", d.return_date));
+            cmd.Parameters.Add(new MySqlParameter("first_name", d.first_name));
+            cmd.Parameters.Add(new MySqlParameter("middle_name", d.middle_name));
+            cmd.Parameters.Add(new MySqlParameter("last_name", d.last_name));
+
+        }
+    }
 
     public class devices
     {
@@ -168,15 +205,15 @@ namespace dm_backend.Models
             return ReadAll(cmd.ExecuteReader());
 
         }
-        public List<devices> getDeviceBySearch(string device_name,string serial_number,string status_name)
+        public List<devices> getDeviceBySearch(string device_name, string serial_number, string status_name)
         {
             using (var cmd = Db.Connection.CreateCommand())
             {
 
                 cmd.CommandText = "call getDevicesBySearch(@device_name,@serial_number,@status_name)";
                 cmd.Parameters.AddWithValue("@device_name", device_name);
-                cmd.Parameters.AddWithValue("@serial_number",serial_number);
-                cmd.Parameters.AddWithValue("@status_name",status_name);
+                cmd.Parameters.AddWithValue("@serial_number", serial_number);
+                cmd.Parameters.AddWithValue("@status_name", status_name);
 
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                     return ReadAll(reader);
@@ -238,7 +275,7 @@ namespace dm_backend.Models
 
         public List<val> getdevicebyid(int device_id)
         {
-            
+
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"select * from device where device_id = @id";
             cmd.Parameters.Add(new MySqlParameter
@@ -247,7 +284,7 @@ namespace dm_backend.Models
                 DbType = DbType.Int32,
                 Value = device_id,
             });
-        return Read(cmd.ExecuteReader());
+            return Read(cmd.ExecuteReader());
         }
         private List<val> Read(MySqlDataReader reader)
         {
@@ -257,7 +294,7 @@ namespace dm_backend.Models
                 while (reader.Read())
                 {
                     var post = new val();
-                    post.device_id = GetInt(reader,"device_id");
+                    post.device_id = GetInt(reader, "device_id");
                     post.device_type_id = GetInt(reader, "device_type_id");
                     post.device_brand_id = GetInt(reader, "device_brand_id");
                     post.model = GetSafeString(reader, "device_model_id");
@@ -281,7 +318,7 @@ namespace dm_backend.Models
 
             cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device_model.model,assign_device.assign_date,assign_device.return_date from user,device_type,device_model,device_brand,assign_device,device
 where  user.user_id=assign_device.user_id and assign_device.device_id=device.device_id and device.device_type_id=device_type.device_type_id and device.device_brand_id=device_brand.device_brand_id
-and device.device_model_id=device_model.device_model_id and assign_device.user_id="+@id+") as demo WHERE demo.type LIKE '%" + @search + "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search + "%' ";
+and device.device_model_id=device_model.device_model_id and assign_device.user_id=" + @id + ") as demo WHERE demo.type LIKE '%" + @search + "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search + "%' ";
 
             cmd.Parameters.Add(new MySqlParameter
             {
@@ -295,7 +332,7 @@ and device.device_model_id=device_model.device_model_id and assign_device.user_i
                 DbType = DbType.String,
                 Value = search,
             });
-             if (!string.IsNullOrEmpty(sort) && !string.IsNullOrEmpty(direction))
+            if (!string.IsNullOrEmpty(sort) && !string.IsNullOrEmpty(direction))
             {
 
 
@@ -316,7 +353,7 @@ and device.device_model_id=device_model.device_model_id and assign_device.user_i
 
             cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device_model.model,assign_date,return_date from user,device_type,device_brand,device_model,request_history 
 where user.user_id=request_history.user_id and request_history.device_type=device_type.device_type_id and request_history.device_brand=device_brand.device_brand_id 
-and request_history.device_model=device_model.device_model_id and request_history.user_id="+@id+") as demo WHERE demo.type LIKE '%" +@search+ "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search  + "%' ";
+and request_history.device_model=device_model.device_model_id and request_history.user_id=" + @id + ") as demo WHERE demo.type LIKE '%" + @search + "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search + "%' ";
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@id",
@@ -348,32 +385,32 @@ and request_history.device_model=device_model.device_model_id and request_histor
         }
 
         public static string GetSafeString(DbDataReader reader, string colName)
-		{
-		return reader[colName] != DBNull.Value ? (string)reader[colName].ToString() : "";
-		}
-		
-		public async Task<List<device>> ReadAllDevice(DbDataReader reader)
-		{
-			Console.WriteLine("Rows" + reader.HasRows);
-			var posts = new List<device>();
-			using (reader)
-			{
-				while (await reader.ReadAsync())
-				{
-					Console.WriteLine("Found a row");
-					var post = new device()
-					{
-						type = reader.GetString(0),
-						brand = reader.GetString(1),
-						model = reader.GetString(2),
-						assign_date = GetSafeString(reader,"assign_date"),
-						return_date = GetSafeString(reader,"return_date"),
-					};
-					posts.Add(post);
-				}
-			}
-			return posts;
-		}
+        {
+            return reader[colName] != DBNull.Value ? (string)reader[colName].ToString() : "";
+        }
+
+        public async Task<List<device>> ReadAllDevice(DbDataReader reader)
+        {
+            Console.WriteLine("Rows" + reader.HasRows);
+            var posts = new List<device>();
+            using (reader)
+            {
+                while (await reader.ReadAsync())
+                {
+                    Console.WriteLine("Found a row");
+                    var post = new device()
+                    {
+                        type = reader.GetString(0),
+                        brand = reader.GetString(1),
+                        model = reader.GetString(2),
+                        assign_date = GetSafeString(reader, "assign_date"),
+                        return_date = GetSafeString(reader, "return_date"),
+                    };
+                    posts.Add(post);
+                }
+            }
+            return posts;
+        }
 
     }
 
