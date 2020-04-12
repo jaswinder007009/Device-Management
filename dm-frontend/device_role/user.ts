@@ -22,7 +22,7 @@ class user{
     async getAllUser() {
         
 
-        this.url = BASEURL + "/api/device/user";
+        this.url =  BASEURL + "/api/device/user";
         let data = await this.getApiCall(this.url);
         this.data = await data;
         console.log(data);
@@ -70,12 +70,12 @@ class user{
             <strong id="lastname${loop}"  >${this.data[loop]["lastName"]}</strong>
             </td>
 
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">
-            <button id="id${loop}" onclick="u_role.getAllUserRole(${this.data[loop]["userId"]})" >SEE ROLES</button>
+             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">
+            <button data-id="see_roles" value=" ${this.data[loop]["userId"]}" >SEE ROLES</button>
             </td>
 
             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">
-            <button id="id${loop}" onclick="ass_role.assignRole(${this.data[loop]["userId"]})" >ASSIGN ROLES</button>
+            <button data-id="assign_role" value="${this.data[loop]["userId"]}" >ASSIGN ROLES</button>
             </td>
             
             
@@ -102,8 +102,35 @@ class user{
 }
 var u=new user();
 
+document.body.addEventListener('click',function(event)
+    {
+        //e.preventDefault();
+        if(event.target.dataset.id == "see_roles"){
+            console.log("jjjjjj");
+            var e4=event.target.value;
+            console.log(e4);
+            u_role.getAllUserRole(e4);
+        }
+    }
+    )
 
 
+
+    document.body.addEventListener('click',function(event)
+    {
+        //e.preventDefault();
+        if(event.target.dataset.id == "assign_role"){
+            console.log("jjjjjj");
+            var e5=event.target.value;
+            console.log(e5);
+            ass_role.assignRole(e5);
+        }
+    }
+    )
+
+
+
+//--------------------------------------------------------
 
 class user_role{
      
@@ -127,7 +154,7 @@ class user_role{
         let x=id
         
 
-        this.url = BASEURL + "/api/device/get_role_with_user/"+x;
+        this.url =  BASEURL + "/api/device/get_role_with_user/"+x;
         let data = await this.getApiRoleCall(this.url);
         this.data = await data;
         console.log(data);
@@ -176,9 +203,8 @@ class user_role{
             <strong id="roleName${loop}">Role Name := ${this.data[loop]["roleName"]}</strong>
             </td>
             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <button id="roleName${loop}" class="btn btn-danger" onclick="u_role.DeleteRoleByUser(${x},${this.data[loop]["id"]})"><span class="glyphicon glyphicon-trash">DELETE</span></button>
+            <button class="del_user_role1"  data-user-id="${x}" value="${this.data[loop]["id"]}" >DELETE</button>
             </td>
-           
             
             
             
@@ -199,7 +225,7 @@ class user_role{
     async DeleteRoleByUser(id:number,id1:number) {
         let x = id;
         let y=id1;
-        let uri = BASEURL + "/api/device/get_role_with_user/" + x+"/"+y;
+        let uri =  BASEURL + "/api/device/get_role_with_user/" + x+"/"+y;
         console.log(uri);
         let response = await fetch(uri,
             {
@@ -207,7 +233,7 @@ class user_role{
             })
         console.log(this.data);
         this.del_role_by_user(id1);
-       u_role.getAllUserRole(id);
+    //    u_role.getAllUserRole(id);
         
     }
 
@@ -225,6 +251,36 @@ var u_role=new user_role();
 
 /////////////////////////////////////////////////////////////////////////////////////
 
+
+
+document.addEventListener('click' ,e=>{
+
+        if( (e.target as HTMLButtonElement).className ==="del_user_role1")
+        {
+            console.log("sdfghjkl");
+            console.log(event.target.dataset.userId);
+            u_role.DeleteRoleByUser(event.target.dataset.userId,event.target.value);
+        //    check1.updateRolePermission(event.target.dataset.roleId,event.target.value);
+           // 
+           
+        }
+       
+    }
+    );
+// document.body.addEventListener('click',function(event)
+//     {
+//         //e.preventDefault();
+//         console.log("hhhh");
+//         if(event.target.dataset.id == "del_user_role1"){
+           
+//            console.log("gotittt");
+//            console.log(event.target.value);
+      
+//           u_role.DeleteRoleByUser(event.target.dataset.id,event.target.value);
+//          //  event.target.dataset.userId,event.target.value
+//         }
+//     }
+//     )
 
 
 
@@ -259,7 +315,7 @@ class assign_role{
         console.log(x);
         
 
-        this.url = BASEURL + "/api/device/assign_role_to_user/"+x;
+        this.url =  BASEURL + "/api/device/assign_role_to_user/"+x;
         let data = await this.getApiRoleAssign(this.url);
         this.data = await data;
         console.log(data);
@@ -312,12 +368,10 @@ class assign_role{
             <strong id="roleName${loop}">Role Name := ${this.data[loop]["roleName"]}</strong>
             </td>
             
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <input type="checkbox"  onclick="check1.updateRolePermission(${x},${this.data[loop]["id"]})" value="${this.data[loop]["id"]}">${this.data[loop]["roleName"]}
-            </td>
+            
             
             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-           <button class="btn btn-info" id="id${loop}" onclick="check1.updateRolePermission(${x},${this.data[loop]["id"]})"  ><span class="glyphicon glyphicon-plus">ADD</span></button>
+           <button class="add_r" data-id="assign_role"  data-user-id="${x}" value=" ${this.data[loop]["id"]}"  >ADD</button>
             </td>
            
             
@@ -340,9 +394,8 @@ class assign_role{
 var ass_role=new assign_role();
 
 
+//------------------------------------------------------------------------------------------
 
-////////////////////////////////////////////////////////////////////////////
-/////////checkbox
 
 
 
@@ -355,31 +408,34 @@ class checkbox1{
 
     bindData(id:number,id1:number)
  {
-     console.log(id1);
      console.log(id);
+     console.log(id1);
 
-         this.userId=  id;
+         this.useId=id;
     this.roleId=id1;
-        console.log(this.userId);
-        console.log(this.roleId);
+    
+        // console.log(this.userId);
+        // console.log(this.roleId);
         this.data={
-            "userId":this.userId,
-            "roleId":this.roleId
+            "userId":Number(id),
+            "roleId":Number(this.roleId)
         };
          console.log(this.data);
      }
     
  updateRolePermission(x:number,y:number){
-        let x1=x;
-        let y1=y;
-            console.log("hhh");
-        this.bindData(x1,y1);
-        this.postData(x1);
+        // let x1=x,
+        // let y1=y;
+        console.log("kkkkkkkkkk");
+            console.log(x);
+        this.bindData(x,y);
+        this.postData(x);
     }
     postData(id:number)
         {
             console.log("lll");
-        let url=BASEURL + "/api/device/role_user/insert";
+        let url= BASEURL + "/api/device/role_user/insert";
+        console.log(url);
               fetch( url , {
                 method : "POST" , 
                
@@ -402,6 +458,46 @@ class checkbox1{
         }
     }
 var check1=new checkbox1();
+
+//----------------------------------------------------------------------------------------------
+
+document.addEventListener('click' ,e=>{
+
+        if( (e.target as HTMLButtonElement).className ==="add_r")
+        {
+            console.log("sdfghjkl");
+            
+           check1.updateRolePermission(event.target.dataset.userId,event.target.value);
+           // 
+           
+        }
+       
+    }
+    );
+// document.body.addEventListener('click',function(event)
+//     {
+//         //e.preventDefault();
+//         if(event.target.dataset.id == "assign_role"){
+//             console.log("iiiiiiiii");
+         
+//         check1.updateRolePermission(event.target.dataset.userId,event.target.value);
+           
+//         }
+//     }
+//     )
+////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+/////////checkbox
+
+
+
+
 
 
 

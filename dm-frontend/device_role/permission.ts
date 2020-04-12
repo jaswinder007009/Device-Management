@@ -1,5 +1,4 @@
 import { BASEURL } from "../globals";
-
 class abc{
      
     id:Number
@@ -81,12 +80,11 @@ class abc{
            
            
              <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">
-            <button id="id${loop}"  onclick="ab.DeletePermissionById(${this.data[loop]["id"]})">DELETE</button>
+            <button data-id="del_perm"  value="${this.data[loop]["id"]}">DELETE</button>
             </td>
 
-
             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">
-            <button class="btn btn-info" ><span class="glyphicon glyphicon-pencil" onclick="upp.update11(${this.data[loop]["id"]})">UPDATE</span></button>
+            <button  class="perm_up_date" value="${this.data[loop]["id"]}"  >UPDATE</button>
             </td>
             
            
@@ -111,6 +109,24 @@ class abc{
 
 }
 var ab=new abc();
+
+document.body.addEventListener('click',function(event)
+    {
+        //e.preventDefault();
+        if(event.target.dataset.id == "del_perm"){
+            console.log("iiiiiiiii");
+            ab.DeletePermissionById(event.target.value)
+           
+        }
+    }
+    )
+
+
+
+    //-----------------------------------------------------------------
+
+
+   
 //-----------------------------------------------------------------------------------
 
 class  updatePerm1{
@@ -124,12 +140,14 @@ class  updatePerm1{
     }
     update_perm(x:number){
         let y=x;
+        console.log(x);
     ab.headerTag1.innerHTML="";
+    this.headerTag3.innerHTML="";
         console.log("hello");
         this.headerTag3.innerHTML+=`
     
         <input type="text" id="PermissionName11"  name="PermissionName11" value=""  style="margin-top:300px; style="margin-left:100px; ">
-        <button   class="btn btn-danger" onclick="perm_update.updatePermission1(${y})" >SUBMIT</button>
+        <button    class="add_ppp"  value="${y}" >SUBMIT</button>
         
         `
        
@@ -137,8 +155,31 @@ class  updatePerm1{
        
 }
 var upp =new updatePerm1();
+////////////////////////////////////////////////////////
 
 
+document.addEventListener('click' ,e=>{
+
+        if( (e.target as HTMLButtonElement).className ==="perm_up_date")
+        {
+            console.log("sdfghjkl");
+            console.log(event.target.value);
+            upp.update_perm(event.target.value);
+           // 
+           
+        }
+       
+    }
+    );
+
+
+////////////////////////////////////////////////////
+// document.body.addEventListener('click',function(e){
+// if(event.target.dataset.id=="add_ppp"){
+//     console.log("jj");
+//     perm_update.updatePermission1(event.target.value);
+// }
+// });
 
 
 
@@ -182,11 +223,13 @@ class AddPermission{
                   
                 }
               });
-    
+       
         }
-    }
+}
 var permission=new AddPermission();
-
+document.querySelector("#btn_insert1").addEventListener('click',function(e){
+    permission.updatePermission();
+})
 
 //------------------------------------------------------------------------------------------------------
 //-----------update permission--------------------------------------------------------------------------
@@ -241,7 +284,23 @@ class update_Permission{
     }
 var perm_update=new update_Permission();
 
+//------------------------------------------------------------------------------------------
+document.addEventListener('click' ,e=>{
 
+        if( (e.target as HTMLButtonElement).className ==="add_ppp")
+        {
+            console.log("sdfghjkl");
+            
+           console.log(event.target.value)
+            perm_update.updatePermission1(event.target.value);
+           
+           
+        }
+       
+    }
+    );
+
+    //----------------------------------------------------------------------
 
 const  temp1=new abc();
    temp1.getAllPermission();
