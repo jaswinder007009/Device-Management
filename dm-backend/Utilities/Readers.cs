@@ -20,7 +20,7 @@ namespace dm_backend.Utilities
         }
         public static PartialUserModel ReadPartialUser(MySqlDataReader reader)
         {
-            var user = new PartialUserModel();
+            PartialUserModel user = new User();
             user.Salutation = GetSafeString(reader, "salutation");
             user.FirstName = GetSafeString(reader, "first_name");
             user.MiddleName = GetSafeString(reader, "middle_name");

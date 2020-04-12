@@ -4,26 +4,27 @@ using System.Data;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using dm_backend.Models;
+using dm_backend.Utilities;
 
 namespace dm_backend
 {
-    public class User : BaseEntity
+    public class User : PartialUserModel
     {
-        public string? Salutation { get; set; }
-        public string? FirstName { get; set; }
-        public string? MiddleName { get; set; }
-        public string? LastName { get; set; }
-        public string? DepartmentName { get; set; }
-        public string? DesignationName { get; set; }
-        public string? Email { get; set; }
+        // public string? Salutation { get; set; }
+        // public string? FirstName { get; set; }
+        // public string? MiddleName { get; set; }
+        // public string? LastName { get; set; }
+        // public string? DepartmentName { get; set; }
+        // public string? DesignationName { get; set; }
+        // public string? Email { get; set; }
         public string? RoleName { get; set; }
         public int? UserId { get; set; }
         public string? Password { get; set; }
-        public string? DOB { get; set; }
-        public string? Gender { get; set; }
+        // public string? DOB { get; set; }
+        // public string? Gender { get; set; }
 
          public string? Status { get; set; }
-        public string? DOJ { get; set; }
+        // public string? DOJ { get; set; }
         public List<ContactNumberModel> phones { get; set; }
         public List<AddressModel> addresses { get; set; }
 
@@ -203,22 +204,22 @@ public int whatIs(String data1)
             {
                 while (reader.Read())
                 {
-                    var post = new User();
-                    post.Salutation = GetSafeString(reader,"salutation");
-                    post.FirstName = GetSafeString(reader, "first_name");
-                    post.MiddleName = GetSafeString(reader, "middle_name");
-                    post.LastName = GetSafeString(reader, "last_name");
+                    var post = (User)Readers.ReadPartialUser(reader);
+                    // post.Salutation = GetSafeString(reader,"salutation");
+                    // post.FirstName = GetSafeString(reader, "first_name");
+                    // post.MiddleName = GetSafeString(reader, "middle_name");
+                    // post.LastName = GetSafeString(reader, "last_name");
                     // post.User_Id = GetSafeString(reader, "user_id");
                     post.UserId = (int)reader["user_id"];
                     post.RoleName = GetSafeString(reader, "role_name");
-                    post.DepartmentName = GetSafeString(reader, "department_name");
-                    post.DesignationName = GetSafeString(reader, "designation_name");
-                    post.Email = GetSafeString(reader, "email");
-                    post.Gender = GetSafeString(reader, "gender");
+                    // post.DepartmentName = GetSafeString(reader, "department_name");
+                    // post.DesignationName = GetSafeString(reader, "designation_name");
+                    // post.Email = GetSafeString(reader, "email");
+                    // post.Gender = GetSafeString(reader, "gender");
                     post.Password=GetSafeString(reader,"password");
                     post.Status = GetSafeString(reader, "status_name");
-                    post.DOB = Convert.ToDateTime(reader["date_of_birth"]).ToString("dd/MM/yyyy");
-                    post.DOJ = Convert.ToDateTime(reader["date_of_joining"]).ToString("dd/MM/yyyy");
+                    // post.DOB = Convert.ToDateTime(reader["date_of_birth"]).ToString("dd/MM/yyyy");
+                    // post.DOJ = Convert.ToDateTime(reader["date_of_joining"]).ToString("dd/MM/yyyy");
                     post.addresses.Add(ReadAddress(reader, "current"));
                     post.addresses.Add(ReadAddress(reader, "permanant"));
                     post.phones.Add(ReadContact(reader,"mobile"));
