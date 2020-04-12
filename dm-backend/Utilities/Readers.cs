@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using dm_backend.Models;
+using dm_backend.Controllers;
+using System.Data.Common;
 
 namespace dm_backend.Utilities
 {
@@ -76,6 +78,22 @@ namespace dm_backend.Utilities
             request.deviceType = (string)reader["type"];
             request.returnDate = Convert.ToDateTime(reader["return_date"]).ToString("yyyy-MM-dd");
             return request;
+        }
+        public static GenericModel  ReadGenericModel(MySqlDataReader reader,string prefix)
+        {
+            var genericmodel=new GenericModel();
+prefix=string.IsNullOrEmpty(prefix)?prefix:prefix+"_";
+            genericmodel.id=(int)reader[prefix+"id"];
+            genericmodel.name=(string)reader[prefix+"name"];
+            return genericmodel;
+        }
+          public static GenericModel  ReadGenericModel(DbDataReader reader,string prefix)
+        {
+            var genericmodel=new GenericModel();
+prefix=string.IsNullOrEmpty(prefix)?prefix:prefix+"_";
+            genericmodel.id=(int)reader[prefix+"id"];
+            genericmodel.name=(string)reader[prefix+"name"];
+            return genericmodel;
         }
     }
 }

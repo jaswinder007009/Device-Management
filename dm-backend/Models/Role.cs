@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using dm_backend.Controllers;
 
 namespace dm_backend.Models
 {
-    public class Role
+    public class Role : GenericModel
     {
+        public Role(AppDb db) : base(db)
+        {
 
 
-        public int id { get; set; }
-        public string RoleName { get; set; }
-   
+        }
+        public async Task<List<GenericModel>> GetAllRoles()
+        {
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = @"select  * from role;";
+            return await ReadAllDropdowns(await cmd.ExecuteReaderAsync());
+        }
+
+
+
     }
 }

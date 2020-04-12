@@ -22,12 +22,7 @@ namespace dm_backend.Models
             Db = db;
         }
 
-        public async Task<List<Role>> getUserInformation()
-        {
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"select  * from role;";
-            return await ReadAllEmployee(await cmd.ExecuteReaderAsync());
-        }
+       
 
 
         public async Task<List<user_role>> getUserRoleInformation()
@@ -297,7 +292,7 @@ namespace dm_backend.Models
         }
 
 
-        public async Task<List<role_permission>> deleteRolePermission(int id, int id1)
+        public async Task<List<RolePermission>> deleteRolePermission(int id, int id1)
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"delete from role_to_permission where role_id=@id and permission_id=@id1;;";
@@ -323,38 +318,30 @@ namespace dm_backend.Models
                 Value = Id1,
             });
         }
-        public async Task<List<role_permission>> getRolePermissionInformation()
-        {
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"select r.role_id,r.role_name,p.permission_id,p.permission_name  from role r
-            join permission p 
-            join role_to_permission rp 
-            on r.role_id=rp.role_id and p.permission_id=rp.permission_id  order by rp.role_id ASC";
-            return await ReadAllRolePermission(await cmd.ExecuteReaderAsync());
-        }
+       
 
 
 
 
-        public async Task<List<role_permission>> ReadAllRolePermission(DbDataReader reader)
-        {
-            var posts = new List<role_permission>();  // create an array of blogpost
-            using (reader)
-            {
-                while (await reader.ReadAsync())
-                {
-                    var post = new role_permission()
-                    {
-                        Role_Id = reader.GetInt32(0),
-                        Role_Name = reader.GetString(1),
-                        Permission_id = reader.GetInt32(2),
-                        Permission_Name = reader.GetString(3)
-                    };
-                    posts.Add(post);
-                }
-            }
-            return posts;
-        }
+        // public async Task<List<RolePermission>> ReadAllRolePermission(DbDataReader reader)
+        // {
+        //     var posts = new List<RolePermission>();  // create an array of blogpost
+        //     using (reader)
+        //     {
+        //         while (await reader.ReadAsync())
+        //         {
+        //             var post = new RolePermission()
+        //             {
+        //                 Role_Id = reader.GetInt32(0),
+        //                 Role_Name = reader.GetString(1),
+        //                 Permission_id = reader.GetInt32(2),
+        //                 Permission_Name = reader.GetString(3)
+        //             };
+        //             posts.Add(post);
+        //         }
+        //     }
+        //     return posts;
+        // }
 
 
 
@@ -529,7 +516,7 @@ namespace dm_backend.Models
 
 
 
-        public async Task insertRolePerm(insert_role_permission result)
+        public async Task insertRolePerm(insert_RolePermission result)
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"insert into role_to_permission(role_id,permission_id) values(@role,@permission);";

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using dm_backend.Utilities;
+
 
 namespace dm_backend.Controllers
 {
@@ -21,17 +23,17 @@ namespace dm_backend.Controllers
         public IActionResult Countries()
         {
 
-            List<DropdownModel> countries = new List<DropdownModel>();
+            List<GenericModel> countries = new List<GenericModel>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select country_id, country_name from country";
+            cmd.CommandText = "select country_id as id, country_name as name from country";
             var reader = cmd.ExecuteReader();
 
             using (reader)
             {
                 while (reader.Read())
                 {
-                    countries.Add(new DropdownModel()
+                    countries.Add(new GenericModel()
                     {
                         id = reader.GetInt32(0),
                         name = reader.GetString(1)
@@ -52,17 +54,17 @@ namespace dm_backend.Controllers
         public IActionResult states()
         {
 
-            List<DropdownModel> states = new List<DropdownModel>();
+            List<GenericModel> states = new List<GenericModel>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select state_id, state_name from state limit 50";
+            cmd.CommandText = "select state_id as id, state_name as name from state limit 50";
             var reader = cmd.ExecuteReader();
 
             using (reader)
             {
                 while (reader.Read())
                 {
-                    states.Add(new DropdownModel()
+                    states.Add(new GenericModel()
                     {
                         id = reader.GetInt32(0),
                         name = reader.GetString(1)
@@ -83,10 +85,10 @@ namespace dm_backend.Controllers
         public IActionResult Cities()
         {
             //String fields = HttpContext.Request.Query["id"];
-            List<DropdownModel> cities = new List<DropdownModel>();
+            List<GenericModel> cities = new List<GenericModel>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select city_id, city_name from city limit 6000 ";
+            cmd.CommandText = "select city_id as id, city_name as name from city limit 6000 ";
            // cmd.Parameters.AddWithValue("@c_id", fields);
             var reader = cmd.ExecuteReader();
 
@@ -94,7 +96,7 @@ namespace dm_backend.Controllers
             {
                 while (reader.Read())
                 {
-                    cities.Add(new DropdownModel()
+                    cities.Add(new GenericModel()
                     {
                         id = reader.GetInt32(0),
                         name = reader.GetString(1)
@@ -114,17 +116,17 @@ namespace dm_backend.Controllers
         public IActionResult Salutations()
         {
 
-            List<DropdownModel> salutations = new List<DropdownModel>();
+            List<GenericModel> salutations = new List<GenericModel>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select * from salutation;";
+            cmd.CommandText = "select salutation_id as id,salutation as name from salutation;";
             var reader = cmd.ExecuteReader();
 
             using (reader)
             {
                 while (reader.Read())
                 {
-                    salutations.Add(new DropdownModel()
+                    salutations.Add(new GenericModel()
                     {
                         id = reader.GetInt32(0),
                         name = reader.GetString(1)
@@ -144,17 +146,17 @@ namespace dm_backend.Controllers
         public IActionResult CountryCodes()
         {
 
-            List<DropdownModel> countries = new List<DropdownModel>();
+            List<GenericModel> countries = new List<GenericModel>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select country_code, country_name from country";
+            cmd.CommandText = "select country_code as id, country_name as name from country";
             var reader = cmd.ExecuteReader();
 
             using (reader)
             {
                 while (reader.Read())
                 {
-                    countries.Add(new DropdownModel()
+                    countries.Add(new GenericModel()
                     {
                         id = Convert.ToInt32(reader.GetString(0)),
                         name = reader.GetString(1),
@@ -175,17 +177,17 @@ namespace dm_backend.Controllers
         public IActionResult addressTypes()
         {
 
-            List<DropdownModel> addTypes = new List<DropdownModel>();
+            List<GenericModel> addTypes = new List<GenericModel>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select * from address_type;";
+            cmd.CommandText = "select address_type_id as id,address_type as name from address_type;";
             var reader = cmd.ExecuteReader();
 
             using (reader)
             {
                 while (reader.Read())
                 {
-                    addTypes.Add(new DropdownModel()
+                    addTypes.Add(new GenericModel()
                     {
                         id = reader.GetInt32(0),
                         name = reader.GetString(1)
@@ -205,17 +207,17 @@ namespace dm_backend.Controllers
         public IActionResult contactTypes()
         {
 
-            List<DropdownModel> phoneTypes = new List<DropdownModel>();
+            List<GenericModel> phoneTypes = new List<GenericModel>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select * from contact_type;";
+            cmd.CommandText = "select contact_type_id as id,contact_type as name from contact_type;";
             var reader = cmd.ExecuteReader();
 
             using (reader)
             {
                 while (reader.Read())
                 {
-                    phoneTypes.Add(new DropdownModel()
+                    phoneTypes.Add(new GenericModel()
                     {
                         id = reader.GetInt32(0),
                         name = reader.GetString(1),
@@ -235,7 +237,7 @@ namespace dm_backend.Controllers
         [Route("brands")]
         public IActionResult GetAllDeviceBrands()
         {
-            var result = GetListFromQuery("select brand from device_brand");
+            var result = GetListFromQuery("select device_brand_id as id, brand as name from device_brand");
             if (result.Count < 1)
                 return NoContent();
             return Ok(result);
@@ -245,7 +247,7 @@ namespace dm_backend.Controllers
         [Route("models")]
         public IActionResult GetAllDeviceModels()
         {
-            var result = GetListFromQuery("select model from device_model");
+            var result = GetListFromQuery("select device_model_id as id,model as name from device_model");
             if (result.Count < 1)
                 return NoContent();
             return Ok(result);
@@ -255,7 +257,7 @@ namespace dm_backend.Controllers
         [Route("types")]
         public IActionResult GetAllDeviceTypes()
         {
-            var result = GetListFromQuery("select type from device_type");
+            var result = GetListFromQuery("select device_type_id as id,type as name from device_type");
             if (result.Count < 1)
                 return NoContent();
             return Ok(result);
@@ -265,7 +267,7 @@ namespace dm_backend.Controllers
         [Route("rams")]
         public IActionResult GetAllSpecificationRAM()
         {
-            var result = GetListFromQuery("select distinct RAM from specification");
+            var result = GetListFromQuery("select distinct 0 as id, RAM as name from specification");
             if (result.Count < 1)
                 return NoContent();
             return Ok(result);
@@ -275,7 +277,7 @@ namespace dm_backend.Controllers
         [Route("storages")]
         public IActionResult GetAllSpecificationStorage()
         {
-            var result = GetListFromQuery("select distinct storage from specification");
+            var result = GetListFromQuery("select distinct 0 as id,storage as name from specification");
             if (result.Count < 1)
                 return NoContent();
             return Ok(result);
@@ -285,7 +287,7 @@ namespace dm_backend.Controllers
         [Route("screensizes")]
         public IActionResult GetAllSpecificationScreenSize()
         {
-            var result = GetListFromQuery("select distinct screen_size from specification");
+            var result = GetListFromQuery("select distinct 0 as id,screen_size as name from specification");
             if (result.Count < 1)
                 return NoContent();
             return Ok(result);
@@ -295,19 +297,19 @@ namespace dm_backend.Controllers
         [Route("connectivities")]
         public IActionResult GetAllSpecificationConnectivity()
         {
-            var result = GetListFromQuery("select distinct connectivity from specification");
+            var result = GetListFromQuery("select distinct 0 as id, connectivity as name from specification");
             if (result.Count < 1)
                 return NoContent();
             return Ok(result);
         }
 
-        private List<DropdownModel> GetListFromQuery(string queryString)
+        private List<GenericModel> GetListFromQuery(string queryString)
         {
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = queryString;
             var reader = cmd.ExecuteReader();
-            var result = new DropdownModel().ReadAllDropdowns(reader);
+            var result = new GenericModel().ReadAllDropdowns(reader);
             Db.Connection.Close();
             return result;
         }
@@ -315,21 +317,38 @@ namespace dm_backend.Controllers
     }
 
 
-    class DropdownModel
+   public  class GenericModel
     {
         public int id { get; set; }
         public string name { get; set; }
+         public AppDb Db { get; }
+         public GenericModel()
+         {
 
-        public List<DropdownModel> ReadAllDropdowns(MySqlDataReader reader)
+         }
+         public GenericModel(AppDb db)
+         {
+             Db=db;
+
+         }
+
+
+        public List<GenericModel> ReadAllDropdowns(MySqlDataReader reader)
         {
-            var list = new List<DropdownModel>();
+            var list = new List<GenericModel>();
             while (reader.Read())
             {
-                list.Add(new DropdownModel()
-                {
-                    // id = reader.GetInt32(0),
-                    name = reader.GetString(0)
-                });
+                list.Add(Readers.ReadGenericModel(reader,""));
+               
+            }
+            return list;
+        }
+         public  async Task<List<GenericModel>> ReadAllDropdowns(DbDataReader reader)
+        {
+            var list = new List<GenericModel>();
+            while (await reader.ReadAsync())
+            {
+                 list.Add(Readers.ReadGenericModel(reader,""));
             }
             return list;
         }

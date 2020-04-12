@@ -7,7 +7,7 @@ using dm_backend.Models;
 
 namespace dm_backend.Controllers
 {
-    [Route("api/device")]
+    [Route("api/[controller]")]
     public class RoleController : ControllerBase
     {
         public RoleController(AppDb db)
@@ -17,35 +17,35 @@ namespace dm_backend.Controllers
 
 
         [HttpGet("role")]
-        public async Task<IActionResult> GetRoleInfo()
-        {
-            await Db.Connection.OpenAsync();
-            var query = new BlogPostQuery(Db);
+        // public async Task<IActionResult> GetRoleInfo()
+        // {
+        //     await Db.Connection.OpenAsync();
+        //     var query = new Role(Db);
 
-            var result = await query.getUserInformation();
-            return new OkObjectResult(result);
-        }
+        //     var result = await query.GetAllRoles();
+        //     return new OkObjectResult(result);
+        // }
 
       
-        [HttpGet("permission")]
-        public async Task<IActionResult> GetPermissionInfo()
-        {
-            await Db.Connection.OpenAsync();
-            var query = new BlogPostQuery(Db);
+        // [HttpGet("permission")]
+        // public async Task<IActionResult> GetPermissionInfo()
+        // {
+        //     await Db.Connection.OpenAsync();
+        //     var query = new Permission(Db);
 
-            var result = await query.getPermissionInformation();
-            return new OkObjectResult(result);
-        }
+        //     var result = await query.GetAllPermissions();
+        //     return new OkObjectResult(result);
+        // }
 
-        [HttpGet("get_role_permission")]
-        public async Task<IActionResult> GetRolePermissionInfo()
-        {
-            await Db.Connection.OpenAsync();
-            var query = new BlogPostQuery(Db);
+        // [HttpGet("get_role_permission")]
+        // public async Task<IActionResult> GetRolePermissionInfo()
+        // {
+        //     await Db.Connection.OpenAsync();
+        //     var query = new RolePermission(Db);
 
-            var result = await query.getRolePermissionInformation();
-            return new OkObjectResult(result);
-        }
+        //     var result = await query.GetAllRolesAndPermissions();
+        //     return new OkObjectResult(result);
+        // }
 
 
         [HttpGet("get_permission_with_role/{id}")]
