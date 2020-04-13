@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace dm_backend.Models
+namespace DeviceManagementPro.Models
 {
     public partial class Role
     {

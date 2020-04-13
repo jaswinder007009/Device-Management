@@ -1,7 +1,7 @@
 ﻿using DeviceManagementPro.Models;
 using System.Threading.Tasks;
 
-namespace dm_backend.Data
+namespace DeviceManagementPro.Data
 {
     public interface IAuthRepository
     {

@@ -12,10 +12,10 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Internal;
-using dm_backend.Utilities;
-using dm_backend.EntityFramework;
+using DeviceManagementPro.Utilities;
+using DeviceManagementPro.EntityFramework;
 
-namespace dm_backend.Controllers
+namespace DeviceManagementPro.Controllers
 {
     
     [ApiController]
