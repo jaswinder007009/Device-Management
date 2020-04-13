@@ -4,9 +4,10 @@ import { RequestSubmitModel } from "./SubmissionRequestModel";
 import { populateData } from "./genrateSubmissionRequest";
 import { RequestModel } from "./RequetsDatamodel";
 import { Sort } from "./user-profile/SortingUser";
+import { BASEURL } from "./globals";
 
 
-let uri = "http://localhost:5000/api/ReturnRequest";
+let address = BASEURL;
 
 
 
@@ -18,7 +19,7 @@ let uri = "http://localhost:5000/api/ReturnRequest";
         let id = (event.target as HTMLInputElement).id;
         let search = (document.getElementById(id) as HTMLInputElement).value;
         (document.getElementById(id) as HTMLInputElement).setAttribute("data-device-name" , search);
-        let url = uri + "" + getSearchUrl();
+        let url = address + "/api/ReturnRequest" + getSearchUrl();
         console.log(url);
         getData(url);
     }
@@ -43,7 +44,7 @@ document.querySelector("#tableHead").addEventListener('click' , event =>
         let sortAttributr = (event.target as HTMLTableHeaderCellElement).dataset.id;
         let sort = new Sort();
        var sortType =  sort.checkSortType((event.target as HTMLTableHeaderCellElement));
-       let url = uri + getSearchUrl() +"&sort="+sortAttributr +"&direction="+ sortType ;
+       let url = address +  "/api/ReturnRequest" + getSearchUrl() +"&sort="+sortAttributr +"&direction="+ sortType ;
         getData(url);
     }
 
@@ -52,7 +53,7 @@ document.querySelector("#tableHead").addEventListener('click' , event =>
 
 function getAll()
 {
-    let url =  uri;
+    let url =  address  + "/api/ReturnRequest";
     (document.getElementById("fixed-header-drawer-exp") as HTMLInputElement).setAttribute("data-device-name" , "");
     getData(url);
 }
@@ -78,8 +79,8 @@ document.addEventListener("click", function (event) {
         var returnId = (event.target as HTMLButtonElement).dataset.returnId
 
 
-        let uri = "http://localhost:5000/api/RequestHistory/"+ returnId +"/accept";
-        new Api().hitGetApi(uri);
+        let url = address + "/api/RequestHistory/"+ returnId +"/accept";
+        new Api().hitGetApi(url);
         getAll();
 
         

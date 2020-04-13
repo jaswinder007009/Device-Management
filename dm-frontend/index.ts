@@ -29,7 +29,7 @@ var domElement =  new HtmlElementsData();
 
 
 
-(document.querySelector("#getdata") as HTMLButtonElement).addEventListener("click" ,e =>
+(document.querySelector("#getdata") as HTMLSpanElement).addEventListener("click" ,e =>
 {   
     (document.getElementById("waterfall-exp") as HTMLInputElement).value = "";
     (document.getElementById("device_serial_number") as HTMLInputElement).value = "";

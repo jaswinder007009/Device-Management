@@ -24,7 +24,7 @@
            
             <div class="mdl-layout__header-row">
                 <!-- Title -->
-                <span class="mdl-layout-title">Title</span>
+                <span class="mdl-layout-title" id="getdata" style="cursor:pointer">Request History</span>
                 <div class="mdl-layout-spacer"></div>
 
             </div>
@@ -34,7 +34,10 @@
         <div class="mdl-layout__drawer">
             <span class="mdl-layout-title">Admin</span>
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="">Roles & Permission</a>
+                <a class="mdl-navigation__link" href="dashboard.html">
+                    <i class="mdl-color-text--blue-grey-400 material-icons"
+                        role="presentation">dashboard</i>Dashboard
+                </a>
                 <a class="mdl-navigation__link" href="">Dash-Board</a>
                 <a class="mdl-navigation__link" href="">Create New User</a>
                 <a class="mdl-navigation__link" href="">All Devices</a>
@@ -43,7 +46,7 @@
         <main class="mdl-layout__content">
             <div class="page-content">
                 <div class="requestdata">
-                    <button class="getAll Requestbutton" id="getdata">Get Data</button>
+                    <!-- <button class="getAll Requestbutton" id="getdata">Get Data</button> -->
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                 mdl-textfield--floating-label mdl-textfield--align-right">
                         <label class="mdl-button mdl-js-button mdl-button--icon" for="waterfall-exp">
