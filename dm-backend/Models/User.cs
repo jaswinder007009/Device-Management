@@ -344,7 +344,9 @@ public int whatIs(String data1)
             cmd.Parameters.Add(new MySqlParameter("email", Email));
            
             if(string.IsNullOrEmpty(Password))
-            cmd.Parameters.AddWithValue("password", DBNull.Value);
+            {  cmd.Parameters.AddWithValue("password", DBNull.Value);
+            cmd.Parameters.AddWithValue("passwordSalt", DBNull.Value);
+            cmd.Parameters.AddWithValue("passwordHash", DBNull.Value);}
             else
 {
    
