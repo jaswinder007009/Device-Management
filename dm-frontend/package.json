@@ -1,16 +1,24 @@
 {
-  "name": "dm-frontend",
+  "name": "webpackfirstproject",
   "version": "1.0.0",
   "description": "",
-  "main": "adminDashboard.js",
-  "dependencies": {
-    "@types/jquery": "^3.3.34",
-    "commonjs": "^0.0.1"
-  },
-  "devDependencies": {},
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack-dev-server",
+    "build": "rm -rf build && webpack",
+    "start": "webpack"
   },
+  "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "ts-loader": "^6.2.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "path": "^0.12.7",
+    "typescript": "^3.8.3"
+  }
 }
