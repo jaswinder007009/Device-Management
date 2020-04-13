@@ -2,6 +2,10 @@ import { GetUserApi } from "./getUserApi";
 import { BASEURL } from "../globals";
 export class Sort 
 {    
+    token : string ="";
+	constructor(token:string){
+		this.token=token;
+	}
    
     sortBy(attributeId : any)
     {
@@ -32,7 +36,7 @@ export class Sort
     {
         const uri=  BASEURL + "/api/user?search="+encodeURI(find)+"&sortby="+sortAttribute+"&direction="+sortType;
       
-        return new GetUserApi().getSort(uri);
+        return new GetUserApi(this.token).getSort(uri);
 
     }
     getSortingUrl(attributeId: HTMLTableHeaderCellElement)
