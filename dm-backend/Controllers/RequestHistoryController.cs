@@ -22,7 +22,7 @@ namespace dm_backend.Controllers
         {
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "accept_  return";
+            cmd.CommandText = "accept_return";
             cmd.CommandType = CommandType.StoredProcedure; 
             try{
                 cmd.Parameters.AddWithValue("@return_id", returnId);

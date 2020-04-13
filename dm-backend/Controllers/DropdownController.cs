@@ -257,7 +257,7 @@ namespace dm_backend.Controllers
         [Route("brands")]
         public IActionResult GetAllDeviceBrands()
         {
-            var result = GetListFromQuery("select * from device_brand");
+            var result = GetListFromQuery("select brand from device_brand");
             if (result.Count < 1)
                 return NoContent();
             return Ok(result);
@@ -267,7 +267,7 @@ namespace dm_backend.Controllers
         [Route("models")]
         public IActionResult GetAllDeviceModels()
         {
-            var result = GetListFromQuery("select * from device_model");
+            var result = GetListFromQuery("select model from device_model");
             if (result.Count < 1)
                 return NoContent();
             return Ok(result);
@@ -277,7 +277,7 @@ namespace dm_backend.Controllers
         [Route("types")]
         public IActionResult GetAllDeviceTypes()
         {
-            var result = GetListFromQuery("select * from device_type");
+            var result = GetListFromQuery("select type from device_type");
             if (result.Count < 1)
                 return NoContent();
             return Ok(result);
@@ -353,8 +353,8 @@ namespace dm_backend.Controllers
             {
                 list.Add(new DropdownModel()
                 {
-                    id = reader.GetInt32(0),
-                    name = reader.GetString(1)
+            //        id = reader.GetInt32(0),
+                    name = reader.GetString(0)
                 });
             }
             return list;
