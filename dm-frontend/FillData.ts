@@ -41,7 +41,7 @@ export class PopulateData {
         this.historyInformation.specifications = (value["specs"]["ram"] == ""?"": "RAM = "+ value["specs"]["ram"] +",") + 
         (value["specs"]["storage"]== "" ? "" : "Storage =  " + value["specs"]["storage"] +"," ) +
         (value["specs"]["screenSize"] =="" ? "" : " Screen-Size = " + value["specs"]["screenSize"] +",") +
-         ( value["specs"]["connectivity"] == "" ? "" : " connectivity =  " + value["specs"]["connectivity"] );
+         ( value["specs"]["connecti vity"] == "" ? "" : " connectivity =  " + value["specs"]["connectivity"] );
     }
 
     private userName(value: any, type: string): string {

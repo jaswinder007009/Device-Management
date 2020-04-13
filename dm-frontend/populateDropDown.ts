@@ -1,3 +1,5 @@
+import { device } from "./deviceModel";
+
 export class populateDropDown
 {
     populateDevice(data:any  , value : string)
@@ -5,8 +7,8 @@ export class populateDropDown
 
         this.clear(value);
         data.map( e=>
-            {   
-                (document.getElementById(value) as HTMLSelectElement).innerHTML += `<option value="${e.name}">${e.name}</option>`;
+            {   var data = new device(e);
+                (document.getElementById(value) as HTMLSelectElement).innerHTML += `<option value="${data.id}">${data.value}</option>`;
               console.log(e.name);
             });
     }

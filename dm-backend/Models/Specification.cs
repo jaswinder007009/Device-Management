@@ -43,6 +43,21 @@ namespace dm_backend.Models
             cmd.Parameters.AddWithValue("@specification_id", specification_id);
             return await ReadSpecifications(cmd.ExecuteReader());
         }
+
+        public async Task<List<Specification>> getSpecificSpecification(int typeId , int brand , int model )
+        {
+
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = @"select s.* from specification as s inner join device as d using(specification_id) 
+                        where d.device_brand_id = @brand and d.device_type_id =@type  and d.device_model_id=@model group by s.specification_id; ";
+
+            cmd.Parameters.AddWithValue("@type", typeId);
+            cmd.Parameters.AddWithValue("@brand", brand);
+            cmd.Parameters.AddWithValue("@model", model);
+            return await ReadSpecifications(await cmd.ExecuteReaderAsync());
+        }
+
+
         public async Task<List<Specification>> ReadSpecifications(DbDataReader reader)
         {
             var specifications = new List<Specification>();
@@ -118,6 +133,7 @@ namespace dm_backend.Models
 
     public class SpecificationModel
     {
+        
         public string RAM { get; set; }
         public string Storage { get; set; }
         public string ScreenSize { get; set; }

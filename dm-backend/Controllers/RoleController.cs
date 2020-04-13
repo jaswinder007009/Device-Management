@@ -8,7 +8,7 @@ using dm_backend.Models;
 namespace dm_backend.Controllers
 {
     [Route("api/device")]
-    public class RoleController : ControllerBase
+    public class RoleController : BaseController
     {
         public RoleController(AppDb db)
         {
@@ -26,7 +26,7 @@ namespace dm_backend.Controllers
             return new OkObjectResult(result);
         }
 
-      
+
         [HttpGet("permission")]
         public async Task<IActionResult> GetPermissionInfo()
         {
@@ -130,7 +130,7 @@ namespace dm_backend.Controllers
             var result = await query.getUsers();
             return new OkObjectResult(result);
         }
-       //
+        //
 
         [HttpGet("user_role")]
         public async Task<IActionResult> GetUserRoleInfo()
@@ -142,28 +142,28 @@ namespace dm_backend.Controllers
             return new OkObjectResult(result);
         }
 
-        
+
 
 
         //insert the role
 
         [HttpPost("role/insert")]
-                public async Task<IActionResult> insertnewAsync([FromBody]Insert body)
-                {
-                    await Db.Connection.OpenAsync();
-                    var query = new BlogPostQuery(Db);
-                    var result = new Insert();
-                       // result.id = body.id;
-                        result.roleName = body.roleName;
+        public async Task<IActionResult> insertnewAsync([FromBody]Insert body)
+        {
+            await Db.Connection.OpenAsync();
+            var query = new BlogPostQuery(Db);
+            var result = new Insert();
+            // result.id = body.id;
+            result.roleName = body.roleName;
 
 
-                    await query.insertAsync(result);
-                    return new OkObjectResult(result);
-                }
+            await query.insertAsync(result);
+            return new OkObjectResult(result);
+        }
 
 
 
-        
+
         //insert the permission
 
         [HttpPost("permission/insert")]
@@ -200,10 +200,10 @@ namespace dm_backend.Controllers
 
 
 
-      
 
 
-        
+
+
         //insert the user and role
         [HttpPost("role_user/insert")]
         public async Task<IActionResult> insertnewUserRole([FromBody]user_role body)
@@ -283,26 +283,35 @@ namespace dm_backend.Controllers
             // result.id = body.id;
             result.RoleName = body.RoleName;
 
-           
-          
+
+
 
             await query.UpdateAsync(body);
             return new OkObjectResult(result);
         }
 
-        [HttpPut("permission/{id}")]
-        public async Task<IActionResult> PutPermission(int id, [FromBody]UpdatePermission body)
+        [HttpPut]
+        [Route("permission/{id}")]
+        async public Task<IActionResult> Putpermission(int id, [FromBody]UpdatePermission body)
         {
-            await Db.Connection.OpenAsync();
-            var query = new BlogPostQuery(Db);
-            var result = await query.FindOnePermission(id);
-            if (result is null)
-                return new NotFoundResult();
-            result.permission_name = body.permission_name;
-            
-            
-            await query.UpdatePermission1(body);
-            return new OkObjectResult(result);
+            Db.Connection.Open();
+            var query = new updatepermission(Db);
+            body.id = id;
+            await query.updatePermission(body);
+            Db.Connection.Close();
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("is_user")]
+        public IActionResult AmIUser(){
+            return Ok(new{ result= GetUserRoles().Contains("user") });
+        }
+
+        [HttpGet]
+        [Route("is_admin")]
+        public IActionResult AmIAdmin(){
+            return Ok(new{ result= GetUserRoles().Contains("admin") });
         }
 
         public AppDb Db { get; }

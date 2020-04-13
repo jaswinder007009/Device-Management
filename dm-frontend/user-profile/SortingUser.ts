@@ -3,7 +3,7 @@ import { BASEURL } from "../globals";
 export class Sort 
 {    
    
-    sortBy(attributeId : HTMLTableHeaderCellElement)
+    sortBy(attributeId : any)
     {
         
         let  sortType = this.checkSortType(attributeId);
@@ -12,7 +12,6 @@ export class Sort
         
     }
     checkSortType(value : HTMLTableHeaderCellElement) : string
-    
     {
        
         const type = value.className;
@@ -20,16 +19,13 @@ export class Sort
         if (type ==="mdl-data-table__header--sorted-descending")
         {
            value.setAttribute("class" ,  "mdl-data-table__header--sorted-ascending");
-      
          return "asc";
         }
         else{
-
            value.setAttribute("class" ,  "mdl-data-table__header--sorted-descending");
       
          return "desc";
         }
-         
     }
 
     setSortingApiCall(sortAttribute : string , find  : string , sortType : string,)

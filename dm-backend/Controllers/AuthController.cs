@@ -76,4 +76,16 @@ namespace dm_backend.Controllers
 
 
 
+<<<<<<< HEAD
+=======
+            var result = new RedirectResult("http://127.0.0.1:8080/dashboard.html?token=" + tokenhandler.WriteToken(token) + "&id=" + usertorepo.Id.ToString());
+            return result;
+        }
+    }
+    public class UserForAuth
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+>>>>>>> e830e7b4a7375fc537f9a53c0f44ed2177798e04
 }
