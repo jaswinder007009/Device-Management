@@ -40,7 +40,7 @@ export class PopulateData {
     private bindSpecs(value: any) {
         this.historyInformation.specifications = (value["specs"]["ram"] == ""?"": "RAM = "+ value["specs"]["ram"] +",") + 
         (value["specs"]["storage"]== "" ? "" : "Storage =  " + value["specs"]["storage"] +"," ) +
-        (value["specs"]["screenSize"] =="" ? "" : " Screen-Size = " + value["specs"]["screenSize"] +",") +
+        (value["specs"]["screen_size"] =="" ? "" : " Screen-Size = " + value["specs"]["screen_size"] +",") +
          ( value["specs"]["connecti vity"] == "" ? "" : " connectivity =  " + value["specs"]["connectivity"] );
     }
 

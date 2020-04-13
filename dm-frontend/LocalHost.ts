@@ -1,5 +1,5 @@
 export class localHostUrl
 {
-    uri : string = "https://localhost:44368/sorting";
+    uri : string = "http://localhost:5000/sorting";
 
 }

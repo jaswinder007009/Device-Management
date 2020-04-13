@@ -1,7 +1,7 @@
 import { BASEURL } from "./globals";
 import { Requests,Specification } from "./RequestModel";
 let adminId = 16;
-let sortDirection = 1;
+let sortDirection = "asc";
 
 let globalUrl = BASEURL + "/request/";
 function getPendingRequests(url: string) {
@@ -74,11 +74,11 @@ function requestAction(requestUrl, requestId, action) {
 function getDirection(className, sortField) {
     if (className === "mdl-data-table__header--sorted-descending") {
         document.getElementById(sortField).setAttribute("class", "mdl-data-table__header--sorted-ascending");
-        return -1;
+        return "asc";
     }
     else {
         document.getElementById(sortField).setAttribute("class", "mdl-data-table__header--sorted-descending");
-        return 1;
+        return "desc";
     }
 }
 
@@ -93,12 +93,13 @@ function postNotification(data:Requests)
     }).catch(Error => console.log(Error));
     alert("Notification sent");
 }
-document.addEventListener("click", function (e) {
+
+(document.querySelector('#tablecol') as HTMLTableElement).addEventListener("click", function (e) {
     const sortField = (e.target as HTMLElement).getAttribute('name');
     const className = (document.getElementById(sortField) as HTMLTableRowElement).getAttribute("class");
     sortDirection = getDirection(className, sortField);
     document.getElementById("content").innerHTML = "";
-    getPendingRequests(globalUrl + "pending?sort=" + sortField + "&direction=" + sortDirection);
+    getPendingRequests(globalUrl + "pending?sortby=" + sortField + "&direction=" + sortDirection);
 
 });
 

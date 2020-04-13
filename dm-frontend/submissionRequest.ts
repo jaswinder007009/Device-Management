@@ -6,7 +6,7 @@ import { RequestModel } from "./RequetsDatamodel";
 import { Sort } from "./user-profile/SortingUser";
 
 
-let uri = "http://localhost:5000/ReturnRequest";
+let uri = "http://localhost:5000/api/ReturnRequest";
 
 
 
@@ -76,10 +76,12 @@ document.addEventListener("click", function (event) {
     if ((event.target as HTMLButtonElement).className == "accept") {
         
         var returnId = (event.target as HTMLButtonElement).dataset.returnId
-        
-        console.log();
 
-        let uri = "http://localhost:5000/api/RequestHistory/"+ returnId +"/accept"
+
+        let uri = "http://localhost:5000/api/RequestHistory/"+ returnId +"/accept";
+        new Api().hitGetApi(uri);
+        getAll();
+
         
 }
 });

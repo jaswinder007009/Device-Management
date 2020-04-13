@@ -95,7 +95,7 @@ document.addEventListener("click", function (e) {
                 notify.deviceId = +((e.target as HTMLButtonElement).dataset.value);
                 notify.userId = +(e.target as HTMLButtonElement).dataset.userid;
                 notify.rejectNotification(notify);
-            
+                
                }
                
             }
@@ -106,4 +106,7 @@ let notify = new Notify();
 const urlParams = new URLSearchParams(window.location.search);
       const myParam = urlParams.get("user_id");
       console.log(myParam);
-notify.notification(myParam);
+if(myParam)
+      notify.notification(myParam);
+else
+notify.notification("");

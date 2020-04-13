@@ -152,7 +152,7 @@ body {
 
 .userForm {
 position: absolute;
-text-align: center;
+text-align: left;
 width: 100%;
 
 }
@@ -195,4 +195,8 @@ background-color: #CC0000;
 .form-popup .btn:hover,
 .open-button:hover {
 opacity: 1;
+}
+.mdl-badge--overlap
+{
+	cursor: pointer;
 }
