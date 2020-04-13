@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using dm_backend.Models;
 
 namespace dm_backend.Controllers
 {
@@ -231,11 +232,32 @@ namespace dm_backend.Controllers
                 return NoContent();
         }
 
+
         [HttpGet]
+        [Route("{type}/{brand}/{model}/specification")]
+        async public Task<IActionResult> GetAllDeviceBrands(int type ,int brand ,  int model )
+        {
+
+            Db.Connection.Open();
+
+            var specs = new Specification(Db);
+
+            var result = await specs.getSpecificSpecification( type, brand, model);
+
+            Db.Connection.Close();
+            // if (result.Any() < 1)
+            //    return NoContent();
+          //  var json = config.Formatters.JsonFormatter;
+            //json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
+            return new OkObjectResult(result);
+        }
+
+
+        [HttpGet]   
         [Route("brands")]
         public IActionResult GetAllDeviceBrands()
         {
-            var result = GetListFromQuery("select brand from device_brand");
+            var result = GetListFromQuery("select * from device_brand");
             if (result.Count < 1)
                 return NoContent();
             return Ok(result);
@@ -245,7 +267,7 @@ namespace dm_backend.Controllers
         [Route("models")]
         public IActionResult GetAllDeviceModels()
         {
-            var result = GetListFromQuery("select model from device_model");
+            var result = GetListFromQuery("select * from device_model");
             if (result.Count < 1)
                 return NoContent();
             return Ok(result);
@@ -255,7 +277,7 @@ namespace dm_backend.Controllers
         [Route("types")]
         public IActionResult GetAllDeviceTypes()
         {
-            var result = GetListFromQuery("select type from device_type");
+            var result = GetListFromQuery("select * from device_type");
             if (result.Count < 1)
                 return NoContent();
             return Ok(result);
@@ -315,6 +337,10 @@ namespace dm_backend.Controllers
     }
 
 
+
+
+
+
     class DropdownModel
     {
         public int id { get; set; }
@@ -327,8 +353,8 @@ namespace dm_backend.Controllers
             {
                 list.Add(new DropdownModel()
                 {
-                    // id = reader.GetInt32(0),
-                    name = reader.GetString(0)
+                    id = reader.GetInt32(0),
+                    name = reader.GetString(1)
                 });
             }
             return list;

@@ -101,8 +101,7 @@ namespace dm_backend.Logics
         {
            
             using var cmd = Db.Connection.CreateCommand();
-          /*  if (status != "" || status != null)
-                getStatus(status);*/
+      
             FindSortingAttribute(sortElement);
             this.command += " " + sortType;
             int pageValue = page_limit(page, 1);
@@ -117,7 +116,7 @@ namespace dm_backend.Logics
             BindLimitParams(cmd, offset, limitValue );
             BindSearchParms(cmd, find , serialNumber , status );
 
-          //  try
+            try
             {
 
                 var data = await new BindRequestData(Db).BindHistoryData(await cmd.ExecuteReaderAsync());
@@ -125,9 +124,9 @@ namespace dm_backend.Logics
                 return await new TotalResultCount(Db).FindCount(data, command, find, offset, limitValue, serialNumber , status);
 
             }
-            //catch (Exception e)
+            catch (Exception e)
             {
-             //   throw e;
+                throw e;
             }
         }
 

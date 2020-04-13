@@ -18,19 +18,19 @@ export class UserData {
         return data;
 
     }
-    async getCountry() {
+     getCountry() {
         this.url = BASEURL + "/api/Dropdown/country";
         this.dropdownApiCall(this.url, document.querySelector("#addresses1 .country"));
         this.dropdownApiCall(this.url, document.querySelector("#addresses2 .country"));
         return null;
     }
-    async getState() {
+     getState() {
         this.url = BASEURL + "/api/Dropdown/state";
         this.dropdownApiCall(this.url, document.querySelector("#addresses1 .state"));
         this.dropdownApiCall(this.url, document.querySelector("#addresses2 .state"));
         return null;
     }
-    async getCity() {
+     getCity() {
         this.url = BASEURL + "/api/Dropdown/city";
         this.dropdownApiCall(this.url, document.querySelector("#addresses1 .city"));
         this.dropdownApiCall(this.url, document.querySelector("#addresses2 .city"));
@@ -55,6 +55,7 @@ export class UserData {
         let response = await fetch(URL);
         let data = await (response.json());       
         populateDropdown(selectElement, data);
+        return null;
 
     }
 }

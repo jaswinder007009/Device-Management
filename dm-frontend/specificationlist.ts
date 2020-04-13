@@ -16,7 +16,7 @@ export class SpecificationList
         this.storage = data.storage;
         this.screen_size = data.screen_size;
         this.connectivity = data.connectivity;
-    }
+    }   
     
     getSpecificationList()
     {

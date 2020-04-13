@@ -58,6 +58,7 @@ namespace dm_backend.Utilities
             var notify = new NotificationModel();
             notify.notificationId = GetSafeInt<int>(reader, "notification_id");
             notify.userId = (int)reader["user_id"];
+            notify.deviceId =(int)reader["device_id"];
             notify.deviceModel = (string)reader["model"];
             notify.deviceBrand = (string)reader["brand"];
             notify.deviceType = (string)reader["type"];
@@ -70,6 +71,10 @@ namespace dm_backend.Utilities
             var request = new ReturnRequestModel();
             request.returnRequestId = GetSafeInt<int>(reader, "return_request_id");
             request.userId = (int)reader["user_id"];
+            request.salutation = (string)reader["salutation"];
+            request.firstName = (string)reader["first_name"];
+            request.middleName = GetSafeString(reader, "middle_name");
+            request.lastName   = (string)reader["last_name"];
             request.deviceId = (int)reader["device_id"];
             request.deviceModel = (string)reader["model"];
             request.deviceBrand = (string)reader["brand"];
