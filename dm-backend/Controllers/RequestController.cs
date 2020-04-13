@@ -40,22 +40,13 @@ namespace dm_backend.Models{
         [Route("pending")]
         public IActionResult GetRequest()
         {
-            int userId=-1;
-            string searchField = "";
-            string sortField = "request_device_id";
-            int sortDirection = 0;
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
-                userId = Convert.ToInt32(HttpContext.Request.Query["id"]);
-
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["search"]))
-                searchField = HttpContext.Request.Query["search"];
-            
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["sort"]))
-                sortField = HttpContext.Request.Query["sort"];
-
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["direction"]))
-                sortDirection = Convert.ToInt32(HttpContext.Request.Query["direction"]);
-
+            int userId=  -1;
+            string searchField=(string) HttpContext.Request.Query["search"] ?? "";
+            string sortField=(string) HttpContext.Request.Query["sortby"] ?? "request_device_id";
+            string sortDirection=(string)HttpContext.Request.Query["direction"] ?? "asc";
+            if(!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
+            userId=Convert.ToInt32((string)HttpContext.Request.Query["id"]);
+    
             Db.Connection.Open();
             var requestObject = new RequestModel(Db);
             var result = requestObject.GetAllPendingRequests(userId,sortField,sortDirection,searchField);
@@ -110,6 +101,7 @@ namespace dm_backend.Models{
                 result =query.CancelRequest(requestId);
             }
             catch(Exception e){
+                Console.WriteLine(e.Message);
                 return NoContent();
             }
             Db.Connection.Close();

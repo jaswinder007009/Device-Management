@@ -34,6 +34,23 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok(result);
         }
+        [HttpPut]
+        [Route("reject")]
+        public IActionResult PutReturnRequest([FromBody]ReturnRequestModel request)
+        {
+            Db.Connection.Open();
+            request.Db = Db;
+            string result = null;
+            try{
+                result = request.RejectReturnRequest();
+            }
+            catch(NullReferenceException){
+                return NoContent();
+            }
+            Db.Connection.Close();
+            return Ok(result);
+        }
+
 
         [HttpGet]
         public IActionResult GetReturnRequest()

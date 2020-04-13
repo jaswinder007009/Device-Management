@@ -51,13 +51,14 @@ namespace dm_backend.Utilities
             request.requestDate = Convert.ToDateTime(reader["request_date"]).ToString("yyyy-MM-dd");
             request.noOfDays = (int)reader["no_of_days"];  // To convert sbyte to int
             request.comment = GetSafeString(reader, "comment");
-            request.availability = GetSafeInt<Int64>(reader, "availability") == 1 ? true : false;
+            request.availability = GetSafeInt<Int32>(reader, "availability") == 1 ? true : false;
             return request;
         }
          public static NotificationModel ReadNotification(MySqlDataReader reader){
             var notify = new NotificationModel();
             notify.notificationId = GetSafeInt<int>(reader, "notification_id");
             notify.userId = (int)reader["user_id"];
+            notify.deviceId =(int)reader["device_id"];
             notify.deviceModel = (string)reader["model"];
             notify.deviceBrand = (string)reader["brand"];
             notify.deviceType = (string)reader["type"];
