@@ -5,26 +5,16 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using dm_backend.Models;
 using dm_backend.Utilities;
+using dm_backend.Data;
 
 namespace dm_backend
 {
     public class User : PartialUserModel
     {
-        // public string? Salutation { get; set; }
-        // public string? FirstName { get; set; }
-        // public string? MiddleName { get; set; }
-        // public string? LastName { get; set; }
-        // public string? DepartmentName { get; set; }
-        // public string? DesignationName { get; set; }
-        // public string? Email { get; set; }
         public string? RoleName { get; set; }
         public int? UserId { get; set; }
         public string? Password { get; set; }
-        // public string? DOB { get; set; }
-        // public string? Gender { get; set; }
-
-         public string? Status { get; set; }
-        // public string? DOJ { get; set; }
+        public string? Status { get; set; }
         public List<ContactNumberModel> phones { get; set; }
         public List<AddressModel> addresses { get; set; }
 
@@ -35,7 +25,6 @@ namespace dm_backend
             phones = new List<ContactNumberModel>();
             addresses = new List<AddressModel>();
         }
-
         internal User(AppDb db)
         {
             Db = db;
@@ -176,7 +165,7 @@ public int whatIs(String data1)
             address1.PIN = GetSafeString(reader, prefix + "_pin");
            
 
-            return address1;//kkkkkkkkkkkkkkkkkkkkkkkkk
+            return address1;
         }
         private ContactNumberModel ReadContact(MySqlDataReader reader, string prefix)
         {
@@ -205,21 +194,10 @@ public int whatIs(String data1)
                 while (reader.Read())
                 {
                     var post = (User)Readers.ReadPartialUser(reader);
-                    // post.Salutation = GetSafeString(reader,"salutation");
-                    // post.FirstName = GetSafeString(reader, "first_name");
-                    // post.MiddleName = GetSafeString(reader, "middle_name");
-                    // post.LastName = GetSafeString(reader, "last_name");
-                    // post.User_Id = GetSafeString(reader, "user_id");
                     post.UserId = (int)reader["user_id"];
                     post.RoleName = GetSafeString(reader, "role_name");
-                    // post.DepartmentName = GetSafeString(reader, "department_name");
-                    // post.DesignationName = GetSafeString(reader, "designation_name");
-                    // post.Email = GetSafeString(reader, "email");
-                    // post.Gender = GetSafeString(reader, "gender");
                     post.Password=GetSafeString(reader,"password");
                     post.Status = GetSafeString(reader, "status_name");
-                    // post.DOB = Convert.ToDateTime(reader["date_of_birth"]).ToString("dd/MM/yyyy");
-                    // post.DOJ = Convert.ToDateTime(reader["date_of_joining"]).ToString("dd/MM/yyyy");
                     post.addresses.Add(ReadAddress(reader, "current"));
                     post.addresses.Add(ReadAddress(reader, "permanant"));
                     post.phones.Add(ReadContact(reader,"mobile"));
@@ -293,7 +271,7 @@ public int whatIs(String data1)
                     }
                 }
 
-                Console.WriteLine("An exception of type " + e.Message + " was encountered while inserting the data.");
+                Console.WriteLine("An exception of type " + e.Message + " was encountered while updating the data.");
                 Console.WriteLine("Neither record was written to database.");
             }
         
@@ -314,8 +292,6 @@ public int whatIs(String data1)
             cmd.Parameters.Add(new MySqlParameter("l_name", LastName));
             cmd.Parameters.Add(new MySqlParameter("dept_name", DepartmentName));
             cmd.Parameters.Add(new MySqlParameter("desig", DesignationName));
-            //cmd.Parameters.Add(new MySqlParameter("role_name", RoleName));
-            //cmd.Parameters.Add(new MySqlParameter("userr_id", UserId));
             cmd.Parameters.Add(new MySqlParameter("email", Email));
            
             if(string.IsNullOrEmpty(Password))
