@@ -37,14 +37,16 @@ export class Notifications {
             </td>
             <td>${this.notificationDate}</td>
             <td>${this.status}</td>
-              <td>${this.message}</td>
-             <td>
+              <td>${this.message}</td>`;
+              if(this.status=="Pending"){         
+                    const buttons= ` <td>
                <button class="accept-button" data-userid = ${this.user_id} data-value=${this.device_id}>Accept </button>
                 <button class="reject-button" data-userid = ${this.user_id} data-value=${this.device_id}>Reject </button>
             </td>
         </tr>`;
-        (document.getElementById("notification_data") as HTMLStyleElement).innerHTML += value;
-
+    
+        (document.getElementById("notification_data") as HTMLStyleElement).innerHTML += value+buttons;
+              }
     }
 
 }
