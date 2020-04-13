@@ -85,9 +85,6 @@ document.addEventListener("click", function (e) {
                     notify.deviceId = +(e.target as HTMLButtonElement).dataset.value;
                     notify.userId = +(e.target as HTMLButtonElement).dataset.userid;
                     notify.acceptNotification(notify);
-                    
-                   // (e.target as HTMLButtonElement).setAttribute("visibility","false");   
-
                  console.log("notification accepted");
                }
             }
@@ -98,8 +95,7 @@ document.addEventListener("click", function (e) {
                 notify.deviceId = +((e.target as HTMLButtonElement).dataset.value);
                 notify.userId = +(e.target as HTMLButtonElement).dataset.userid;
                 notify.rejectNotification(notify);
-              // window.location.reload();
-
+            
                }
                
             }
@@ -107,4 +103,7 @@ document.addEventListener("click", function (e) {
 });
 
 let notify = new Notify();
-notify.notification("");
+const urlParams = new URLSearchParams(window.location.search);
+      const myParam = urlParams.get("user_id");
+      console.log(myParam);
+notify.notification(myParam);

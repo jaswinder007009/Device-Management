@@ -135,7 +135,10 @@ function getPendingRequests(url: string) {
 
 }
 
-
+document.getElementById("notifications").addEventListener('click',function(e)
+{
+    window.location.href = "./notifiication.html?user_id="+user_id;
+})
 document.getElementById('email').innerHTML = email;
 document.getElementById('userRole').innerHTML = role;
 if(role=='User'){
