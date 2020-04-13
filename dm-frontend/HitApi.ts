@@ -26,7 +26,9 @@ export class HitApi
     {
 
 
- //       HitGetApi()
+
+       // this.HitGetApi()
+
     }
     geneartePage()
     {

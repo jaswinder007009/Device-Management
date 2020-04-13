@@ -60,7 +60,7 @@ import { AddDevice } from './device_crud';
           window.location.href = "./deviceListForadmin.html";
       }
       else {
-
+        
           temp.Create_device();
           console.log("added Successfully");
           alert("Device Added");
