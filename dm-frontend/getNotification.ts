@@ -106,4 +106,7 @@ let notify = new Notify();
 const urlParams = new URLSearchParams(window.location.search);
       const myParam = urlParams.get("user_id");
       console.log(myParam);
-notify.notification(myParam);
+if(myParam)
+      notify.notification(myParam);
+else
+notify.notification("");

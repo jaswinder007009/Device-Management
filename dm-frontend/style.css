@@ -196,3 +196,7 @@ background-color: #CC0000;
 .open-button:hover {
 opacity: 1;
 }
+.mdl-badge--overlap
+{
+	cursor: pointer;
+}

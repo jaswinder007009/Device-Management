@@ -6,7 +6,7 @@ import { RequestModel } from "./RequetsDatamodel";
 import { Sort } from "./user-profile/SortingUser";
 
 
-let uri = "http://localhost:5000/ReturnRequest";
+let uri = "http://localhost:5000/api/ReturnRequest";
 
 
 

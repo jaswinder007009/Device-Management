@@ -45,7 +45,7 @@ class GetApiForAdmin {
             const URL = URL1 + "&serial_number=" + serial_number;
             this.getApi(URL);
         }
-        else if (status) {
+        else if (status && !device_name) {
             const URL = URL1 + "&status_name=" + status;
             this.getApi(URL);
         }
