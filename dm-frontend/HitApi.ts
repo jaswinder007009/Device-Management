@@ -26,7 +26,7 @@ export class HitApi
     {
 
 
-        HitGetApi()
+ //       HitGetApi()
     }
     geneartePage()
     {

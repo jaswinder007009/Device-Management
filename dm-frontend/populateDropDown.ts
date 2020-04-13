@@ -9,7 +9,7 @@ export class populateDropDown
         data.map( e=>
             {   var data = new device(e);
                 (document.getElementById(value) as HTMLSelectElement).innerHTML += `<option value="${data.id}">${data.value}</option>`;
-              console.log(e.name);
+              console.log(e);
             });
     }
     populateSpecs(data:any  , value : string )
