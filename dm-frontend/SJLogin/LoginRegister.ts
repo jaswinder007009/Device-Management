@@ -26,11 +26,11 @@ function  LoginUser()
     headers: { 
         "Content-type": "application/json; charset=UTF-8"
     } 
-}).then(response => response.json()).then(json => {
-    console.log("jwt token : "+ json.token);
-    console.log(parseJwt(json.token));
-    localStorage.setItem("jwttoken",json.token );
-}).catch(err=>{console.log(err)});
+}).then(response => {
+    console.log(response);
+    window.location.href=response.url;
+})
+.catch(err=>{console.log(err)});
 }
 function RegisterUser()
 {

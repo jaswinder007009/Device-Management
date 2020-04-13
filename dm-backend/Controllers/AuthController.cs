@@ -96,10 +96,8 @@ namespace dm_backend.Controllers
             var tokenhandler = new JwtSecurityTokenHandler();
             var token = tokenhandler.CreateToken(tokenDescriptor);
 
-            return Ok(new
-            {
-                token = tokenhandler.WriteToken(token)
-            });
+            var result = new RedirectResult("http://127.0.0.1:8080/dashboard.html?token=" + tokenhandler.WriteToken(token) + "&id=" + usertorepo.Id.ToString());
+            return result;
         }
     }
     public class UserForAuth

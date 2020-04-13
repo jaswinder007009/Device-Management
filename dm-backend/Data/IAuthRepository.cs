@@ -9,6 +9,5 @@ namespace dm_backend.Data
         Task<UserAuth> Login(string name, string password);
 
         Task<bool> UserExists(string name);
-       
     }
 }
