@@ -2,13 +2,13 @@ import { BASEURL, amIAdmin, amIUser } from './globals';
 (async function(){
     let cardTitle=['Total Devices','Free Devices','Faults','Assigned Devices','Device Requests','Rejected Requests'];
 
-
+    
     const url = new URL(window.location.href);
     const token = url.searchParams.get("token");
     const id = url.searchParams.get("id");
     sessionStorage.setItem("user_info", JSON.stringify({token, id}));
     let email='abc@gmail.com';
-    let user_id=JSON.parse(sessionStorage.getItem("user_info"))[id];
+    let user_id=JSON.parse(sessionStorage.getItem("user_info"))["id"];
     const role= await amIUser(token) == true ? "User" : "Admin";
     //let role = 'User';
 
