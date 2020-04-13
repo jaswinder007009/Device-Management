@@ -2,8 +2,7 @@ import { BASEURL } from "../globals";
 class role_permission{
      
     id:Number
-    firstName:string
-    lastName:string
+   
     url:any
 
     bodyData: any
@@ -13,9 +12,16 @@ class role_permission{
   
     headerTag = (document.getElementById("output") as HTMLInputElement);
     headerTag1 = (document.getElementById("get_role_info") as HTMLInputElement);
+    
+ 
+  
+
+  
+
 
     async getAllRoles() {
         
+
         this.url = BASEURL + "/api/device/role";
         let data = await this.getApiRoleCall(this.url);
         this.data = await data;
@@ -68,34 +74,34 @@ class role_permission{
            
 
             <tr style="background-color: #74B72E;">
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <strong id="id${loop}">Role ID := ${this.data[loop]["id"]}</strong>
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
+            <strong id="id${loop}">${this.data[loop]["id"]}</strong>
             </td>
-
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <strong id="roleName${loop}">Role Name := ${this.data[loop]["roleName"]}</strong>
-            </td>
-
 
             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
-            <button class="btn btn-info"  onclick="up. update_data(${this.data[loop]["id"]})"><span class="glyphicon glyphicon-pencil">UPDATE</span></button>
+            <strong id="roleName${loop}"> ${this.data[loop]["roleName"]}</strong>
             </td>
 
 
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
-            <button class="btn btn-danger" id="roleName${loop}" onclick="get_role.DeleteRoleById(${this.data[loop]["id"]})"><span class="glyphicon glyphicon-trash">DELETE</span></button>
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">
+            <button   class="role_up_date" value="${this.data[loop]["id"]}">UPDATE</button>
+            </td>
+
+
+             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:20%;">
+            <button class="btn btn-danger" data-id="del_permission1"  value="${this.data[loop]["id"]}">DELETE</button>
             </td>
 
            
 
            
             
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <button id="roleName${loop}" onclick="r_permission.getAllRolePermission(${this.data[loop]["id"]})">VIEW PERMISSION</button>
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
+            <button data-id="view_permission" value="${this.data[loop]["id"]}">VIEW PERMISSION</button>
             </td>
 
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <button id="roleName${loop}" onclick="permission_role.assignPermission(${this.data[loop]["id"]})" >ASSIGN PERMISSION</button>
+            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
+            <button data-id="assign_permission" value="${this.data[loop]["id"]}" >ASSIGN PERMISSION</button>
             </td>
            
            
@@ -115,13 +121,41 @@ class role_permission{
     }
 
  
-
-  
-
 }
 
 
     var get_role=new role_permission();
+
+    //-------------------------------------------------------------------------------
+document.body.addEventListener('click',function(event)
+    {
+        //e.preventDefault();
+     
+        if(event.target.dataset.id == "del_permission1"){
+            console.log("iiiiiiiii");
+      
+            get_role.DeleteRoleById(event.target.value);
+           
+        }
+    }
+    )
+
+
+//-----------------------------------------------------------------------------------------
+document.addEventListener('click' ,e=>{
+
+        if( (e.target as HTMLButtonElement).className ==="role_up_date")
+        {
+            console.log("sdfghjkl");
+            up.update_data(event.target.value);
+           // 
+           
+        }
+       
+    }
+    );
+    
+    
 //////////////////////////////////////////////////////////////////
 
 
@@ -136,13 +170,14 @@ class update1{
 
     }
     update_data(x:number){
+
     get_role.headerTag1.innerHTML="";
-        console.log("hello");
+        console.log(x);
         this.headerTag3.innerHTML+=`
-    s
+      
         <input type="text" id="RoleName11"  name="RoleName11" value=""  style="margin-top:300px; style="margin-left:100px; ">
-        <button   class="btn btn-danger"  onclick="role_update.updateRole(${x})">SUBMIT</button>
-        
+        <button     class="role_update_1"  value="${x}">SUBMIT</button>
+       
         `
        
     }
@@ -150,6 +185,23 @@ class update1{
 }
 var up =new update1();
 
+//------------------------------------------------------------------------------------
+
+
+
+ document.body.addEventListener('click',function(event)
+    {
+        //e.preventDefault();
+        if(event.target.dataset.id == "role_update_1"){
+            console.log("lllllll");
+        console.log(event.log.value);
+            role_update.updateRole(event.target.value);
+      
+            
+           
+        }
+    }
+    )
 
 
 
@@ -160,8 +212,7 @@ var up =new update1();
 class assign_permission{
      
     id:Number
-    firstName:string
-    lastName:string
+   
     url:any
 
     bodyData: any
@@ -222,7 +273,7 @@ class assign_permission{
             this.getuserdata.innerHTML += `
 
 
-            <tr style="background-color: #52B2BF;">
+              <tr style="background-color: #52B2BF;">
             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
             <strong id="id${loop}">Role ID := ${x}</strong>
             </td>
@@ -234,17 +285,16 @@ class assign_permission{
             <strong id="roleName${loop}">Permisssion Name := ${this.data[loop]["permissionName"]}</strong>
             </td>
             
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-            <input type="checkbox" value="${this.data[loop]["permissionid"]}">${this.data[loop]["permissionName"]}
-            </td>
+           
             
             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:30%;">
-           <button  id="id${loop}" onclick="check.updateRolePermission(${x},${this.data[loop]["permissionId"]})"><span class="glyphicon glyphicon-plus">ADD</span></button>
+           <button  class="xyz" data-role-id=${x} value="${this.data[loop]['permissionId']}">
+         ADD</button>
             </td>
            
             
             
-            
+          
             
         
         
@@ -267,6 +317,22 @@ class assign_permission{
 
 }
 var permission_role=new assign_permission();
+// //----------------------------------------------------------------------------------------------
+
+// document.body.addEventListener('click',function(event)
+//     {
+//         console.log("lllkkkk"+event.target.dataset.id);
+       
+//        if(event.target.dataset.id == "add2"){
+            
+//             console.log("data1");
+
+           
+//              check.updateRolePermission(event.target.dataset.roleId,event.target.value);
+           
+//         }
+
+
 
 
 
@@ -286,8 +352,7 @@ var permission_role=new assign_permission();
 class role_permission1{
      
     id:Number
-    firstName:string
-    lastName:string
+  
     url:any
 
     bodyData: any
@@ -304,7 +369,7 @@ class role_permission1{
     async getAllRolePermission(id:number) {
         
         var x=id;
-        var y=name;
+        
 
         this.url = BASEURL + "/api/device/get_permission_with_role/"+x;
         let data = await this.getApiPermissionCall(this.url);
@@ -337,6 +402,7 @@ class role_permission1{
 
     RolePermInfo(id:number) {
         let x=id;
+        
        
         let loop = 0;
        // let populate11=new populateData1();
@@ -363,10 +429,10 @@ class role_permission1{
             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:20%;">
             <strong id="permissionName${loop}">Permission Name := ${this.data[loop]["permissionName"]}</strong>
             </td>
-            <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:20%;">
-            <button class="btn btn-danger" id="permissionName${loop}" onclick="r_permission.DeleteRoleByPermission(${x},${this.data[loop]["permissionId"]})"><span class="glyphicon glyphicon-trash">DELETE</span></button>
-            </td>
            
+  <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:20%;">
+            <button class="btn btn-danger" data-id="del_permission" data-role-id="${x}" value="${this.data[loop]["permissionId"]}">DELETE</button>
+            </td>
             
             
             
@@ -384,6 +450,7 @@ class role_permission1{
     async DeleteRoleByPermission(id1:number,id:number) {
         let x = id1;
         let y=id;
+        console.log(id1);
         let uri = BASEURL + "/api/device/get_permission_with_role/" + x+"/"+y;
         console.log(uri);
         let response = await fetch(uri,
@@ -407,15 +474,27 @@ class role_permission1{
 
 }
 var r_permission=new role_permission1();
+
+document.body.addEventListener('click',function(event)
+    {
+        //e.preventDefault();
+        if(event.target.dataset.id == "del_permission"){
+            console.log("data111111111111");
+            console.log(event.target.value.id);
+            r_permission.DeleteRoleByPermission(event.target.dataset.roleId,event.target.value);
+           
+        }
+    }
+    )
 //////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////
 /////////////////add checkbox
 
 
 
-class checkbox{
+class checkbox1{
     role_Id:number;
-    permission_Id:number;
+    permission_id:number;
     data:any
 
     // addRoleToPermission(roleId:number,permissionId:number){
@@ -431,12 +510,12 @@ class checkbox{
      console.log(id);
 
          this.role_Id=  id;
-    this.permission_Id=id1;
+    this.permission_id=id1;
         console.log(this.role_Id);
-        console.log(this.permission_Id);
+        console.log(this.permission_id);
         this.data={
-            "role_Id":this.role_Id,
-            "permission_Id":this.permission_Id
+            "role_Id":Number(this.role_Id),
+            "permission_id":Number(this.permission_id)
         };
          console.log(this.data);
      }
@@ -472,7 +551,36 @@ class checkbox{
     
         }
     }
-var check=new checkbox();
+
+
+
+
+
+var check1=new checkbox1();
+
+
+/////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+document.addEventListener('click' ,e=>{
+
+        if( (e.target as HTMLButtonElement).className ==="xyz")
+        {
+            console.log("sdfghjkl");
+           check1.updateRolePermission(event.target.dataset.roleId,event.target.value);
+           // 
+           
+        }
+       
+    }
+    );
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///insert new role 
 
@@ -527,6 +635,12 @@ class insert_Role{
     }
 var role_insert=new insert_Role();
 
+document.querySelector("#btn_insert").addEventListener('click',function(e){
+    role_insert.updateRole();
+})
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////update Data//////////////////////////////////////////////////////////
 
@@ -558,7 +672,7 @@ class update_Role{
     }
     postData(x:number)
         {
-            console.log("lll");
+            console.log(x);
         let url=BASEURL + "/api/device/role/"+x;
               fetch( url , {
                 method : "PUT" , 
@@ -575,10 +689,71 @@ class update_Role{
                   
                 }
               });
-             
-    
+
+     up.headerTag3.innerHTML="";
+    get_role.getAllRoles();
         }
     }
 var role_update=new update_Role();
 
 ///////////////////////////////////////////////////////////////////////////////////////////
+
+document.addEventListener('click' ,e=>{
+
+        if( (e.target as HTMLButtonElement).className ==="role_update_1")
+        {
+            console.log("sdfghjkl");
+            
+           console.log(event.target.value)
+            role_update.updateRole(event.target.value);
+           
+           
+        }
+       
+    }
+    );
+
+// window.addEventListener(
+//     "load",
+//     function () {
+      
+//     const temp = new role_permission();
+//     temp.getAllRoles();
+//     });
+
+
+document.body.addEventListener('click',function(event)
+{
+    if(event.target.dataset.id=="view_permission"){
+        console.log("jjjjjjj");
+        var e1=event.target.value;
+        console.log(e1);
+        r_permission.getAllRolePermission(e1);
+    }
+
+    if(event.target.dataset.id=="assign_permission"){
+        console.log("jjjjjjj");
+        var e2=event.target.value;
+        console.log(e2);
+        permission_role.assignPermission(e2);
+        // this.divs =document.querySelectorAll('.add_data');
+    }
+
+    if(event.target.dataset.id== "del_permission1"){
+        console.log("jjjjjjj");
+        var e3=event.target.value;
+        console.log(e3);
+        get_role.DeleteRoleById(e3);
+        
+        // this.divs =document.querySelectorAll('.add_data');
+    }
+
+ 
+  
+    
+})
+
+
+
+const  temp=new role_permission();
+   temp.getAllRoles();

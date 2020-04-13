@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using dm_backend.Logics;
-
-namespace dm_backend.Models{
+using dm_backend.Models;
+namespace dm_backend.Controllers
+{
 
     [Route("api/[controller]")]
-    public class NotificationController : Controller
+    public class NotificationController : ControllerBase
     {
         public AppDb Db { get; }
 
@@ -36,12 +37,12 @@ namespace dm_backend.Models{
         }
 
         [HttpGet]
-        public IActionResult GetNotification()
+         public IActionResult GetNotification()
         {
             int userId=-1;
             string searchField = "";
             string sortField = "notification_id";
-            int sortDirection = 0;
+            string sortDirection = "asc";
             if (!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
                 userId = Convert.ToInt32(HttpContext.Request.Query["id"]);
 
@@ -52,11 +53,24 @@ namespace dm_backend.Models{
                 sortField = HttpContext.Request.Query["sort"];
 
             if (!string.IsNullOrEmpty(HttpContext.Request.Query["direction"]))
-                sortDirection = Convert.ToInt32(HttpContext.Request.Query["direction"]);
+                sortDirection = HttpContext.Request.Query["direction"];
+            sortDirection = (sortDirection.ToLower()) == "asc" ? "ASC" : "DESC";
+            switch (sortField.ToLower())
+            {
+                 case "device_name":
+                    sortField = "concat(type ,'', brand , '' ,  model)";
+                    break;
+                case "specification":
+                    sortField = "concat(RAM,'', storage ,'' ,screen_size ,'',connectivity)";
+                    break;
+                default:  sortField = "concat(type ,'', brand , '' ,  model)";
 
+                break;
+              
+            }
             Db.Connection.Open();
             var NotificationObject = new NotificationModel(Db);
-            var result = NotificationObject.GetNotifications(userId,sortField,sortDirection,searchField);
+            var result =  NotificationObject.GetNotifications(userId,sortField,sortDirection,searchField);
             Db.Connection.Close();
             return Ok(result);
         }

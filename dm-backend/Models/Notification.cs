@@ -13,6 +13,7 @@ namespace dm_backend.Models
     {
         public int? notificationId { get; set; }
         public int userId { get; set; }
+        public int deviceId {get;set;}
         public string deviceModel { get; set; }
         public string deviceBrand { get; set; }
         public string deviceType { get; set; }
@@ -48,13 +49,13 @@ namespace dm_backend.Models
         }
 		
 
-        public List<NotificationModel> GetNotifications(int userId,string sortField,int sortDirection,string searchField)
+        public List<NotificationModel> GetNotifications(int userId,string sortField,string sortDirection,string searchField)
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = get_all_notifications+searchQuery;
             if(userId!=-1)
                 cmd.CommandText +=@" having user_id="+userId;
-            cmd.CommandText +=@" order by "+sortField+(sortDirection==-1 ? " desc":" asc");; 
+            cmd.CommandText +=@" order by "+sortField+" "+sortDirection+";"; 
             cmd.Parameters.AddWithValue("@search_field", searchField); 
             using MySqlDataReader reader =  cmd.ExecuteReader();
             return ReadAll(reader);
@@ -84,7 +85,7 @@ namespace dm_backend.Models
             return notifications;
         }
         internal string get_all_notifications=@"select notification_id, user_id, notification_type, device_model.model, 
-        device_type.type, device_brand.brand, specification.*,status.status_name, 
+        device_id,device_type.type, device_brand.brand, specification.*,status.status_name, 
         notification_date, message
         from notification
         inner join status using(status_id)

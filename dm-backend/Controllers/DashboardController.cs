@@ -88,12 +88,12 @@ namespace dm_backend.Controllers
 
         [HttpGet]
         [Route("faults")]
-        public IActionResult getFaultStatistics()
+        public IActionResult getFaultOverview()
         {
             List<Overview> faultOverview = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "get_Faults";
+            cmd.CommandText = "get_faults";
             cmd.CommandType = CommandType.StoredProcedure;
             var reader = cmd.ExecuteReader();
 
