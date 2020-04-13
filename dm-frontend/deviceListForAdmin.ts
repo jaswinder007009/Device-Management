@@ -52,93 +52,62 @@ export class DeviceListForAdmin {
 
     }
     getDeviceList() {
-         
+        const value = `
+           
+        <tr>
+            <td class = "cards">${this.type} ${this.brand} ${this.model}
+                <div class="mdl-card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Device Details</h2>
+                    </div>
+
+                    <div class="mdl-card__supporting-text">
+                        Device color: ${this.color} <br>
+                        Price:${this.price} <br>
+                        Warranty Year: ${this.warranty_year}<br>
+                        Purchase Date: ${this.purchase_date}
+                    </div> 
+                </div> 
+            </td>
+            <td>${this.serial_number} </td>
+            <td>RAM:${this.ram} Storage:${this.storage}
+                <br>
+                Screen Size:${this.screen_size} Connectivity: ${this.connectivity}
+            </td>
+            <td>${this.assign_date.substring(0,10)} </td>
+            <td>${this.return_date.substring(0,10)} </td>
+            <td>${this.assign_to_first_name} ${this.assign_to_middle_name} ${this.assign_to_last_name}</td>
+            <td>${this.assign_by_first_name} ${this.assign_by_middle_name} ${this.assign_by_last_name}</td>
+             `;
+
             if(token==1){
+
 
                const buttons =  `<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="">
                      <a href = "./AddDevice.html" style="color: black;">
                         Add Device</a>
                       </button>`;
                       (document.getElementById("buttons") as HTMLStyleElement).innerHTML = buttons;    
-          const value = `
-           
-        <tr>
-            <td class = "cards">${this.type} ${this.brand} ${this.model}
-                <div class="mdl-card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">Device Details</h2>
-                    </div>
-
-                    <div class="mdl-card__supporting-text">
-                        Device color: ${this.color} <br>
-                        Price:${this.price} <br>
-                        Warranty Year: ${this.warranty_year}<br>
-                        Purchase Date: ${this.purchase_date}
-                    </div> 
-                </div> 
-            </td>
-            <td>${this.serial_number} </td>
-            <td>RAM:${this.ram} Storage:${this.storage}
-                <br>
-                Screen Size:${this.screen_size} Connectivity: ${this.connectivity}
-            </td>
-            <td>${this.assign_date.substring(0,10)} </td>
-            <td>${this.return_date.substring(0,10)} </td>
-            <td>${this.assign_to_first_name} ${this.assign_to_middle_name} ${this.assign_to_last_name}</td>
-            <td>${this.assign_by_first_name} ${this.assign_by_middle_name} ${this.assign_by_last_name}</td>
-             <td>
-                <button class="edit-button" value=${this.device_id}>Edit </button>
-                <button class="delete-button" value=${this.device_id}>Delete </button>
-            </td>`;
-    
-            if(this.status=="Allocated")
-              var val = `<td>  <button class="notify-button" data-devicemodel=${this.model} 
-              data-devicetype= ${this.type} data-devicebrand= ${this.brand} 
-              data-ram= ${this.ram}
-              data-connectivity= ${this.connectivity}
-              data-screensize= ${this.screen_size}
-              data-storage= ${this.storage}
-              >Notify</button></td> </tr>`;
-              else 
-              val = `<td>  <button class="assign-button" data-id=${this.device_id}>Assign Device</button></td> </tr> `;
-        (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value + val;
-                
-
-    }
-           
-           
-           
-           
-            else{
-               const value =  `
-        <tr>
-            <td class = "cards">${this.type} ${this.brand} ${this.model}
-                <div class="mdl-card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">Device Details</h2>
-                    </div>
-
-                    <div class="mdl-card__supporting-text">
-                        Device color: ${this.color} <br>
-                        Price:${this.price} <br>
-                        Warranty Year: ${this.warranty_year}<br>
-                        Purchase Date: ${this.purchase_date}
-                    </div> 
-                </div> 
-            </td>
-            <td>${this.serial_number} </td>
-            
-            <td>RAM:${this.ram} Storage:${this.storage}
-                <br>
-                Screen Size:${this.screen_size} Connectivity: ${this.connectivity}
-            </td>
-            <td>${this.assign_date.substring(0,10)} </td>
-            <td>${this.return_date.substring(0,10)} </td>
-            <td>${this.assign_to_first_name} ${this.assign_to_middle_name} ${this.assign_to_last_name}</td>
-            <td>${this.assign_by_first_name} ${this.assign_by_middle_name} ${this.assign_by_last_name}</td>
-            </tr>`;
-            (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value;
-            }
+                const editbutton = `<td>
+                          <button class="edit-button" value=${this.device_id}>Edit </button>
+                          <button class="delete-button" value=${this.device_id}>Delete </button>
+                          </td>`;
+                    if(this.status=="Allocated")
+                      var val = `<td>  <button class="notify-button" data-devicemodel=${this.model} 
+                                data-devicetype= ${this.type} data-devicebrand= ${this.brand} 
+                                data-ram= ${this.ram}
+                                data-connectivity= ${this.connectivity}
+                                data-screensize= ${this.screen_size}
+                                data-storage= ${this.storage}
+                                >Notify</button></td> </tr>`;
+                    else 
+                        val = `<td>  <button class="assign-button" data-id=${this.device_id}>Assign Device</button></td> </tr> `;
+                        (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value +editbutton+ val;
+                }
+           else
+           {
+                 (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value;
+           }
 
     }
      

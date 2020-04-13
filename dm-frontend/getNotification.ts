@@ -1,6 +1,7 @@
 import { BASEURL } from "./globals";
 import { Sort } from "./user-profile/SortingUser";
 import {Notifications} from "./notification";
+
 class Notify
 {
     deviceId:number =0;
@@ -84,7 +85,8 @@ document.addEventListener("click", function (e) {
                     notify.deviceId = +(e.target as HTMLButtonElement).dataset.value;
                     notify.userId = +(e.target as HTMLButtonElement).dataset.userid;
                     notify.acceptNotification(notify);
-                    (e.target as HTMLButtonElement).setAttribute("visibility","false");   
+                    
+                   // (e.target as HTMLButtonElement).setAttribute("visibility","false");   
 
                  console.log("notification accepted");
                }

@@ -386,34 +386,6 @@ and request_history.device_model=device_model.device_model_id and request_histor
         }
 
         public static string GetSafeString(DbDataReader reader, string colName)
-<<<<<<< HEAD
-        {
-            return reader[colName] != DBNull.Value ? (string)reader[colName].ToString() : "";
-        }
-
-        public async Task<List<device>> ReadAllDevice(DbDataReader reader)
-        {
-            Console.WriteLine("Rows" + reader.HasRows);
-            var posts = new List<device>();
-            using (reader)
-            {
-                while (await reader.ReadAsync())
-                {
-                    Console.WriteLine("Found a row");
-                    var post = new device()
-                    {
-                        type = reader.GetString(0),
-                        brand = reader.GetString(1),
-                        model = reader.GetString(2),
-                        assign_date = GetSafeString(reader, "assign_date"),
-                        return_date = GetSafeString(reader, "return_date"),
-                    };
-                    posts.Add(post);
-                }
-            }
-            return posts;
-        }
-=======
 		{
 		return reader[colName] != DBNull.Value ? (string)reader[colName].ToString() : "";
 		}
@@ -446,7 +418,6 @@ and request_history.device_model=device_model.device_model_id and request_histor
 			}
 			return posts;
 		}
->>>>>>> dfcd08958b4897a17a2abe5f8cd8247ac599c245
 
     }
 

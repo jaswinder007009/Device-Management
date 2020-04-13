@@ -1,3 +1,5 @@
+
+
 export class Notifications {
     device_id: number;
     user_id:number;
@@ -39,14 +41,17 @@ export class Notifications {
             <td>${this.status}</td>
               <td>${this.message}</td>`;
               if(this.status=="Pending"){         
-                    const buttons= ` <td>
+                    var buttons= ` <td>
                <button class="accept-button" data-userid = ${this.user_id} data-value=${this.device_id}>Accept </button>
                 <button class="reject-button" data-userid = ${this.user_id} data-value=${this.device_id}>Reject </button>
             </td>
         </tr>`;
-    
-        (document.getElementById("notification_data") as HTMLStyleElement).innerHTML += value+buttons;
               }
+              else{
+                  buttons="";
+              }
+        (document.getElementById("notification_data") as HTMLStyleElement).innerHTML += value+buttons;
+              
     }
 
 }
