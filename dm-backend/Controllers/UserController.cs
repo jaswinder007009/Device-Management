@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace dm_backend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class UserController : BaseController
     {
@@ -12,7 +13,7 @@ namespace dm_backend.Controllers
         {
             Db = db;
         }
-
+        [Authorize(Roles="admin,user")]
         [HttpGet]
         [Route("{user_id}")]
         public  JsonResult GetOneUser(string user_id)
@@ -38,7 +39,7 @@ namespace dm_backend.Controllers
         }
        
        
-
+        [Authorize(Roles="admin")]
         [HttpGet]
         public JsonResult GetAllUsersInCustomFormat()
         {
@@ -60,7 +61,7 @@ namespace dm_backend.Controllers
 
         }
         
-
+        [Authorize(Roles="admin")]
          [HttpPost]
          [Route("add")]
          public IActionResult Post([FromBody]User item)
@@ -74,7 +75,7 @@ namespace dm_backend.Controllers
              return new OkObjectResult(item);
          }
 
-        
+        [Authorize(Roles="admin,user")]
         [HttpPut]
         [Route("{user_id}/update")]
          public ActionResult Put(int user_id, [FromBody]User body)
@@ -89,7 +90,7 @@ namespace dm_backend.Controllers
         
         }
 
-
+        [Authorize(Roles="admin")]
         [HttpGet]
         [Route("{user_id}/{activeInactive}")]
         public IActionResult PutOne(int user_id , string activeInactive)
@@ -101,7 +102,7 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok();
         }
-        
+        [Authorize(Roles="admin")]
         [HttpDelete]
         [Route("{user_id}/remove")]
          public IActionResult DeleteOne(int user_id)
