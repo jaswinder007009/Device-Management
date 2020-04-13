@@ -122,7 +122,7 @@ document.addEventListener("click", function (e) {
             console.log("device_id" + device_id);
             temp.deleteDevice(device_id);
             console.log("device deleted");
-            //            window.location.reload();
+            
             temp.getData();
 
         } else {

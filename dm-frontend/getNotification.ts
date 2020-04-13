@@ -95,7 +95,7 @@ document.addEventListener("click", function (e) {
                 notify.deviceId = +((e.target as HTMLButtonElement).dataset.value);
                 notify.userId = +(e.target as HTMLButtonElement).dataset.userid;
                 notify.rejectNotification(notify);
-            
+                
                }
                
             }
