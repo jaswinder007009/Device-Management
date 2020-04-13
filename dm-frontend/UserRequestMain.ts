@@ -13,7 +13,7 @@ let uri = "http://localhost:5000";
 
  device.map(function(e : any)
     {
-        const path = uri +'/api/dropdown/' + e.id;
+        const path = uri +'/api/device/' + e.id;
         let data = GetData(path , e.id);
     });
     specificationDropdown();

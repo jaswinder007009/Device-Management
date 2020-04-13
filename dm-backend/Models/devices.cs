@@ -317,9 +317,9 @@ namespace dm_backend.Models
         {
             using var cmd = Db.Connection.CreateCommand();
 
-            cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device_model.model,assign_device.assign_date,assign_device.return_date,assign_device.device_id,assign_device.user_id from user,device_type,device_model,device_brand,assign_device,device
+            cmd.CommandText = @"select * from(select device_type.type,device_brand.brand,device_model.model,assign_device.assign_date,assign_device.return_date,assign_device.device_id,assign_device.user_id from user,device_type,device_model,device_brand,assign_device,device,status
 where  user.user_id=assign_device.user_id and assign_device.device_id=device.device_id and device.device_type_id=device_type.device_type_id and device.device_brand_id=device_brand.device_brand_id
-and device.device_model_id=device_model.device_model_id and assign_device.user_id=" + @id + ") as demo WHERE demo.type LIKE '%" + @search + "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search + "%' ";
+and device.device_model_id=device_model.device_model_id  and assign_device.status_id=status.status_id and status.status_name='Allocated' and assign_device.user_id=" + @id + ") as demo WHERE demo.type LIKE '%" + @search + "%' or demo.brand LIKE '%" + @search + "%' or demo.model LIKE '%" + @search + "%' ";
 
             cmd.Parameters.Add(new MySqlParameter
             {
