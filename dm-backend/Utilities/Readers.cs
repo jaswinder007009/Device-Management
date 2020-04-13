@@ -71,6 +71,10 @@ namespace dm_backend.Utilities
             var request = new ReturnRequestModel();
             request.returnRequestId = GetSafeInt<int>(reader, "return_request_id");
             request.userId = (int)reader["user_id"];
+            request.salutation = (string)reader["salutation"];
+            request.firstName = (string)reader["first_name"];
+            request.middleName = GetSafeString(reader, "middle_name");
+            request.lastName   = (string)reader["last_name"];
             request.deviceId = (int)reader["device_id"];
             request.deviceModel = (string)reader["model"];
             request.deviceBrand = (string)reader["brand"];

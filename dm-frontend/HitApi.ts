@@ -2,7 +2,7 @@ import {PopulateData} from "./FillData"
 import { page } from "./paging";
 export class HitApi
 {
-    RequestDeviceData : any
+    Data : any
     public async HitGetApi(uri : string)
     {
         (document.getElementById("loading") as HTMLDivElement).style.display = "flex";    // loading start 
@@ -15,19 +15,25 @@ export class HitApi
             console.log(e , "error while  hitting api");
         }
         console.log(res.status);
-        this.RequestDeviceData  = await res.json();
-        await new PopulateData().fillData(this.RequestDeviceData);
+        this.Data  = await res.json();
+        await new PopulateData().fillData(this.Data);
         this.geneartePage();
         (document.getElementById("loading") as HTMLDivElement).style.display = "none";    //  loading end
         return res;
     }
 
+    public async getData()
+    {
+
+
+        HitGetApi()
+    }
     geneartePage()
     {
         let id = (document.getElementById("pagination") as HTMLDivElement).getAttribute("pageNum");
         if(parseInt(id)==1)
         {
-           new page().setPages(this.RequestDeviceData["resultCount"]);
+           new page().setPages(this.Data["resultCount"]);
         }
     }
    
