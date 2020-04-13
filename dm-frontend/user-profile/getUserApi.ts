@@ -2,10 +2,15 @@ import { BASEURL } from '../globals';
 import { UserModel } from "../UserModel";
 export class GetUserApi 
 {
+	token : string ="";
+	constructor(token:string){
+		this.token=token;
+	}
 	array: any = [];
 /////API TO SORT
 	getSort(uri : string) {
-		return fetch(uri)
+		return fetch(uri,{
+			headers: new Headers({"Authorization": `Bearer ${this.token}`})})
 			.then(Response => {
 				return Response.json();
 			})
@@ -15,7 +20,9 @@ export class GetUserApi
 			}
 /////API GET		
 	getRequest() {
-		return fetch(BASEURL + "/api/user")
+		return fetch(BASEURL + "/api/user",{
+			headers: new Headers({"Authorization": `Bearer ${this.token}`})}
+		)
 			.then(Response => {
 				return Response.json();
 			})
@@ -30,7 +37,9 @@ export class GetUserApi
 			.catch(err => console.log(err));
 	}
 	getUserById(userId: number) {
-		return fetch(BASEURL + "/api/user/" + userId)
+		return fetch(BASEURL + "/api/user/" + userId,
+		{
+			headers: new Headers({"Authorization": `Bearer ${this.token}`})})
 			.then(res => res.json())
 			.then(data => {
 				return data;
@@ -39,7 +48,8 @@ export class GetUserApi
 	}
 	////API TO MAKE ACTIVE INACTIVE
 	userInactive(userId: number,data : string) {
-		return fetch(BASEURL + "/api/user/" + userId + "/" + data + "")
+		return fetch(BASEURL + "/api/user/" + userId + "/" + data + "", {
+			headers: new Headers({"Authorization": `Bearer ${this.token}`})})
 			.then(res =>
 				console.log(res.status))
 			
@@ -48,13 +58,16 @@ export class GetUserApi
 /////API TO DELETE
 	deleteData(userId: number) {
 	 return fetch(BASEURL + "/api/user/" + userId + "/remove", {
-			method: "DELETE"
+			method: "DELETE",
+				headers: new Headers({"Authorization": `Bearer ${this.token}`})
 		});
 	}
 
 	searchUser() {
 		let search = (document.getElementById("fixed-header-drawer-exp")as HTMLInputElement).value;
-		return fetch(BASEURL+ "/api/user?search=" + search)
+		return fetch(BASEURL+ "/api/user?search=" + search, 
+		{
+			headers: new Headers({"Authorization": `Bearer ${this.token}`})})
 			.then(Response => {
 				return Response.json();
 			})
