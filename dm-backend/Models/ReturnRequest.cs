@@ -13,6 +13,10 @@ namespace dm_backend.Models
     {
         public int? returnRequestId { get; set; }
         public int userId { get; set; }
+        public string  salutation { get; set; }
+        public string  firstName { get; set; }
+        public string middleName { get; set; }
+        public string lastName { get; set; }
         public int deviceId { get; set; }
         public string deviceModel { get; set; }
         public string deviceBrand { get; set; }
@@ -27,6 +31,30 @@ namespace dm_backend.Models
         public ReturnRequestModel(AppDb db)
         {
             Db = db;
+        }
+        public string FindSortingAttribute(string value)
+        {
+
+            value = value.ToLower();
+            var attribute = value switch
+            {
+                "name" =>
+                        " concat(user.first_name , ' ', if (user.middle_name is null, '' , concat(user.middle_name , ' ')) , user.last_name )",
+
+                "type" =>
+                        "  device_type.type ",
+
+                "device" =>
+                         " concat(device_brand.brand, ' ', device_model.model)",
+
+                _ =>
+                    " concat(user.first_name , ' ', if (user.middle_name is null, '' , concat(user.middle_name , ' ')) , user.last_name )"
+            };
+
+            return attribute;
+
+
+
         }
 
         public string AddReturnRequest()
@@ -46,13 +74,13 @@ namespace dm_backend.Models
             }
         }
 
-        public List<ReturnRequestModel> GetReturnRequests(int userId,string sortField,int sortDirection,string searchField)
+        public List<ReturnRequestModel> GetReturnRequests(int userId,string sortField,string sortDirection,string searchField)
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = get_return_requests+searchQuery;
             if(userId!=-1)
                 cmd.CommandText +=@" having user_id="+userId;
-            cmd.CommandText +=@" order by "+sortField+(sortDirection==-1 ? " desc":" asc");; 
+            cmd.CommandText +=@" order by " + FindSortingAttribute(sortField) + " " + (sortDirection);
             cmd.Parameters.AddWithValue("@search_field", searchField); 
             using MySqlDataReader reader =  cmd.ExecuteReader();
             return ReadAll(reader);
@@ -79,17 +107,20 @@ namespace dm_backend.Models
             }
             return requests;
         }
-        internal string get_return_requests=@"select return_request_id, user_id,device_id, device_model.model, 
+        internal string get_return_requests= @"select return_request_id, user_id, salutation.salutation , user.first_name , user.middle_name , user.last_name , device_id
+        , device_model.model, 
         device_type.type, device_brand.brand,specification.*, return_date
         from return_request
+       
         inner join user using(user_id)
+         inner join salutation using(salutation_id)
         inner join device using(device_id)
         inner join device_brand using(device_brand_id)
         inner join device_model using(device_model_id)
         inner join device_type using(device_type_id)
         inner join specification using(specification_id)";
 
-        internal string searchQuery=@" where device_type.type like CONCAT('%', @search_field, '%') or device_model.model like CONCAT('%', @search_field, '%') or device_brand.brand like CONCAT('%', @search_field, '%') group by return_request_id";       
+        internal string searchQuery= @"where  concat(user.first_name , ' ', if (user.middle_name is null, '' , concat(user.middle_name , ' ')) , user.last_name ) like concat('%' ,@search_field ,'%')";       
 
     }   
 }

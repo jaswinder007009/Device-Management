@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <link rel="stylesheet" href="index.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Devicelist</title>
@@ -18,7 +20,7 @@
             <div class="mdl-layout__header-row">
                 <!-- Title -->
                 <div class="devices">
-                    <span class="mdl-layout-title">Notification</span>
+                    <span id="getData" class="mdl-layout-title submission-title">Submission Request</span>
                 </div>
                 <!-- Add spacer, to align navigation to the right -->
                 <div class="mdl-layout-spacer"></div>
@@ -26,7 +28,7 @@
             </div>
         </header>
         <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">Notification</span>
+            <span class="mdl-layout-title">Submission Request</span>
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" href="">Request Page</a>
                 <a class="mdl-navigation__link" href="">Device History</a>
@@ -42,38 +44,44 @@
                                  <i class="material-icons">search</i>
                              </label>
                              <div class="mdl-textfield__expandable-holder">
-                                 <input class="mdl-textfield__input" type="text" name="search"
+                                 <input class="mdl-textfield__input" type="text"  data-device-name="" name="search"
                                      id="fixed-header-drawer-exp">
                              </div>
                          </div>
-                <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" data-id="notification"
+                <table  id= "submissionTable"class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" data-id="submission"
                     style="overflow: auto;">
-                    <thead>
+                    <thead id="tableHead">
                         <tr>
-                            <th class="mdl-data-table__header--sorted-descending" name="device_name" data-id="device_name">
+                            <th class="mdl-data-table__header--sorted-descending" name="device_name" data-id="name">
+                                    User Name </th>
+                            <th class="mdl-data-table__header--sorted-descending" name="device_name" data-id="type">
+                                Device Type </th>
+                            <th class="mdl-data-table__header--sorted-descending" name="device_name" data-id="device">
                                 Device Name </th>
-                            <th class="mdl-data-table__header--sorted-descending" name="specification"
+                            <th class="" name="specification"
                                 data-id="specification">
                                 Specifications </th>
-                                <th class="mdl-data-table__header--sorted-descending" name="notification_date"
-                                data-id="notification_date">
-                                Notification Date </th>
-                                <th class="mdl-data-table__header--sorted-descending" name="status"
+                                <th class="" name="return_date"
+                                data-id="return_date">
+                                Return Date </th>
+                                <th class="" name="status"
                                 data-id="status">
-                                Status </th>
-                                <th class="mdl-data-table__header--sorted-descending" name="message"
-                                data-id="message">
-                                Message </th>
+                                Action </th>
                         </tr>
                     </thead>
-                    <tbody>
-                    <tbody id="notification_data">
+                  
+                    <tbody id="submission_request">
+                        
                     </tbody>
                 </table>
-                <!-- Your content goes here -->
+                
             </div>
         </main>
     </div>
+    <div class="load" id="loading">
+        <div class= "loader"></div>
+    </div>
+
 </body>
-<script data-main="getNotification.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+<script data-main="submissionRequest.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
 </html>

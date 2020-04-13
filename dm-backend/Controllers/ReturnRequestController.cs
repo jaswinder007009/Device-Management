@@ -40,19 +40,20 @@ namespace dm_backend.Controllers
         {
             int userId=-1;
             string searchField = "";
-            string sortField = "return_request_id";
-            int sortDirection = 0;
+            string sortField = "";
+            string sortDirection = "asc";
             if (!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
                 userId = Convert.ToInt32(HttpContext.Request.Query["id"]);
 
             if (!string.IsNullOrEmpty(HttpContext.Request.Query["search"]))
                 searchField = HttpContext.Request.Query["search"];
             
+            
             if (!string.IsNullOrEmpty(HttpContext.Request.Query["sort"]))
                 sortField = HttpContext.Request.Query["sort"];
 
             if (!string.IsNullOrEmpty(HttpContext.Request.Query["direction"]))
-                sortDirection = Convert.ToInt32(HttpContext.Request.Query["direction"]);
+                sortDirection = HttpContext.Request.Query["direction"];
 
             Db.Connection.Open();
             var returnObject = new ReturnRequestModel(Db);

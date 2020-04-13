@@ -20,7 +20,7 @@ let uri = "http://localhost:5000";
 
     function  specificationDropdown() {
         fetch(
-            uri + "/api/Device/specification"
+            uri + "/api/Dropdown/"
         )
             .then(Response => Response.json())
             .then(data => {
@@ -40,7 +40,8 @@ let uri = "http://localhost:5000";
 
 async function GetData(uri : string ,column : string)
 {
- let data = await new HitApi().HitGetApi(uri);   
+ let data = await new HitApi().HitGetApi(uri); 
+        
  console.log(data);
  new populateDropDown().populateDevice(data , column);
  return data ;
