@@ -1,3 +1,5 @@
+import { BASEURL } from "./globals";
+
 const Select = mdc.select.MDCSelect;
 const TextField = mdc.textField.MDCTextField;
 
@@ -41,7 +43,7 @@ const textField = new TextField(document.querySelector('.mdc-text-field'));
 
 function  submitForm()
 {
-    const url = 'http://localhost:5000/request/add'
+    const url = BASEURL + "/request/add"
     let data = fun()
     console.log(data);
     
@@ -60,8 +62,8 @@ function  submitForm()
 }
 
 function initialiseDropdowns(){
-   const url = 'http://localhost:5000/api/dropdown/';
-    // const url = 'https://localhost:44392/api/Dropdown/';
+   const url = BASEURL + '/api/dropdown/';
+   
 
     // Iterate over all the dropdown elements
     selects.forEach(selectElement => {

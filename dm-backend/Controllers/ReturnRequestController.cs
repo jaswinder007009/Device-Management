@@ -76,7 +76,7 @@ namespace dm_backend.Controllers
             var returnObject = new ReturnRequestModel(Db);
             var result = returnObject.GetReturnRequests(userId,sortField,sortDirection,searchField);
             Db.Connection.Close();
-            return Ok(result);
+            return new OkObjectResult(result);
         }
     }
 

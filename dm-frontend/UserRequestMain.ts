@@ -1,13 +1,15 @@
 import { HitApi } from "./HitRequestApi";
 import {populateDropDown } from "./populateDropDown";
 import { RequestDeviceModel } from "./deviceRequestModel";
+import { BASEURL } from "./globals";
 
 var device = [].map.call(document.querySelectorAll(".device") , e =>
 {
     return e;
 
 });
-let uri = "http://localhost:5000";
+let uri = BASEURL;
+
 
 
 
