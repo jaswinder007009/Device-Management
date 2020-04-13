@@ -118,6 +118,7 @@ namespace dm_backend.Models
 
     public class SpecificationModel
     {
+        
         public string RAM { get; set; }
         public string Storage { get; set; }
         public string ScreenSize { get; set; }
