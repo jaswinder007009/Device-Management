@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using dm_backend.Models;
 using dm_backend.Utilities;
-
+using dm_backend.Data;
 namespace dm_backend
 {
     public class User : PartialUserModel
@@ -20,6 +20,9 @@ namespace dm_backend
         public string? RoleName { get; set; }
         public int? UserId { get; set; }
         public string? Password { get; set; }
+        // public byte[]? SaltPassword { get; set; }
+        // public byte[]? HashPassword { get; set; }
+
         // public string? DOB { get; set; }
         // public string? Gender { get; set; }
 
@@ -29,9 +32,15 @@ namespace dm_backend
         public List<AddressModel> addresses { get; set; }
 
         internal AppDb Db { get; set; }
-
+        internal IAuthRepository _repo;
         public User()
         {
+            phones = new List<ContactNumberModel>();
+            addresses = new List<AddressModel>();
+        }
+        public User(IAuthRepository repo)
+        {
+            _repo = repo;
             phones = new List<ContactNumberModel>();
             addresses = new List<AddressModel>();
         }
@@ -42,6 +51,7 @@ namespace dm_backend
         }
         public string AddOneUser()
         {
+
             MySqlParameter outputEmailParam;
 
             MySqlCommand cmd = Db.Connection.CreateCommand();
@@ -53,6 +63,10 @@ namespace dm_backend
 
             try
             {
+                
+                
+
+
                 cmd.CommandText = "insert_user";
                 cmd.CommandType = CommandType.StoredProcedure;
                 outputEmailParam = BindOutputuser_id(cmd);
@@ -168,7 +182,7 @@ public int whatIs(String data1)
         {
             var address1 = new AddressModel();
             address1.AddressLine1 = GetSafeString(reader, prefix + "_address_Line1");
-             address1.AddressLine2 = GetSafeString(reader, prefix + "_address_Line2");
+            address1.AddressLine2 = GetSafeString(reader, prefix + "_address_Line2");
             address1.AddressType = prefix;
             address1.City = GetSafeString(reader, prefix +"_city");
             address1.State = GetSafeString(reader, prefix + "_state");
@@ -256,6 +270,11 @@ public int whatIs(String data1)
             cmd.Transaction = myTrans;
 
             try {
+                // byte[] passwordHash, passwordSalt;
+                // _repo.CreatePasswordHash(Password, out passwordHash, out passwordSalt);
+                // HashPassword = passwordHash;
+                // SaltPassword = passwordSalt;
+
                 cmd.CommandText = "update_user";
                 cmd.CommandType = CommandType.StoredProcedure;
                 outputEmailParam = BindOutputuser_id(cmd);
@@ -304,7 +323,13 @@ public int whatIs(String data1)
 
         }
             
-        
+         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+
+            using var hmac = new System.Security.Cryptography.HMACSHA512();
+            passwordSalt = hmac.Key;
+            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+        }
 
         private void BindUserProcParams(MySqlCommand cmd)
         {
@@ -321,7 +346,16 @@ public int whatIs(String data1)
             if(string.IsNullOrEmpty(Password))
             cmd.Parameters.AddWithValue("password", DBNull.Value);
             else
-                cmd.Parameters.Add(new MySqlParameter("password", Password));
+{
+   
+    byte[] passwordHash, passwordSalt;
+  
+            CreatePasswordHash(Password, out passwordHash, out passwordSalt);
+            cmd.Parameters.Add(new MySqlParameter("password", Password));
+            cmd.Parameters.Add(new MySqlParameter("passwordSalt", passwordSalt));
+            cmd.Parameters.Add(new MySqlParameter("passwordHash", passwordHash));
+}
+        
             cmd.Parameters.Add(new MySqlParameter("dob", DateTime.Parse(DOB).ToString("yyyy-MM-dd")));
             cmd.Parameters.Add(new MySqlParameter("gend", Gender));
             cmd.Parameters.Add(new MySqlParameter("doj", DateTime.Parse(DOJ).ToString("yyyy-MM-dd")));
