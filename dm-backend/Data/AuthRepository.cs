@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
-namespace DeviceManagementPro.Data
+namespace db_backend.Data
 {
     public class AuthRepository : IAuthRepository
     {
