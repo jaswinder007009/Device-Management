@@ -6,12 +6,16 @@ import { validate } from "./validate"
 import { BASEURL } from '../globals';
 
 export class UserData {
+    token : string ="";
+	constructor(token:string){
+		this.token=token;
+	}
     data: any;
     url: string;
     body: any;
-
-    async getOneUser() {
-        this.url = BASEURL + "/api/user/30";
+//TODO CLASSNAME AND GETUSERBYID REUSE
+    async getOneUser(userId:string) {
+        this.url = BASEURL + "/api/user/"+ userId;
         let data = await this.getApiCall(this.url);
         this.data = await data;
         dynamicGenerate(this.data);
@@ -37,35 +41,37 @@ export class UserData {
 
     }
   
-    async updateData(data) {
-        return fetch(BASEURL + "/api/user/30/update", {
+    async updateData(data,userId:string) {
+        return fetch(BASEURL + "/api/user/"+userId+"/update", {
             method: 'PUT',
-            headers: new Headers({ 'content-type': 'application/json' }),
+            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: JSON.stringify(data)
         });
     }
 
     async getApiCall(URL: any) {
-        let response = await fetch(URL);
+        let response = await fetch(URL,
+            {headers: new Headers({"Authorization": `Bearer ${token}`})});
         let data = await (response.json());
         console.log(data);
         return (await new UserModel(data));
     }
     async dropdownApiCall(URL: any, selectElement: HTMLSelectElement) {
-        let response = await fetch(URL);
+        let response = await fetch(URL,{headers: new Headers({"Authorization": `Bearer ${token}`})});
         let data = await (response.json());       
         populateDropdown(selectElement, data);
         return null;
 
     }
 }
-
-var user = new UserData()
+const userId=JSON.parse(sessionStorage.getItem("user_info"))["id"];
+const token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
+var user = new UserData(token);
 
 user.getCountry();
 user.getState();
 user.getCity();
-user.getOneUser();
+user.getOneUser(userId);
 
 
 document.querySelector('form').addEventListener('click', function (ev) {
@@ -74,7 +80,7 @@ document.querySelector('form').addEventListener('click', function (ev) {
         util.openForm();
         var userObject: UserModel;
 
-        user.getOneUser().then(function (data) {
+        user.getOneUser(userId).then(function (data) {
             userObject = data;
             const form = document.querySelector('form') as HTMLFormElement;
             populateFormFromObject(userObject, form);
@@ -87,7 +93,7 @@ document.querySelector('form').addEventListener('click', function (ev) {
             return;
 
         }
-        user.updateData(createObjectFromForm(this)).then(function () { user.getOneUser(); })
+        user.updateData(createObjectFromForm(this),userId).then(function () { user.getOneUser(userId); })
 
         util.closeForm();
 

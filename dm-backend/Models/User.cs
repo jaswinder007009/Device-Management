@@ -4,37 +4,26 @@ using System.Data;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using dm_backend.Models;
-
+using dm_backend.Utilities;
+using dm_backend.Data;
 namespace dm_backend
 {
-    public class User : BaseEntity
+    public class User : PartialUserModel
     {
-        public string? Salutation { get; set; }
-        public string? FirstName { get; set; }
-        public string? MiddleName { get; set; }
-        public string? LastName { get; set; }
-        public string? DepartmentName { get; set; }
-        public string? DesignationName { get; set; }
-        public string? Email { get; set; }
         public string? RoleName { get; set; }
         public int? UserId { get; set; }
         public string? Password { get; set; }
-        public string? DOB { get; set; }
-        public string? Gender { get; set; }
-
-         public string? Status { get; set; }
-        public string? DOJ { get; set; }
+        public string? Status { get; set; }
         public List<ContactNumberModel> phones { get; set; }
         public List<AddressModel> addresses { get; set; }
 
         internal AppDb Db { get; set; }
-
+        internal IAuthRepository _repo;
         public User()
         {
             phones = new List<ContactNumberModel>();
             addresses = new List<AddressModel>();
         }
-
         internal User(AppDb db)
         {
             Db = db;
@@ -130,52 +119,52 @@ namespace dm_backend
         {
             using (var cmd = Db.Connection.CreateCommand())
             {
-                
+
                 cmd.CommandText = GetAllUsersquery;
-                if(!string.IsNullOrEmpty(searchby))
+                if (!string.IsNullOrEmpty(searchby))
                 {
                     cmd.CommandText += @" where get_full_name(user.user_id) like CONCAT('%', '" + @searchby + "', '%') or user.email like CONCAT('%', '" + @searchby + "', '%') or status_name like CONCAT('%', '" + @searchby + "', '%')";
-                    
+
                     cmd.Parameters.AddWithValue("@searchby", searchby);
                 }
-                    cmd.CommandText += " group by user_id,role_id order by " + sortby + " " + direction; //" " + direction
+                cmd.CommandText += " group by user_id,role_id order by " + sortby + " " + direction; //" " + direction
                 cmd.Parameters.AddWithValue("@sortby", sortby);
                 using MySqlDataReader reader = cmd.ExecuteReader();
                 return ReadAll(reader);
 
             }
         }
-public int whatIs(String data1)
-{
- return data1=="inactive"?1:2;
+        public int whatIs(String data1)
+        {
+            return data1 == "inactive" ? 1 : 2;
 
-}
-         public void MarkUserInactive(int data)
-          {
-              using var cmd = Db.Connection.CreateCommand();
-              cmd.CommandText = @"UPDATE `user` SET `status`="+ data +" WHERE `user_id` = @userr_id;";
-              Binduser_id(cmd);
-              cmd.ExecuteNonQuery();
-          }
+        }
+        public void MarkUserInactive(int data)
+        {
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = @"UPDATE `user` SET `status`=" + data + " WHERE `user_id` = @userr_id;";
+            Binduser_id(cmd);
+            cmd.ExecuteNonQuery();
+        }
 
         public static string GetSafeString(MySqlDataReader reader, string colName)
         {
             return reader[colName] != DBNull.Value ? (string)reader[colName] : "";
         }
 
-        private AddressModel ReadAddress(MySqlDataReader reader,string prefix)
+        private AddressModel ReadAddress(MySqlDataReader reader, string prefix)
         {
             var address1 = new AddressModel();
             address1.AddressLine1 = GetSafeString(reader, prefix + "_address_Line1");
-             address1.AddressLine2 = GetSafeString(reader, prefix + "_address_Line2");
+            address1.AddressLine2 = GetSafeString(reader, prefix + "_address_Line2");
             address1.AddressType = prefix;
-            address1.City = GetSafeString(reader, prefix +"_city");
+            address1.City = GetSafeString(reader, prefix + "_city");
             address1.State = GetSafeString(reader, prefix + "_state");
             address1.Country = GetSafeString(reader, prefix + "_country");
             address1.PIN = GetSafeString(reader, prefix + "_pin");
-           
 
-            return address1;//kkkkkkkkkkkkkkkkkkkkkkkkk
+
+            return address1;
         }
         private ContactNumberModel ReadContact(MySqlDataReader reader, string prefix)
         {
@@ -203,28 +192,17 @@ public int whatIs(String data1)
             {
                 while (reader.Read())
                 {
-                    var post = new User();
-                    post.Salutation = GetSafeString(reader,"salutation");
-                    post.FirstName = GetSafeString(reader, "first_name");
-                    post.MiddleName = GetSafeString(reader, "middle_name");
-                    post.LastName = GetSafeString(reader, "last_name");
-                    // post.User_Id = GetSafeString(reader, "user_id");
+                    var post = (User)Readers.ReadPartialUser(reader);
                     post.UserId = (int)reader["user_id"];
                     post.RoleName = GetSafeString(reader, "role_name");
-                    post.DepartmentName = GetSafeString(reader, "department_name");
-                    post.DesignationName = GetSafeString(reader, "designation_name");
-                    post.Email = GetSafeString(reader, "email");
-                    post.Gender = GetSafeString(reader, "gender");
-                    post.Password=GetSafeString(reader,"password");
+                    post.Password = GetSafeString(reader, "password");
                     post.Status = GetSafeString(reader, "status_name");
-                    post.DOB = Convert.ToDateTime(reader["date_of_birth"]).ToString("dd/MM/yyyy");
-                    post.DOJ = Convert.ToDateTime(reader["date_of_joining"]).ToString("dd/MM/yyyy");
                     post.addresses.Add(ReadAddress(reader, "current"));
                     post.addresses.Add(ReadAddress(reader, "permanant"));
-                    post.phones.Add(ReadContact(reader,"mobile"));
+                    post.phones.Add(ReadContact(reader, "mobile"));
                     post.phones.Add(ReadContact(reader, "work"));
                     post.phones.Add(ReadContact(reader, "home"));
-                    
+
                     posts.Add(post);
                 }
             }
@@ -234,15 +212,15 @@ public int whatIs(String data1)
 
         private User ReadUser(MySqlDataReader reader)
         {
-            
+
             using (reader)
             {
-                var user_s = ReadAll(reader);            
+                var user_s = ReadAll(reader);
                 return user_s[0];
             }
         }
 
-       
+
         public string UpdateUser()
         {
             MySqlParameter outputEmailParam;
@@ -254,7 +232,8 @@ public int whatIs(String data1)
             cmd.Connection = Db.Connection;
             cmd.Transaction = myTrans;
 
-            try {
+            try
+            {
                 cmd.CommandText = "update_user";
                 cmd.CommandType = CommandType.StoredProcedure;
                 outputEmailParam = BindOutputuser_id(cmd);
@@ -266,17 +245,17 @@ public int whatIs(String data1)
                 {
                     Binduser_id(cmd);
                     phone.BindAndExecuteProcedure(cmd, "update_contact");
-                }   
+                }
 
                 foreach (AddressModel address in addresses)
                 {
                     Binduser_id(cmd);
                     address.BindAndExecuteProcedure(cmd, "update_address");
                 }
-                
+
                 Console.WriteLine("Record Updated");
-               myTrans.Commit();
-               return "Record Updated";
+                myTrans.Commit();
+                return "Record Updated";
             }
             catch (Exception e)
             {
@@ -292,18 +271,24 @@ public int whatIs(String data1)
                     }
                 }
 
-                Console.WriteLine("An exception of type " + e.Message + " was encountered while inserting the data.");
+                Console.WriteLine("An exception of type " + e.Message + " was encountered while updating the data.");
                 Console.WriteLine("Neither record was written to database.");
             }
-        
+
 
 
             return "Update failed";
 
 
         }
-            
-        
+
+        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+
+            using var hmac = new System.Security.Cryptography.HMACSHA512();
+            passwordSalt = hmac.Key;
+            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+        }
 
         private void BindUserProcParams(MySqlCommand cmd)
         {
@@ -313,14 +298,21 @@ public int whatIs(String data1)
             cmd.Parameters.Add(new MySqlParameter("l_name", LastName));
             cmd.Parameters.Add(new MySqlParameter("dept_name", DepartmentName));
             cmd.Parameters.Add(new MySqlParameter("desig", DesignationName));
-            //cmd.Parameters.Add(new MySqlParameter("role_name", RoleName));
-            //cmd.Parameters.Add(new MySqlParameter("userr_id", UserId));
             cmd.Parameters.Add(new MySqlParameter("email", Email));
            
             if(string.IsNullOrEmpty(Password))
-            cmd.Parameters.AddWithValue("password", DBNull.Value);
+            {  cmd.Parameters.AddWithValue("password", DBNull.Value);
+            cmd.Parameters.AddWithValue("passwordSalt", DBNull.Value);
+            cmd.Parameters.AddWithValue("passwordHash", DBNull.Value);}
             else
+            {
+                byte[] passwordHash, passwordSalt;
+                CreatePasswordHash(Password, out passwordHash, out passwordSalt);
                 cmd.Parameters.Add(new MySqlParameter("password", Password));
+                cmd.Parameters.Add(new MySqlParameter("passwordSalt", passwordSalt));
+                cmd.Parameters.Add(new MySqlParameter("passwordHash", passwordHash));
+            }
+
             cmd.Parameters.Add(new MySqlParameter("dob", DateTime.Parse(DOB).ToString("yyyy-MM-dd")));
             cmd.Parameters.Add(new MySqlParameter("gend", Gender));
             cmd.Parameters.Add(new MySqlParameter("doj", DateTime.Parse(DOJ).ToString("yyyy-MM-dd")));
@@ -330,7 +322,8 @@ public int whatIs(String data1)
         private void Binduser_id(MySqlCommand cmd)
         {
             var user_idParam = new MySqlParameter("userr_id", UserId);
-            if(cmd.Parameters.Contains("userr_id")){
+            if (cmd.Parameters.Contains("userr_id"))
+            {
                 cmd.Parameters["userr_id"].Value = UserId;
             }
             else

@@ -1,29 +1,35 @@
 ﻿using System;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using dm_backend.Models;
-using dm_backend.Utilities;
-using System.Web.Http.Results;
-using System.Text.Json;
 
 namespace dm_backend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
 
         public UserController(AppDb db)
         {
             Db = db;
         }
-
+        [Authorize(Roles="admin,user")]
         [HttpGet]
         [Route("{user_id}")]
         public  JsonResult GetOneUser(string user_id)
         {
+            /*
+                **** Get the user Id as (int)
+                Console.WriteLine("User id: " + GetUserId());
+
+                **** Get the user email as (string)
+                Console.WriteLine("User name: " + GetUserName());
+
+                **** Get the user roles as (List of strings)
+                foreach(string roleName in GetUserRoles()){
+                    Console.WriteLine("Role: ", roleName);
+                }
+            */
             Db.Connection.Open();
             var query = new User(Db);
             var result = query.getUserByuser_id(user_id);
@@ -33,7 +39,7 @@ namespace dm_backend.Controllers
         }
        
        
-        
+        [Authorize(Roles="admin")]
         [HttpGet]
         public JsonResult GetAllUsersInCustomFormat()
         {
@@ -55,7 +61,7 @@ namespace dm_backend.Controllers
 
         }
         
-
+        [Authorize(Roles="admin")]
          [HttpPost]
          [Route("add")]
          public IActionResult Post([FromBody]User item)
@@ -69,7 +75,7 @@ namespace dm_backend.Controllers
              return new OkObjectResult(item);
          }
 
-        
+        [Authorize(Roles="admin,user")]
         [HttpPut]
         [Route("{user_id}/update")]
          public ActionResult Put(int user_id, [FromBody]User body)
@@ -84,7 +90,7 @@ namespace dm_backend.Controllers
         
         }
 
-
+        [Authorize(Roles="admin")]
         [HttpGet]
         [Route("{user_id}/{activeInactive}")]
         public IActionResult PutOne(int user_id , string activeInactive)
@@ -96,7 +102,7 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok();
         }
-        
+        [Authorize(Roles="admin")]
         [HttpDelete]
         [Route("{user_id}/remove")]
          public IActionResult DeleteOne(int user_id)
