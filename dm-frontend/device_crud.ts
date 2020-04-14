@@ -2,37 +2,40 @@ import { BASEURL } from "./globals";
 import { formatDate1 } from "./utilities";
 
 export class AddDevice {
-    device_type_id: number ;
-    device_brand_id: number ;
-    device_type :string;
-    device_brand :string;
-    status_id: number ;
-    device_model_id :string ;
+    device_type_id: number;
+    device_brand_id: number;
+    device_type: string;
+    device_brand: string;
+    status_id: number;
+    device_model_id: string;
     model: string;
-    color: string ;
-    price: string ;
-    serial_number: string ;
-    warranty_year: string ;
-    purchase_date: string ;
-    specification_id: number ;
-    entry_date: string ;
-    ram: string ;
-    storage: string ;
-    screen_size: string ;
-    connectivity: string ;
-
+    color: string;
+    price: string;
+    serial_number: string;
+    warranty_year: string;
+    purchase_date: string;
+    specification_id: number;
+    entry_date: string;
+    ram: string;
+    storage: string;
+    screen_size: string;
+    connectivity: string;
+    token: string = "";
+    constructor(token: string) {
+        this.token = token;
+    }
     brandDropdown() {
         fetch(
-            BASEURL + "/api/Device/brand"
-        )
-            .then(Response => Response.json())
+            BASEURL + "/api/Device/brand",{
+                headers: new Headers({"Authorization": `Bearer ${this.token}`})
+            }).then(Response => Response.json())
             .then(data => {
                 console.log(data);
-                (document.getElementById("brand")as HTMLInputElement).innerHTML = "";
+                (document.getElementById("brand") as HTMLInputElement).innerHTML = "";
                 for (let i = 0; i < data.length; i++) {
 
-                    (document.getElementById("brand")as HTMLInputElement).innerHTML += '<option value="' + data[i].device_brand_id + '">' + data[i].device_brand + '</option>';
-                    
+                    (document.getElementById("brand") as HTMLInputElement).innerHTML += '<option value="' + data[i].device_brand_id + '">' + data[i].device_brand + '</option>';
+
                 }
             })
             .catch(err => console.log(err));
@@ -40,15 +43,15 @@ export class AddDevice {
     }
     typeDropdown() {
         fetch(
-            BASEURL + "/api/Device/type"
-        )
-            .then(Response => Response.json())
+            BASEURL + "/api/Device/type",{
+                headers: new Headers({"Authorization": `Bearer ${this.token}`})
+            }).then(Response => Response.json())
             .then(data => {
 
-                (document.getElementById("type")as HTMLInputElement).innerHTML = "";
+                (document.getElementById("type") as HTMLInputElement).innerHTML = "";
                 for (let i = 0; i < data.length; i++) {
 
-                    (document.getElementById("type")as HTMLInputElement).innerHTML += '<option value="' + data[i].device_type_id + '">' + data[i].device_type + '</option>';
+                    (document.getElementById("type") as HTMLInputElement).innerHTML += '<option value="' + data[i].device_type_id + '">' + data[i].device_type + '</option>';
 
                 }
             })
@@ -57,15 +60,15 @@ export class AddDevice {
     }
     modelDropdown() {
         fetch(
-            BASEURL + "/api/Device/model"
-        )
-            .then(Response => Response.json())
+            BASEURL + "/api/Device/model",{
+                headers: new Headers({"Authorization": `Bearer ${this.token}`})
+            }).then(Response => Response.json())
             .then(data => {
 
-                (document.getElementById("model")as HTMLInputElement).innerHTML = "";
+                (document.getElementById("model") as HTMLInputElement).innerHTML = "";
                 for (let i = 0; i < data.length; i++) {
 
-                    (document.getElementById("model")as HTMLInputElement).innerHTML += '<option value="' + data[i].device_model_id + '">' + data[i].model + '</option>';
+                    (document.getElementById("model") as HTMLInputElement).innerHTML += '<option value="' + data[i].device_model_id + '">' + data[i].model + '</option>';
 
                 }
             })
@@ -74,15 +77,15 @@ export class AddDevice {
     }
     specificationDropdown() {
         fetch(
-            BASEURL + "/api/Device/specification"
-        )
-            .then(Response => Response.json())
+            BASEURL + "/api/Device/specification",{
+                headers: new Headers({"Authorization": `Bearer ${this.token}`})
+            }).then(Response => Response.json())
             .then(data => {
 
-                (document.getElementById("specification")as HTMLInputElement).innerHTML = "";
+                (document.getElementById("specification") as HTMLInputElement).innerHTML = "";
                 for (let i = 0; i < data.length; i++) {
 
-                    (document.getElementById("specification")as HTMLInputElement).innerHTML += '<option value="' + data[i].specification_id + '">'
+                    (document.getElementById("specification") as HTMLInputElement).innerHTML += '<option value="' + data[i].specification_id + '">'
                         + "RAM: " + data[i].ram + " Storage: " + data[i].storage + " Screen Size: " + data[i].screen_size + " Connectivity: " + data[i].connectivity +
                         '</option>';
 
@@ -97,31 +100,34 @@ export class AddDevice {
 
         fetch(BASEURL + "/api/Device/add", {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
+            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data,
         }).catch(Error => console.log(Error));
 
     }
     async getDataToForm() {
-        let data :any 
+        let data: any
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get("device_id");
         console.log("device_id" + myParam);
-        const obj = new AddDevice();
-        
-       let res = await  fetch(
-                  BASEURL + "/api/Device/device_id/" + myParam )
-            data = await res.json();
-            console.log(data);
-                         this.populateDataToForm(data);
-        
-            return null ;
+        const obj = new AddDevice(this.token);
+
+        let res = await fetch(
+            BASEURL + "/api/Device/device_id/" + myParam,
+            {
+                headers: new Headers({"Authorization": `Bearer ${this.token}`})
+            })
+        data = await res.json();
+        console.log(data);
+        this.populateDataToForm(data);
+
+        return null;
     }
     populateDataToForm(data: any) {
         console.log(data[0].device_brand_id);
 
-        (document.getElementById("brand")as HTMLInputElement).value=data[0].device_brand_id; 
-        (document.getElementById("type")as HTMLInputElement).value  = data[0].device_type_id ;
+        (document.getElementById("brand") as HTMLInputElement).value = data[0].device_brand_id;
+        (document.getElementById("type") as HTMLInputElement).value = data[0].device_type_id;
         (document.getElementById("status") as HTMLInputElement).value = data[0].status_id;
         (document.getElementById("model") as HTMLInputElement).value = data[0].model;
         (document.getElementById("color") as HTMLInputElement).value = data[0].color;
@@ -129,16 +135,16 @@ export class AddDevice {
         (document.getElementById("serial_number") as HTMLInputElement).value = data[0].serial_number;
         (document.getElementById("warranty_year") as HTMLInputElement).value = data[0].warranty_year;
         (document.getElementById("purchase_date") as HTMLInputElement).value = formatDate1(data[0].purchase_date);
-        (document.getElementById("specification")as HTMLInputElement).value = data[0].specification_id ;
+        (document.getElementById("specification") as HTMLInputElement).value = data[0].specification_id;
         (document.getElementById("entry_date") as HTMLInputElement).value = formatDate1(data[0].entry_date);
     }
-    
+
     update_device(device_id: any) {
         let data = this.addDataFromForm();
         console.log(data);
         fetch(BASEURL + "/api/Device/update/" + device_id, {
             method: "PUT",
-            headers: { 'Content-Type': 'application/json' },
+            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data,
         }).catch(Error => console.log(Error));
 
@@ -157,93 +163,85 @@ export class AddDevice {
         this.entry_date = (document.getElementById("entry_date") as HTMLInputElement).value;
         return JSON.stringify(this);
     }
-    addDataToBrand()
-    {
-        
+    addDataToBrand() {
+
         console.log("brand");
-        let data = new AddDevice();
-        data.device_brand = (document.getElementById("brands")as HTMLInputElement).value;
+        let data = new AddDevice(this.token);
+        data.device_brand = (document.getElementById("brands") as HTMLInputElement).value;
         return JSON.stringify(data);
     }
-    async addNewBrand()
-    {
-    
-         let data1=this.addDataToBrand();
+    async addNewBrand() {
+
+        let data1 = this.addDataToBrand();
         console.log(data1);
-       let data=await fetch("https://localhost:5001/api/Device/brand", {
+        let data = await fetch(BASEURL + "/api/Device/brand", {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
+            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data1,
         });
-       
+
         return null;
     }
-    addDataToType()
-    {
-        
+    addDataToType() {
+
         console.log("type");
-        const data = new AddDevice();
-        data.device_type = (document.getElementById("types")as HTMLInputElement).value;
+        const data = new AddDevice(this.token);
+        data.device_type = (document.getElementById("types") as HTMLInputElement).value;
         return JSON.stringify(data);
     }
-    async addNewType()
-    {
-    
-         let data1=this.addDataToType();
+    async addNewType() {
+
+        let data1 = this.addDataToType();
         console.log(data1);
-       let data = await fetch("https://localhost:5001/api/Device/type", {
+        let data = await fetch(BASEURL + "/api/Device/type", {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
+            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data1,
         });
         return null;
     }
-    addDataToModel()
-    {
-        
+    addDataToModel() {
+
         console.log("model");
-        const data = new AddDevice();
-        data.model = (document.getElementById("models")as HTMLInputElement).value;
+        const data = new AddDevice(this.token);
+        data.model = (document.getElementById("models") as HTMLInputElement).value;
         return JSON.stringify(data);
     }
-    async addNewModel()
-    {
-    
-         let data1=this.addDataToModel();
+    async addNewModel() {
+
+        let data1 = this.addDataToModel();
         console.log(data1);
-       let data=await fetch("https://localhost:5001/api/Device/model", {
+        let data = await fetch(BASEURL + "/api/Device/model", {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
+            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data1,
         });
         return null;
     }
 
 
-    addDataToSpecification()
-    {
-        
+    addDataToSpecification() {
+
         console.log("type");
-        const data = new AddDevice();
-        data.ram = (document.getElementById("RAM")as HTMLInputElement).value;
-        data.storage = (document.getElementById("Storage")as HTMLInputElement).value;
-        data.screen_size = (document.getElementById("Screen_size")as HTMLInputElement).value;
-        data.connectivity = (document.getElementById("Connectivity")as HTMLInputElement).value;
+        const data = new AddDevice(this.token);
+        data.ram = (document.getElementById("RAM") as HTMLInputElement).value;
+        data.storage = (document.getElementById("Storage") as HTMLInputElement).value;
+        data.screen_size = (document.getElementById("Screen_size") as HTMLInputElement).value;
+        data.connectivity = (document.getElementById("Connectivity") as HTMLInputElement).value;
         return JSON.stringify(data);
     }
-    async addNewSpecification()
-    {
-    
-         let data1=this.addDataToSpecification();
+    async addNewSpecification() {
+
+        let data1 = this.addDataToSpecification();
         console.log(data1);
-        let data = await fetch("https://localhost:5001/api/Device/addspecification", {
+        let data = await fetch(BASEURL + "/api/Device/addspecification", {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
+            headers:new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data1,
         });
         return null;
     }
- 
- 
-    
+
+
+
 }

@@ -30,7 +30,7 @@ namespace dm_backend.Controllers
         }
         [HttpGet]
         [Route("device_id/{device_id}")]
-        public IActionResult GetOneUser(string device_id)
+        public IActionResult GetOneDevice(string device_id)
         {
             Db.Connection.Open();
             var query = new devices(Db);
