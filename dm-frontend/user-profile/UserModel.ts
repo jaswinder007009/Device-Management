@@ -38,7 +38,7 @@ export class UserModel {
 			this.dob = data.dob;
 			this.doj = data.doj;
 			this.email = data.email;
-			this.roleName = data.role_Name;
+			this.roleName = data.roleName;
 			this.gender = data.gender;
 			this.status = data.status;
 		}
