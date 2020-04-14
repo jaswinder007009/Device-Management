@@ -71,7 +71,9 @@ import { UserData }  from "./dropdown";
 		}
 		else if(form_mode=="edit")
 		{
+		
 			var userData1=createObjectFromForm(this);
+
 			console.log(userData1);
 				if(validateForm(form_mode)==true){
 						new UpdateUserApi(token).updateUserData(userData1).then(function(){
@@ -87,12 +89,19 @@ import { UserData }  from "./dropdown";
 	return false;
 
 	});
+	function alertDelete() {
+		return confirm("Do You Want To Permanently Delete ?");
+
+
+	}
 
 
 	document.addEventListener("click", function (ea) {
 		if((ea.target as HTMLButtonElement).className == "userDeleteData"){
 			const id = parseInt((ea.target as HTMLButtonElement).dataset["id"]);
-			new GetUserApi(token).deleteData(id).then(function(){setData();});
+			if (alertDelete()) {
+				new GetUserApi(token).deleteData(id).then(function () { setData(); });
+			}
 			
 		}
 		else if(ea.target.tagName == 'TH')
