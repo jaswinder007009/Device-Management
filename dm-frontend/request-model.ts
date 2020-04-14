@@ -4,12 +4,14 @@ const Select = mdc.select.MDCSelect;
 const TextField = mdc.textField.MDCTextField;
 
 
+
+// var BASEURL = "http://localhost:5000";
 class RequestDevice
 {
     deviceModel : string
     deviceBrand : string
     deviceType : string
-    specs : Specification
+    specs : Specification   
     noOfDays : number
     comment : string = ""
 }
@@ -84,6 +86,7 @@ function  fun () :  RequestDevice
     request.deviceType = selects[0].value;
     request.deviceBrand = selects[1].value;
     request.deviceModel = selects[2].value;
+    request.noOfDays = parseInt((document.getElementById("expecteddays") as HTMLInputElement).value);
     specs.RAM = selects[3].value;
     specs.Storage = selects[4].value;
     specs.ScreenSize = selects[5].value;
@@ -105,6 +108,13 @@ function populateDropdown(id : string, dataArray: any)
                                                     </li>`
     }
 }
+
+
+
+document.querySelector("#DeviceRequest").addEventListener('click', event =>
+{
+    submitForm();
+})
 
 
 function clear(id : string)

@@ -6,6 +6,7 @@ export class populateDropDown
     {
 
         this.clear(value);
+        (document.getElementById(value) as HTMLSelectElement).innerHTML += `<option value=""></option>`;
         data.map( e=>
             {   var data = new device(e);
                 (document.getElementById(value) as HTMLSelectElement).innerHTML += `<option value="${data.id}">${data.value}</option>`;

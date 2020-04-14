@@ -44,12 +44,15 @@ namespace dm_backend.Models
             return await ReadSpecifications(cmd.ExecuteReader());
         }
 
-        public async Task<List<Specification>> getSpecificSpecification(int typeId , int brand , int model )
+        public async Task<List<Specification>> getSpecificSpecification(string typeId , string brand , string model )
         {
 
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"select s.* from specification as s inner join device as d using(specification_id) 
-                        where d.device_brand_id = @brand and d.device_type_id =@type  and d.device_model_id=@model group by s.specification_id; ";
+            cmd.CommandText = @"select s.* from specification as s inner join device as d using(specification_id)
+inner join device_type as dt using (device_type_id)
+inner join device_brand as db using (device_brand_id) 
+inner join device_model as dm using (device_model_id)
+where db.brand = @brand  and dt.type = @type  and dm.model=@model group by s.specification_id; ";
 
             cmd.Parameters.AddWithValue("@type", typeId);
             cmd.Parameters.AddWithValue("@brand", brand);

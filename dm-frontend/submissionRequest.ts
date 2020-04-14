@@ -5,10 +5,14 @@ import { populateData } from "./genrateSubmissionRequest";
 import { RequestModel } from "./RequetsDatamodel";
 import { Sort } from "./user-profile/SortingUser";
 import { BASEURL } from "./globals";
+import { navigate } from "./navigation";
 
 
 let address = BASEURL;
 
+
+
+new navigate();
 
 
 (document.querySelector("#fixed-header-drawer-exp")  as HTMLInputElement).addEventListener("keypress" , event =>

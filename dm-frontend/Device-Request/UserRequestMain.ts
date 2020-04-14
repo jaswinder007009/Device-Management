@@ -1,7 +1,7 @@
 import { HitApi } from "./HitRequestApi";
 import {populateDropDown } from "./populateDropDown";
 import { RequestDeviceModel } from "./deviceRequestModel";
-import { BASEURL } from "./globals";
+import { BASEURL } from "../globals";
 
 var device = [].map.call(document.querySelectorAll(".device") , e =>
 {
@@ -15,9 +15,24 @@ let uri = BASEURL;
 
  device.map(function(e : any)
     {
-        const path = uri +'/api/device/' + e.id;
+        const path = uri +'/api/dropdown/' + e.id;
         let data = GetData(path , e.id);
     });
+
+
+document.querySelector(".device").addEventListener('onselect' ,event =>
+{
+    let device = "";
+    let brand = "";
+    let model = "";
+    for(let x of device)
+    {
+        console.log(x.value)
+        
+    }
+});
+
+
     specificationDropdown();
 
     function  specificationDropdown() {
@@ -40,14 +55,17 @@ let uri = BASEURL;
 
     }
 
+
+
 async function GetData(uri : string ,column : string)
 {
- let data = await new HitApi().HitGetApi(uri); 
-        
- console.log(data);
- new populateDropDown().populateDevice(data , column);
- return data ;
+    let data = await new HitApi().HitGetApi(uri); 
+    console.log(data);
+    new populateDropDown().populateDevice(data , column);
+    return data;
 }
+
+
 
 document.querySelector("#request")?.addEventListener('click' , e =>
 {
@@ -62,6 +80,5 @@ function bindData()
     body.deviceType = device[0].value
     body.deviceBrand = device[1].value;
     body.deviceModel = device[2].value;
-  //body.specs = document.getElementById()
 
 }
