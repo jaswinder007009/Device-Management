@@ -47,6 +47,7 @@ import { UserData }  from "./dropdown";
 				if((e.target as HTMLButtonElement).id == "popup")
 				{
 					console.log("Button clicked")
+					document.getElementById("email").disabled = false;
 					changeheading1Text();
 					util.openForm();
 					form_mode="create";
@@ -153,8 +154,10 @@ import { UserData }  from "./dropdown";
 	document.addEventListener("click", function(e) {
 	if ((e.target as HTMLButtonElement).className == "userEditData") {
 		changeheadingText();
+		document.getElementById("email").disabled = true;
 				util.openForm();
 				form_mode="edit";
+				
 				const userId: number = parseInt((e.target as HTMLButtonElement).id) ;
 				var userObject: UserModel;
 				new GetUserApi(token).getUserById(userId).then(res => {
