@@ -8,6 +8,7 @@ const TextField = mdc.textField.MDCTextField;
 // var BASEURL = "http://localhost:5000";
 class RequestDevice
 {
+    userId = 67;
     deviceModel : string
     deviceBrand : string
     deviceType : string
