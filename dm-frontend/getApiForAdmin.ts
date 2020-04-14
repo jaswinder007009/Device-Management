@@ -132,7 +132,7 @@ import { openForm } from "./utilities";
 				console.log("device_id" + device_id);
 				temp.deleteDevice(device_id);
 				console.log("device deleted");
-				//            window.location.reload();
+	           window.location.reload();
 				temp.getData();
 			} else {
 				console.log("fail deleted");
