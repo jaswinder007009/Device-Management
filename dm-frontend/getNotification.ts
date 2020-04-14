@@ -1,23 +1,30 @@
 import { BASEURL } from "./globals";
 import { Sort } from "./user-profile/SortingUser";
 import {Notifications} from "./notification";
-
+const token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
 class Notify
 {
     deviceId:number =0;
     userId:number= 0;
+    token:string ="";
+    constructor(token:string)
+    {
+        this.token =token;
+    }
     getNotification(URL:any)
     {
         fetch(
             BASEURL + "/api/notification"+URL 
-        )
+        ,{
+            headers: new Headers({"Authorization": `Bearer ${token}`})
+        })
             .then(Response => Response.json())
             .then(data => {
                 console.log(data);
                 (document.getElementById("notification_data") as HTMLTableElement).innerHTML = "";
             
                 for (let element in data) {
-                    let res = new Notifications(data[element]);
+                    let res = new Notifications(data[element],token);
                     res.getNotificationTable();
                 }
             })
@@ -43,7 +50,7 @@ class Notify
     {
         fetch(BASEURL + "/api/ReturnRequest", {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
+            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: JSON.stringify(data),
         }).catch(Error => console.log(Error));   
     }   
@@ -53,7 +60,7 @@ class Notify
         console.log(data);
         fetch(BASEURL + "/api/ReturnRequest/reject", {
             method: "PUT",
-            headers: { 'Content-Type': 'application/json' },
+            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data1,
         }).catch(Error => console.log(Error));   
     }   
@@ -102,7 +109,7 @@ document.addEventListener("click", function (e) {
         
 });
 
-let notify = new Notify();
+let notify = new Notify(token);
 const urlParams = new URLSearchParams(window.location.search);
       const myParam = urlParams.get("user_id");
       console.log(myParam);

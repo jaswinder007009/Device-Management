@@ -2,23 +2,30 @@ import { SpecificationList } from "./specificationlist";
 
 import { BASEURL } from './globals';
 let mode:string = "create";
+let token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
+
 class GetSpecification {
     specification_id:number;
     RAM:string;
     storage:string;
     screen_size:string;
     connectivity:string;
- 
+    token;string;
+    constructor(token:string)
+    {
+        this.token = token;
+    }
     getSpecificationData() {
         fetch(
-            BASEURL +"/api/Device/specification"
-        )
+            BASEURL +"/api/Device/specification",{
+                headers: new Headers({"Authorization": `Bearer ${token}`})
+            })
             .then(response => response.json())
             .then(data => {
                 console.log(data);
                 (document.getElementById("specification_data") as HTMLTableElement).innerHTML = "";
                 for (let i = 0; i < data.length; i++) {
-                    let res = new SpecificationList(data[i]);
+                    let res = new SpecificationList(data[i],token);
                     res.getSpecificationList();
                 }
             })
@@ -29,7 +36,7 @@ class GetSpecification {
     {
         
         console.log("type");
-        const data = new GetSpecification();
+        const data = new GetSpecification(token);
         data.RAM = (document.getElementById("RAM")as HTMLInputElement).value;
         data.storage = (document.getElementById("Storage")as HTMLInputElement).value;
         data.screen_size = (document.getElementById("Screen_size")as HTMLInputElement).value;
@@ -43,7 +50,7 @@ class GetSpecification {
         console.log(data1);
         fetch(BASEURL +"/api/Device/addspecification", {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
+            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data1,
         })
         .catch(Error => console.log(Error));
@@ -55,7 +62,7 @@ class GetSpecification {
         let data1 = this.addDataToSpecification();
         fetch(BASEURL +"/api/Device/updatespecification/"+ specification_id, {
             method: "PUT",
-            headers: { 'Content-Type': 'application/json' },
+            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data1,
         })
         .catch(Error => console.log(Error));
@@ -65,7 +72,9 @@ class GetSpecification {
     {
         fetch(
             BASEURL +"/api/Device/spec/"+specification_id
-        )
+            ,{
+                headers: new Headers({"Authorization": `Bearer ${token}`})
+            })
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -124,7 +133,7 @@ document.addEventListener("click", function (e) {
     }
 });
 
-const specs = new GetSpecification();
+const specs = new GetSpecification(token);
 specs.getSpecificationData();
 
 

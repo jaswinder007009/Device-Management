@@ -14,11 +14,18 @@ import { openForm } from "./utilities";
 		first_name: string = "";
 		middle_name: string = "";
 		last_name: string = "";
+		
 	}
 
 	class GetApiForAdmin {
+		token: string="";
+		constructor(token:string){
+			this.token=token;
+		}
 		getApi(URL: string) {
-			fetch(URL)
+			fetch(URL,{
+                headers: new Headers({"Authorization": `Bearer ${token}`})
+            })
 				.then(Response => Response.json())
 				.then(data => {
 					console.log(data);
@@ -26,7 +33,7 @@ import { openForm } from "./utilities";
 						"Request_data"
 					) as HTMLTableElement).innerHTML = "";
 					for (let element in data) {
-						let res = new DeviceListForAdmin(data[element]);
+						let res = new DeviceListForAdmin(data[element],token);
 						res.getDeviceList(role);
 					}
 				})
@@ -74,7 +81,8 @@ import { openForm } from "./utilities";
 
 		deleteDevice(device_id: number) {
 			fetch(BASEURL + "/api/Device/del/" + device_id, {
-				method: "DELETE"
+                method: "DELETE",
+                headers: new Headers({"Authorization": `Bearer ${token}`})
 			});
 		}
 
@@ -82,7 +90,7 @@ import { openForm } from "./utilities";
 			let data1 = JSON.stringify(data);
 			fetch(BASEURL + "/api/Notification", {
 				method: "POST",
-				headers: { "Content-Type": "application/json" },
+                headers:new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
 				body: data1
 			}).catch(Error => console.log(Error));
 			alert("Notification sent");
@@ -92,7 +100,7 @@ import { openForm } from "./utilities";
 			console.log(data1);
 			fetch(BASEURL + "/api/device/assign", {
 				method: "POST",
-				headers: { "Content-Type": "application/json" },
+				headers:new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
 				body: data1
 			}).catch(Error => console.log(Error));
 		}
@@ -117,7 +125,7 @@ import { openForm } from "./utilities";
 		if ((e.target as HTMLButtonElement).className == "delete-button") {
 			console.log("delete");
 			if (confirm("Are you sure you want to delete this device?")) {
-				const temp = new GetApiForAdmin();
+				const temp = new GetApiForAdmin(token);
 				const device_id: any = (e.target as HTMLButtonElement).getAttribute(
 					"value"
 				);
@@ -221,6 +229,6 @@ import { openForm } from "./utilities";
 			temp.getData();
 		}
 	);
-	const temp = new GetApiForAdmin();
+	const temp = new GetApiForAdmin(token);
 	temp.getData();
 })();
