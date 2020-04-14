@@ -7,9 +7,11 @@ import { getStatus } from "./index";
 
 export class Sort 
 {    
-    elements : HtmlElementsData
-    constructor()
+    token:string;
+    elements : HtmlElementsData;
+    constructor(token: string)
     {
+        this.token = token;
         this.elements = new HtmlElementsData();
     }
     sortBy(attributeId : string)
@@ -42,9 +44,9 @@ export class Sort
     
     {
         const status = getStatus((document.getElementById("request-status") as HTMLSelectElement).value);
-        const uri= new findResult().searchUser() +"&status="+status+"&sort="+sortAttribute+"&sort-type="+sortType;
+        const uri= new findResult(this.token).searchUser() +"&status="+status+"&sort="+sortAttribute+"&sort-type="+sortType;
         
-        var populateSorting = new HitApi();
+        var populateSorting = new HitApi(this.token);
         
         populateSorting.HitGetApi(uri);
     }

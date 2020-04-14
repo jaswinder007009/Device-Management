@@ -2,13 +2,20 @@ import {PopulateData} from "./FillData"
 import { page } from "./paging";
 export class HitApi
 {
-    Data : any
+    Data : any;
+    token: string;
+
+    constructor(token: string){
+        this.token = token;
+    }
     public async HitGetApi(uri : string)
     {
         (document.getElementById("loading") as HTMLDivElement).style.display = "flex";    // loading start 
         var res  : any
         try{
-        res =  await fetch(uri);
+        res =  await fetch(uri, {
+            headers: new Headers({"Authorization": `Bearer: ${this.token}`})
+        });
         }
         catch(e)
         {
@@ -35,7 +42,7 @@ export class HitApi
         let id = (document.getElementById("pagination") as HTMLDivElement).getAttribute("pageNum");
         if(parseInt(id)==1)
         {
-           new page().setPages(this.Data["resultCount"]);
+           new page(this.token).setPages(this.Data["resultCount"]);
         }
     }
    
