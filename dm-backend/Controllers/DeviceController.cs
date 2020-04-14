@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using dm_backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace dm_backend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class DeviceController : ControllerBase
     {
@@ -40,7 +42,6 @@ namespace dm_backend.Controllers
 
         [HttpGet]
         [Route("search")]
-
         public IActionResult getDeviceswithSearch()
         {
             string device_name = (HttpContext.Request.Query["device_name"]);
@@ -59,7 +60,6 @@ namespace dm_backend.Controllers
         }
         [HttpGet]
         [Route("sort")]
-
         public IActionResult getDeviceswithSorting()
         {
             string SortColumn = (HttpContext.Request.Query["SortColumn"]);
@@ -90,6 +90,7 @@ namespace dm_backend.Controllers
 
         }
 
+        [Authorize(Roles="admin")]
         [HttpDelete]
         [Route("del/{device_id}")]
         public IActionResult DeleteOne(int device_id)
@@ -102,6 +103,7 @@ namespace dm_backend.Controllers
             return Ok();
         }
 
+        [Authorize(Roles="admin")]
         [HttpPost]
         [Route("add")]
         async public Task<IActionResult> Post([FromBody]val body)
@@ -113,6 +115,7 @@ namespace dm_backend.Controllers
             return Ok();
         }
 
+        [Authorize(Roles="admin")]
         [HttpPost]
         [Route("assign")]
         async public Task<IActionResult> AssignDevice([FromBody]Assign body)
@@ -124,7 +127,7 @@ namespace dm_backend.Controllers
             return Ok();
         }
 
-
+        [Authorize(Roles="admin")]
         [HttpPut]
         [Route("update/{device_id}")]
         async public Task<IActionResult> Put(int device_id, [FromBody]val body)
@@ -137,7 +140,8 @@ namespace dm_backend.Controllers
             return Ok();
         }
 
-
+        //TODO below three routes
+        // and same in dropdown controller
 
         //Specification
         [HttpGet("specid")]
@@ -175,7 +179,7 @@ namespace dm_backend.Controllers
 
 
 
-
+        [Authorize(Roles="admin")]
         [HttpPost]
         [Route("addspecification")]
         async public Task<IActionResult> Postspec([FromBody]Specification body)
@@ -188,6 +192,8 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok();
         }
+
+        [Authorize(Roles="admin")]
         [HttpPut]
         [Route("updatespecification/{specification_id}")]
         async public Task<IActionResult> Putspec(int specification_id, [FromBody]Specification body)
@@ -223,6 +229,8 @@ namespace dm_backend.Controllers
             var result = await query.getallbrands();
             return new OkObjectResult(result);
         }
+
+        [Authorize(Roles="admin")]
         [HttpPost]
         [Route("type")]
         async public Task<IActionResult> PostTYPE([FromBody]type body)
@@ -233,6 +241,8 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok();
         }
+
+        [Authorize(Roles="admin")]
         [HttpPost]
         [Route("brand")]
         async public Task<IActionResult> PostBrand([FromBody]Brand body)
@@ -243,6 +253,8 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok();
         }
+
+        [Authorize(Roles="admin")]
         [HttpPost]
         [Route("model")]
         async public Task<IActionResult> Postmodel([FromBody]Model body)
