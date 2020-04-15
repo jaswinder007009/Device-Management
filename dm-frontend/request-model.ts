@@ -7,20 +7,20 @@ import { BASEURL } from "./globals";
 
     class RequestDevice
     {
-        userId: string
+        userId: number
         deviceModel : string
         deviceBrand : string
         deviceType : string
         specs : Specification
-        noOfDays : number
+        noOfDays : number = 15
         comment : string = ""
     }
     class Specification
     {
-        RAM : String 
-        Storage : String
-        ScreenSize : String
-        Connectivity :  String
+        ram : String 
+        storage : String
+        screenSize : String
+        connectivity :  String
     }
 
     console.log(Select);
@@ -72,7 +72,9 @@ import { BASEURL } from "./globals";
         selects.forEach(selectElement => {
             const urlSnip = selectElement.root_.dataset.urlSnip;  // Gets the `data-url-snip` attribute and add it with the url to make a fetch request
             
-            fetch(url + urlSnip)
+            fetch(url + urlSnip,{ headers: {
+                'Authorization': `Bearer ${token}`
+            }})
             .then(res => res.json())
             .then(data => populateDropdown(urlSnip, data));
         });
@@ -84,14 +86,14 @@ import { BASEURL } from "./globals";
     {
         let specs = new Specification();
         let request = new RequestDevice();
-        request.userId = id;
+        request.userId = parseInt(id);
         request.deviceType = selects[0].value;
         request.deviceBrand = selects[1].value;
         request.deviceModel = selects[2].value;
-        specs.RAM = selects[3].value;
-        specs.Storage = selects[4].value;
-        specs.ScreenSize = selects[5].value;
-        specs.Connectivity = selects[6].value;
+        specs.ram = selects[3].value;
+        specs.storage = selects[4].value;
+        specs.screenSize = selects[5].value;
+        specs.connectivity = selects[6].value;
         request.specs =  specs;
         return request;
     }
@@ -119,4 +121,5 @@ import { BASEURL } from "./globals";
 
 
     initialiseDropdowns();
+    document.querySelector('button').addEventListener('click', function(){submitForm()});
 })();
