@@ -4,11 +4,14 @@ import { BASEURL, amIAdmin, amIUser } from './globals';
 
 
     const url = new URL(window.location.href);
-    const token = url.searchParams.get("token");
-    const id = url.searchParams.get("id");
-    sessionStorage.setItem("user_info", JSON.stringify({ token, id }));
+    let token, id;
+    if(url.searchParams.has("token") && url.searchParams.has("id")){
+        token = url.searchParams.get("token");
+        id = url.searchParams.get("id");
+        sessionStorage.setItem("user_info", JSON.stringify({ token, id }));
+    }
     let email = 'abc@gmail.com';
-    let user_id = JSON.parse(sessionStorage.getItem("user_info"))["id"];
+    token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
     const role = await amIUser(token) == true ? "User" : "Admin";
     //let role = 'User';
     function NavigationBar() {
@@ -209,7 +212,7 @@ import { BASEURL, amIAdmin, amIUser } from './globals';
         window.location.href = "./notifiication.html?user_id=" + user_id;
     })
     document.getElementById('email').innerHTML = email;
-    document.getElementById('userRole').innerHTML = role;
+    // document.getElementById('userRole').innerHTML = role;
     if (role == 'User') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
         getDeviceReturnDates(BASEURL + "/api/dashboard/" + email + "/devices/returndates");

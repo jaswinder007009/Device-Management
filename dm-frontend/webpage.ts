@@ -60,7 +60,7 @@ import { UserData }  from "./dropdown";
 			var userData=createObjectFromForm(this);
 			if(validateForm(form_mode)==true){
 			new CreateUserApi(token).createUserData(userData).then(function(){setData();});
-			new UserData();
+			new UserData(token);
 		}
 			else 
 			{

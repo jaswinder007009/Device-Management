@@ -36,7 +36,7 @@ export class UserData {
     }
     async dropdownApiCall(URL: any, selectElement: HTMLSelectElement) {
         let response = await fetch(URL,{
-            headers: new Headers({"Authorization": `Bearer: ${this.token}`})
+            headers: new Headers({"Authorization": `Bearer ${this.token}`})
         });
         let data = await (response.json());       
         populateDropdown(selectElement, data);

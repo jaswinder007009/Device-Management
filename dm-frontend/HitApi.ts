@@ -14,7 +14,7 @@ export class HitApi
         var res  : any
         try{
         res =  await fetch(uri, {
-            headers: new Headers({"Authorization": `Bearer: ${this.token}`})
+            headers: new Headers({"Authorization": `Bearer ${this.token}`})
         });
         }
         catch(e)
