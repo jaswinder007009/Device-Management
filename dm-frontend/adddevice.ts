@@ -1,14 +1,11 @@
 
 import { AddDevice } from './device_crud';
 
-
-    
-
-
+let token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
 (document.querySelector('#brand_popup') as HTMLButtonElement).addEventListener('submit', function (e) {
     console.log("inside function")
     e.preventDefault();
-    const temp = new AddDevice();
+    const temp = new AddDevice(token);
     temp.addNewBrand();
     (document.getElementById("popupForm2") as HTMLFormElement).style.display = "none";
     
@@ -17,7 +14,7 @@ import { AddDevice } from './device_crud';
   (document.querySelector('#model_popup') as HTMLButtonElement).addEventListener('submit', function (e) {
     console.log("inside function model")
     e.preventDefault();
-    const temp = new AddDevice();
+    const temp = new AddDevice(token);
     temp.addNewModel();
     (document.getElementById("popupForm3") as HTMLFormElement).style.display = "none";
     
@@ -30,7 +27,7 @@ import { AddDevice } from './device_crud';
   (document.querySelector('#popuptype')as HTMLButtonElement).addEventListener('submit', function (e) {
     console.log("inside function")
     e.preventDefault();
-    const temp = new AddDevice();
+    const temp = new AddDevice(token);
     temp.addNewType();
     (document.getElementById("popupForm1") as HTMLFormElement).style.display = "none";
     temp.typeDropdown();
@@ -39,7 +36,7 @@ import { AddDevice } from './device_crud';
   (document.querySelector('#popup_specification') as HTMLButtonElement).addEventListener('submit', function (e) {
       console.log("inside function")
       e.preventDefault();
-      const temp = new AddDevice();
+      const temp = new AddDevice(token);
       temp.addNewSpecification();
       (document.getElementById("popupForm") as HTMLFormElement).style.display = "none";
       temp.specificationDropdown();
@@ -55,7 +52,7 @@ import { AddDevice } from './device_crud';
       const myParam = urlParams.get("device_id");
       console.log(myParam);
       e.preventDefault();
-      const temp = new AddDevice();
+      const temp = new AddDevice(token);
       if (myParam) {
           temp.update_device(myParam);
           console.log("updated Successfully");
@@ -73,7 +70,7 @@ import { AddDevice } from './device_crud';
   
   });
   
-  const temp = new AddDevice();
+  const temp = new AddDevice(token);
   temp.brandDropdown();
   temp.typeDropdown();
   temp.modelDropdown();

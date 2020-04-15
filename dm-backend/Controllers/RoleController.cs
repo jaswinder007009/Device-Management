@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using dm_backend.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dm_backend.Controllers
 {
+    [Authorize(Roles="admin")]
     [Route("api/device")]
     public class RoleController : BaseController
     {
@@ -302,12 +304,14 @@ namespace dm_backend.Controllers
             return Ok();
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("is_user")]
         public IActionResult AmIUser(){
             return Ok(new{ result= GetUserRoles().Contains("user") });
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("is_admin")]
         public IActionResult AmIAdmin(){

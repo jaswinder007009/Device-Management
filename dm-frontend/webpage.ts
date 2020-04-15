@@ -4,7 +4,6 @@ import * as util from "./utilities";
 import { UpdateUserApi } from "./updateApi";
 import { populateFormFromObject, createObjectFromForm } from "./user-profile/databinding";
 import { UserModel } from "./UserModel";
-import { AllListerers } from "EventListeners";
 import { remove} from "validation";
 import { validateForm} from "validation";
 import { Sort } from "./user-profile/SortingUser";
@@ -42,8 +41,6 @@ import { UserData }  from "./dropdown";
 		}
 		
 		setData();
-		AllListerers();
-
 		function changeheading1Text()
 		{
 		document.getElementById('headingText').innerHTML='Register User';
@@ -69,7 +66,7 @@ import { UserData }  from "./dropdown";
 			var userData=createObjectFromForm(this);
 			if(validateForm(form_mode)==true){
 			new CreateUserApi(token).createUserData(userData).then(function(){setData();});
-			new UserData();
+			new UserData(token);
 		}
 			else 
 			{

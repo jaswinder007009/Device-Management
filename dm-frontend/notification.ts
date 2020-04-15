@@ -13,7 +13,8 @@ export class Notifications {
     notificationDate:string;
     status:string;
     message:string;
-    constructor(data: any) {
+    token:string="";
+    constructor(data: any,token:string) {
         this.user_id = data.userId;
         this.device_id = data.deviceId;
         this.type = data.deviceType;
@@ -26,7 +27,7 @@ export class Notifications {
         this.notificationDate = data.notificationDate;
         this.status = data.status;
         this.message = data.message;
-
+        this.token =token;
     }
     getNotificationTable() {
         const value = `

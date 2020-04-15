@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using dm_backend.Logics;
 using System.Net;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace dm_backend.Models{
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class RequestController : Controller
@@ -60,6 +61,7 @@ namespace dm_backend.Models{
             return Ok(result);
         }
 
+        [Authorize(Roles="admin")]
         [HttpGet]
         [Route("pending")]
         public IActionResult GetRequest()
@@ -78,7 +80,7 @@ namespace dm_backend.Models{
             return Ok(result);
         }
 
-
+        [Authorize(Roles="admin")]
         [HttpGet]
         [Route("{requestId}/reject")]
         public IActionResult RejectRequest(int requestId, [System.Web.Http.FromUri]int id){
@@ -96,6 +98,7 @@ namespace dm_backend.Models{
             return Ok("Request rejected");
         }
         
+        [Authorize(Roles="admin")]
         [HttpGet]
         [Route("{requestId}/accept")]
         public IActionResult AcceptRequest(int requestId, [System.Web.Http.FromUri]int id)

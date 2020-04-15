@@ -4,7 +4,11 @@ export class UserData {
     data: any;
     url: string;
     body: any;
+    token: string;
 
+    constructor(token: string){
+        this.token = token;
+    }
     
     async getCountry() {
         this.url = BASEURL + "/api/Dropdown/country";
@@ -30,14 +34,18 @@ export class UserData {
         console.log(document.querySelector("#form-group .salutation"));
         
     }
-        async dropdownApiCall(URL: any, selectElement: HTMLSelectElement) {
-        let response = await fetch(URL);
+    async dropdownApiCall(URL: any, selectElement: HTMLSelectElement) {
+        let response = await fetch(URL,{
+            headers: new Headers({"Authorization": `Bearer ${this.token}`})
+        });
         let data = await (response.json());       
         populateDropdown(selectElement, data);
 
     }
 }
-var user = new UserData()
+
+const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
+var user = new UserData(token);
 
 user.getCountry();
 user.getState();

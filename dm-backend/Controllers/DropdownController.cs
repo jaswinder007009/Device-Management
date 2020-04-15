@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using dm_backend.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dm_backend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DropdownController : ControllerBase

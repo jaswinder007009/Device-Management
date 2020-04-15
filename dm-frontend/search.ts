@@ -3,16 +3,18 @@ import { PopulateData } from "./FillData";
 import { BASEURL } from "./globals";
 import { HtmlElementsData } from "./HtmlElementsId";
 export class findResult {
-    data: any
-    elements : HtmlElementsData
-    constructor()
-    {
+    data: any;
+    elements : HtmlElementsData;
+    token: string;
+    constructor(token: string)
+    {   
+        this.token = token;
         this.elements = new HtmlElementsData();
     }
     public findByUser() 
     {
         var uri = this.searchUser();
-        new HitApi().HitGetApi(uri);
+        new HitApi(this.token).HitGetApi(uri);
     }
 
     public searchUser() {

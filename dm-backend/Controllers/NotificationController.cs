@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using dm_backend.Logics;
 using dm_backend.Models;
+using Microsoft.AspNetCore.Authorization;
+
 namespace dm_backend.Controllers
 {
-
+    [Authorize]
     [Route("api/[controller]")]
     public class NotificationController : ControllerBase
     {
@@ -19,7 +21,8 @@ namespace dm_backend.Controllers
         {
             Db = db;
         }
-
+        
+        [Authorize(Roles="admin")]
         [HttpPost]
         public IActionResult PostNotification([FromBody]NotificationModel notify)
         {
