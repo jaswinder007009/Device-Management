@@ -3,65 +3,68 @@ import {populateDropDown } from "./populateDropDown";
 import { RequestDeviceModel } from "./deviceRequestModel";
 import { BASEURL } from "./globals";
 
-var device = [].map.call(document.querySelectorAll(".device") , e =>
-{
-    return e;
-
-});
-let uri = BASEURL;
-
-
-
-
- device.map(function(e : any)
+(async function(){
+    let {id, token}=JSON.parse(sessionStorage.getItem("user_info"));
+    var device = [].map.call(document.querySelectorAll(".device") , e =>
     {
-        const path = uri +'/api/device/' + e.id;
-        let data = GetData(path , e.id);
+        return e;
+
     });
-    specificationDropdown();
+    let uri = BASEURL;
 
-    function  specificationDropdown() {
-        fetch(
-            uri + "/api/Dropdown/"
-        )
-            .then(Response => Response.json())
-            .then(data => {
 
-                (document.getElementById("Specification")as HTMLSelectElement).innerHTML = "";
-                for (let i = 0; i < data.length; i++) {
 
-                    (document.getElementById("Specification")as HTMLSelectElement).innerHTML += '<option value="' + data[i].specification_id + '">'
-                        + "RAM: " + data[i].ram + " Storage: " + data[i].storage + " Screen Size: " + data[i].screen_size + " Connectivity: " + data[i].connectivity +
-                        '</option>';
 
-                }
-            })
-            .catch(err => console.log(err));
+    device.map(function(e : any)
+        {
+            const path = uri +'/api/device/' + e.id;
+            let data = GetData(path , e.id);
+        });
+        specificationDropdown();
 
+        function  specificationDropdown() {
+            fetch(
+                uri + "/api/Dropdown/"
+            )
+                .then(Response => Response.json())
+                .then(data => {
+
+                    (document.getElementById("Specification")as HTMLSelectElement).innerHTML = "";
+                    for (let i = 0; i < data.length; i++) {
+
+                        (document.getElementById("Specification")as HTMLSelectElement).innerHTML += '<option value="' + data[i].specification_id + '">'
+                            + "RAM: " + data[i].ram + " Storage: " + data[i].storage + " Screen Size: " + data[i].screen_size + " Connectivity: " + data[i].connectivity +
+                            '</option>';
+
+                    }
+                })
+                .catch(err => console.log(err));
+
+        }
+
+    async function GetData(uri : string ,column : string)
+    {
+    let data = await new HitApi(token).HitGetApi(uri); 
+            
+    console.log(data);
+    new populateDropDown().populateDevice(data , column);
+    return data ;
     }
 
-async function GetData(uri : string ,column : string)
-{
- let data = await new HitApi().HitGetApi(uri); 
-        
- console.log(data);
- new populateDropDown().populateDevice(data , column);
- return data ;
-}
-
-document.querySelector("#request")?.addEventListener('click' , e =>
-{
-  console.log((document.getElementById("specification") as HTMLSelectElement).value);
-});
+    document.querySelector("#request")?.addEventListener('click' , e =>
+    {
+    console.log((document.getElementById("specification") as HTMLSelectElement).value);
+    });
 
 
-function bindData()
-{
-    var body = new RequestDeviceModel();
-    body.userId = 61;
-    body.deviceType = device[0].value
-    body.deviceBrand = device[1].value;
-    body.deviceModel = device[2].value;
-  //body.specs = document.getElementById()
+    function bindData()
+    {
+        var body = new RequestDeviceModel();
+        body.userId = id;
+        body.deviceType = device[0].value
+        body.deviceBrand = device[1].value;
+        body.deviceModel = device[2].value;
+    //body.specs = document.getElementById()
 
-}
+    }
+})();

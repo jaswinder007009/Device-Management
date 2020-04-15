@@ -1,5 +1,6 @@
 export class DeviceListForAdmin {
-        device_id: number;
+token :string="";
+    device_id: number;
         type: string;
         brand: string;
         model: string;
@@ -25,7 +26,8 @@ export class DeviceListForAdmin {
         assign_by_first_name: string;
         assign_by_middle_name: string;
         assign_by_last_name: string;
-        constructor(data: any) {
+        constructor(data: any,token:string) {
+            this.token =token;
             this.device_id = data.device_id;
             this.type = data.type;
             this.brand = data.brand;

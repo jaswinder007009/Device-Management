@@ -8,14 +8,15 @@ export class SpecificationList
     storage:string;
     screen_size:string;
     connectivity:string;
-
-    constructor(data:any)
+    token:string ="";
+    constructor(data:any,token:string)
     {
         this.specification_id = data.specification_id;
         this.RAM = data.ram;
         this.storage = data.storage;
         this.screen_size = data.screen_size;
         this.connectivity = data.connectivity;
+        this.token=token;
     }   
     
     getSpecificationList()
