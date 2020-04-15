@@ -24,14 +24,17 @@ function getPendingRequests(url: string) {
                 if (typeof (value) == 'object') {
                     for (key in value) {
                         var val = value[key];
+						if(prop=="requestedBy"){
                         if (key == "salutation" || key == "firstName" || key == "middleName" || key == "lastName")
                             name += val + " ";
-
-                        if (prop != "requestedBy")
-                            tableData += "<td>" + val + "</td>";
+						}
+                        
 
                         if (key == "lastName")
                             tableData += "<td>" + name + "</td>";
+						if (prop == "specs")
+                            if(key=="storage")
+								tableData += "<td>" + specs.ram+", "+ specs.connectivity +",<br>"+specs.screenSize +"", "+specs.storage+ "</td>";
                     }
                 }
                 else {
