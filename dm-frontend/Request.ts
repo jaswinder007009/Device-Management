@@ -1,4 +1,4 @@
-import { BASEURL } from "./globals";
+import { BASEURL, navigationBarsss } from "./globals";
 import { Requests,Specification } from "./RequestModel";
 (async function(){
     const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
@@ -117,40 +117,38 @@ import { Requests,Specification } from "./RequestModel";
         });
 
 
-        document.addEventListener("click", function (e) {
+    document.addEventListener("click", function (e) {
 
-            if ((e.target as HTMLButtonElement).className == "reject-button") {
-                const data = (e.target as HTMLButtonElement).dataset.requestid;
-                let requestId = parseInt(data, 10);
-                requestAction('/reject?id=' + adminId, requestId, 'rejected');
+        if ((e.target as HTMLButtonElement).className == "reject-button") {
+            const data = (e.target as HTMLButtonElement).dataset.requestid;
+            let requestId = parseInt(data, 10);
+            requestAction('/reject?id=' + adminId, requestId, 'rejected');
 
-            }
-            if ((e.target as HTMLButtonElement).className == "accept-button") {
-                const data = (e.target as HTMLButtonElement).dataset.requestid;
-                let requestId = parseInt(data, 10);
-                requestAction('/accept?id=' + adminId, requestId, 'accepted');
+        }
+        if ((e.target as HTMLButtonElement).className == "accept-button") {
+            const data = (e.target as HTMLButtonElement).dataset.requestid;
+            let requestId = parseInt(data, 10);
+            requestAction('/accept?id=' + adminId, requestId, 'accepted');
+          }
+        if ((e.target as HTMLButtonElement).className == "notify-button") {
+            let request = new Requests();
+            request.deviceModel = (e.target as HTMLButtonElement).dataset.devicemodel;
+            request.deviceBrand = (e.target as HTMLButtonElement).dataset.devicebrand;
+            request.deviceType = (e.target as HTMLButtonElement).dataset.devicetype;
+            request.specs.ram = ((e.target as HTMLButtonElement).dataset.ram);
+            request.specs.connectivity = ((e.target as HTMLButtonElement).dataset.connectivity);
+            request.specs.screenSize = ((e.target as HTMLButtonElement).dataset.screensize);
+            request.specs.storage = ((e.target as HTMLButtonElement).dataset.storage);
+            postNotification(request);
 
-            }
-            if((e.target as HTMLButtonElement).className == "notify-button")
-            {
-                let request = new Requests();
-                request.deviceModel = (e.target as HTMLButtonElement).dataset.devicemodel;
-                request.deviceBrand = (e.target as HTMLButtonElement).dataset.devicebrand;
-                request.deviceType = (e.target as HTMLButtonElement).dataset.devicetype;
-                request.specs.ram = ((e.target as HTMLButtonElement).dataset.ram);
-                request.specs.connectivity = ((e.target as HTMLButtonElement).dataset.connectivity);
-                request.specs.screenSize = ((e.target as HTMLButtonElement).dataset.screensize);
-                request.specs.storage = ((e.target as HTMLButtonElement).dataset.storage);
-                postNotification(request);
+            (e.target as HTMLButtonElement).remove();
 
-                (e.target as HTMLButtonElement).remove();
-                
-            }
+        }
 
     });
 
-
-    // document.getElementById("content").innerHTML = "";
-    getPendingRequests(globalUrl + "pending");
+// document.getElementById("content").innerHTML = "";
+getPendingRequests(globalUrl + "pending");
+navigationBarsss("Admin","navigation");
 })();
 
