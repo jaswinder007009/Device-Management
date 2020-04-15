@@ -4,7 +4,7 @@ import * as util from "./utilities";
 import { UpdateUserApi } from "./updateApi";
 import { populateFormFromObject, createObjectFromForm } from "./user-profile/databinding";
 import { UserModel } from "./UserModel";
-import { AllListerers } from "EventListeners";
+//import { AllListerers } from "EventListeners";
 import { remove} from "validation";
 import { validateForm} from "validation";
 import { Sort } from "./user-profile/SortingUser";
@@ -36,7 +36,7 @@ import { UserData }  from "./dropdown";
 		}
 		
 		setData();
-		AllListerers();
+		//AllListerers();
 
 		function changeheading1Text()
 		{
@@ -174,7 +174,7 @@ import { UserData }  from "./dropdown";
 
 			checkbox.addEventListener( 'change', function() {
 			if(this.checked) {
-						var container = document.getElementById("addresses1")
+							var container = document.getElementById("addresses1")
 							var curradd1 =(container.querySelector(".addressLine1")as HTMLInputElement).value;
 							var curradd2 =(container.querySelector(".addressLine2")as HTMLInputElement).value;
 							var currcity =(container.querySelector(".city")as HTMLInputElement).value;
@@ -182,15 +182,14 @@ import { UserData }  from "./dropdown";
 							var currcountry =(container.querySelector(".country")as HTMLInputElement).value;
 							var currpincode =(container.querySelector(".pin")as HTMLInputElement).value;
 							
-						var peradd1 =curradd1 ;
-						var peradd2 =curradd2 ;
-						var percity =currcity ;
-						var perstate =currstate ;
-						var perpcountry =currcountry ;
-						var perpincode =currpincode ;
+							var peradd1 =curradd1 ;
+							var peradd2 =curradd2 ;
+							var percity =currcity ;
+							var perstate =currstate ;
+							var perpcountry =currcountry ;
+							var perpincode =currpincode ;
 
-						var container1 = document.getElementById("addresses2");
-
+							var container1 = document.getElementById("addresses2");
 							(container1.querySelector(".addressLine1")as HTMLInputElement).value = peradd1;
 							(container1.querySelector(".addressLine2")as HTMLInputElement).value = peradd2;
 							(container1.querySelector(".city")as HTMLInputElement).value = percity;
