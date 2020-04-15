@@ -35,7 +35,10 @@ class role_permission{
     async getApiRoleCall(URL: any) {
 
 
-        let response = await fetch(URL);
+        let response = await fetch(URL,
+            {
+                headers: new Headers({"Authorization": `Bearer ${this.token}`})
+            });
         let data = await (response.json());
       //  console.log(data);
         return (await data);
@@ -51,6 +54,7 @@ class role_permission{
         let response = await fetch(uri,
             {
                 method: 'DELETE',
+                headers: new Headers({"Authorization": `Bearer ${this.token}`})
             })
         console.log(this.data);
         this.alert_delete(x);
@@ -246,7 +250,7 @@ class assign_permission{
     async getApiPermissionAssign(URL: any) {
 
 
-        let response = await fetch(URL);
+        let response = await fetch(URL,{headers: new Headers({"Authorization": `Bearer ${this.token}`})});
         let data = await (response.json());
       //  console.log(data);
         return (await data);

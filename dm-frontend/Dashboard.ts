@@ -209,7 +209,7 @@ import { BASEURL, amIAdmin, amIUser } from './globals';
         window.location.href = "./notifiication.html?user_id=" + user_id;
     })
     document.getElementById('email').innerHTML = email;
-    document.getElementById('userRole').innerHTML = role;
+    // document.getElementById('userRole').innerHTML = role;
     if (role == 'User') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
         getDeviceReturnDates(BASEURL + "/api/dashboard/" + email + "/devices/returndates");
