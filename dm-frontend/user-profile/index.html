@@ -4,6 +4,7 @@
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Material Design icon font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -38,78 +39,91 @@
             
           <div class="collapsible-container">
             <ul class="collapsible">
-                <li>
+                <li class="active">
                   <div class="collapsible-header"><img src="demo.png" width="19" height="19" />&nbsp; &nbsp;Personal Info</div>
                   <div class="collapsible-body" id="dynamic">
                     
                     <div class="form-hideable hide">
-                      <div class="form-group">
-                       <select style="height: 29px;" id="salutation" name="Salutation">
+                      <!-- <div class="form-group"> -->
+                        <div class="form-row" id="form-group">
+                          <div class="form-group col-md-2">
+                            <label><b>Salutation:</b></label>
+                       <select style="height: 46px;" id="salutation" name="Salutation">
                             <option value="Mr">Mr</option>
                             <option value="Mrs">Mrs</option>
                             <option value="Miss">Miss</option>
                             <option value="Dr">Dr</option>
                         </select>
-                        <label> FirstName: </label><input type="text"  id="firstName" >
+                        </div>
+                        <div class="form-group col-md-3">
+                        <label> <b>FirstName:</b> </label><input type="text"  id="firstName" >
                         <span id="firstnames" class="text-danger font-weight-bold"></span>
-                        <label> MiddleName: </label><input type="text" id="middleName">
+                        </div>
+                        <div class="form-group col-md-3">
+                        <label><b> MiddleName: </b></label><input type="text" id="middleName">
                         <span id="middlenames" class="text-danger font-weight-bold"></span>
-                        <label> LastName: </label><input type="text"  id="lastName" >
-                        
+                         </div>
+                         <div class="form-group col-md-3">
+                        <label> <b>LastName:</b> </label><input type="text"  id="lastName" >                       
                         <span id="lastnames" class="text-danger font-weight-bold"></span>
+                        </div>
                     </div>
-                    <div class="form-group">
                      
-                        <input type="text" name="department" hidden class="form-control" id="departmentName"
-                            >
+                    <div class="form-group">                     
+                        <input type="text" name="department" hidden class="form-control" id="departmentName">                            
                         <span id="departments" class="text-danger font-weight-bold"></span>
                     </div>
-                    <div class="form-group">
-                       
-                        <input type="text" name="designation" hidden class="form-control" id="designationName"
-                           >
+
+                    <div class="form-group">                      
+                        <input type="text" name="designation" hidden class="form-control" id="designationName">                          
                         <span id="designations" class="text-danger font-weight-bold"></span>
-                    </div><br>
-                    <div><label for="DOB">Date Of Birth:</label>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label> <b>Gender:</b> </label>
+                        <select style="height: 46px;" id="gender" name="Gender" class="form-control">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                     </select>
+                     </div>
+                    <div class="form-group col-md-4">
+                      <label for="DOB"><b>Date Of Birth:</b></label>
                         <input type="text" id="dob" name="dob" class="form-control">
                         <span id="dobs" class="text-danger font-weight-bold"></span>
                     </div><br>
                     <div>
                         <input type="text" hidden id="doj" name="doj" class="form-control">
                         <span id="dojs" class="text-danger font-weight-bold"></span>
-                    </div><br>
-                    <div class="form-group">
-                        <label> Email: </label>
-                        <input type="text" name="email" class="form-control" id="email" >
-                        <span id="emails" class="text-danger font-weight-bold"></span>
                     </div>
-                    <div class="form-group col-md-4">
-                      <label> Gender: </label>
-                      <select id="gender" name="Gender" class="form-control">
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                          <option value="Others">Others</option>
-                   </select><br>
 
+                    <div class="form-group col-md-4">
+                        <label><b> Email:</b> </label>
+                        <input type="text" name="email" disabled class="form-control" id="email" >
+                        <span id="emails" class="text-danger font-weight-bold"></span>                     
+                    </div>
                   </div>
+
                   <div class="form-group">
-                    <label> Password: </label>
+                    <label><b> Password: </b></label>
                     <input type="password" name="password" class="form-control" id="password" >
                     <span id="passwords" class="text-danger font-weight-bold"></span>
                 </div>
+
                   <div class="form-group">
-                    <input type="hidden" name="status" disabled class="form-control" id="status" >
-                    
+                    <input type="hidden" name="status" disabled class="form-control" id="status" >                   
                 </div>
+
                 <div class="form-group">
-                  <input type="hidden" name="status" disabled class="form-control" id="userId" >
-                  
+                  <input type="hidden" name="status" disabled class="form-control" id="userId" >                  
               </div>
+
                 <div class="form-group">
-                  <input type="hidden" name="role" disabled class="form-control" id="roleName">
-                  
+                  <input type="hidden" name="role" disabled class="form-control" id="roleName">                  
               </div>
-                    <input type="submit" id="savemydata" value="Save My Data"/>
+
+              <center><input type="submit" id="savemydata" value="Save My Data"/></center>
                    </div>
                   <div class="data-hideable">
                     </div>
@@ -121,68 +135,97 @@
                   <div class="collapsible-body" id="dynamic1">
                     <div class="form-hideable hide">
                       
-                        <label> Address: </label><br>
+                        
                        <div id="addresses1">
+                         <div class="form-row">
+                           <div class="form-group col-md-2">
+                            <label><b> Address</b> </label><br>
                         <input type="text" disabled name="CurrentAddress" class="addressType" size="50"
                             maxlength="50">
+                            </div>
+                            <div class="form-group col-md-5">
+                              <label> <b>AddressLine1</b> </label>
                        <input type="text" name="CurrentAddress" class="addressLine1" size="50"
                             maxlength="50">
                             <span  class="text-danger font-weight-bold addressLine1span"></span>
+                         </div>
+                         <div class="form-group col-md-5">
+                          <label> <b>AddressLine2</b> </label>
                             <input type="text" name="CurrentAddress"  class="addressLine2" size="50"
                             maxlength="50">
                             <span  class="text-danger font-weight-bold addressLine2span"></span>
-                            <label> Country: </label>
-                            <select style="height: 29px;" class="country" name="country">
-                              
-                       
-    
-                        </select>
-                        <label> State: </label>
-                        <select style="height: 29px;" class="state" name="state">
-                            
-    
-                        </select>
-                        <label> City: </label>
-                        <select style="height: 29px;" class="city" name="city">
-                           
-                        </select>
-                        <label>Pincode</label>
+                       </div>
+                            </div>
+                            <div class="form-row">
+                              <div class="form-group col-md-3">
+
+                            <label><b>Country</b> </label>
+                            <select style="height: 46px;" class="country" name="country"></select>
+                            </div>
+                            <div class="form-group col-md-3">
+
+                        <label><b> State</b> </label>
+                        <select style="height: 46px;" class="state" name="state"> </select>
+                        </div>
+                        <div class="form-group col-md-3">
+
+                        <label> <b>City</b> </label>
+                        <select style="height: 46px;" class="city" name="city"></select>
+                        </div>
+                        <div class="form-group col-md-3">
+
+                        <label><b>Pincode</b></label>
                         <input type="text" name="pincode1" class="pin"  maxlength="6">
                         <span  class="text-danger font-weight-bold pinspan"></span>
+                        </div>
+                        </div>
                           
                     </div>
                     <div id="addresses2">
-    
-                      <input type="text" disabled name="CurrentAddress" class="addressType" size="50"
-                      maxlength="50">
-                      <input type="text" name="CurrentAddress"  class="addressLine1" size="50"
-                        maxlength="50">
-                        <span  class="text-danger font-weight-bold addressLine1span"></span>
-                        <input type="text" name="CurrentAddress" class="addressLine2" size="50"
-                        maxlength="50">
-                        <span  class="text-danger font-weight-bold addressLine2span"></span>
-                        <label> Country: </label>
-                            <select style="height: 29px;" class="country" name="country">
-                                
-                       
-    
-                        </select>
-                        <label> State: </label>
-                        <select style="height: 29px;" class="state" name="state">
-                           
-    
-                        </select>
-                        <label> City: </label>
-                        <select style="height: 29px;" class="city" name="city">
-                           
-    
-                        </select>
-                        <label>Pincode</label>
-                        <input type="text" name="pincode2"  class="pin" maxlength="6">
-                        <span  class="text-danger font-weight-bold pinspan"></span>
-    
+                      <div class="form-row">
+                        <div class="form-group col-md-2">
+                         <label><b> Address</b> </label><br>
+                     <input type="text" disabled name="CurrentAddress" class="addressType" size="50"
+                         maxlength="50">
+                         </div>
+                         <div class="form-group col-md-5">
+                           <label> <b>AddressLine1</b> </label>
+                    <input type="text" name="CurrentAddress" class="addressLine1" size="50"
+                         maxlength="50">
+                         <span  class="text-danger font-weight-bold addressLine1span"></span>
+                      </div>
+                      <div class="form-group col-md-5">
+                       <label> <b>AddressLine2</b> </label>
+                         <input type="text" name="CurrentAddress"  class="addressLine2" size="50"
+                         maxlength="50">
+                         <span  class="text-danger font-weight-bold addressLine2span"></span>
                     </div>
-                    <input type="submit" id="savemydata" value="Save My Data"/>
+                         </div>
+                         <div class="form-row">
+                           <div class="form-group col-md-3">
+
+                         <label><b>Country</b> </label>
+                         <select style="height: 46px;" class="country" name="country"></select>
+                         </div>
+                         <div class="form-group col-md-3">
+
+                     <label><b> State</b> </label>
+                     <select style="height: 46px;" class="state" name="state"> </select>
+                     </div>
+                     <div class="form-group col-md-3">
+
+                     <label> <b>City</b> </label>
+                     <select style="height: 46px;" class="city" name="city"></select>
+                     </div>
+                     <div class="form-group col-md-3">
+
+                     <label><b>Pincode</b></label>
+                     <input type="text" name="pincode1" class="pin"  maxlength="6">
+                     <span  class="text-danger font-weight-bold pinspan"></span>
+                     </div>
+                     </div>
+                    </div>
+                    <center><input type="submit" id="savemydata" value="Save My Data"/></center>
                   </div>
                   <div class="data-hideable1"></div>
                   </div>
@@ -192,75 +235,107 @@
                   <div class="collapsible-body" id="dynamic2">
                   <div class="form-hideable hide">
                     <div id="phones1">
-                      <label> Contact 1: </label><br>
-                      <select style="height: 29px;" class="contactNumberType" name="Contact" disabled>
+                     
+                      <div class="form-row">
+                        <div class="form-group col-md-2">
+                          <label><b>Contact 1:</b> </label>
+                      <select style="height: 46px;" class="contactNumberType" name="Contact" disabled>
                         <option value="mobile">Mobile</option>
                         <option value="home">Home</option>
-                        <option value="work">Work</option>
-  
+                        <option value="work">Work</option>  
                       </select>
-                      <input type="text" name="phone_number1" class="number" maxlength="10"
-                          >
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label><b>Enter Number:</b></label>
+                      <input type="text" name="phone_number1" class="number" maxlength="10">                          
                       <span  class="text-danger font-weight-bold numberspan"></span>
-                      <label>Country Code</label>
-                      <select style="height: 29px;" class="countryCode" name="CountryCode">
+                      </div>
+                      <div class="form-group col-md-3">
+                      <label><b>Country Code</b></label>
+                      <select style="height: 46px;" class="countryCode" name="CountryCode">
                           <option value="91">India</option>
                           <option value="93">Afghanistan</option>
                       </select>
+                      </div>
+                      <div class="form-group col-md-3">
   
-                      <label>Area Code</label>
-                      <select style="height: 29px;" style="height: 29px;" class="areaCode" name="AreaCode">
+                      <label><b>Area Code</b></label>
+                      <select style="height: 46px;" style="height: 46px;" class="areaCode" name="AreaCode">
                           <option value="0129">Faridabad</option>
-                          <option value="b">b</option>
+                        
                       </select>
+                      </div>
+                      </div>
   
                   </div>
                   <div id="phones2">
-                      <label> Contact 2: </label><br>
-                      <select style="height: 29px;" class="contactNumberType" name="Contact2" disabled>
-                        <option value="mobile">Mobile</option>
-                        <option value="home">Home</option>
-                        <option value="work">Work</option>
-                      </select>
-                      <input type="text" name="phone_number2" class="number" maxlength="10">
-                      <span  class="text-danger font-weight-bold numberspan"></span>
-                      <label>Country Code</label>
-                      <select style="height: 29px;" class="countryCode" name="CountryCode2">
-                          <option value="India">India</option>
-                          <option value="b">b</option>
-                      </select>
-  
-                      <label>Area Code</label>
-                      <select style="height: 29px;" class="areaCode" name="AreaCode2">
-                          <option value="0129">Faridabad</option>
-                          <option value="b">b</option>
-                      </select>
-  
+                  
+                    <div class="form-row">
+                      <div class="form-group col-md-2">
+                        <label><b>Contact 2:</b> </label>
+                    <select style="height: 46px;" class="contactNumberType" name="Contact" disabled>
+                      <option value="mobile">Mobile</option>
+                      <option value="home">Home</option>
+                      <option value="work">Work</option>  
+                    </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label><b>Enter Number:</b></label>
+                    <input type="text" name="phone_number1" class="number" maxlength="10">                          
+                    <span  class="text-danger font-weight-bold numberspan"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                    <label><b>Country Code</b></label>
+                    <select style="height: 46px;" class="countryCode" name="CountryCode">
+                        <option value="91">India</option>
+                        <option value="93">Afghanistan</option>
+                    </select>
+                    </div>
+                    <div class="form-group col-md-3">
+
+                    <label><b>Area Code</b></label>
+                    <select style="height: 46px;" style="height: 46px;" class="areaCode" name="AreaCode">
+                        <option value="0129">Faridabad</option>
+                      
+                    </select>
+                    </div>
+                    </div>
+
                   </div>
                   <div id="phones3">
-                      <label> Contact 3: </label><br>
-                      <select style="height: 29px;" style="height: 29px;" class="contactNumberType" name="Contact3" disabled>
-                          <option value="mobile">Mobile</option>
-                          <option value="home">Home</option>
-                          <option value="work">Work</option>
-  
-                      </select>
-                      <input type="text" name="phone_number3" class="number" maxlength="10">
-                      <span  class="text-danger font-weight-bold numberspan"></span>
-                      <label>Country Code</label>
-                      <select style="height: 29px;" class="countryCode" name="CountryCode3">
-                          <option value="91">India</option>
-                          <option value="b">b</option>
-                      </select>
-  
-                      <label>Area Code</label>
-                      <select style="height: 29px;" class="areaCode" name="AreaCode3">
-                          <option value="Faridabad">Faridabad</option>
-                          <option value="b">b</option>
-                      </select>
-  
+                    <div class="form-row">
+                      <div class="form-group col-md-2">
+                        <label><b>Contact 3:</b> </label>
+                    <select style="height: 46px;" class="contactNumberType" name="Contact" disabled>
+                      <option value="mobile">Mobile</option>
+                      <option value="home">Home</option>
+                      <option value="work">Work</option>  
+                    </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label><b>Enter Number:</b></label>
+                    <input type="text" name="phone_number1" class="number" maxlength="10">                          
+                    <span  class="text-danger font-weight-bold numberspan"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                    <label><b>Country Code</b></label>
+                    <select style="height: 46px;" class="countryCode" name="CountryCode">
+                        <option value="91">India</option>
+                        <option value="93">Afghanistan</option>
+                    </select>
+                    </div>
+                    <div class="form-group col-md-3">
+
+                    <label><b>Area Code</b></label>
+                    <select style="height: 46px;" style="height: 46px;" class="areaCode" name="AreaCode">
+                        <option value="0129">Faridabad</option>
+                      
+                    </select>
+                    </div>
+                    </div>
+
                   </div>
-                  <input type="submit" id="savemydata" value="Save My Data"/>
+                  <center><input type="submit" id="savemydata" value="Save My Data"/></center>
                   </div>
                   <div class="data-hideable2"></div>
                 </div>
