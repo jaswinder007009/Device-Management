@@ -22,7 +22,11 @@ function Firstnamevalidation() {
 }
 function Middlenamevalidation() {
     var middlenames = document.getElementById('middleName').value;
-     if (middlenames.length < 2 || middlenames.length > 20) {
+    if (middlenames=="")
+    {
+        return true;
+    }
+     else if (middlenames.length < 2 || middlenames.length > 20) {
         document.getElementById('middlenames').innerHTML = "MiddleName Should Be Between 2 and 20";
         return false;
     }
@@ -68,7 +72,7 @@ function date0fbirthvalidation() {
         return false;
     } 
      else {
-        document.getElementById('emails').innerHTML = "";
+        document.getElementById('dobs').innerHTML = "";
         return true;
     }
 }
