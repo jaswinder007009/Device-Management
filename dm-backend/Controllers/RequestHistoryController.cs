@@ -1,10 +1,13 @@
 using System;
 using System.Data;
 using System.Data.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dm_backend.Controllers
 {
+    // Question ? Should be in ReturnRequestController ?
+    [Authorize]
     [Route("api/[controller]")]
     public class RequestHistoryController : ControllerBase
     {
@@ -15,7 +18,7 @@ namespace dm_backend.Controllers
             Db = db;
         }
 
- 
+        [Authorize(Roles="admin")]
         [HttpGet]
         [Route("{returnId}/accept")]
         public IActionResult AcceptReturn(int returnId)
