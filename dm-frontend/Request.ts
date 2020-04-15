@@ -9,7 +9,9 @@ import { Requests,Specification } from "./RequestModel";
 
         var tableData = '';
         var specs = new Specification();
-        fetch(url).then(Response => Response.json()).then(data => {
+        fetch(url,{
+            headers: new Headers({ "Authorization": `Bearer ${token}` })
+        }).then(Response => Response.json()).then(data => {
             for (var i = 0; i < data.length; i++) {
                 tableData += "<tr>";
                 var key, name = "";
