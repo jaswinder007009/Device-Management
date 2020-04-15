@@ -1,5 +1,5 @@
 export function validate() {
-    return Firstnamevalidation() &&
+    return Firstnamevalidation() &&Middlenamevalidation()&&
     Lastnamevalidation() &&
     emailvalidation()&&passwordvalidation()&&addressvalidation("addresses1")&&addressvalidation("addresses2")&&
     addressvalidation1("addresses1")&&addressvalidation1("addresses2")&&date0fbirthvalidation()&&
