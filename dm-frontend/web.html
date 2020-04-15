@@ -57,27 +57,25 @@
                             <input type="text" class="form-control" id="lastName">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-row ">
+                    <div class="form-group col-md-4">
                         <label> Email: </label>
                         <input type="text" name="email" class="form-control" id="email">
                         <span id="emails" class="text-danger font-weight-bold"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-4">
                         <label> Password: </label>
                         <input type="password" name="password" class="form-control" id="password">
                         <span id="passwords" class="text-danger font-weight-bold"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-4">
                         <label> Confirm Password: </label>
                         <input type="password" name="confirmpass" class="form-control" id="confirmpass">
                         <span id="confirmpasss" class="text-danger font-weight-bold"></span>
                     </div>
-                    <div class="form-group">
+                </div>
 
-                        <input type="text" hidden name="Role" class="form-control" id="roleName">
-
-                    </div>
-                    <div class="form-group">
+                   <div class="form-group">
 
                         <input type="text" hidden name="User" class="form-control" id="userId">
 
@@ -87,20 +85,37 @@
                         <input type="text" hidden name="Status" class="form-control" id="status">
 
                     </div>
-                    <div class="form-group">
+                <div class="form-row ">
+                    <div  class="form-group col-md-4">
+                        <label for="Role">Enter Role</label>
+                        <select id="roleName" class="form-control">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                        <option value="superadmin">Super Admin</option>
+                         </select>
+
+                    </div>
+
+                    <div class="form-group col-md-4">
                         <label> Department: </label>
                         <input type="text" name="departmentName" class="form-control" id="department">
                         <span id="departments" class="text-danger font-weight-bold"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-4">
                         <label> Designation: </label>
                         <input type="text" name="designation" class="form-control" id="designationName">
                         <span id="designations" class="text-danger font-weight-bold"></span>
+                    </div>
+                </div><br>
+
+
+
+
+                   <div class="form-row">
+                    <div class="form-group col-md-4"><label for="DOB">Date Of Birth:</label>
+                        <input type="text" id="dob" placeholder="dd-mm-YYYY" name="DOB" class="form-control">
                     </div><br>
-                    <div><label for="DOB">Date Of Birth:</label>
-                        <input type="text" id="dob" name="DOB" class="form-control">
-                    </div><br>
-                    <div>
+                    <div class="form-group col-md-4">
                         <label> Gender: </label>
                         <select id="gender" name="Gender" class="form-control">
                             <option value="Male">Male</option>
@@ -110,8 +125,9 @@
 
                     </div>
 
-                    <div><label for="DOJ">Date Of Joining:</label>
-                        <input type="text" id="doj" name="DOJ" class="form-control">
+                    <div class="form-group col-md-4"><label for="DOJ">Date Of Joining:</label>
+                        <input type="text" id="doj" placeholder="dd-mm-YYYY" name="DOJ" class="form-control">
+                    </div>
                     </div><br>
                 </div><br>
 
