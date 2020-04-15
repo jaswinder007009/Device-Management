@@ -314,6 +314,7 @@ namespace dm_backend
             }
 
             cmd.Parameters.Add(new MySqlParameter("dob", DateTime.Parse(DOB).ToString("yyyy-MM-dd")));
+            cmd.Parameters.Add(new MySqlParameter("role_name", RoleName));
             cmd.Parameters.Add(new MySqlParameter("gend", Gender));
             cmd.Parameters.Add(new MySqlParameter("doj", DateTime.Parse(DOJ).ToString("yyyy-MM-dd")));
             cmd.Parameters.Add(new MySqlParameter("is_ac", "Active"));

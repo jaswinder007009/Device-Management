@@ -13,6 +13,72 @@
 </head>
 
 <body>
+<div class="mdl-layout__container">
+        <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header has-drawer is-upgraded"
+            data-upgraded=",MaterialLayout">
+            <header
+                class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600 is-casting-shadow">
+
+                <div class="mdl-layout__header-row">
+
+                    <span class="mdl-layout__title">Device Requests</span>
+                    
+                    </nav>
+                </div>
+
+
+            </header>
+            <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50"
+                aria-hidden="true">
+                <header class="demo-drawer-header">
+                    <div class="demo-avatar-dropdown"><br>
+                        <span id="email"></span>
+                        <div class="mdl-layout-spacer"></div>
+                        <br>
+                    </div>
+                </header>
+                <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+                    <a class="mdl-navigation__link" href="dashboard.html">
+                        <i class="mdl-color-text--blue-grey-400 material-icons"
+                            role="presentation">dashboard</i>Dashboard
+                    </a>
+                    <a class="mdl-navigation__link" href="userRequestHistory.html">
+                        <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">storage</i>My
+                        Devices
+                    </a>
+                    <a class="mdl-navigation__link" href="deviceListForadmin.html">
+                        <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">devices</i>All
+                        Devices
+                    </a>
+                    <a class="mdl-navigation__link" href="web.html">
+                        <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">group</i>Users
+                    </a>
+                    <a class="mdl-navigation__link" href="adminRequestPage.html">
+                        <i class="mdl-color-text--blue-grey-400 material-icons"
+                            role="presentation">import_export</i>All Requests
+                    </a>
+					<a class="mdl-navigation__link" href="user-model.html">
+                        <i class="mdl-color-text--blue-grey-400 material-icons"
+                            role="presentation">import_export</i>Request a Device
+                    </a>
+                    <a class="mdl-navigation__link" href="request-history.html">
+                        <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">history</i>
+                        Request History
+                    </a>
+                    <a class="mdl-navigation__link" href="device_role/user.html">
+                        <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">build</i>Roles
+                    </a>
+                    <a class="mdl-navigation__link" href="device_role/role1.html">
+                        <i class="mdl-color-text--blue-grey-400 material-icons"
+                            role="presentation">perm_device_information</i>Permissions
+                    </a>
+                    <a class="mdl-navigation__link" href="help">
+                        <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i>
+                        Help
+                    </a>
+                </nav>
+            </div>
+
 
     <main class="mdl-layout__content">
         <div class="page-content">
@@ -26,19 +92,16 @@
                         <input class="mdl-textfield__input" type="text" name="sample" id="fixed-header-drawer-exp">
                     </div>
                 </div>
-            </div><br><br>
-            <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp mdl-color-text--blue-grey-800"
+            </div><br><br><br>
+            <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp "
                 id="Request_data1" style="overflow: auto;">
-                <thead class='mdl-color--blue-grey-400' id="tablecol">
-                    <tr class='mdl-color--blue-grey-300'>
+                <thead id="tablecol">
+                    <tr>
                         <th class="mdl-data-table__header--sorted-descending" name="user_id" id="user_id">User Id </th>
                         <th class="mdl-data-table__header--sorted-descending" name="model" id="model">Model </th>
                         <th class="mdl-data-table__header--sorted-descending" name="brand" id="brand">Brand </th>
                         <th class="mdl-data-table__header--sorted-descending" name="type" id="type">Type </th>
-                        <th>RAM</th>
-                        <th>Storage</th>
-                        <th>Screen Size</th>
-                        <th>Connectivity</th>
+                        <th>Specifications</th>
                         <th class="mdl-data-table__header--sorted-descending" name="first_name" id="first_name">Name</th>
                         <th class="mdl-data-table__header--sorted-descending" name="request_date" id="request_date">Request date </th>
                         <!--<th class="mdl-data-table__header--sorted-descending" name="no_of_days" id="no_of_days">No of days </th>-->
