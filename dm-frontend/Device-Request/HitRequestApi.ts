@@ -19,16 +19,14 @@ export class HitApi
 
     public async HitPostApi(uri : string , data : any )
     {
-        fetch(uri , {
+       return fetch(uri , {
             method : "post",
             headers: {
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify(data)
-        }).then(res =>
-            console.log(res))
-            .catch(e =>
-                console.log(e));
+        })
+            
     }
 
 

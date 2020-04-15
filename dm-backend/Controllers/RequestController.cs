@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using dm_backend.Logics;
+using System.Net;
+
 
 namespace dm_backend.Models{
     [ApiController]
@@ -18,6 +20,28 @@ namespace dm_backend.Models{
         {
             Db = db;
         }
+
+
+        [HttpPost]
+        [Route("device")]
+        public  IActionResult postdeviceRequest([FromBody] DeviceRequest req)
+        {
+            Db.Connection.Open();
+            var request = new Request(Db);
+            try
+            {
+                request.addDevice(req);
+               
+            }
+            catch
+            {
+               return BadRequest("request is incorrect");
+            }
+            Db.Connection.Close();
+            return Ok("request Sent");
+
+        }
+
 
         [HttpPost]
         [Route("add")]

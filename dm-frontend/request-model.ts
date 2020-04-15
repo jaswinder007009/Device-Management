@@ -36,13 +36,6 @@ console.log(selects);
 const textField = new TextField(document.querySelector('.mdc-text-field'));
 
 
-// document.addEventListener('onload' ,e =>)
-
-
-// select.listen('MDCSelect:change', ev => {
-//     console.log('Value : ' + select.value + " at index " + select.selectedIndex);
-// })
-
 
 function  submitForm()
 {

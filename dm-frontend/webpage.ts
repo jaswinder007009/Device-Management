@@ -8,8 +8,14 @@ import { AllListerers } from "EventListeners";
 import { remove} from "validation";
 import { validateForm} from "validation";
 import { Sort } from "./user-profile/SortingUser";
-import { BASEURL } from "./globals";
+import { BASEURL, amIUser } from "./globals";
 import { UserData }  from "./dropdown";
+
+
+
+
+
+
 (async function(){
 	const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
 	let form_mode: "create" | "edit";

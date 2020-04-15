@@ -1,9 +1,9 @@
 
 import { AddDevice } from './device_crud';
-import { navigate } from './navigation';
+
 
     
-new navigate();
+
 
 (document.querySelector('#brand_popup') as HTMLButtonElement).addEventListener('submit', function (e) {
     console.log("inside function")

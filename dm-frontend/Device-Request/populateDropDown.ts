@@ -1,4 +1,4 @@
-import { device } from "./deviceModel";
+import { device } from "../deviceModel";
 
 export class populateDropDown
 {
@@ -9,7 +9,7 @@ export class populateDropDown
         (document.getElementById(value) as HTMLSelectElement).innerHTML += `<option value=""></option>`;
         data.map( e=>
             {   var data = new device(e);
-                (document.getElementById(value) as HTMLSelectElement).innerHTML += `<option value="${data.id}">${data.value}</option>`;
+                (document.getElementById(value) as HTMLSelectElement).innerHTML += `<option value="${data.value}">${data.value}</option>`;
               console.log(e);
             });
     }

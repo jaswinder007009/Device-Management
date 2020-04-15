@@ -5,7 +5,6 @@ export class device
 
     constructor(data: any )
     {
-        // console.log(data[0]);
         this.id = data.id;
         this.value = data.name;
     }
