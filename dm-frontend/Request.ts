@@ -1,7 +1,9 @@
 import { BASEURL } from "./globals";
 import { Requests, Specification, PartialUserModel } from "./RequestModel";
-let adminId = 16;
-let sortDirection = "asc";
+
+(async function(){
+    const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
+    let adminId = JSON.parse(sessionStorage.getItem("user_info"))["id"];
 let globalUrl = BASEURL + "/request/pending";
 
 function getPendingRequests(url: string) {
@@ -9,7 +11,9 @@ function getPendingRequests(url: string) {
     var tableData = '';
     var specs = new Specification();
     var requestedBy = new PartialUserModel();
-    fetch(url).then(Response => Response.json()).then(data => {
+    fetch(url,{
+        headers: new Headers({"Authorization": `Bearer ${token}`})
+        }).then(Response => Response.json()).then(data => {
         for (var i = 0; i < data.length; i++) {
             specs = data[i]['specs'];
             requestedBy = data[i]['requestedBy'];
@@ -69,8 +73,7 @@ function postNotification(data: Requests) {
 (document.querySelector('#tablecol') as HTMLTableElement).addEventListener("click", function (e) {
     const sortField = (e.target as HTMLElement).getAttribute('name');
     const className = (document.getElementById(sortField) as HTMLTableRowElement).getAttribute("class");
-    sortDirection = getDirection(className, sortField);
-    getPendingRequests(globalUrl + "?sortby=" + sortField + "&direction=" + sortDirection);
+    getPendingRequests(globalUrl + "?sortby=" + sortField + "&direction=" + getDirection(className, sortField));
 
 });
 
@@ -111,4 +114,4 @@ document.addEventListener("click", function (e) {
 
 getPendingRequests(globalUrl);
 
-
+})();
