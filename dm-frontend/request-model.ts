@@ -1,10 +1,10 @@
-import { BASEURL } from "./globals";
-
+import { BASEURL, navigationBarsss, amIUser } from "./globals";
 (async function(){
     const Select = mdc.select.MDCSelect;
     const TextField = mdc.textField.MDCTextField;
     let { id, token }=JSON.parse(sessionStorage.getItem("user_info"));
-
+     let role = await amIUser(token) == true ? "User" : "Admin";
+  
     class RequestDevice
     {
         userId: number
@@ -120,6 +120,8 @@ import { BASEURL } from "./globals";
     }
 
 
-    initialiseDropdowns();
-    document.querySelector('button').addEventListener('click', function(){submitForm()});
+initialiseDropdowns();
+navigationBarsss(role,"navigation");
+document.querySelector('button').addEventListener('click', function(){submitForm()});
+
 })();

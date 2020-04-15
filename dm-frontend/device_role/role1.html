@@ -3,10 +3,17 @@
     <title>Device Management System</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo.min.css">
+
     
 <style>
       #popup{
@@ -21,36 +28,63 @@
     </style>
 
 </head>
-<body style="background-color: linen;">
-  <nav class="navbar  navbar-inverse navbar-fixed-top ">
-    <div class="container" style="margin-left: 10px;">
-      <div class="navbar-header">
-       
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mynavbar">
+<body >
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <!-- Title -->
+            <div class="devices">
+                <span class="mdl-layout-title">Roles and Permissions</span>
+            </div>
 
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a href="#" class="navbar-brand  text-primary" >DEVICE MANAGEMENT SYSTEM</a>
+            <!-- Add spacer, to align navigation to the right -->
+            <div class="mdl-layout-spacer"></div>
 
-      </div>
-    
+            <div class="mdl-layout-spacer"></div>
+        </div>
+    </header>
+
+<!-- 
+ <div class="mdl-layout__container">
+        <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header has-drawer is-upgraded"
+            data-upgraded=",MaterialLayout">
+            <header
+                class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600 is-casting-shadow">
+                <div aria-expanded="false" role="button" tabindex="0" class="mdl-layout__drawer-button"><i
+                        class="material-icons"></i></div>
+                <div class="mdl-layout__header-row">
+
+                    <span class="mdl-layout__title">Roles</span>
+                    <div class="mdl-layout-spacer"></div>
+                    <div class="mdl-layout-spacer"></div>
+                  
+                </div>
 
 
-        <ul class="nav navbar-nav navbar-right" style="font-size: medium;font-weight: bold;">
-          <li class="active"><a href="#" >Link1</a></li>
-        
-          <li><a href="#">Link1</a></li>
+            </header> -->
+            <!-- <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50"
+                aria-hidden="true">
+                <header class="demo-drawer-header">
+                    <div class="demo-avatar-dropdown"><br>
+                        <span id="adminEmail">adminEmail</span>
+                        <div class="mdl-layout-spacer"></div>
+                        <br>
+                    </div>
+                </header> -->
+                <div class="mdl-layout__drawer" id="navigation">
+                </div>
+            
 
-        </ul>
-      </div>
-    </div>
+
+
+<main class="mdl-layout__content mdl-color--grey-100">
+                <div class="mdl-grid demo-content" id="content">
+                 
+               
   
 
-  </nav>
-
   <div id="insert_data">
+ 
     
       
 
@@ -79,7 +113,7 @@
 
  
 
-<div class="container" style="margin-top:60px;">
+<div class="container" >
 <button class="btn btn-success" onclick="openForm()">ADD ROLE</button>
 <!-- <button type="submit"  class="btn btn-warning"  id="output" onclick="get_role.getAllRoles();" >ROLES</button> -->
 <a href="table1.html"><button class="btn btn-warning">Permission</button></a>
@@ -87,11 +121,11 @@
 
 </div>
 <div id="output"></div>
-
-<table class="table table-bordered" style="width:70%" >
+<center>
+<table class="table table-bordered table-striped table-hover" style="width:70%" >
   <thead>
     <tr style="background-color: #74B72E;">
-      <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">RoleId</td>
+<!-- <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">RoleId</td> -->
       <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">Role Name</td>
       <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">Delete Role</td>
       <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:5%;">Update Role</td>
@@ -103,27 +137,30 @@
     
   </tbody>
 </table>
+</center>
 
 
-
-
-<table class="table table-bordered" style="width:70%" >
+<center>
+<table class="table table-bordered table-striped table-hover" style="width:70%" >
 <tbody id="getperm"  onclick="r_permission.getAllRolePermission()"></tbody>
 
 </table>
-<table class="table table-bordered" style="width:70%" >
+</center>
+<center>
+<table class="table table-bordered table-striped table-hover" style="width:70%" >
 <tbody id="assign_perm" ></tbody>
 </table>
-
+</center>
  <!-- <div id="getdata"></div> -->
 
 </table>
 <div id="getpermission"></div>
 
+ </div>
+            </main>
 
-
-
-
+ 
+<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
 <script data-main="role_permission.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
 </body>
