@@ -209,14 +209,14 @@ import { BASEURL, amIAdmin, amIUser } from './globals';
     }
 
     document.getElementById("notifications").addEventListener('click', function (e) {
-        window.location.href = "./notifiication.html?user_id=" + user_id;
+        window.location.href = "./notifiication.html?user_id=" + id;
     })
     document.getElementById('email').innerHTML = email;
     // document.getElementById('userRole').innerHTML = role;
     if (role == 'User') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
         getDeviceReturnDates(BASEURL + "/api/dashboard/" + email + "/devices/returndates");
-        getHistory(BASEURL + "/api/device/previous_device/" + user_id);
+        getHistory(BASEURL + "/api/device/previous_device/" + id);
     }
     else if (role == 'Admin') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
