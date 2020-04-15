@@ -1,4 +1,9 @@
-import { BASEURL } from "./globals";
+import { BASEURL, navigationBarsss, amIUser } from "./globals";
+(async function() {
+
+
+    let token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
+	let role = (await amIUser(token)) == true ? "User" :"Admin";
 
 const Select = mdc.select.MDCSelect;
 const TextField = mdc.textField.MDCTextField;
@@ -115,3 +120,5 @@ function clear(id : string)
 
 
 initialiseDropdowns();
+navigationBarsss(role,"navigation");
+})();

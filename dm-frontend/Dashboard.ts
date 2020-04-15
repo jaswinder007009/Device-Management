@@ -1,63 +1,23 @@
-import { BASEURL, amIAdmin, amIUser } from './globals';
+import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
+
 (async function () {
     let cardTitle = ['Total Devices', 'Free Devices', 'Faults', 'Assigned Devices', 'Device Requests', 'Rejected Requests'];
 
 
     const url = new URL(window.location.href);
-    const token = url.searchParams.get("token");
-    const id = url.searchParams.get("id");
-    sessionStorage.setItem("user_info", JSON.stringify({ token, id }));
-    let email = 'abc@gmail.com';
-    let user_id = JSON.parse(sessionStorage.getItem("user_info"))["id"];
-    const role = await amIUser(token) == true ? "User" : "Admin";
-    //let role = 'User';
-    function NavigationBar() {
-        var navigation = `<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800" >
-        <a class="mdl-navigation__link" href="dashboard.html">
-       <i class="mdl-color-text--blue-grey-400 material-icons"
-           role="presentation">dashboard</i>Dashboard
-        </a>
-         <a class="mdl-navigation__link" href="deviceListForadmin.html">
-             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">devices</i>All
-                 Devices
-        </a>
-        
-        <a class="mdl-navigation__link" href="user-model.html">
-        <i class="mdl-color-text--blue-grey-400 material-icons"
-                role="presentation">import_export</i>Request Device
-        </a>
-        <a class="mdl-navigation__link" href="userRequestHistory.html">
-            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">storage</i>My
-            Devices
-        </a>`;
-        if (role == "Admin") {
-            let nav = ` 
-        
-       
-        <a class="mdl-navigation__link" href="web.html">
-            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">group</i>Users
-        </a>
-        <a class="mdl-navigation__link" href="adminRequestPage.html">
-            <i class="mdl-color-text--blue-grey-400 material-icons"
-                role="presentation">import_export</i>All Requests
-        </a>
-        <a class="mdl-navigation__link" href="request-history.html">
-            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">history</i>Request History
-        </a>
-       
-        <a class="mdl-navigation__link" href="device_role/role1.html">
-            <i class="mdl-color-text--blue-grey-400 material-icons"
-                role="presentation">perm_device_information</i>Permissions
-        </a></nav>
-
-        `;
-            document.getElementById("navigation").innerHTML = navigation + nav;
-        }
-       else
-       {
-        document.getElementById("navigation").innerHTML = navigation;
+    let token, id;
+    if(url.searchParams.has("token") && url.searchParams.has("id")){
+        token = url.searchParams.get("token");
+        id = url.searchParams.get("id");
+        sessionStorage.setItem("user_info", JSON.stringify({ token, id }));
     }
-}
+    let email = 'abc@gmail.com';
+    token = JSON.parse(sessionStorage.getItem("user_info"))["token"]; 
+
+
+  let role = await amIUser(token) == true ? "User" : "Admin";
+    //let role = 'User';
+ 
     function createCard(index, key, cardData) {
         var cardCreationCode: string = "<div class='demo-card-event mdl-card mdl-shadow--2dp mdl-color--blue-grey-200' id='card'>"
             + "<div class='mdl-card__title mdl-card--expand'>"
@@ -70,7 +30,7 @@ import { BASEURL, amIAdmin, amIUser } from './globals';
         document.getElementById("content").innerHTML += cardCreationCode;
     }
 
-    function createTable(tableTitle, tableHeading, tableBody) {
+    function createTable(tableTitle: string, tableHeading: string, tableBody: string) {
         var tableData = "<br><br><table class='mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color-text--blue-grey-800'>"
             + "<thead class='mdl-color--blue-grey-400'>"
             + "<tr>" + tableTitle + "</tr>"
@@ -195,21 +155,24 @@ import { BASEURL, amIAdmin, amIUser } from './globals';
             });
 
     }
+    navigationBarsss(role,"navigation");
 
     document.getElementById("notifications").addEventListener('click', function (e) {
-        window.location.href = "./notifiication.html?user_id=" + user_id;
+        window.location.href = "./notifiication.html?user_id=" + id;
     })
     document.getElementById('email').innerHTML = email;
     document.getElementById('userRole').innerHTML = role;
     if (role == 'User') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
         getDeviceReturnDates(BASEURL + "/api/dashboard/" + email + "/devices/returndates");
-        getHistory(BASEURL + "/api/device/previous_device/" + user_id);
+        getHistory(BASEURL + "/api/device/previous_device/" + id);
+
     }
     else if (role == 'Admin') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
         getFaults(BASEURL + "/api/dashboard/faults");
         getPendingRequests(BASEURL + "/request/pending");
+        
     }
-    NavigationBar();
-})();
+    })();
+    

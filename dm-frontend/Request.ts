@@ -1,4 +1,4 @@
-import { BASEURL } from "./globals";
+import { BASEURL, navigationBarsss } from "./globals";
 import { Requests,Specification } from "./RequestModel";
 let adminId = 16;
 let sortDirection = "asc";
@@ -34,7 +34,7 @@ function getPendingRequests(url: string) {
                             tableData += "<td>" + name + "</td>";
 						if (prop == "specs")
                             if(key=="storage")
-								tableData += "<td>" + specs.ram+", "+ specs.connectivity +",<br>"+specs.screenSize +"", "+specs.storage+ "</td>";
+								tableData += "<td>" + specs.ram+", "+ specs.connectivity +",<br>"+specs.screenSize +" ,"+specs.storage+ "</td>";
                     }
                 }
                 else {
@@ -146,5 +146,5 @@ document.addEventListener("click", function (e) {
 
 // document.getElementById("content").innerHTML = "";
 getPendingRequests(globalUrl + "pending");
-
+navigationBarsss("Admin","navigation");
 

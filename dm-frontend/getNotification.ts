@@ -1,7 +1,12 @@
-import { BASEURL } from "./globals";
+import { BASEURL, navigationBarsss, amIUser } from "./globals";
 import { Sort } from "./user-profile/SortingUser";
 import {Notifications} from "./notification";
-const token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
+(async function() {
+
+
+    let token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
+	let role = (await amIUser(token)) == true ? "User" :"Admin";
+
 class Notify
 {
     deviceId:number =0;
@@ -78,7 +83,7 @@ document.addEventListener("click", function (e) {
         
         let id = (e.target as HTMLTableHeaderCellElement);
         let column = (e.target as HTMLTableHeaderCellElement).dataset.id;
-	    let sorts = new Sort();
+	    let sorts = new Sort(token);
         let direction =sorts.checkSortType(id);
         console.log(direction);
         notify.notificationSort(column,direction);
@@ -114,6 +119,12 @@ const urlParams = new URLSearchParams(window.location.search);
       const myParam = urlParams.get("user_id");
       console.log(myParam);
 if(myParam)
+{
       notify.notification(myParam);
+}
 else
+{
 notify.notification("");
+}
+navigationBarsss(role,"navigation");
+})();

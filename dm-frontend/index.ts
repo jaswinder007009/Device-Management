@@ -5,7 +5,7 @@ import { Sort } from "./Sorting";
 import { HtmlElementsData } from "./HtmlElementsId";
 import { page } from "./paging";
 import { UserRequestStatus } from "./RequestStatus";
-
+import {navigationBarsss} from "./globals";
 new findResult().findByUser(); // for get all data 
 
 var domElement =  new HtmlElementsData();
@@ -93,6 +93,6 @@ export function getStatus( requestStatus : string) : string
 }
 
 
-
+navigationBarsss("Admin","navigation");
 console.log((document.getElementById("request-status") as HTMLSelectElement).value);
 

@@ -5,10 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Request Modal</title>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+ 
 
-    <head>
+    
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-pink.min.css" />
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
         <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
             rel="stylesheet">
         <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
@@ -47,6 +49,24 @@
 </head>
 
 <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <div class="devices">
+                    <span class="mdl-layout-title">Request Devices</span>
+                </div>
+
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+
+                <div class="mdl-layout-spacer"></div>
+            </div>
+        </header>
+
+
+        <div class="mdl-layout__drawer" id="navigation">
+  </div>
     <!-- <button id="show-dialog" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
         Show Modal
     </button>
@@ -351,6 +371,6 @@
         </div>
     </div>
 </body>
-<script src="./request-model.js"></script>
+<script data-main="request-model.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
 
 </html>
