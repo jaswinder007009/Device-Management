@@ -46,7 +46,7 @@ export function navigationBarsss(role:string , element:string) {
         <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">history</i>Request History
     </a>
    
-    <a class="mdl-navigation__link" href="/role1.html">
+    <a class="mdl-navigation__link" href="/device_role/role1.html">
         <i class="mdl-color-text--blue-grey-400 material-icons"
             role="presentation">perm_device_information</i>Permissions
     </a></nav>
