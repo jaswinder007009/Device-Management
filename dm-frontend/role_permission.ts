@@ -18,16 +18,8 @@ class role_permission{
   
     headerTag = (document.getElementById("output") as HTMLInputElement);
     headerTag1 = (document.getElementById("get_role_info") as HTMLInputElement);
-    
- 
-  
-
-  
-
 
     async getAllRoles() {
-        
-
         this.url = BASEURL + "/api/device/role";
         let data = await this.getApiRoleCall(this.url);
         this.data = await data;
@@ -39,9 +31,10 @@ class role_permission{
     }
 
     async getApiRoleCall(URL: any) {
-
-
-        let response = await fetch(URL);
+        let response = await fetch(URL,
+            {
+                headers: new Headers({"Authorization": `Bearer ${token}`})
+            });
         let data = await (response.json());
       //  console.log(data);
         return (await data);
@@ -57,6 +50,7 @@ class role_permission{
         let response = await fetch(uri,
             {
                 method: 'DELETE',
+                headers: new Headers({"Authorization": `Bearer ${token}`})
             })
         console.log(this.data);
         this.alert_delete(x);
@@ -70,9 +64,6 @@ class role_permission{
 
     RoleGenerate() {
         let loop = 0;
-       // let populate11=new populateData1();
-      
-        //let tempo : any;
        this.headerTag.innerHTML = "";
        this.headerTag1.innerHTML= "";
         for (loop = 0; loop < this.data.length; loop++) {
@@ -109,15 +100,7 @@ class role_permission{
             <td style="color: darkslategray; font-style: italic;font-family: cursive; font-weight: bolder;width:10%;">
             <button data-id="assign_permission" value="${this.data[loop]["id"]}" >ASSIGN PERMISSION</button>
             </td>
-           
-           
-            
-            
-            
-            
-        
-        
-            </tr>
+           </tr>
 
           
           `
@@ -153,7 +136,7 @@ document.addEventListener('click' ,e=>{
         if( (e.target as HTMLButtonElement).className ==="role_up_date")
         {
             console.log("sdfghjkl");
-            up.update_data(event.target.value);
+            up.update_data(parseInt((event.target as HTMLInputElement).value));
            // 
            
         }
@@ -252,7 +235,7 @@ class assign_permission{
     async getApiPermissionAssign(URL: any) {
 
 
-        let response = await fetch(URL);
+        let response = await fetch(URL,{headers: new Headers({"Authorization": `Bearer ${token}`})});
         let data = await (response.json());
       //  console.log(data);
         return (await data);

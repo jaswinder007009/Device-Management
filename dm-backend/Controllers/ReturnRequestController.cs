@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using dm_backend.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dm_backend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class ReturnRequestController : ControllerBase
     {
@@ -34,6 +36,7 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok(result);
         }
+        
         [HttpPut]
         [Route("reject")]
         public IActionResult PutReturnRequest([FromBody]ReturnRequestModel request)

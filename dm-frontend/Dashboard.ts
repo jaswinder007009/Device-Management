@@ -161,12 +161,11 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
         window.location.href = "./notifiication.html";
     })
     document.getElementById('email').innerHTML = email;
-    document.getElementById('userRole').innerHTML = role;
+    // document.getElementById('userRole').innerHTML = role;
     if (role == 'User') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
         getDeviceReturnDates(BASEURL + "/api/dashboard/" + email + "/devices/returndates");
         getHistory(BASEURL + "/api/device/previous_device/" + id);
-
     }
     else if (role == 'Admin') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
