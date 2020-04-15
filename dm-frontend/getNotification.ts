@@ -6,7 +6,7 @@ import {Notifications} from "./notification";
 
     let token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
 	let role = (await amIUser(token)) == true ? "User" :"Admin";
-
+    let user_id = JSON.parse(sessionStorage.getItem("user_info"))["id"];
 class Notify
 {
     deviceId:number =0;
@@ -115,16 +115,7 @@ document.addEventListener("click", function (e) {
 });
 
 let notify = new Notify(token);
-const urlParams = new URLSearchParams(window.location.search);
-      const myParam = urlParams.get("user_id");
-      console.log(myParam);
-if(myParam)
-{
-      notify.notification(myParam);
-}
-else
-{
-notify.notification("");
-}
+notify.notification(user_id);
+
 navigationBarsss(role,"navigation");
 })();

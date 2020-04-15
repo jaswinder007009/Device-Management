@@ -1,4 +1,4 @@
-import { BASEURL } from "../globals";
+import { BASEURL } from "./globals";
 class abc{
      
     id:Number
