@@ -1,5 +1,6 @@
 
 import { AddDevice } from './device_crud';
+import { navigationBarsss } from './globals';
 
 let token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
 (document.querySelector('#brand_popup') as HTMLButtonElement).addEventListener('submit', function (e) {
@@ -69,7 +70,7 @@ let token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
   
   
   });
-  
+  navigationBarsss("Admin","navigation");
   const temp = new AddDevice(token);
   temp.brandDropdown();
   temp.typeDropdown();

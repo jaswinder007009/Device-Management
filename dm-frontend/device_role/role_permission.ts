@@ -377,7 +377,7 @@ class role_permission1{
     async getApiPermissionCall(URL: any) {
 
 
-        let response = await fetch(URL);
+        let response = await fetch(URL,{headers: new Headers({"Authorization": `Bearer ${token}`})});
         let data = await (response.json());
       //  console.log(data);
         return (await data);
@@ -445,6 +445,7 @@ class role_permission1{
         let response = await fetch(uri,
             {
                 method: 'DELETE',
+                headers: new Headers({"Authorization": `Bearer ${token}`})
             })
         console.log(this.data);
         this.del_permis(id1);
@@ -525,6 +526,7 @@ class checkbox1{
                
                 headers : {
                     "content-Type" : "application/json" , 
+                    "Authorization": `Bearer ${token}`
                 },
                 body : JSON.stringify(this.data),
             
@@ -608,6 +610,7 @@ class insert_Role{
                
                 headers : {
                     "content-Type" : "application/json" , 
+                    "Authorization": `Bearer ${token}`
                 },
                 body : JSON.stringify(this.data),
             
@@ -668,6 +671,7 @@ class update_Role{
                
                 headers : {
                     "content-Type" : "application/json" , 
+                    "Authorization": `Bearer ${token}`
                 },
                 body : JSON.stringify(this.data),
             
