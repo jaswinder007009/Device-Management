@@ -10,7 +10,7 @@ import { BASEURL } from "./globals";
 (async function(){
     let address = BASEURL;
     let token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
-});
+
 
     (document.querySelector("#fixed-header-drawer-exp")  as HTMLInputElement).addEventListener("keypress" , event =>
     {
@@ -93,4 +93,5 @@ import { BASEURL } from "./globals";
             getAll();
         });
     getAll();
+
 })();

@@ -1,13 +1,25 @@
 import { HitApi } from "./HitRequestApi";
 import {populateDropDown } from "./populateDropDown";
 import { RequestDeviceModel } from "./deviceRequestModel";
-import { BASEURL } from "../globals";
+import { BASEURL, Token, amIUser, navigationBarsss } from "../globals";
+import { CreateUserApi } from "../createApi";
+
+(async function () {
+    let obj = Token.getInstance();
+    let role = await amIUser(obj.tokenKey) == true ? "User" : "Admin";
+    navigationBarsss(role,"navigations");
+})();
+
+
+
+
 
 var device = [].map.call(document.querySelectorAll(".device") , e =>
 {
     return e;
 });
 startup();
+
 function startup()
 {
     device.map(function(e : any)
@@ -32,14 +44,13 @@ function startup()
     });
 
 
-    function  specificationDropdown( types : string  , brands : string , models : string) {
+ async function  specificationDropdown( types : string  , brands : string , models : string) {
         console.log(types +" " + brands + " " + models)
+        let uri =  BASEURL + "/api/Dropdown/"+encodeURI(types)+"/"+encodeURI(brands)+"/"+encodeURI(models)+"/specification";
+        let obj = Token.getInstance();
 
-        fetch(
-            BASEURL + "/api/Dropdown/"+encodeURI(types)+"/"+encodeURI(brands)+"/"+encodeURI(models)+"/specification"
-        )
-            .then(Response => Response.json())
-            .then(data => {
+        let data = await new HitApi(obj.tokenKey).HitGetApi(uri); 
+       
                 console.log(data);
                 (document.getElementById("specification")as HTMLSelectElement).innerHTML = "";
                 (document.getElementById("specification")as HTMLSelectElement).innerHTML += `<option value=""> </option>`;
@@ -50,8 +61,7 @@ function startup()
                         '</option>';
 
                 }
-            })
-            .catch(err => console.log(err));
+                return null;
 
     }
 
@@ -59,7 +69,9 @@ function startup()
 
 async function GetData(uri : string ,column : string)
 {
-    let data = await new HitApi().HitGetApi(uri); 
+    let obj = Token.getInstance();
+
+    let data = await new HitApi(obj.tokenKey).HitGetApi(uri); 
     console.log(data);
     new populateDropDown().populateDevice(data , column);
     return data;
@@ -68,12 +80,16 @@ async function GetData(uri : string ,column : string)
 
 
 document.querySelector("#request")?.addEventListener('click' , e =>
-{
-    var body = bindData();
+{ 
+    let obj = Token.getInstance();
+    var body = bindData(obj.userID);
     console.log(JSON.stringify(body));
   if(validate())
   {
-   (new HitApi().HitPostApi( BASEURL + "/request/device" , body)).then(res =>
+      let uri =  BASEURL + "/api/request/device";
+   
+      (new HitApi(obj.tokenKey).HitPostApi( uri, body)).then(
+          res =>
     {
         if (res.status == 200 )
     alert("device request submitted ");
@@ -138,10 +154,10 @@ function validateDevice()
 }
 
 
-function bindData()
+function bindData(userID : number)
 {
     var body = new RequestDeviceModel();
-    body.userId = 16;
+    body.userId = (userID)
     body.devicetype = device[0].value
     body.brand = device[1].value;
     body.model = device[2].value;
