@@ -1,4 +1,4 @@
-import { BASEURL } from "./globals";
+import { BASEURL, navigationBarsss } from "./globals";
 import { Requests, Specification, PartialUserModel } from "./RequestModel";
 
 (async function () {
@@ -115,5 +115,6 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     });
 
     getPendingRequests(globalUrl);
+    navigationBarsss("Admin","navigation");
 
 })();

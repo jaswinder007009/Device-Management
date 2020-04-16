@@ -5,6 +5,7 @@ import { Sort } from "./Sorting";
 import { HtmlElementsData } from "./HtmlElementsId";
 import { page } from "./paging";
 import { UserRequestStatus } from "./RequestStatus";
+import {navigationBarsss} from "./globals";
 
 (async function(){
     let token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
@@ -47,7 +48,7 @@ import { UserRequestStatus } from "./RequestStatus";
         let id = (e.target as HTMLInputElement).id;
         if (id === "user"|| id === "admin" ||  id === "serialNumber" || id === "device_name") 
                 {
-            new Sort().sortBy(id);
+            new Sort(token).sortBy(id);
             (document.getElementById("pagination") as HTMLDivElement).setAttribute("page" , "1");    // set page to 1
         }});
 
@@ -79,6 +80,7 @@ import { UserRequestStatus } from "./RequestStatus";
         
         // console.log(requestStatus);
     });
+    navigationBarsss("Admin","navigation");
 
     console.log((document.getElementById("request-status") as HTMLSelectElement).value);
 })();
@@ -96,3 +98,6 @@ export function getStatus( requestStatus : string) : string
     requestStatus = "";
     return requestStatus;
 }
+
+
+

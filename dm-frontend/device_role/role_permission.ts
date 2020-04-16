@@ -1,6 +1,10 @@
-import { BASEURL } from "../globals";
+import { BASEURL, navigationBarsss, amIUser } from "../globals";
+(async function() {
 
-const token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
+
+    let token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
+	let role = (await amIUser(token)) == true ? "User" :"Admin";
+
 class role_permission{
      
     id:Number
@@ -231,7 +235,7 @@ class assign_permission{
     async getApiPermissionAssign(URL: any) {
 
 
-        let response = await fetch(URL,{headers: new Headers({"Authorization": `Bearer ${this.token}`})});
+        let response = await fetch(URL,{headers: new Headers({"Authorization": `Bearer ${token}`})});
         let data = await (response.json());
       //  console.log(data);
         return (await data);
@@ -373,7 +377,7 @@ class role_permission1{
     async getApiPermissionCall(URL: any) {
 
 
-        let response = await fetch(URL);
+        let response = await fetch(URL,{headers: new Headers({"Authorization": `Bearer ${token}`})});
         let data = await (response.json());
       //  console.log(data);
         return (await data);
@@ -441,6 +445,7 @@ class role_permission1{
         let response = await fetch(uri,
             {
                 method: 'DELETE',
+                headers: new Headers({"Authorization": `Bearer ${token}`})
             })
         console.log(this.data);
         this.del_permis(id1);
@@ -521,6 +526,7 @@ class checkbox1{
                
                 headers : {
                     "content-Type" : "application/json" , 
+                    "Authorization": `Bearer ${token}`
                 },
                 body : JSON.stringify(this.data),
             
@@ -604,6 +610,7 @@ class insert_Role{
                
                 headers : {
                     "content-Type" : "application/json" , 
+                    "Authorization": `Bearer ${token}`
                 },
                 body : JSON.stringify(this.data),
             
@@ -664,6 +671,7 @@ class update_Role{
                
                 headers : {
                     "content-Type" : "application/json" , 
+                    "Authorization": `Bearer ${token}`
                 },
                 body : JSON.stringify(this.data),
             
@@ -742,3 +750,5 @@ document.body.addEventListener('click',function(event)
 
 const  temp=new role_permission();
    temp.getAllRoles();
+   navigationBarsss(role,"navigation");
+})();

@@ -3,7 +3,7 @@ import { createObjectFromForm, populateFormFromObject } from './databinding';
 import * as util from "./utility";
 import { dynamicGenerate } from "./dynamic";
 import { validate } from "./validate"
-import { BASEURL } from '../globals';
+import { BASEURL, navigationBarsss, amIUser } from '../globals';
 
 export class UserData {
     token : string ="";
@@ -66,6 +66,7 @@ export class UserData {
 }
 const userId=JSON.parse(sessionStorage.getItem("user_info"))["id"];
 const token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
+
 var user = new UserData(token);
 
 user.getCountry();
@@ -110,3 +111,4 @@ function populateDropdown(selectElement: HTMLSelectElement, data) {
     }
     selectElement.innerHTML = htmlString;
 }
+navigationBarsss("Admin","navigation");

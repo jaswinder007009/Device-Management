@@ -1,4 +1,4 @@
-import { BASEURL } from "./globals";
+import { BASEURL, navigationBarsss } from "./globals";
 import { DeviceListForAdmin } from "./deviceListForAdmin";
 import { Sort } from "./user-profile/SortingUser";
 import { amIUser } from "./globals";
@@ -195,7 +195,7 @@ import { openForm } from "./utilities";
 		function(e) {
 			const col = (e.target as HTMLElement).getAttribute("name");
 			let id = e.target as HTMLTableHeaderCellElement;
-			let sorts = new Sort();
+			let sorts = new Sort(token);
 			let direction = sorts.checkSortType(id);
 			temp.sort(col, direction);
 		}
@@ -231,4 +231,11 @@ import { openForm } from "./utilities";
 	);
 	const temp = new GetApiForAdmin(token);
 	temp.getData();
+	if(role ==0)
+	{
+		var roles ="User";
+	}
+	else 
+	roles = "Admin";
+	navigationBarsss(roles,"navigations");
 })();

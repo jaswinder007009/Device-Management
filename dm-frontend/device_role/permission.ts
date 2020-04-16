@@ -1,19 +1,24 @@
-import { BASEURL } from "../globals";
-
-const token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
+import { BASEURL } from "./globals";
 class abc{
+     
     id:Number
     firstName:string
     lastName:string
     url:any
+
     bodyData: any
+
     data: any;
     size: any;
   
     headerTag = (document.getElementById("output") as HTMLInputElement);
     headerTag1 = (document.getElementById("perm") as HTMLInputElement);
 
+  
+
+
     async getAllPermission() {
+
         this.url = BASEURL + "/api/device/permission";
         let data = await this.getApiCall(this.url);
         this.data = await data;
@@ -25,10 +30,11 @@ class abc{
     }
 
     async getApiCall(URL: any) {
-        let response = await fetch(URL,{
-            headers: new Headers({"Authorization": `Bearer ${token}`})
-        });
+
+
+        let response = await fetch(URL);
         let data = await (response.json());
+      //  console.log(data);
         return (await data);
     }
 
@@ -43,7 +49,6 @@ class abc{
         let response = await fetch(uri,
             {
                 method: 'DELETE',
-                headers: new Headers({"Authorization": `Bearer ${token}`})
             })
         console.log(this.data);
         this.get_delete_alert(x);
@@ -167,6 +172,22 @@ document.addEventListener('click' ,e=>{
     }
     );
 
+
+////////////////////////////////////////////////////
+// document.body.addEventListener('click',function(e){
+// if(event.target.dataset.id=="add_ppp"){
+//     console.log("jj");
+//     perm_update.updatePermission1(event.target.value);
+// }
+// });
+
+
+
+//--------------------------------------------------------------------------
+
+
+
+
 class AddPermission{
     PermissionName:String
     data:any
@@ -180,6 +201,7 @@ class AddPermission{
         console.log(this.data);
     }
     updatePermission(){
+            console.log("hhh");
         this.bindData();
         this.postData();
     }
@@ -191,7 +213,6 @@ class AddPermission{
                 method : "POST" , 
                 headers : {
                     "content-Type" : "application/json" , 
-                    "Authorization": `Bearer ${token}`
                 },
                 body : JSON.stringify(this.data),
             
@@ -243,9 +264,9 @@ class update_Permission{
         let url=BASEURL + "/api/device/permission/"+x;
               fetch( url , {
                 method : "PUT" , 
+               
                 headers : {
-                    "content-Type" : "application/json",
-                    "Authorization": `Bearer ${token}`
+                    "content-Type" : "application/json" , 
                 },
                 body : JSON.stringify(this.data),
             
