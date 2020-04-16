@@ -1,9 +1,9 @@
 
 .demo-card-square.mdl-card {
-  width: 320px;
-  height: 450px;
-  margin-top: 90px;
-  margin-left: 38%;
+  width: 500px;
+  height: 460px;
+  margin-top: 60px;
+  margin-left: 32%;
 }
 .demo-card-square > .mdl-card__title {
   color: #fff;

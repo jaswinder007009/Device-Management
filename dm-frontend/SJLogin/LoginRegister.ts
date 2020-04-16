@@ -36,12 +36,20 @@ function RegisterUser()
 {
     let remail=(window.document.getElementById("remail") as HTMLInputElement ).value;
     let rpassword=(window.document.getElementById("rpassword") as HTMLInputElement ).value;
-    console.log(remail+"  "+rpassword)
+    let fname=(window.document.getElementById("fname") as HTMLInputElement ).value;
+    let mname=(window.document.getElementById("mname") as HTMLInputElement ).value;
+    let lname=(window.document.getElementById("lname") as HTMLInputElement ).value;
+    console.log(remail+"  "+rpassword+"  "+fname+" "+mname+" "+lname);
+   
     fetch("http://localhost:5000/api/auth/register", { 
         method: "POST", 
         body: JSON.stringify({ 
             email: remail, 
             password: rpassword, 
+            firstname : fname ,
+            middlename : mname,
+            lastname : lname
+
         }), 
         headers: { 
             "Content-type": "application/json; charset=UTF-8"
