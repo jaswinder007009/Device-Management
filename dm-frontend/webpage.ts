@@ -4,14 +4,14 @@ import * as util from "./utilities";
 import { UpdateUserApi } from "./updateApi";
 import { populateFormFromObject, createObjectFromForm } from "./user-profile/databinding";
 import { UserModel } from "./UserModel";
-//import { AllListerers } from "EventListeners";
 import { remove} from "validation";
 import { validateForm} from "validation";
 import { Sort } from "./user-profile/SortingUser";
-import { BASEURL } from "./globals";
+import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
 import { UserData }  from "./dropdown";
 (async function(){
 	const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
+	const role = (await amIUser(token)) == true ? "User" : "Admin";
 	let form_mode: "create" | "edit";
 
 	const table = document.getElementById("Request_data_body") as HTMLTableElement;
@@ -36,8 +36,6 @@ import { UserData }  from "./dropdown";
 		}
 		
 		setData();
-		//AllListerers();
-
 		function changeheading1Text()
 		{
 		document.getElementById('headingText').innerHTML='Register User';
@@ -63,7 +61,7 @@ import { UserData }  from "./dropdown";
 			var userData=createObjectFromForm(this);
 			if(validateForm(form_mode)==true){
 			new CreateUserApi(token).createUserData(userData).then(function(){setData();});
-			new UserData();
+			new UserData(token);
 		}
 			else 
 			{
@@ -214,4 +212,6 @@ import { UserData }  from "./dropdown";
 			populateTable(data);
 		});
 	});
+	navigationBarsss(role,"navigation");
+
 })();

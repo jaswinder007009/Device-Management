@@ -1,23 +1,35 @@
-import { BASEURL } from "./globals";
+import { BASEURL, navigationBarsss, amIUser } from "./globals";
 import { Sort } from "./user-profile/SortingUser";
 import {Notifications} from "./notification";
+(async function() {
 
+
+    let token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
+	let role = (await amIUser(token)) == true ? "User" :"Admin";
+    let user_id = JSON.parse(sessionStorage.getItem("user_info"))["id"];
 class Notify
 {
     deviceId:number =0;
     userId:number= 0;
+    token:string ="";
+    constructor(token:string)
+    {
+        this.token =token;
+    }
     getNotification(URL:any)
     {
         fetch(
             BASEURL + "/api/notification"+URL 
-        )
+        ,{
+            headers: new Headers({"Authorization": `Bearer ${token}`})
+        })
             .then(Response => Response.json())
             .then(data => {
                 console.log(data);
                 (document.getElementById("notification_data") as HTMLTableElement).innerHTML = "";
             
                 for (let element in data) {
-                    let res = new Notifications(data[element]);
+                    let res = new Notifications(data[element],token);
                     res.getNotificationTable();
                 }
             })
@@ -43,7 +55,7 @@ class Notify
     {
         fetch(BASEURL + "/api/ReturnRequest", {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
+            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: JSON.stringify(data),
         }).catch(Error => console.log(Error));   
     }   
@@ -53,7 +65,7 @@ class Notify
         console.log(data);
         fetch(BASEURL + "/api/ReturnRequest/reject", {
             method: "PUT",
-            headers: { 'Content-Type': 'application/json' },
+            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data1,
         }).catch(Error => console.log(Error));   
     }   
@@ -71,7 +83,7 @@ document.addEventListener("click", function (e) {
         
         let id = (e.target as HTMLTableHeaderCellElement);
         let column = (e.target as HTMLTableHeaderCellElement).dataset.id;
-	    let sorts = new Sort();
+	    let sorts = new Sort(token);
         let direction =sorts.checkSortType(id);
         console.log(direction);
         notify.notificationSort(column,direction);
@@ -102,11 +114,8 @@ document.addEventListener("click", function (e) {
         
 });
 
-let notify = new Notify();
-const urlParams = new URLSearchParams(window.location.search);
-      const myParam = urlParams.get("user_id");
-      console.log(myParam);
-if(myParam)
-      notify.notification(myParam);
-else
-notify.notification("");
+let notify = new Notify(token);
+notify.notification(user_id);
+
+navigationBarsss(role,"navigation");
+})();
