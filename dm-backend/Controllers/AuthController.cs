@@ -14,6 +14,8 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore.Internal;
 using dm_backend.Utilities;
 using dm_backend.EntityFramework;
+using dm_backend.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace dm_backend.Controllers
 {
@@ -24,12 +26,12 @@ namespace dm_backend.Controllers
 
     public class AuthController : ControllerBase
     {
-        private readonly SagardbContext _context;
+        private readonly efdbcontext _context;
         public IAuthRepository _repo;
         public IConfiguration _config;
         private int Userforlog;
 
-        public AuthController(IAuthRepository repo, IConfiguration config, SagardbContext context)
+        public AuthController(IAuthRepository repo, IConfiguration config, efdbcontext context)
         {
             _context = context;
             _repo = repo;
