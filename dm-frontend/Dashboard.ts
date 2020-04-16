@@ -160,6 +160,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
     document.getElementById("notifications").addEventListener('click', function (e) {
         window.location.href = "./notifiication.html";
     })
+    
     document.getElementById('email').innerHTML = email;
     // document.getElementById('userRole').innerHTML = role;
     if (role == 'User') {

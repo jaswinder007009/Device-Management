@@ -5,7 +5,7 @@ export class device
 
     constructor(data: any )
     {
-        this.id = data[0];
-        this.value = data[1];
+        this.id = data.id;
+        this.value = data.name;
     }
 }
