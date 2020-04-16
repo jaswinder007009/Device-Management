@@ -43,9 +43,8 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
 
     function requestAction(requestUrl, requestId, action) {
         fetch(globalUrl + requestId + requestUrl,
-            {
-                headers: new Headers({ "Authorization": `Bearer ${token}` })
-            });
+            {headers: new Headers({"Authorization": `Bearer ${token}`})
+        });
         alert("Request " + requestId + " " + action);
         getPendingRequests(globalUrl);
 

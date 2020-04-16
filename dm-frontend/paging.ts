@@ -6,7 +6,11 @@ export class page
 {
     domElements : HtmlElementsData
     totalRowsInTable : number =10
+    token: string;
 
+    constructor(token: string){
+        this.token = token;
+    }
 
 
     slectedPage(value: string)
@@ -18,7 +22,7 @@ export class page
         var sortType  =  (document.getElementById(this.domElements.thead) as HTMLTableRowElement).getAttribute(this.domElements.sortType);
         let uri = BASEURL+ "/sorting" +"?user-name="+encodeURI(userName)+"&sort="+sortAttribute+"&sort-type="+sortType+"&page="+offset+"&page-size="+this.totalRowsInTable;
         console.log(uri)
-        new HitApi().HitGetApi(uri);     
+        new HitApi(this.token).HitGetApi(uri);     
     }
 
 
