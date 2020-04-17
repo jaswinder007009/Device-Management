@@ -44,7 +44,7 @@ function startup()
     });
 
 
- async function  specificationDropdown( types : string  , brands : string , models : string) {
+ export async function  specificationDropdown( types : string  , brands : string , models : string) {
         console.log(types +" " + brands + " " + models)
         let uri =  BASEURL + "/api/Dropdown/"+encodeURI(types)+"/"+encodeURI(brands)+"/"+encodeURI(models)+"/specification";
         let obj = Token.getInstance();
