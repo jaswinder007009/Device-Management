@@ -1,10 +1,11 @@
 import { BASEURL, navigationBarsss } from "./globals";
+import * as util from "./utilities";
 import { Requests, Specification, PartialUserModel } from "./RequestModel";
 
 (async function () {
     const token: string = JSON.parse(sessionStorage.getItem("user_info"))["token"];
     let adminId = JSON.parse(sessionStorage.getItem("user_info"))["id"];
-    let globalUrl = BASEURL + "/api/request/pending";
+    let globalUrl = BASEURL + "/api/request/";
 
     function getPendingRequests(url: string) {
 
@@ -20,8 +21,8 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
                 tableData += "<tr>"
                     + "<td>" + data[i]['userId'] + "</td>"
                     + "<td>" + data[i]['deviceType'] + "</td>" + "<td>" + data[i]['deviceBrand'] + "</td>" + "<td>" + data[i]['deviceModel'] + "</td>"
-                    + "<td>" + specs.ram + ", " + specs.connectivity + ",<br>" + specs.screenSize + "', " + specs.storage + "</td>"
-                    + "<td>" + requestedBy.salutation + " " + requestedBy.firstName + " " + requestedBy.middleName + " " + requestedBy.lastName + "</td>"
+                    + "<td>" + util.concatSpecs(specs)+ "</td>"
+                    + "<td>" + util.concatName(requestedBy)+ "</td>"
                     + "<td>" + data[i]['requestDate'] + "</td>"
                     + "<td>" + data[i]['availability'] + "</td>";
                 if (data[i]['availability'] == true)
@@ -42,11 +43,11 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     }
 
     function requestAction(requestUrl, requestId, action) {
-        fetch(globalUrl + requestId + requestUrl,
+        fetch(globalUrl +requestId + requestUrl,
             {headers: new Headers({"Authorization": `Bearer ${token}`})
         });
         alert("Request " + requestId + " " + action);
-        getPendingRequests(globalUrl);
+        getPendingRequests(globalUrl+"pending");
 
     }
 
@@ -75,13 +76,13 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     (document.querySelector('#tablecol') as HTMLTableElement).addEventListener("click", function (e) {
         const sortField = (e.target as HTMLElement).getAttribute('name');
         const className = (document.getElementById(sortField) as HTMLTableRowElement).getAttribute("class");
-        getPendingRequests(globalUrl + "?sortby=" + sortField + "&direction=" + getDirection(className, sortField));
+        getPendingRequests(globalUrl + "pending?sortby=" + sortField + "&direction=" + getDirection(className, sortField));
 
     });
 
     document.querySelector('#fixed-header-drawer-exp').addEventListener('input', function (e) {
         var searchField = (document.getElementById("fixed-header-drawer-exp") as HTMLInputElement).value;
-        getPendingRequests(globalUrl + "?search=" + searchField);
+        getPendingRequests(globalUrl + "pending?search=" + searchField);
     });
 
 
@@ -89,12 +90,14 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
 
         if ((e.target as HTMLButtonElement).className == "reject-button") {
             let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
-            requestAction('/reject?id=' + adminId, requestId, 'rejected');
+            if(confirm("Are you sure you want to reject the request?"))
+                requestAction('?action=reject&id=' + adminId, requestId, 'rejected');
 
         }
         if ((e.target as HTMLButtonElement).className == "accept-button") {
             let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
-            requestAction('/accept?id=' + adminId, requestId, 'accepted');
+            if(confirm("Are you sure you want to accept the request?"))
+                requestAction('?action=accept&id=' + adminId, requestId, 'accepted');
 
         }
         if ((e.target as HTMLButtonElement).className == "notify-button") {
@@ -108,13 +111,11 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
             request.specs.storage = ((e.target as HTMLButtonElement).dataset.storage);
             postNotification(request);
 
-            (e.target as HTMLButtonElement).remove();
-
         }
 
     });
 
-    getPendingRequests(globalUrl);
+    getPendingRequests(globalUrl+"pending");
     navigationBarsss("Admin","navigation");
 
 })();

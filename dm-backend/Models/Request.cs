@@ -62,9 +62,12 @@ namespace dm_backend.Models
             return ReadAll(reader);
         }
 
-        public void RejectDeviceRequest(int id){
+        public void DeviceRequestAction(int id,string action){
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "reject_request";
+            if(action=="accept")
+                cmd.CommandText = "accept_request";
+            else if(action=="reject")
+                cmd.CommandText = "reject_request";
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
@@ -106,23 +109,6 @@ namespace dm_backend.Models
                 }
             }
             return requests;
-        }
-
-        public string AcceptDeviceRequest(int id)
-        {
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "accept_request";
-            cmd.CommandType = CommandType.StoredProcedure; 
-            try{
-                cmd.Parameters.AddWithValue("@request_id", requestId);
-                cmd.Parameters.Add(new MySqlParameter("var_admin_id", id));
-                cmd.ExecuteNonQuery();
-                return "Request accepted";
-            }
-            catch(Exception e){
-                throw e;
-            }
-            
         }
 
         public string CancelRequest(int  requestId)

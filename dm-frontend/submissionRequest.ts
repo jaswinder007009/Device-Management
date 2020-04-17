@@ -79,23 +79,23 @@ import { BASEURL, navigationBarsss } from "./globals";
         if ((event.target as HTMLButtonElement).className == "accept") {
             
             var returnId = (event.target as HTMLButtonElement).dataset.returnId
-
-
-            let url = address + "/api/ReturnRequest/"+ returnId +"?action=accept&id="+adminId;
-            new Api(token).hitGetApi(url);
-            getAll();
-
+            if(confirm("Are you sure you want to approve the return?"))
+            {   let url = address + "/api/ReturnRequest/"+ returnId +"?action=accept&id="+adminId;
+                alert("Device return approved");
+                new Api(token).hitGetApi(url);
+                getAll();
+            }
             
     }
     else if ((event.target as HTMLButtonElement).className == "reject") {
             
         var returnId = (event.target as HTMLButtonElement).dataset.returnId
-
-
-        let url = address + "/api/ReturnRequest/"+ returnId +"?action=reject&id="+adminId;
-        new Api(token).hitGetApi(url);
-        getAll();
-
+        if(confirm("Are you sure you want to reject the return?"))
+        {   let url = address + "/api/ReturnRequest/"+ returnId +"?action=reject&id="+adminId;
+            alert("Device return rejected");
+            new Api(token).hitGetApi(url);
+            getAll();
+        }
         
 }
     });

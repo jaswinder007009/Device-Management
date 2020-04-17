@@ -43,22 +43,12 @@ namespace dm_backend.Controllers
         [HttpGet]
         public IActionResult GetReturnRequest()
         {
-            int userId=-1;
-            string searchField = "";
-            string sortField = "";
-            string sortDirection = "asc";
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
-                userId = Convert.ToInt32(HttpContext.Request.Query["id"]);
-
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["search"]))
-                searchField = HttpContext.Request.Query["search"];
-            
-            
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["sort"]))
-                sortField = HttpContext.Request.Query["sort"];
-
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["direction"]))
-                sortDirection = HttpContext.Request.Query["direction"];
+            int userId=  -1;
+            string searchField=(string) HttpContext.Request.Query["search"] ?? "";
+            string sortField=(string) HttpContext.Request.Query["sort"] ?? "";
+            string sortDirection=(string)HttpContext.Request.Query["direction"] ?? "asc";
+            if(!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
+            userId=Convert.ToInt32((string)HttpContext.Request.Query["id"]);
 
             Db.Connection.Open();
             var returnObject = new ReturnRequestModel(Db);
