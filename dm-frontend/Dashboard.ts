@@ -178,8 +178,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
     })
     document.getElementById("logout").addEventListener('click', function (e) {
         sessionStorage.clear();
-        console.log("logout  click ");
-        window.location.href = "./SJLogin/LoginRegiter.html";
+        window.location.href = "/SJLogin/LoginRegiter.html";
     })
     
     document.getElementById('email').innerHTML = email;
