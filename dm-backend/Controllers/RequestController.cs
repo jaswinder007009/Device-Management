@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace dm_backend.Models{
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class RequestController : Controller
     {
         public AppDb Db { get; }

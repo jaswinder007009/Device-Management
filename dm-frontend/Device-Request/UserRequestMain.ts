@@ -86,7 +86,7 @@ document.querySelector("#request")?.addEventListener("click", (e) => {
   var body = bindData(obj.userID);
   console.log(JSON.stringify(body));
   if (validate()) {
-    let uri = BASEURL + "/request/device";
+    let uri = BASEURL + "/api/request/device";
 
     new HitApi(obj.tokenKey).HitPostApi(uri, body).then((res) => {
       if (res.status == 200) alert("device request submitted ");
