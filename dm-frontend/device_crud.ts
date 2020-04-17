@@ -4,12 +4,9 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 import { populateDropdown } from "./dropdown";
 
 export class AddDevice {
-   //device_type_id: number;
-  //  device_brand_id: number;
     type: string;
     brand: string;
     status_id: number;
-    //device_model_id: string;
     model: string;
     color: string;
     price: string;
@@ -43,26 +40,6 @@ export class AddDevice {
         const models = await new HitApi(this.token).HitGetApi(URL);
         populateDropdown((document.getElementById("model") as HTMLSelectElement),models);
     }
-    // specificationDropdown() {
-    //     fetch(
-    //         BASEURL + "/api/Device/specification",{
-    //             headers: new Headers({"Authorization": `Bearer ${this.token}`})
-    //         }).then(Response => Response.json())
-    //         .then(data => {
-
-    //             (document.getElementById("specification") as HTMLInputElement).innerHTML = "";
-    //             for (let i = 0; i < data.length; i++) {
-
-    //                 (document.getElementById("specification") as HTMLInputElement).innerHTML += '<option value="' + data[i].specification_id + '">'
-    //                     + "RAM: " + data[i].ram + " Storage: " + data[i].storage + " Screen Size: " + data[i].screen_size + " Connectivity: " + data[i].connectivity +
-    //                     '</option>';
-
-    //             }
-    //         })
-    //         .catch(err => console.log(err));
-
-    // }
-
     Create_device() {
         let data = this.addDataFromForm();
         console.log(data);

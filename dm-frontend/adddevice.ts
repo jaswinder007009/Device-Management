@@ -15,7 +15,7 @@ function checkTypeBrandModel()
 }
 specification.addEventListener('focus',function(e)
 {
-//  if( checkTypeBrandModel())
+  if( checkTypeBrandModel())
    specificationDropdown(type.value,brand.value,model.value);
   
   
@@ -72,7 +72,6 @@ specification.addEventListener('focus',function(e)
       e.preventDefault();
       const temp = new AddDevice(token);
       if (myParam) {
-        if(Response.)
           temp.update_device(myParam);
           console.log("updated Successfully");
           alert("Device Updated");
