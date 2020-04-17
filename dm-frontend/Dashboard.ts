@@ -191,7 +191,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
     else if (role == 'Admin') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
         getFaults(BASEURL + "/api/dashboard/faults");
-        getPendingRequests(BASEURL + "/request/pending");
+        getPendingRequests(BASEURL + "/api/request/pending");
         
     }
     })();

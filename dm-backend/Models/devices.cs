@@ -12,10 +12,12 @@ namespace dm_backend.Models
     public class val
     {
         public int device_id { get; set; }
-        public int device_brand_id { get; set; }
-        public int device_type_id { get; set; }
+      // public int device_brand_id { get; set; }
+       // public int device_type_id { get; set; }
         public int status_id { get; set; }
         public int specification_id { get; set; }
+        public string type {get;set;}
+        public string brand {get;set;}
         public string model { get; set; }
         public string color { get; set; }
         public string price { get; set; }
@@ -41,9 +43,9 @@ namespace dm_backend.Models
         }
         private void BindDevice(MySqlCommand cmd, val v)
         {
-            cmd.Parameters.Add(new MySqlParameter("device_type_id", v.device_type_id));
-            cmd.Parameters.Add(new MySqlParameter("device_brand_id", v.device_brand_id));
-            cmd.Parameters.Add(new MySqlParameter("device_model_id", v.model));
+            cmd.Parameters.Add(new MySqlParameter("device_type", v.type));
+            cmd.Parameters.Add(new MySqlParameter("device_brand", v.brand));
+            cmd.Parameters.Add(new MySqlParameter("device_model", v.model));
             cmd.Parameters.Add(new MySqlParameter("color", v.color));
             cmd.Parameters.Add(new MySqlParameter("price", v.price));
             cmd.Parameters.Add(new MySqlParameter("serial_number", v.serial_number));
@@ -278,7 +280,8 @@ namespace dm_backend.Models
         {
 
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"select * from device where device_id = @id";
+            cmd.CommandText = "getdevicebyid";
+            cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@id",
@@ -296,9 +299,9 @@ namespace dm_backend.Models
                 {
                     var post = new val();
                     post.device_id = GetInt(reader, "device_id");
-                    post.device_type_id = GetInt(reader, "device_type_id");
-                    post.device_brand_id = GetInt(reader, "device_brand_id");
-                    post.model = GetSafeString(reader, "device_model_id");
+                    post.type = GetSafeString(reader, "type");
+                    post.brand = GetSafeString(reader, "brand");
+                    post.model = GetSafeString(reader, "model");
                     post.color = GetSafeString(reader, "color");
                     post.price = GetSafeString(reader, "price");
                     post.serial_number = GetSafeString(reader, "serial_number");
