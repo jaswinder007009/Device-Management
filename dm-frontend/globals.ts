@@ -23,7 +23,7 @@ export function navigationBarsss(role:string , element:string) {
              Devices
     </a>
     
-    <a class="mdl-navigation__link" href="/Device-Request/device_request.html">
+    <a class="mdl-navigation__link" href="./Device-Request/device_request.html">
     <i class="mdl-color-text--blue-grey-400 material-icons"
             role="presentation">import_export</i>Request Device
     </a>

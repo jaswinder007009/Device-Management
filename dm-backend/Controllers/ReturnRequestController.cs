@@ -1,4 +1,6 @@
 using System;
+using System.Data;
+using System.Data.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using dm_backend.Models;
 using Microsoft.AspNetCore.Authorization;
+using MySql.Data.MySqlClient;
 
 namespace dm_backend.Controllers
 {
@@ -36,24 +39,6 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok(result);
         }
-        
-        [HttpPut]
-        [Route("reject")]
-        public IActionResult PutReturnRequest([FromBody]ReturnRequestModel request)
-        {
-            Db.Connection.Open();
-            request.Db = Db;
-            string result = null;
-            try{
-                result = request.RejectReturnRequest();
-            }
-            catch(NullReferenceException){
-                return NoContent();
-            }
-            Db.Connection.Close();
-            return Ok(result);
-        }
-
 
         [HttpGet]
         public IActionResult GetReturnRequest()
@@ -80,6 +65,32 @@ namespace dm_backend.Controllers
             var result = returnObject.GetReturnRequests(userId,sortField,sortDirection,searchField);
             Db.Connection.Close();
             return new OkObjectResult(result);
+        }
+
+        [Authorize(Roles="admin")]
+        [HttpGet]
+        [Route("{returnId}")]
+        public IActionResult ReturnActions(int returnId, [System.Web.Http.FromUri]int id)
+        {
+            string action=(string)HttpContext.Request.Query["action"];
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            if(action=="accept")
+                cmd.CommandText = "accept_return";
+            else if(action=="reject")
+                cmd.CommandText = "reject_return";
+            cmd.CommandType = CommandType.StoredProcedure; 
+            try{
+                cmd.Parameters.AddWithValue("@return_id", returnId);
+                cmd.Parameters.Add(new MySqlParameter("var_admin_id", id));
+                cmd.ExecuteNonQuery();
+            }
+            catch(Exception e){
+                return NoContent();
+            }
+            Db.Connection.Close();
+            
+            return  Ok("Action successfully performed");
         }
     }
 

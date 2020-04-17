@@ -1,4 +1,6 @@
 using System;
+using System.Data;
+using System.Data.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using dm_backend.Logics;
 using dm_backend.Models;
 using Microsoft.AspNetCore.Authorization;
+using MySql.Data.MySqlClient;
+
 
 namespace dm_backend.Controllers
 {
@@ -76,6 +80,28 @@ namespace dm_backend.Controllers
             var result =  NotificationObject.GetNotifications(userId,sortField,sortDirection,searchField);
             Db.Connection.Close();
             return Ok(result);
+        }
+
+        
+        [HttpGet]
+         [Route("reject/{notificationId}")]
+        public IActionResult PutReturnRequest(int notificationId)
+        {
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            
+            cmd.CommandText = "reject_user_request";
+            cmd.CommandType = CommandType.StoredProcedure; 
+            try{
+                cmd.Parameters.AddWithValue("@var_notif_id", notificationId);
+                cmd.ExecuteNonQuery();
+            }
+            catch(Exception e){
+                return NoContent();
+            }
+            Db.Connection.Close();
+            
+            return  Ok("Request rejected");
         }
 
 

@@ -59,14 +59,11 @@ class Notify
             body: JSON.stringify(data),
         }).catch(Error => console.log(Error));   
     }   
-    rejectNotification(data:Notify)
+    rejectNotification(notificationId:number)
     {
-        let  data1 = JSON.stringify(data);
-        console.log(data);
-        fetch(BASEURL + "/api/ReturnRequest/reject", {
-            method: "PUT",
+        
+        fetch(BASEURL + "/api/Notification/reject/"+notificationId, {
             headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
-            body: data1,
         }).catch(Error => console.log(Error));   
     }   
 }
@@ -104,9 +101,8 @@ document.addEventListener("click", function (e) {
                if(confirm("Are you sure you donot want to submit the device?"))
                {
                 
-                notify.deviceId = +((e.target as HTMLButtonElement).dataset.value);
-                notify.userId = +(e.target as HTMLButtonElement).dataset.userid;
-                notify.rejectNotification(notify);
+                let notificationId = parseInt((e.target as HTMLButtonElement).dataset.notificationid,10);
+                notify.rejectNotification(notificationId);
                 
                }
                

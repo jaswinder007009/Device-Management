@@ -73,22 +73,6 @@ namespace dm_backend.Models
                 throw e;
             }
         }
-        public string RejectReturnRequest()
-        {
-             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"reject_user_request";
-            cmd.CommandType = CommandType.StoredProcedure;
-            try
-            {
-                BindReturnProcedureParams(cmd);
-                cmd.ExecuteNonQuery();
-                return "Request rejected";
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
 
         public List<ReturnRequestModel> GetReturnRequests(int userId,string sortField,string sortDirection,string searchField)
         {
