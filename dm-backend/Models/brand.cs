@@ -22,42 +22,42 @@ namespace dm_backend.Models
         {
             Db = db;
         }
-        public async Task<List<Brand>> getallbrands()
-        {
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"select * from device_brand;";
-            return await Readbrand(await cmd.ExecuteReaderAsync());
-        }
-        async public Task<List<Brand>> Readbrand(DbDataReader reader)
-        {
-            var brands = new List<Brand>();
-            using (reader)
-            {
-                while (await reader.ReadAsync())
-                {
-                    var brand1 = new Brand()
-                    {
-                        device_brand_id = reader.GetInt32(0),
-                        device_brand = reader.GetString(1),
-                    };
-                    brands.Add(brand1);
-                }
-            }
-            return brands;
-        }
+        // public async Task<List<Brand>> getallbrands()
+        // {
+        //     using var cmd = Db.Connection.CreateCommand();
+        //     cmd.CommandText = @"select * from device_brand;";
+        //     return await Readbrand(await cmd.ExecuteReaderAsync());
+        // }
+        // async public Task<List<Brand>> Readbrand(DbDataReader reader)
+        // {
+        //     var brands = new List<Brand>();
+        //     using (reader)
+        //     {
+        //         while (await reader.ReadAsync())
+        //         {
+        //             var brand1 = new Brand()
+        //             {
+        //                 device_brand_id = reader.GetInt32(0),
+        //                 device_brand = reader.GetString(1),
+        //             };
+        //             brands.Add(brand1);
+        //         }
+        //     }
+        //     return brands;
+        // }
         async public Task addbrand(Brand b)
             {
                 using var cmd = Db.Connection.CreateCommand();
-                cmd.CommandText = " addbrand";
-                cmd.CommandType = CommandType.StoredProcedure;
-                BindDevice(cmd, b);
+                cmd.CommandText = @"insert into device_brand (brand) values ('"+ b.device_brand +"');";
+                //cmd.CommandType = CommandType.StoredProcedure;
+              //  BindDevice(cmd, b);
                 await cmd.ExecuteNonQueryAsync();
             }
-            private void BindDevice(MySqlCommand cmd, Brand b)
-            {
+            // private void BindDevice(MySqlCommand cmd, Brand b)
+            // {
                 
-                cmd.Parameters.Add(new MySqlParameter("brand", b.device_brand));
-            }
+            //     cmd.Parameters.Add(new MySqlParameter("brand", b.device_brand));
+            // }
     }
 
 }
