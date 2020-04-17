@@ -88,24 +88,65 @@ import { UserData }  from "./dropdown";
 	return false;
 
 	});
-	function alertDelete() {
-		return confirm("Do You Want To Permanently Delete ?");
+	//function alertDelete() {
+	//	return confirm("Do You Want To Permanently Delete ?");
 
 
-	}
+//	}
+
+
+$('#deleteModal').on('shown.bs.modal', function (e) {
+
+	this.querySelector('.userDeleteData').setAttribute("data-id",e.relatedTarget.id);
+
+  })
+  $('#aiModal').on('shown.bs.modal', function (g) {
+
+	this.querySelector('.userCheckStatus').setAttribute("data-id",g.relatedTarget.id);
+})
+
+
+//   async getCurrentDecice(id:number,search: string = "", sort: string = "") {
+// 	this.url = BASEURL + "/api/Device/current_device/"+id+"?search=" + search + sort;
+// 	let data = await this.getApiCall(this.url);
+// 	this.data = await data;
+// 	console.log(data);
+// 	this.size = data.length;
+// 	this.dynamicGenerate(this.table1);
+// 	return data;
+
+// }
+// document.getElementById("tab1").addEventListener('click', function (ev) {
+
+// 	if (ev.target.classList.contains("return")) {
+// 		const deviceid=ev.target.parentElement.parentElement.dataset.deviceId;
+// 		const userid=ev.target.parentElement.parentElement.dataset.userId;
+// 		console.log(userid);
+// 		console.log(deviceid);
+// 		mydevices.returnDevice(parseInt(userid),parseInt(deviceid)).then(function() {mydevices.getCurrentDecice(userId);});
+	
+// 	}
+
+// });
+
+
 
 
 	document.addEventListener("click", function (ea) {
+		console.log("--------1------");
 		if((ea.target as HTMLButtonElement).className == "userDeleteData"){
+			console.log("--------2------");
 			const id = parseInt((ea.target as HTMLButtonElement).dataset["id"]);
-			if (alertDelete()) {
+			console.log("--------3------");
+			//if (alertDelete()) {
 				new GetUserApi(token).deleteData(id).then(function () { setData(); });
-			}
+				console.log("--------4------");
+		//	}
 			
 		}
 		else if(ea.target.tagName == 'TH')
 		{
-		
+			console.log("--------5------");
 			const returned = new Sort(token).sortBy(ea.target as HTMLTableHeaderCellElement);
 					returned.then(data => {
 					console.log(data);
@@ -114,7 +155,8 @@ import { UserData }  from "./dropdown";
 		}
 		else if (((ea.target) as HTMLInputElement).className == "userCheckStatus")
 		{
-			let userId:number = parseInt(((ea.target) as HTMLInputElement).id);
+			let userId:number = parseInt(((ea.target) as HTMLInputElement).dataset.id);
+			console.log(userId);			
 			if((document.getElementById(userId.toString()) as HTMLInputElement).checked)
 			{
 				new GetUserApi(token).userInactive(userId , "inactive");
