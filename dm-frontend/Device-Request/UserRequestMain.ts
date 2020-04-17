@@ -32,7 +32,7 @@ document.addEventListener("change", (event) => {
   }
 });
 
-async function specificationDropdown(
+export async function specificationDropdown(
   types: string,
   brands: string,
   models: string
