@@ -4,8 +4,10 @@ import * as util from "./utility";
 import { dynamicGenerate } from "./dynamic";
 import { validate } from "./validate"
 import { BASEURL, navigationBarsss, amIUser } from '../globals';
-
-export class UserData {
+(async function () {
+    let token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
+    let role = await amIUser(token) == true ? "User" : "Admin";
+class UserData {
     token : string ="";
 	constructor(token:string){
 		this.token=token;
@@ -65,7 +67,6 @@ export class UserData {
     }
 }
 const userId=JSON.parse(sessionStorage.getItem("user_info"))["id"];
-const token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
 
 var user = new UserData(token);
 
@@ -111,4 +112,5 @@ function populateDropdown(selectElement: HTMLSelectElement, data) {
     }
     selectElement.innerHTML = htmlString;
 }
-navigationBarsss("Admin","navigation");
+navigationBarsss(role,"navigation");
+})();

@@ -14,10 +14,26 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
     let email = 'abc@gmail.com';
     token = JSON.parse(sessionStorage.getItem("user_info"))["token"]; 
 
-
+    
   let role = await amIUser(token) == true ? "User" : "Admin";
     //let role = 'User';
  
+
+
+    (function(){
+        if (role=="Admin")
+        {
+            (document.getElementById("submissionNotification") as HTMLSpanElement).innerText ="check_circle";
+        }
+    })();
+
+    document.querySelector("#submissionNotification").addEventListener('click',e=>
+        {
+            if(role=="Admin")
+            {
+                window.location.href="./submissionRequestPage.html";
+            }
+        });
     function createCard(index, key, cardData) {
         var cardCreationCode: string = "<div class='demo-card-event mdl-card mdl-shadow--2dp mdl-color--blue-grey-200' id='card'>"
             + "<div class='mdl-card__title mdl-card--expand'>"
@@ -160,6 +176,10 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
     document.getElementById("notifications").addEventListener('click', function (e) {
         window.location.href = "./notifiication.html";
     })
+    document.getElementById("logout").addEventListener('click', function (e) {
+        sessionStorage.clear();
+        window.location.href = "/SJLogin/LoginRegiter.html";
+    })
     
     document.getElementById('email').innerHTML = email;
     // document.getElementById('userRole').innerHTML = role;
@@ -171,7 +191,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
     else if (role == 'Admin') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
         getFaults(BASEURL + "/api/dashboard/faults");
-        getPendingRequests(BASEURL + "/request/pending");
+        getPendingRequests(BASEURL + "/api/request/pending");
         
     }
     })();

@@ -4,7 +4,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
 (async function () {
     const token: string = JSON.parse(sessionStorage.getItem("user_info"))["token"];
     let adminId = JSON.parse(sessionStorage.getItem("user_info"))["id"];
-    let globalUrl = BASEURL + "/request/pending";
+    let globalUrl = BASEURL + "/api/request/pending";
 
     function getPendingRequests(url: string) {
 

@@ -29,14 +29,14 @@ namespace dm_backend.Models{
         {
             Db.Connection.Open();
             var request = new Request(Db);
-          //  try
+            try
             {
                 request.addDevice(req);
                
             }
-          //  catch
+            catch
             {
-          //     return BadRequest("request is incorrect");
+               return BadRequest("request is incorrect");
             }
             Db.Connection.Close();
             return Ok("request Sent");
