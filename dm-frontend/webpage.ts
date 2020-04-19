@@ -7,8 +7,10 @@ import { UserModel } from "./UserModel";
 import { remove} from "validation";
 import { validateForm} from "validation";
 import { Sort } from "./user-profile/SortingUser";
-import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
+import { BASEURL, amIAdmin, amIUser,navigationBarsss, BASEURL, BASEURL } from './globals';
 import { UserData }  from "./dropdown";
+import {MyDevices } from "./userHistory";
+
 (async function(){
 	const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
 	const role = (await amIUser(token)) == true ? "User" : "Admin";
@@ -96,13 +98,62 @@ import { UserData }  from "./dropdown";
 
 
 $('#deleteModal').on('shown.bs.modal', function (e) {
-
+    
 	this.querySelector('.userDeleteData').setAttribute("data-id",e.relatedTarget.id);
+	let userId:number = parseInt(((e.target) as HTMLInputElement).dataset.id);
+	
+	let url : string= BASEURL + "/api/Device/current_device/"+e.relatedTarget.id+"?search=" + "" + "";
 
-  })
-  $('#aiModal').on('shown.bs.modal', function (g) {
+	 let data=new MyDevices(token).getApiCall(url)
+	 .then(res=>{
+	      
+			  console.log(res);
+			if(res.length>0)
+			 {   let i=0;
+				(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
+				(document.getElementById("errorMsg") as HTMLInputElement).innerHTML= "This User Already Has Assigned Devices So Can't Be Deleted";
+				document.getElementById("dis").disabled = true;
+				 for(i=0;i<res.length;i++)
+				 (document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices "+ "<br>"+(i+1)+". "+res[i].type+" "+res[i].brand+" "+res[i].model+"<br> ";
+				}
+			 else
+			 {
+				
+				(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
+				document.getElementById("dis").disabled = false;
+				(document.getElementById("errorMsg") as HTMLInputElement).innerHTML= "This User Will Be Permanently Deleted <br> Do You Want To Proceed ?";
+				
+			 }
+				});
+ })
 
-	this.querySelector('.userCheckStatus').setAttribute("data-id",g.relatedTarget.id);
+
+$('#aiModal').on('shown.bs.modal', function (g) {
+    console.log("in1");
+	
+this.querySelector('.userCheckStatus').setAttribute("data-id",g.relatedTarget.id);
+let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
+			console.log(g.relatedTarget.id); //userid
+			let url : string= BASEURL + "/api/Device/current_device/"+g.relatedTarget.id+"?search=" + "" + "";
+
+			 let data=new MyDevices(token).getApiCall(url)
+			 .then(res=>{
+					  console.log(res);
+		            if(res.length>0)
+					 {   let i=0;
+						(document.getElementById("insideModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices "+ "<br>"
+
+		                 for(i=0;i<res.length;i++)
+                         (document.getElementById("insideModel") as HTMLInputElement).innerHTML+=(i+1)+". "+res[i].type+" "+res[i].brand+" "+res[i].model+"<br> ";
+						 (document.getElementById("insideModel") as HTMLInputElement).innerHTML+="Making Inactive Will Delete Above Assigned Devices!";
+
+						}
+					 else{
+						(document.getElementById("insideModel") as HTMLInputElement).innerHTML="";
+					 }
+                        });
+			 
+
 })
 
 
@@ -133,20 +184,20 @@ $('#deleteModal').on('shown.bs.modal', function (e) {
 
 
 	document.addEventListener("click", function (ea) {
-		console.log("--------1------");
+		//console.log("--------1------");
 		if((ea.target as HTMLButtonElement).className == "userDeleteData"){
-			console.log("--------2------");
+		//	console.log("--------2------");
 			const id = parseInt((ea.target as HTMLButtonElement).dataset["id"]);
-			console.log("--------3------");
+		//	console.log("--------3------");
 			//if (alertDelete()) {
 				new GetUserApi(token).deleteData(id).then(function () { setData(); });
-				console.log("--------4------");
+			//	console.log("--------4------");
 		//	}
 			
 		}
 		else if(ea.target.tagName == 'TH')
 		{
-			console.log("--------5------");
+			//console.log("--------5------");
 			const returned = new Sort(token).sortBy(ea.target as HTMLTableHeaderCellElement);
 					returned.then(data => {
 					console.log(data);
@@ -154,18 +205,25 @@ $('#deleteModal').on('shown.bs.modal', function (e) {
 				});
 		}
 		else if (((ea.target) as HTMLInputElement).className == "userCheckStatus")
-		{
+		{   
 			let userId:number = parseInt(((ea.target) as HTMLInputElement).dataset.id);
-			console.log(userId);			
+			console.log("this is id : "+userId);			
 			if((document.getElementById(userId.toString()) as HTMLInputElement).checked)
 			{
 				new GetUserApi(token).userInactive(userId , "inactive");
+				console.log("------------------1---------------");
+				//(document.getElementById(userId.toString()) as HTMLInputElement).checked=true;
 			}
 			else
 			{	
 				new GetUserApi(token).userInactive(userId , "active");
+				console.log("-----------------2----------------");
+
+				
 			}
+			console.log("-----------------3----------------");
 			setData();
+
 		}
 		else if(((ea.target) as HTMLInputElement).id == "closeFormButton")
 		{

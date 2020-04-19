@@ -399,14 +399,15 @@
               </button>
             </div>
             <div class="modal-body">
-            Do You Want To Permanently Delete This User?<br>
-            This User Has Following Devices
+            <div id="errorMsg"></div>
+            <div id="insideDeleteModel">
+       
+            </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="" data-dismiss="modal">Close</button>
-              <button type="button"  class="userDeleteData"  data-dismiss="modal" value="Delete">Delete</button>
-            </div>
-          </div>
+              <button type="button"  class="userDeleteData" id="dis"  data-dismiss="modal" value="Delete">Delete</button>
+            </div>      </div>
         </div>
       </div>
 <!--------Modal For Delete Ends Here-->
@@ -425,7 +426,9 @@
         </div>
         <div class="modal-body">
         Do You Want To Change Status For This User?<br>
-        This User Has Following  Devices
+       <div id="insideModel">
+       
+       </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="" data-dismiss="modal">Close</button>
