@@ -13,7 +13,7 @@ namespace dm_backend.Controllers
     #warning enforce authorization before merging to develop
     // [Authorize(Roles="admin")]
     [ApiController]
-    [Route("api")]
+    [Route("api/device")]
     public class RoleController : BaseController
     {
         public RoleController(AppDb db)
@@ -353,19 +353,19 @@ namespace dm_backend.Controllers
         //     return Ok();
         // }
 
-        // [AllowAnonymous]
-        // [HttpGet]
-        // [Route("is_user")]
-        // public IActionResult AmIUser(){
-        //     return Ok(new{ result= GetUserRoles().Contains("user") });
-        // }
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("is_user")]
+        public IActionResult AmIUser(){
+            return Ok(new{ result= GetUserRoles().Contains("user") });
+        }
 
-        // [AllowAnonymous]
-        // [HttpGet]
-        // [Route("is_admin")]
-        // public IActionResult AmIAdmin(){
-        //     return Ok(new{ result= GetUserRoles().Contains("admin") });
-        // }
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("is_admin")]
+        public IActionResult AmIAdmin(){
+            return Ok(new{ result= GetUserRoles().Contains("admin") });
+        }
 
         public AppDb Db { get; }
     }
