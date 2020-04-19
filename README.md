@@ -87,10 +87,10 @@ Step 2. Refer [this file on using the methods](https://github.com/rishikant05/De
 
 ### Webpack
 
-The file inside `data-main` attribute is now under `entry` property in [*webpack.config.js*]()
+The file inside `data-main` attribute is now under `entry` property in [*webpack.config.js*](https://github.com/rishikant05/Device-Management/blob/frontend-with-webpack/dm-frontend/webpack.config.js)
 and the new way to use the script in html is `<script src="/assets/js/<filename>.js"></script>`
 
-While developing a new page don't forget to add your file in the entry object in [*webpack.config.js*]() file.
+While developing a new page don't forget to add your file in the entry object in [*webpack.config.js*](https://github.com/rishikant05/Device-Management/blob/frontend-with-webpack/dm-frontend/webpack.config.js) file.
 
 #### Usage
 
