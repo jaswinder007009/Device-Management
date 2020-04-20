@@ -142,6 +142,12 @@ import { openForm } from "./utilities";
 				console.log("fail deleted");
 			}
 		}
+		if((e.target as HTMLTableCellElement).className=="cards")
+        {
+			console.log("abc");
+			const device_id: any = (e.target as HTMLButtonElement).dataset.deviceid;
+			window.location.href = "./devicedetail.html?device_id=" + device_id;
+        }
 		if ((e.target as HTMLButtonElement).className == "notify-button") {
 			console.log("notify");
 			let request = new Requests();
@@ -194,6 +200,12 @@ import { openForm } from "./utilities";
 			temp.closeForm1("popupForm2");
 		}
 	});
+	(document.querySelector("#device_id") as HTMLTableElement).addEventListener(
+		"click",
+		function(e) {
+			window.location.href="./devicedetail.html";
+		}
+	);
 	(document.querySelector("#tablecol") as HTMLTableElement).addEventListener(
 		"click",
 		function(e) {

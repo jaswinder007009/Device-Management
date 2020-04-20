@@ -10,7 +10,7 @@ token :string="";
         warranty_year: string;
         purchase_date: string;
         status: string;
-
+        comments :  string;
 
         ram: string;
         storage: string;
@@ -38,6 +38,7 @@ token :string="";
             this.warranty_year = data.warranty_year;
             this.purchase_date = data.purchase_date;
             this.status = data.status;
+            this.comments = data.comments;
             this.ram = data.specifications.ram;
             this.storage = data.specifications.storage;
             this.screen_size = data.specifications.screen_size;
@@ -56,7 +57,7 @@ token :string="";
             const value = `
             
             <tr>
-                <td class = "cards">${this.type} ${this.brand} ${this.model}
+                <td class = "cards" data-deviceid="${this.device_id}">${this.type} ${this.brand} ${this.model}
                     <div class="mdl-card">
                         <div class="mdl-card__title">
                             <h2 class="mdl-card__title-text">Device Details</h2>
