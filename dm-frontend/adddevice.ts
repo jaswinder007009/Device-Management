@@ -22,14 +22,16 @@ function checkTypeBrandModel() {
 
   return (brand.value && type.value && model.value);
 }
-specification.addEventListener('click', function (e) {
-  if (checkTypeBrandModel())
-    specificationDropdown(type.value, brand.value, model.value);
-    else
-    {
-      alert("please fill type,brand and model");
-    }
-});
+// specification.addEventListener('blur', function (e) {
+//   console.log("sg");
+//   if (checkTypeBrandModel())
+//   specificationDropdown(type.value, brand.value, model.value);
+  
+//    else
+//     {
+//       alert("please fill type,brand and model");
+//     }
+// });
 (document.querySelector('#inputtype') as HTMLInputElement).addEventListener('change', function (e) {
   console.log((document.getElementById("inputtype") as HTMLInputElement).value)
   let types = checkDropDown("type",type);
@@ -45,6 +47,9 @@ specification.addEventListener('click', function (e) {
       (document.getElementById("inputtype") as HTMLInputElement).value="";
     }
   }
+  if (checkTypeBrandModel())
+  specificationDropdown(type.value, brand.value, model.value);
+ 
 });
 (document.querySelector('#inputbrand') as HTMLInputElement).addEventListener('change', function (e) {
   let brands = checkDropDown("brand",brand);
@@ -60,6 +65,9 @@ specification.addEventListener('click', function (e) {
       (document.getElementById("inputbrand") as HTMLInputElement).value="";
     }
   }
+  if (checkTypeBrandModel())
+  specificationDropdown(type.value, brand.value, model.value);
+ 
 });
 (document.querySelector('#inputmodel') as HTMLInputElement).addEventListener('change', function (e) {
   let models = checkDropDown("model",model);
@@ -75,6 +83,9 @@ specification.addEventListener('click', function (e) {
       (document.getElementById("inputmodel") as HTMLInputElement).value="";
     }
   }
+  if (checkTypeBrandModel())
+  specificationDropdown(type.value, brand.value, model.value);
+ 
 });
 (document.querySelector('#popup_specification') as HTMLButtonElement).addEventListener('submit', function (e) {
   console.log("inside function")

@@ -1,19 +1,21 @@
 import { SpecificationList } from "./specificationlist";
-import { BASEURL } from './globals';
+import { BASEURL, amIUser, navigationBarsss } from './globals';
 let mode:string = "create";
 (async function(){
     let token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
+    const role = (await amIUser(token)) == true ? "User" :"Admin";
     class GetSpecification {
         specification_id:number;
         RAM:string;
         storage:string;
-        screen_size:string;
+        screenSize:string;
         connectivity:string;
     
         getSpecificationData() {
             fetch(
-                BASEURL +"/api/Device/specification"
-            )
+                BASEURL +"/api/Device/specification",{
+                    headers: new Headers({"Authorization": `Bearer ${token}`})
+                })
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
@@ -33,7 +35,7 @@ let mode:string = "create";
             const data = new GetSpecification();
             data.RAM = (document.getElementById("RAM")as HTMLInputElement).value;
             data.storage = (document.getElementById("Storage")as HTMLInputElement).value;
-            data.screen_size = (document.getElementById("Screen_size")as HTMLInputElement).value;
+            data.screenSize = (document.getElementById("Screen_size")as HTMLInputElement).value;
             data.connectivity = (document.getElementById("Connectivity")as HTMLInputElement).value;
             return JSON.stringify(data);
         }
@@ -44,7 +46,10 @@ let mode:string = "create";
             console.log(data1);
             fetch(BASEURL +"/api/Device/addspecification", {
                 method: "POST",
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: data1,
             })
             .catch(Error => console.log(Error));
@@ -68,7 +73,9 @@ let mode:string = "create";
         fillSpecification(specification_id:number)
         {
             fetch(
-                BASEURL +"/api/Device/spec/"+specification_id
+                BASEURL +"/api/Device/spec/"+specification_id,{
+                    headers: new Headers({"Authorization": `Bearer ${token}`})
+                }
             )
                 .then(response => response.json())
                 .then(data => {
@@ -86,7 +93,7 @@ let mode:string = "create";
             (document.getElementById("RAM")as HTMLInputElement).value  =  data.result[0].ram;
             (document.getElementById("Connectivity")as HTMLInputElement).value = data.result[0].connectivity;
             (document.getElementById("Storage")as HTMLInputElement).value  = data.result[0].storage;
-            (document.getElementById("Screen_size")as HTMLInputElement).value  = data.result[0].screen_size;
+            (document.getElementById("Screen_size")as HTMLInputElement).value  = data.result[0].screenSize;
             
         }
         openForm() {
@@ -130,4 +137,5 @@ let mode:string = "create";
 
     const specs = new GetSpecification();
     specs.getSpecificationData();
+    navigationBarsss(role,"navigation");
 })();
