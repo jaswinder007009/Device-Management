@@ -23,7 +23,7 @@ export function navigationBarsss(role:string , element:string) {
              Devices
     </a>
     
-    <a class="mdl-navigation__link" href="/user-model.html">
+    <a class="mdl-navigation__link" href="/Device-Request/device_request.html">
     <i class="mdl-color-text--blue-grey-400 material-icons"
             role="presentation">import_export</i>Request Device
     </a>
@@ -58,4 +58,23 @@ export function navigationBarsss(role:string , element:string) {
    {
     document.getElementById(element).innerHTML = navigation;
 }
+}
+
+export class Token    /// call static method that return an object 
+{
+    userID:number 
+    tokenKey :string
+    
+
+    private constructor(){ 
+        this.tokenKey = JSON.parse(sessionStorage.getItem("user_info"))["token"];
+        this.userID = parseInt(JSON.parse(sessionStorage.getItem("user_info"))["id"]);
+     }
+
+     static  getInstance():Token
+    {
+       
+        return new Token();
+    }
+
 }

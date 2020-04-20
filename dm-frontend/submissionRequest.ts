@@ -93,4 +93,5 @@ import { BASEURL } from "./globals";
             getAll();
         });
     getAll();
+
 })();

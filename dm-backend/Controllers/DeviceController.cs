@@ -187,8 +187,6 @@ namespace dm_backend.Controllers
             Db.Connection.Open();
             var que = new insertspec(Db);
             await que.addspecification(body);
-            // item.Db = Db;
-            //var result = item.Insert();
             Db.Connection.Close();
             return Ok();
         }
@@ -204,30 +202,6 @@ namespace dm_backend.Controllers
             await query.updatespecification(body);
             Db.Connection.Close();
             return Ok();
-        }
-        [HttpGet("type")]
-        public async Task<IActionResult> GetAlltypes()
-        {
-            await Db.Connection.OpenAsync();
-            var query = new type(Db);
-            var result = await query.getalltypes();
-            return new OkObjectResult(result);
-        }
-        [HttpGet("model")]
-        public async Task<IActionResult> GetAllmodel()
-        {
-            await Db.Connection.OpenAsync();
-            var query = new Model(Db);
-            var result = await query.getallmodel();
-            return new OkObjectResult(result);
-        }
-        [HttpGet("brand")]
-        public async Task<IActionResult> GetAllbrands()
-        {
-            await Db.Connection.OpenAsync();
-            var query = new Brand(Db);
-            var result = await query.getallbrands();
-            return new OkObjectResult(result);
         }
 
         [Authorize(Roles="admin")]

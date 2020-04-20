@@ -237,7 +237,7 @@ namespace dm_backend.Controllers
 
         [HttpGet]
         [Route("{type}/{brand}/{model}/specification")]
-        async public Task<IActionResult> GetAllDeviceBrands(int type ,int brand ,  int model )
+        async public Task<IActionResult> GetAllDeviceBrands(String type ,String brand ,  String model )
         {
 
             Db.Connection.Open();

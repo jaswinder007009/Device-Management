@@ -33,7 +33,8 @@ namespace dm_backend.Utilities
             user.DOJ = Convert.ToDateTime(reader["date_of_joining"]).ToString("yyyy-MM-dd");
             return user;
         }
-        public static SpecificationModel ReadSpecifications(MySqlDataReader reader){
+        public static SpecificationModel ReadSpecifications(MySqlDataReader reader)
+        {
             var specfication = new SpecificationModel();
             specfication.RAM = (string)reader["RAM"];
             specfication.Storage = (string)reader["storage"];

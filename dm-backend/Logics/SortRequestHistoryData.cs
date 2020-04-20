@@ -78,23 +78,7 @@ namespace dm_backend.Logics
             return limit_size;
         }
 
-
-    /*    private void getStatus(string status)
-        {
-
-
-            if (status == "ret" || status == "Returned")
-                status = " and  s.status_name = 'Returned'";
-            else if (status == "rej" || status == "Rejected")
-                status = " and  s.status_name = 'Rejected'";
-            else
-                status = "";
-
-            this.command += " " + status;
-
-        }*/
-
-      
+   
 
 
         async public Task<Result<RequestDeviceHistory>> GetSortData(string find, string serialNumber, string status , string sortElement, string sortType, string page, string limit)
