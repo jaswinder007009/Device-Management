@@ -31,7 +31,7 @@ namespace dm_backend.Models
             Db = db;
         }
 
-        public string AddNotification()
+        public string AddNotifications()
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "insert_notification";

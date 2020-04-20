@@ -9,8 +9,7 @@ let model = (document.getElementById("inputmodel") as HTMLInputElement);
 let specification = (document.getElementById("specification") as HTMLSelectElement);
 function checkDropDown(elements: string,compareElement) {
   let flag = 0;
-  let option = document.getElementById(elements).options;
-  console.log(option[0].value);
+  let option = (document.getElementById(elements)as HTMLDataListElement).options;
   Array.from(option).forEach(element => {
     if (compareElement.value == element.value) {
       flag = 1;

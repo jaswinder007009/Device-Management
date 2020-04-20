@@ -1,5 +1,5 @@
 export function validate() {
-    return Firstnamevalidation() &&Middlenamevalidation()&&
+    return Firstnamevalidation() && Middlenamevalidation() &&
     Lastnamevalidation() &&
     emailvalidation()&&passwordvalidation()&&addressvalidation("addresses1")&&addressvalidation("addresses2")&&
     addressvalidation1("addresses1")&&addressvalidation1("addresses2")&&date0fbirthvalidation()&&
@@ -7,7 +7,7 @@ export function validate() {
     phonevalidation("phones3");
 }
 function Firstnamevalidation() {
-    var firstnames = document.getElementById('firstName').value;
+    var firstnames = (document.getElementById('firstName') as HTMLInputElement).value;
     if (firstnames == "") {
         document.getElementById('firstnames').innerHTML = "Fill First Name";
         return false;
@@ -21,7 +21,7 @@ function Firstnamevalidation() {
     }
 }
 function Middlenamevalidation() {
-    var middlenames = document.getElementById('middleName').value;
+    var middlenames = (document.getElementById('middleName') as HTMLInputElement).value;
     if (middlenames=="")
     {
         return true;
@@ -36,7 +36,7 @@ function Middlenamevalidation() {
     }
 }
 function Lastnamevalidation() {
-    var lastnames = document.getElementById('lastName').value;
+    var lastnames = (document.getElementById('lastName') as HTMLInputElement).value;
     if (lastnames == "") {
         document.getElementById('lastnames').innerHTML = "Fill Last Name";
         return false;
@@ -50,7 +50,7 @@ function Lastnamevalidation() {
     }
 }
 function emailvalidation() {
-    var emails = document.getElementById('email').value;
+    var emails = (document.getElementById('email') as HTMLInputElement).value;
     if (emails == "") {
         document.getElementById('emails').innerHTML = "Fill Email";
         return false;
@@ -66,7 +66,7 @@ function emailvalidation() {
     }
 }
 function date0fbirthvalidation() {
-    var dobs= document.getElementById('dob').value;
+    var dobs= (document.getElementById('dob') as HTMLInputElement).value;
     if (dobs == "") {
         document.getElementById('dobs').innerHTML = "Fill date of birth";
         return false;
@@ -77,7 +77,7 @@ function date0fbirthvalidation() {
     }
 }
 function passwordvalidation() {
-    var passwords = document.getElementById('password').value;
+    var passwords = (document.getElementById('password') as HTMLInputElement).value;
     if(passwords=="")
     {
         return true;
@@ -90,7 +90,7 @@ function passwordvalidation() {
         return true; }
 }
 function addressvalidation(containerId: string) {
-    var addresses1 = document.querySelector("#" + containerId + ' .addressLine1').value;
+    var addresses1 = (document.querySelector("#" + containerId + ' .addressLine1') as HTMLInputElement).value;
     if (addresses1 == "") {
         document.querySelector("#" + containerId + ' .addressLine1span').innerHTML = "Fill  addresss line1";
         return false;
@@ -104,7 +104,7 @@ function addressvalidation(containerId: string) {
     }
 }
 function addressvalidation1(containerId: string) {
-    var addresses2 = document.querySelector("#" + containerId + ' .addressLine2').value;
+    var addresses2 = (document.querySelector("#" + containerId + ' .addressLine2') as HTMLInputElement).value;
     if (addresses2 == "") {
         return true;
     }
@@ -118,8 +118,8 @@ function addressvalidation1(containerId: string) {
     }
 }
 function pinvalidation(containerId: string) {
-    var pin = document.querySelector("#" + containerId + ' .pin').value;
-     if (isNaN(pin)) {
+    var pin = (document.querySelector("#" + containerId + ' .pin') as HTMLInputElement).value;
+     if (isNaN(parseInt(pin))) {
         document.querySelector("#" + containerId + ' .pinspan').innerHTML = "pincode must be in digit";
         return false;
     }
@@ -129,11 +129,11 @@ function pinvalidation(containerId: string) {
     }
 }
 function phonevalidation(containerId: string) {
-    var phone = document.querySelector("#" + containerId + ' .number').value;
+    var phone = (document.querySelector("#" + containerId + ' .number') as HTMLInputElement).value;
     if ((phone=="")) {
         return true;
     }
-    else if (isNaN(phone)) {
+    else if (isNaN(parseInt(phone))) {
         document.querySelector("#" + containerId + ' .numberspan').innerHTML = "**Only Digits Allowed";
         return false;
     } else if (phone.length != 10) {

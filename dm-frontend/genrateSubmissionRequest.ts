@@ -18,8 +18,10 @@ export class populateData
         <td>${data.specification} </td>
         <td>${data.ReturnDate}</td>
         <td>
-        <button class="accept" data-user-id=${data.userId} data-return-id=${data.returnRequestId} > submitt </button>
-         </td>`;
+        <button class="accept" data-user-id=${data.userId} data-return-id=${data.returnRequestId} > Submit </button>
+        <button class="reject" data-return-id=${data.returnRequestId} > Reject </button>
+ 
+        </td>`;
          this.addData(value , elementId)
     }
     addData(data : string , elementId : string)
