@@ -54,7 +54,7 @@ namespace dm_backend.Models{
                 specification_id = reader.IsDBNull("specification_id") ? -1 : (int)reader["specification_id"],
                 RAM = reader.IsDBNull("RAM") ? "" : reader.GetString("RAM"),
                 Storage = reader.IsDBNull("storage") ? "" : reader.GetString("storage"),
-                Screen_size = reader.IsDBNull("screen_size")  ? "" : reader.GetString("screen_size"),
+                ScreenSize = reader.IsDBNull("screen_size")  ? "" : reader.GetString("screen_size"),
                 Connectivity = reader.IsDBNull("connectivity")  ? "" : reader.GetString("connectivity")
 
             };

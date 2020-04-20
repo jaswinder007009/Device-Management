@@ -163,25 +163,25 @@ import { dynamicGenerate } from './user-profile/dynamic';
     });
     document.getElementById("tab3").addEventListener('click', function (ev) {
 
-        if (ev.target.classList.contains("cancel")) {
-            const requestId = ev.target.parentElement.parentElement.dataset.requestId;
-            mydevices.deleteRequestHistory(parseInt(requestId)).then(function () { mydevices.getRequestHistory(userId); });
+        if ((ev.target as HTMLButtonElement).classList.contains("cancel")) {
+            const requestId=(ev.target as HTMLButtonElement).parentElement.parentElement.dataset.requestId;
+            mydevices.deleteRequestHistory(parseInt(requestId)).then(function () {mydevices.getRequestHistory(userId); });
 
         }
 
     });
     document.getElementById("tab1").addEventListener('click', function (ev) {
 
-        if (ev.target.classList.contains("return")) {
-            const deviceid = ev.target.parentElement.parentElement.dataset.deviceId;
+if ((ev.target as HTMLButtonElement).classList.contains("return")) {
+            const deviceid=(ev.target as HTMLButtonElement).parentElement.parentElement.dataset.deviceId;
             console.log(deviceid);
             mydevices.returnDevice(parseInt(userId), parseInt(deviceid)).then(function () { mydevices.getCurrentDecice(userId); });
 
         }
 
-        else if (ev.target.classList.contains("fault")) {
+       else if ((ev.target as HTMLButtonElement).classList.contains("fault")) {
             openForm();
-            const deviceid = ev.target.parentElement.parentElement.dataset.deviceId;
+            const deviceid=(ev.target as HTMLButtonElement).parentElement.parentElement.dataset.deviceId;
             document.getElementById("faultpopup").setAttribute("data-device-id", deviceid)
         }
 
@@ -208,7 +208,7 @@ import { dynamicGenerate } from './user-profile/dynamic';
 
     document.getElementById("search1").addEventListener('keyup', function () {
 
-        mydevices.getCurrentDecice(userId, document.getElementById("search1").value);
+        mydevices.getCurrentDecice(userId,(document.getElementById("search1") as HTMLInputElement).value);
     });
     // document.getElementById("search2").addEventListener('keyup', function () {
 
@@ -223,23 +223,23 @@ import { dynamicGenerate } from './user-profile/dynamic';
 
     document.addEventListener("click", function (ea) {
 
-        if (ea.target.tagName == 'TH' && ea.target.dataset.sortable == "true") {
+        if ((ea.target as HTMLTableHeaderCellElement).tagName == 'TH' && (ea.target as HTMLTableHeaderCellElement).dataset.sortable=="true") {
             var tab1: HTMLLIElement = document.getElementById("fixed-tab-1") as HTMLLIElement;
             // var tab2: HTMLLIElement = document.getElementById("fixed-tab-2") as HTMLLIElement;
 
             const searchbox = tab1.querySelector(".mdl-textfield__input")
             if (document.querySelector(".mdl-layout__tab-panel.is-active") == tab1) {
 
-                mydevices.getCurrentDecice(userId, searchbox.value, new Sort().getSortingUrl(ea.target));
+                mydevices.getCurrentDecice(userId,(searchbox as HTMLInputElement).value, new Sort(token).getSortingUrl(ea.target as HTMLTableHeaderCellElement));
             }
             // else if(document.querySelector(".mdl-layout__tab-panel.is-active") == tab2) {
 
-            //     mydevices.getPreviousDecice(userId,searchbox.value, new Sort().getSortingUrl(ea.target));
-            // }
-            else {
-                mydevices.getRequestHistory(userId, searchbox.value, new Sort().getSortingUrl(ea.target));
+                mydevices.getPreviousDecice(userId,(searchbox as HTMLInputElement).value, new Sort(token).getSortingUrl(ea.target as HTMLTableHeaderCellElement));
             }
-        }
+            else{
+                mydevices.getRequestHistory(userId,(searchbox as HTMLInputElement).value,new Sort(token).getSortingUrl(ea.target as HTMLTableHeaderCellElement));
+            }
+        
 
 
     });

@@ -1,4 +1,6 @@
 using System;
+using System.Data;
+using System.Data.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using dm_backend.Models;
 using Microsoft.AspNetCore.Authorization;
+using MySql.Data.MySqlClient;
 
 namespace dm_backend.Controllers
 {
@@ -75,28 +78,44 @@ namespace dm_backend.Controllers
         [HttpGet]
         public IActionResult GetReturnRequest()
         {
-            int userId=-1;
-            string searchField = "";
-            string sortField = "";
-            string sortDirection = "asc";
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
-                userId = Convert.ToInt32(HttpContext.Request.Query["id"]);
-
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["search"]))
-                searchField = HttpContext.Request.Query["search"];
-            
-            
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["sort"]))
-                sortField = HttpContext.Request.Query["sort"];
-
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["direction"]))
-                sortDirection = HttpContext.Request.Query["direction"];
+            int userId=  -1;
+            string searchField=(string) HttpContext.Request.Query["search"] ?? "";
+            string sortField=(string) HttpContext.Request.Query["sort"] ?? "";
+            string sortDirection=(string)HttpContext.Request.Query["direction"] ?? "asc";
+            if(!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
+            userId=Convert.ToInt32((string)HttpContext.Request.Query["id"]);
 
             Db.Connection.Open();
             var returnObject = new ReturnRequestModel(Db);
             var result = returnObject.GetReturnRequests(userId,sortField,sortDirection,searchField);
             Db.Connection.Close();
             return new OkObjectResult(result);
+        }
+
+        [Authorize(Roles="admin")]
+        [HttpGet]
+        [Route("{returnId}")]
+        public IActionResult ReturnActions(int returnId, [System.Web.Http.FromUri]int id)
+        {
+            string action=(string)HttpContext.Request.Query["action"];
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            if(action=="accept")
+                cmd.CommandText = "accept_return";
+            else if(action=="reject")
+                cmd.CommandText = "reject_return";
+            cmd.CommandType = CommandType.StoredProcedure; 
+            try{
+                cmd.Parameters.AddWithValue("@return_id", returnId);
+                cmd.Parameters.Add(new MySqlParameter("var_admin_id", id));
+                cmd.ExecuteNonQuery();
+            }
+            catch(Exception e){
+                return NoContent();
+            }
+            Db.Connection.Close();
+            
+            return  Ok("Action successfully performed");
         }
     }
 

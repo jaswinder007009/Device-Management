@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { BASEURL, navigationBarsss, amIUser } from "./globals";
 (async function(){
     const Select = mdc.select.MDCSelect;
