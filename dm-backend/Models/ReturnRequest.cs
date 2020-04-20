@@ -21,7 +21,7 @@ namespace dm_backend.Models
         public string deviceModel { get; set; }
         public string deviceBrand { get; set; }
         public string deviceType { get; set; }  
-        public SpecificationModel specs { get; set;}     
+        public Specification specs { get; set;}     
         public string returnDate { get; set; }
         internal AppDb Db { get; set; }
 

@@ -63,8 +63,8 @@ export async function specificationDropdown(
       data[i].ram)  +
       (data[i].storage == "" ? "" : " Storage: " +
       data[i].storage) +
-      (data[i].screen_size == "" ? "" : " Screen Size: " +
-      data[i].screen_size) +
+      (data[i].screenSize == "" ? "" : " Screen Size: " +
+      data[i].screenSize) +
       (data[i].connectivity == "" ? "" : " Connectivity: " +
       data[i].connectivity) +
       "</option>";

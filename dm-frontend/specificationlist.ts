@@ -14,7 +14,7 @@ export class SpecificationList
         this.specification_id = data.specification_id;
         this.RAM = data.ram;
         this.storage = data.storage;
-        this.screen_size = data.screen_size;
+        this.screen_size = data.screenSize;
         this.connectivity = data.connectivity;
         this.token=token;
     }   
