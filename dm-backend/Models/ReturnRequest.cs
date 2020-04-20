@@ -24,7 +24,7 @@ namespace dm_backend.Models
         public Specification specs { get; set;}     
         public string returnDate { get; set; }
          public string comment {get; set;}
-         public int complaintId {get; set;}
+         
         internal AppDb Db { get; set; }
 
         public ReturnRequestModel()
@@ -107,39 +107,7 @@ namespace dm_backend.Models
                 throw e;
             }
         }
-         public string resolveRequest()
-        {
-             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"resolve_complaint";
-            cmd.CommandType = CommandType.StoredProcedure;
-            try
-            {
-                BindFaultyRequestProcedureParams(cmd);
-                cmd.ExecuteNonQuery();
-                return "Request rejected";
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-         public string markFaultyRequest()
-        {
-             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"report_faults";
-            cmd.CommandType = CommandType.StoredProcedure;
-            try
-            {
-                BindFaultyRequestProcedureParams(cmd);
-                cmd.ExecuteNonQuery();
-                return "Request rejected";
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
+        
         public List<ReturnRequestModel> GetReturnRequests(int userId,string sortField,string sortDirection,string searchField)
         {
             using var cmd = Db.Connection.CreateCommand();
@@ -152,18 +120,14 @@ namespace dm_backend.Models
             return ReadAll(reader);
         }
 
-        private void BindReturnProcedureParams(MySqlCommand cmd){
+       
+         private void BindReturnProcedureParams(MySqlCommand cmd){
            
             cmd.Parameters.Add(new MySqlParameter("var_user_id", userId));
             cmd.Parameters.Add(new MySqlParameter("var_device_id", deviceId));
             
         }
-         private void BindFaultyRequestProcedureParams(MySqlCommand cmd){
-           
-            cmd.Parameters.Add(new MySqlParameter("var_complain_id", complaintId));
-           
-            
-        }
+        
          private void BindFaultProcedureParams(MySqlCommand cmd){
            
             cmd.Parameters.Add(new MySqlParameter("var_user_id", userId));
