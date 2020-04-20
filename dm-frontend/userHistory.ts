@@ -35,7 +35,7 @@ import { dynamicGenerate } from './user-profile/dynamic';
 
         }
         async getRequestHistory(id: number, searchField: string = "", sort: string = "") {
-            this.url = BASEURL + "/request/pending?id="+id+"&search=" + searchField + sort;
+            this.url = BASEURL + "/api/request/pending?id="+id+"&search=" + searchField + sort;
             let data = await this.getApiCall(this.url);
             this.data = await data;
             console.log(data);
@@ -52,7 +52,7 @@ import { dynamicGenerate } from './user-profile/dynamic';
             });
         }
         deleteRequestHistory(requestID: number) {
-            return fetch(BASEURL + "/request/" + requestID + "/cancel", {
+            return fetch(BASEURL + "/api/request/" + requestID + "/cancel", {
                 method: "DELETE",headers: new Headers({"Authorization": `Bearer ${token}`})
             });
         }

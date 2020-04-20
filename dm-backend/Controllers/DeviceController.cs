@@ -151,7 +151,6 @@ namespace dm_backend.Controllers
             return Ok();
         }
 
-
         //Specification
         [HttpGet("specid")]
         async public Task<IActionResult> get_specification_id()
@@ -216,10 +215,10 @@ namespace dm_backend.Controllers
         [Authorize(Roles="admin")]
         [HttpPost]
         [Route("type")]
-        async public Task<IActionResult> PostTYPE([FromBody]type body)
+        async public Task<IActionResult> PostTYPE([FromBody]TypeBrandModel body)
         {
             Db.Connection.Open();
-            var que = new type(Db);
+            var que = new TypeBrandModel(Db);
             await que.addType(body);
             Db.Connection.Close();
             return Ok();
@@ -228,10 +227,10 @@ namespace dm_backend.Controllers
         [Authorize(Roles="admin")]
         [HttpPost]
         [Route("brand")]
-        async public Task<IActionResult> PostBrand([FromBody]Brand body)
+        async public Task<IActionResult> PostBrand([FromBody]TypeBrandModel body)
         {
             Db.Connection.Open();
-            var que = new Brand(Db);
+            var que = new TypeBrandModel(Db);
             await que.addbrand(body);
             Db.Connection.Close();
             return Ok();
@@ -240,10 +239,10 @@ namespace dm_backend.Controllers
         [Authorize(Roles="admin")]
         [HttpPost]
         [Route("model")]
-        async public Task<IActionResult> Postmodel([FromBody]Model body)
+        async public Task<IActionResult> Postmodel([FromBody]TypeBrandModel body)
         {
             Db.Connection.Open();
-            var que = new Model(Db);
+            var que = new TypeBrandModel(Db);
             await que.addmodel(body);
             Db.Connection.Close();
             return Ok();

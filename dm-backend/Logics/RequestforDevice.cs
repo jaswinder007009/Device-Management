@@ -23,15 +23,15 @@ namespace dm_backend.Logics
             cmd.CommandText= "insert_request";
             cmd.CommandType = CommandType.StoredProcedure;
           
-          //  try
+            try
                 {
                 BindRequestProcedureParams(cmd, req);
                 cmd.ExecuteNonQuery();
                
             }
-          //  catch (Exception e)
-            {
-           //    throw e;
+            catch (Exception e)
+           {
+              throw e;
             }
             return "Request sent";
 

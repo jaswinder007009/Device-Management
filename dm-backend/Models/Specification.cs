@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using dm_backend;
+using dm_backend.Utilities;
+
 namespace dm_backend.Models
 {
     public class Specification
@@ -26,6 +28,11 @@ namespace dm_backend.Models
         internal Specification(AppDb db)
         {
             Db = db;
+        }
+
+        public string GetSafeString(DbDataReader reader, string colName)
+        {
+            return reader[colName] != DBNull.Value ? (string)reader[colName] : "";
         }
 
         public async Task<List<Specification>> getAllSpecifications()
@@ -71,12 +78,12 @@ where db.brand = @brand  and dt.type = @type  and dm.model=@model group by s.spe
                     var spec1 = new Specification()
                     {
                         specification_id = reader.GetInt32(0),
-                        RAM = reader.GetString(1),
-                        Storage = reader.GetString(2),
-                        Screen_size = reader.GetString(3),
-                        Connectivity = reader.GetString(4)
+                        RAM = GetSafeString(reader , "RAM"),
+                        Storage = GetSafeString(reader , "storage"),
+                        Screen_size = GetSafeString(reader, "screen_size"),
+                        Connectivity = GetSafeString(reader, "connectivity")
 
-
+                     
                     };
                     specifications.Add(spec1);
                 }
