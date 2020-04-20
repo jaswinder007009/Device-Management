@@ -4,6 +4,7 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 import { populateDropdown } from "./dropdown";
 
 export class AddDevice {
+    field:string
     type: string;
     brand: string;
     status_id: number;
@@ -27,18 +28,19 @@ export class AddDevice {
         const URL = BASEURL + "/api/dropdown/brands";
        const brands = await new HitApi(this.token).HitGetApi(URL);
        populateDropdown((document.getElementById("brand") as HTMLSelectElement),brands);
-        
+        return null;
     }
     async typeDropdown() {
         const URL = BASEURL + "/api/dropdown/types";
         const types = await new HitApi(this.token).HitGetApi(URL);
         populateDropdown((document.getElementById("type") as HTMLSelectElement),types);
-       
+       return null;
     }
     async modelDropdown() {
         const URL = BASEURL + "/api/dropdown/models";
         const models = await new HitApi(this.token).HitGetApi(URL);
         populateDropdown((document.getElementById("model") as HTMLSelectElement),models);
+    return null;
     }
     Create_device() {
         let data = this.addDataFromForm();
@@ -108,55 +110,18 @@ export class AddDevice {
         this.entry_date = (document.getElementById("entry_date") as HTMLInputElement).value;
         return JSON.stringify(this);
     }
-    addDataToBrand() {
+    addDataToField(element) {
 
-        console.log("brand");
-        let data = new AddDevice(this.token);
-        data.brand = (document.getElementById("brands") as HTMLInputElement).value;
-        return JSON.stringify(data);
-    }
-    async addNewBrand() {
-
-        let data1 = this.addDataToBrand();
-        console.log(data1);
-        let data = await fetch(BASEURL + "/api/Device/brand", {
-            method: "POST",
-            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
-            body: data1,
-        });
-
-        return null;
-    }
-    addDataToType() {
-
-        console.log("type");
+        
         const data = new AddDevice(this.token);
-        data.type = (document.getElementById("types") as HTMLInputElement).value;
+        data.field = (document.getElementById(element) as HTMLInputElement).value;
         return JSON.stringify(data);
     }
-    async addNewType() {
+    async addNewTypeBrandModel(URL:any,element) {
 
-        let data1 = this.addDataToType();
+        let data1 = this.addDataToField(element);
         console.log(data1);
-        let data = await fetch(BASEURL + "/api/Device/type", {
-            method: "POST",
-            headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
-            body: data1,
-        });
-        return null;
-    }
-    addDataToModel() {
-
-        console.log("model");
-        const data = new AddDevice(this.token);
-        data.model = (document.getElementById("models") as HTMLInputElement).value;
-        return JSON.stringify(data);
-    }
-    async addNewModel() {
-
-        let data1 = this.addDataToModel();
-        console.log(data1);
-        let data = await fetch(BASEURL + "/api/Device/model", {
+        let data = await fetch(BASEURL + URL, {
             method: "POST",
             headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data1,

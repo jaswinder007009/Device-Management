@@ -40,7 +40,7 @@ token :string="";
             this.status = data.status;
             this.ram = data.specifications.ram;
             this.storage = data.specifications.storage;
-            this.screen_size = data.specifications.screen_size;
+            this.screen_size = data.specifications.screenSize;
             this.connectivity = data.specifications.connectivity;
             this.assign_date = data.assign_date;
             this.return_date = data.return_date;
@@ -56,7 +56,7 @@ token :string="";
             const value = `
             
             <tr>
-                <td class = "cards">${this.type} ${this.brand} ${this.model}
+                <td class = "cards" data-deviceid="${this.device_id}">${this.type} ${this.brand} ${this.model}
                     <div class="mdl-card">
                         <div class="mdl-card__title">
                             <h2 class="mdl-card__title-text">Device Details</h2>

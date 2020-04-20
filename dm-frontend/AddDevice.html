@@ -12,48 +12,6 @@
    </head>
 
 <body>
-    <!-- brand popup -->
-    <div class="login-popup">
-        <div class="form-popup" id="popupForm2">
-            <form class="form-container" id="brand_popup">
-                <h5><b><u>Add New Brand</b></u></h5>
-                <label for="brand">
-                    <strong>Brand</strong>
-                </label>
-                <input type="text" id="brands" placeholder="Enter Brand" name="brand">
-                <button type="submit" class="btn">ADD</button>
-                <button type="button" class="btn cancel" onclick="closeForm('popupForm2')">Close</button>
-            </form>
-        </div>
-    </div>
-    <!-- type popup -->
-    <div class="login-popup">
-        <div class="form-popup" id="popupForm1">
-            <form class="form-container" id="popuptype">
-                <h5><b><u>Add New Type</b></u></h5>
-                <label for="type">
-                    <strong>Type</strong>
-                </label>
-                <input type="text" id="types" placeholder="Enter Type" name="type">
-                <button type="submit" class="btn">ADD</button>
-                <button type="button" class="btn cancel" onclick="closeForm('popupForm1')">Close</button>
-            </form>
-        </div>
-    </div>
-     <!-- model popup -->
-     <div class="login-popup">
-        <div class="form-popup" id="popupForm3">
-            <form class="form-container" id="model_popup">
-                <h5><b><u>Add New Model</b></u></h5>
-                <label for="model">
-                    <strong>Model</strong>
-                </label>
-                <input type="text" id="models" placeholder="Enter Model" name="model">
-                <button type="submit" class="btn">ADD</button>
-                <button type="button" class="btn cancel" onclick="closeForm('popupForm3')">Close</button>
-            </form>
-        </div>
-    </div>
     <!-- specification popup -->
     <div class="login-popup">
         <div class="form-popup" id="popupForm">
@@ -90,57 +48,33 @@
             </div>
         </header>
         <div class="mdl-layout__drawer" id="navigation">
-            <!-- <span class="mdl-layout-title">Add Device </span>
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="#">Link</a>
-                <a class="mdl-navigation__link" href="#">Link</a>
-                <a class="mdl-navigation__link" href="#">Link</a>
-                <a class="mdl-navigation__link" href="#">Link</a>
-            </nav> -->
-        </div>
+          </div>
         <main class="mdl-layout__content">
             <div class="page-content">
                 <h6 align="center">
                     <div class="page-content"
                         style="border:5px solid rgb(46, 46, 250);width: 60%;/*! padding-bottom: 5%; */border-radius: 15px;">
                         <form border:="" 1px="" solid="" transparent;="" style="margin: 5px 0px;">
-                            <fieldset>
+                            
                                 <label for="type" style="margin-right:30px ;"> Device Type:</label>
-                                <!-- <select id="type" required> -->
-                                    <!-- <option value=""></option>
-                                </select> -->
                                 <datalist id="type">
                                     <option value=""></option>
                                    </datalist>
-                                <input id="inputtype" autoComplete="on" list="type"/>
+                                <input id="inputtype" autoComplete="on" list="type" required/>
                                
-                                 <input type="button" value=" Add type" id="addtype" style="margin-left:50px ;"
-                                    onclick="openForm('popupForm1')"><br><br>
-                                <div id="newtype"> </div>
                                 <label for="brand"> Device Brand:</label>
-                                <!-- <select id="brand" required> -->
                                     <datalist id="brand">
                                         <option value=""></option>
                                        </datalist>
-                                    <input  id="inputbrand" autoComplete="on" list="brand"/>
-                                    
-                                <!-- s</select> -->
-                                <input type="button" value=" Add brand" id="addbrand"
-                                    style="margin-left:60px ;" onclick="openForm('popupForm2')"><br><br>
-                                <div id="newbrand"> </div>
+                                    <input  id="inputbrand" autoComplete="on" list="brand" required/><br><br>
                                 <label for="model">Model:</label>
-                                <!-- <select id="model" required>
-                                    <option value=""></option>
-                                </select> -->
+                               
                                 <datalist id="model">
                                     <option value=""></option>
                                    </datalist>
-                                <input id="inputmodel" autoComplete="on" list="model"/>
+                                <input id="inputmodel" autoComplete="on" list="model" required/>
                                
-                                <input type="button" value=" Add model" id="addmodel"
-                                style="margin-left:60px ;" onclick="openForm('popupForm3')"><br><br>
-                                <div id="newmodel"> </div>
-                            
+                                
                                 <label for="color" style="margin-left:60px ;"> Color:</label>
                                 <input type="text" id="color" name="color" required><br><br>
                                 <label for="price"> Price:</label>
@@ -155,18 +89,18 @@
                                 <select id="specification" required>
                                     <option value=""></option>
                                 </select> <input type="button" value="Add Specifications" onclick="openForm('popupForm')" />
-                                <label for="Status" style="margin-left:50px ;"> Status:</label>
+                                <br><br><label for="Status" style="margin-left:50px ;"> Status:</label>
                                 <select id="status" required>
                                     <option value="3">Allocated</option>
                                     <option value="4">Free</option>
                                 </select>
-                                <br><br>
+                                
                                 <label for="entry date"> entry date :</label>
                                 <input type="date" id="entry_date"
                                  name="entry date" required><br><br>
                                 <input type="submit" value="ADD" name="submit" id="submit">
                                 <input type="button" value="BACK" id="back" style="margin-left:30px ;">
-                            </fieldset>
+                            
                         </form>
                     </div>
         </main>
@@ -181,6 +115,6 @@
        
     </script>
 </body>
-<script data-main="adddevice.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+<script src="/assets/js/adddevice.js"></script>
 
 </html>

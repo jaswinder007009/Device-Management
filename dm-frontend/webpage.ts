@@ -4,12 +4,14 @@ import * as util from "./utilities";
 import { UpdateUserApi } from "./updateApi";
 import { populateFormFromObject, createObjectFromForm } from "./user-profile/databinding";
 import { UserModel } from "./UserModel";
-import { remove} from "validation";
-import { validateForm} from "validation";
+import { remove, validateForm } from "./validation";
 import { Sort } from "./user-profile/SortingUser";
-import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
+import { BASEURL,amIUser,navigationBarsss } from './globals';
 import { UserData }  from "./dropdown";
 import {MyDevices } from "./userHistory";
+import $ from "jquery";
+
+
 
 (async function(){
 	const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
@@ -46,8 +48,8 @@ import {MyDevices } from "./userHistory";
 			{
 				if((e.target as HTMLButtonElement).id == "popup")
 				{
-					console.log("Button clicked")
-					document.getElementById("email").disabled = false;
+					console.log("Button clicked");
+					(document.getElementById("email") as HTMLInputElement).disabled = false;
 					changeheading1Text();
 					util.openForm();
 					form_mode="create";
@@ -90,13 +92,15 @@ import {MyDevices } from "./userHistory";
 	return false;
 
 	});
+
+	
 	
 $('#deleteModal').on('shown.bs.modal', function (e) {
     
-	this.querySelector('.userDeleteData').setAttribute("data-id",e.relatedTarget.id);
+	this.querySelector('.userDeleteData').setAttribute("data-id",(e.delegateTarget).id);
 	let userId:number = parseInt(((e.target) as HTMLInputElement).dataset.id);
 	
-	let url : string= BASEURL + "/api/Device/current_device/"+e.relatedTarget.id+"?search=" + "" + "";
+	let url : string= BASEURL + "/api/Device/current_device/"+e.delegateTarget.id+"?search=" + "" + "";
 
 	 let data=new MyDevices(token).getApiCall(url)
 	 .then(res=>{
@@ -106,7 +110,7 @@ $('#deleteModal').on('shown.bs.modal', function (e) {
 			 {   let i=0;
 				(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
 				(document.getElementById("errorMsg") as HTMLInputElement).innerHTML= "This User Already Has Assigned Devices So Can't Be Deleted";
-				document.getElementById("dis").disabled = true;
+				(document.getElementById("dis")as HTMLInputElement).disabled = true;
 				 for(i=0;i<res.length;i++)
 				 (document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices "+ "<br>"+(i+1)+". "+res[i].type+" "+res[i].brand+" "+res[i].model+"<br> ";
 				}
@@ -114,7 +118,7 @@ $('#deleteModal').on('shown.bs.modal', function (e) {
 			 {
 				
 				(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
-				document.getElementById("dis").disabled = false;
+				(document.getElementById("dis")as HTMLInputElement).disabled = false;
 				(document.getElementById("errorMsg") as HTMLInputElement).innerHTML= "This User Will Be Permanently Deleted <br> Do You Want To Proceed ?";
 				
 			 }
@@ -125,24 +129,24 @@ $('#deleteModal').on('shown.bs.modal', function (e) {
 $('#aiModal').on('shown.bs.modal', function (g) {
     console.log("in1");
 	
-this.querySelector('.userCheckStatus').setAttribute("data-id",g.relatedTarget.id);
+this.querySelector('.userCheckStatus').setAttribute("data-id",g.delegateTarget.id);
 let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
-			console.log(g.relatedTarget.id); //userid
-			let url : string= BASEURL + "/api/Device/current_device/"+g.relatedTarget.id+"?search=" + "" + "";
+			console.log(g.delegateTarget.id); //userid
+			let url : string= BASEURL + "/api/Device/current_device/"+g.delegateTarget.id+"?search=" + "" + "";
 
 			 let data=new MyDevices(token).getApiCall(url)
 			 .then(res=>{
 					  console.log(res);
 		            if(res.length>0)
 					 {   let i=0;
-						(document.getElementById("insideModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices And Cannot Be Inactivated"+ "<br>"
-						document.getElementById("ucs").disabled = true;
+						(document.getElementById("insideModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices And Cannot Be Inactivated"+ "<br>";
+						(document.getElementById("ucs")as HTMLInputElement).disabled = true;
 		                 for(i=0;i<res.length;i++)
                          (document.getElementById("insideModel") as HTMLInputElement).innerHTML+=(i+1)+". "+res[i].type+" "+res[i].brand+" "+res[i].model+"<br> ";
 				
 						}
 					 else{
-						document.getElementById("ucs").disabled = false;
+						(document.getElementById("ucs")as HTMLInputElement).disabled = false;
 						(document.getElementById("insideModel") as HTMLInputElement).innerHTML="";
 						
 					 }
@@ -161,7 +165,7 @@ setData();
 		const id = parseInt((ea.target as HTMLButtonElement).dataset["id"]);
 		new GetUserApi(token).deleteData(id).then(function () { setData(); });
 		}
-		else if(ea.target.tagName == 'TH')
+		else if((ea.target as HTMLTableHeaderCellElement).tagName == 'TH')
 		{
 			const returned = new Sort(token).sortBy(ea.target as HTMLTableHeaderCellElement);
 					returned.then(data => {
@@ -210,7 +214,7 @@ function changeheadingText()
 	document.addEventListener("click", function(e) {
 	if ((e.target as HTMLButtonElement).className == "userEditData") {
 		changeheadingText();
-		document.getElementById("email").disabled = true;
+		(document.getElementById("email") as HTMLInputElement).disabled = true;
 				util.openForm();
 				form_mode="edit";
 				

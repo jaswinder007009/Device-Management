@@ -140,22 +140,19 @@ namespace dm_backend.Controllers
             return Ok();
         }
 
-        //TODO below three routes
-        // and same in dropdown controller
-
         //Specification
-        [HttpGet("specid")]
-        async public Task<IActionResult> get_specification_id()
-        {
-            string ram = (HttpContext.Request.Query["ram"]);
-            string screen = (HttpContext.Request.Query["screen"]);
-            string conn = (HttpContext.Request.Query["connec"]);
-            string stor = (HttpContext.Request.Query["storage"]);
-            await Db.Connection.OpenAsync();
-            var result = new spec(Db);
-            var data = await result.getSpecificationId(ram, screen, conn, stor);
-            return new OkObjectResult(data);
-        }
+        // [HttpGet("specid")]
+        // async public Task<IActionResult> get_specification_id()
+        // {
+        //     string ram = (HttpContext.Request.Query["ram"]);
+        //     string screen = (HttpContext.Request.Query["screen"]);
+        //     string conn = (HttpContext.Request.Query["connec"]);
+        //     string stor = (HttpContext.Request.Query["storage"]);
+        //     await Db.Connection.OpenAsync();
+        //     var result = new spec(Db);
+        //     var data = await result.getSpecificationId(ram, screen, conn, stor);
+        //     return new OkObjectResult(data);
+        // }
 
         [HttpGet("specification")]
         public async Task<IActionResult> GetAllSpecification()
@@ -185,7 +182,7 @@ namespace dm_backend.Controllers
         async public Task<IActionResult> Postspec([FromBody]Specification body)
         {
             Db.Connection.Open();
-            var que = new insertspec(Db);
+            var que = new Specification(Db);
             await que.addspecification(body);
             Db.Connection.Close();
             return Ok();
@@ -197,7 +194,7 @@ namespace dm_backend.Controllers
         async public Task<IActionResult> Putspec(int specification_id, [FromBody]Specification body)
         {
             Db.Connection.Open();
-            var query = new updatespec(Db);
+            var query = new Specification(Db);
             body.specification_id = specification_id;
             await query.updatespecification(body);
             Db.Connection.Close();
@@ -207,10 +204,10 @@ namespace dm_backend.Controllers
         [Authorize(Roles="admin")]
         [HttpPost]
         [Route("type")]
-        async public Task<IActionResult> PostTYPE([FromBody]type body)
+        async public Task<IActionResult> PostTYPE([FromBody]TypeBrandModel body)
         {
             Db.Connection.Open();
-            var que = new type(Db);
+            var que = new TypeBrandModel(Db);
             await que.addType(body);
             Db.Connection.Close();
             return Ok();
@@ -219,10 +216,10 @@ namespace dm_backend.Controllers
         [Authorize(Roles="admin")]
         [HttpPost]
         [Route("brand")]
-        async public Task<IActionResult> PostBrand([FromBody]Brand body)
+        async public Task<IActionResult> PostBrand([FromBody]TypeBrandModel body)
         {
             Db.Connection.Open();
-            var que = new Brand(Db);
+            var que = new TypeBrandModel(Db);
             await que.addbrand(body);
             Db.Connection.Close();
             return Ok();
@@ -231,10 +228,10 @@ namespace dm_backend.Controllers
         [Authorize(Roles="admin")]
         [HttpPost]
         [Route("model")]
-        async public Task<IActionResult> Postmodel([FromBody]Model body)
+        async public Task<IActionResult> Postmodel([FromBody]TypeBrandModel body)
         {
             Db.Connection.Open();
-            var que = new Model(Db);
+            var que = new TypeBrandModel(Db);
             await que.addmodel(body);
             Db.Connection.Close();
             return Ok();

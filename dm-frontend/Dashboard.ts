@@ -76,7 +76,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
 
         var tableTitle = "<TH COLSPAN='3'><center>FAULTS</center></th>";
         var tableHeading = "";
-        tableHeading += "<th class='mdl-data-table__cell--non-numeric'>Type</th>"
+        tableHeading += "<th>Type</th>"
             + "<th>Model</th>"
             + "<th>Fault</th>";
         var tableBody = "";
@@ -88,7 +88,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
                     let tempObject = data[i];
 
                     tableBody += "<tr>"
-                        + "<td class='mdl-data-table__cell--non-numeric'>" + tempObject.deviceType + "</td>"
+                        + "<td>" + tempObject.deviceType + "</td>"
                         + "<td>" + tempObject.deviceModel + "</td>"
                         + "<td>" + tempObject.faultDescription + "</td>"
                         + "</tr>"
@@ -101,7 +101,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
     function getDeviceReturnDates(url: string) {
         var tableTitle = "<TH COLSPAN='3'><center>DEVICE RETURN DATES</center></th>";
         var tableHeading = "";
-        tableHeading += "<th class='mdl-data-table__cell--non-numeric'>Type</th>"
+        tableHeading += "<th>Type</th>"
             + "<th>Model</th>"
             + "<th>Return Date</th>";
         var tableBody = "";
@@ -113,7 +113,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
                     let tempObject = data[i];
 
                     tableBody += "<tr>"
-                        + "<td class='mdl-data-table__cell--non-numeric'>" + tempObject.deviceType + "</td>"
+                        + "<td>" + tempObject.deviceType + "</td>"
                         + "<td>" + tempObject.deviceModel + "</td>"
                         + "<td>" + tempObject.returnDate + "</td>"
                         + "</tr>"
@@ -125,7 +125,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
     function getHistory(url: string) {
         var tableTitle = "<TH COLSPAN='3'><center>MY HISTORY</center></th>";
         var tableHeading = "";
-        tableHeading += "<th class='mdl-data-table__cell--non-numeric'>Type</th>"
+        tableHeading += "<th>Type</th>"
             + "<th>Brand</th>"
             + "<th>Model</th>";
         var tableBody = "";
@@ -137,7 +137,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
                     let tempObject = data[i];
                     if (tempObject.assign_date != '')
                         tableBody += "<tr>"
-                            + "<td class='mdl-data-table__cell--non-numeric'>" + tempObject.type + "</td>"
+                            + "<td>" + tempObject.type + "</td>"
                             + "<td>" + tempObject.brand + "</td>"
                             + "<td>" + tempObject.model + "</td>"
                             + "</tr>";
@@ -150,7 +150,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
 
         var tableTitle = "<TH COLSPAN='4'><center>REQUESTS</center></th>";
         var tableHeading = "";
-        tableHeading += "<th class='mdl-data-table__cell--non-numeric'>User Id</th>"
+        tableHeading += "<th>User Id</th>"
             + "<th>Type</th>"
             + "<th>Model</th>"
         var tableBody = "";
@@ -162,7 +162,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
                     let tempObject = data[i];
 
                     tableBody += "<tr>"
-                        + "<td class='mdl-data-table__cell--non-numeric'>" + tempObject.userId + "</td>"
+                        + "<td class=''>" + tempObject.userId + "</td>"
                         + "<td>" + tempObject.deviceType + "</td>"
                         + "<td>" + tempObject.deviceModel + "</td>"
                         + "</tr>"

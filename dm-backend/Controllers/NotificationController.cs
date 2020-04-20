@@ -1,4 +1,6 @@
 using System;
+using System.Data;
+using System.Data.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using dm_backend.Logics;
 using dm_backend.Models;
 using Microsoft.AspNetCore.Authorization;
+using MySql.Data.MySqlClient;
+
 
 namespace dm_backend.Controllers
 {
@@ -24,13 +28,13 @@ namespace dm_backend.Controllers
         
         [Authorize(Roles="admin")]
         [HttpPost]
-        public IActionResult PostNotification([FromBody]NotificationModel notify)
+        public IActionResult PostMultipleNotifications([FromBody]NotificationModel notify)
         {
             Db.Connection.Open();
             notify.Db = Db;
             string result = null;
             try{
-                result = notify.AddNotification();
+                result = notify.AddNotifications();
             }
             catch(NullReferenceException){
                 return NoContent();
@@ -39,24 +43,39 @@ namespace dm_backend.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles="admin")]
+        [HttpGet]
+         [Route("{deviceId}")]
+        public IActionResult InsertOneNotification(int deviceId)
+        {
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            
+            cmd.CommandText = @"insert into notification(`user_id`,`notification_type`,`device_id`,
+	`notification_date`,`status_id`,`message`) (select user_id,'Public',device_id,now(),status.status_id,'Submit Possible?'
+	from status, assign_device inner join device using (device_id) where assign_device.device_id=@device_id
+    and status.status_name='Pending');"; 
+            try{
+                cmd.Parameters.AddWithValue("@device_id", deviceId);
+                cmd.ExecuteNonQuery();
+            }
+            catch(Exception e){
+                return NoContent();
+            }
+            Db.Connection.Close();
+            
+            return  Ok("Notification inserted");
+        }
+
         [HttpGet]
          public IActionResult GetNotification()
         {
-            int userId=-1;
-            string searchField = "";
-            string sortField = "notification_id";
-            string sortDirection = "asc";
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
-                userId = Convert.ToInt32(HttpContext.Request.Query["id"]);
-
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["search"]))
-                searchField = HttpContext.Request.Query["search"];
-            
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["sort"]))
-                sortField = HttpContext.Request.Query["sort"];
-
-            if (!string.IsNullOrEmpty(HttpContext.Request.Query["direction"]))
-                sortDirection = HttpContext.Request.Query["direction"];
+            int userId=  -1;
+            string searchField=(string) HttpContext.Request.Query["search"] ?? "";
+            string sortField=(string) HttpContext.Request.Query["sort"] ?? "notification_date";
+            string sortDirection=(string)HttpContext.Request.Query["direction"] ?? "asc";
+            if(!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
+            userId=Convert.ToInt32((string)HttpContext.Request.Query["id"]);
             sortDirection = (sortDirection.ToLower()) == "asc" ? "ASC" : "DESC";
             switch (sortField.ToLower())
             {
@@ -78,6 +97,27 @@ namespace dm_backend.Controllers
             return Ok(result);
         }
 
+        
+        [HttpGet]
+         [Route("reject/{notificationId}")]
+        public IActionResult RejectNotification(int notificationId)
+        {
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            
+            cmd.CommandText = "reject_user_request";
+            cmd.CommandType = CommandType.StoredProcedure; 
+            try{
+                cmd.Parameters.AddWithValue("@var_notif_id", notificationId);
+                cmd.ExecuteNonQuery();
+            }
+            catch(Exception e){
+                return NoContent();
+            }
+            Db.Connection.Close();
+            
+            return  Ok("Request rejected");
+        }
 
 
     }

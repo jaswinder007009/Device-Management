@@ -72,7 +72,15 @@ namespace dm_backend.Models{
             string sortDirection=(string)HttpContext.Request.Query["direction"] ?? "asc";
             if(!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
             userId=Convert.ToInt32((string)HttpContext.Request.Query["id"]);
-    
+            switch (sortField.ToLower())
+            {
+                 case "name":
+                    sortField = "concat(first_name ,'', middle_name , '' ,  last_name)";
+                    break;
+                case "specification":
+                    sortField = "concat(RAM,'', storage ,'' ,screen_size ,'',connectivity)";
+                    break;
+            }
             Db.Connection.Open();
             var requestObject = new RequestModel(Db);
             var result = requestObject.GetAllPendingRequests(userId,sortField,sortDirection,searchField);
@@ -82,40 +90,24 @@ namespace dm_backend.Models{
 
         [Authorize(Roles="admin")]
         [HttpGet]
-        [Route("{requestId}/reject")]
-        public IActionResult RejectRequest(int requestId, [System.Web.Http.FromUri]int id){
+        [Route("{requestId}")]
+        public IActionResult RequestActions(int requestId, [System.Web.Http.FromUri]int id)
+        {
+            string action=(string)HttpContext.Request.Query["action"];
             Db.Connection.Open();
             RequestModel query = new RequestModel(Db);
             query.requestId = requestId;
             try{
-                query.RejectDeviceRequest(id);
+                query.DeviceRequestAction(id,action);
             }
             catch(Exception e){
                 Console.WriteLine(e.Message);
-                return BadRequest("An error occured while rejecting the request");
+                return BadRequest("An error occured while performing the action");
             }
             Db.Connection.Close();
-            return Ok("Request rejected");
+            return Ok("Action performed successfully");
         }
-        
-        [Authorize(Roles="admin")]
-        [HttpGet]
-        [Route("{requestId}/accept")]
-        public IActionResult AcceptRequest(int requestId, [System.Web.Http.FromUri]int id)
-        {
-            Db.Connection.Open();
-            RequestModel query = new RequestModel(Db);
-            query.requestId = requestId;
-            string result = null;
-            try{
-                result =query.AcceptDeviceRequest(id);
-            }
-            catch(Exception e){
-                result="Device unavailable";
-            }
-            Db.Connection.Close();
-            return  Ok(result);
-        }
+
 
         [HttpDelete]
         [Route("{requestId}/cancel")]

@@ -65,22 +65,24 @@
         </header>
 
 
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">Device List</span>
-            <nav class="mdl-navigation">
+        <div class="mdl-layout__drawer" id="navigation">
+            <!-- <span class="mdl-layout-title">Device List</span> -->
+            <!-- <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" href="">Link</a>
                 <a class="mdl-navigation__link" href="">Link</a>
                 <a class="mdl-navigation__link" href="">Link</a>
                 <a class="mdl-navigation__link" href="">Link</a>
-            </nav>
+            </nav> -->
         </div>
         <main class="mdl-layout__content">
             <div class="page-content">
                      <!-- <div style="float:right "> <br> -->
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" 
+                        <div style="float: right;">                     
+                               <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" 
                         value="Add Specifications" onclick="openForm()">Add Specification</button>
-                                 <br><br>
-                     
+                                 
+                                </div>
+                                <br><br>
                                      
                 <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" id="specification_table"
                     style="overflow: auto;">
@@ -127,6 +129,6 @@
     </script>
 
 </body>
-<script data-main="specificationcrud.js" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+<script src="/assets/js/specificationcrud.js"></script>
 
 </html>

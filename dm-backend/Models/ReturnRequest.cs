@@ -21,7 +21,7 @@ namespace dm_backend.Models
         public string deviceModel { get; set; }
         public string deviceBrand { get; set; }
         public string deviceType { get; set; }  
-        public SpecificationModel specs { get; set;}     
+        public Specification specs { get; set;}     
         public string returnDate { get; set; }
         internal AppDb Db { get; set; }
 
@@ -67,22 +67,6 @@ namespace dm_backend.Models
                 BindReturnProcedureParams(cmd);
                 cmd.ExecuteNonQuery();
                 return "Request sent";
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-        public string RejectReturnRequest()
-        {
-             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"reject_user_request";
-            cmd.CommandType = CommandType.StoredProcedure;
-            try
-            {
-                BindReturnProcedureParams(cmd);
-                cmd.ExecuteNonQuery();
-                return "Request rejected";
             }
             catch (Exception e)
             {
