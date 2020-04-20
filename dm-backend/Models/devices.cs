@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using dm_backend;
 using System.Data.Common;
+using dm_backend.Utilities;
 
 namespace dm_backend.Models
 {
@@ -122,10 +123,10 @@ namespace dm_backend.Models
         public string purchase_date { get; set; }
 
         public string status { get; set; }
-
-
+        public string? comments { get; set; }
         public Specification specifications { get; set; }
         public string assign_date { get; set; }
+        public string entry_date{get; set;}
         public string return_date { get; set; }
         public name assign_to { get; set; }
         public name assign_by { get; set; }
@@ -222,7 +223,15 @@ namespace dm_backend.Models
                     return ReadAll(reader);
             }
         }
-
+        // device description separate page
+        public devices getDeviceDescriptionbyid(int device_id)
+        {
+            using var cmd = Db.Connection.CreateCommand();;
+            cmd.CommandText = @"call device_description_byid(@id)";
+            //cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id",device_id);
+            return ReadAllDeets(cmd.ExecuteReader())[0];
+        }
 
         //delete device
         public int Delete()
@@ -266,12 +275,39 @@ namespace dm_backend.Models
                     post.status = GetSafeString(reader, "status_name");
                     post.purchase_date = Convert.ToDateTime(reader["purchase_date"]).ToString("dd/MM/yyyy");
                     post.specifications = ReadSpecification(reader);
+                    //post.comments = GetSafeString(reader, "comments");
                     post.assign_date = GetSafeString(reader, "assign_date");
                     post.return_date = GetSafeString(reader, "return_date");
                     post.assign_by = ReadName(reader, post.assign_by, "assign_by");
                     post.assign_to = ReadName(reader, post.assign_to, "assign_to");
                     posts.Add(post);
                 }
+            }
+            return posts;
+        }
+        private List<devices> ReadAllDeets(MySqlDataReader reader)
+        {
+            var posts = new List<devices>();
+            using (reader)
+            {
+                while (reader.Read())
+                {
+                    var post = new devices();
+                    post.device_id = GetInt(reader, "device_id");
+                    post.type = GetSafeString(reader, "type");
+                    post.brand = GetSafeString(reader, "brand");
+                    post.model = GetSafeString(reader, "model");
+                    post.color = GetSafeString(reader, "color");
+                    post.price = GetSafeString(reader, "price");
+                    post.serial_number = GetSafeString(reader, "serial_number");
+                    post.warranty_year = GetSafeString(reader, "warranty_year");
+                    post.status = GetSafeString(reader, "status_name");
+                    post.purchase_date = Convert.ToDateTime(reader["purchase_date"]).ToString("dd/MM/yyyy");
+                    post.entry_date = Convert.ToDateTime(reader["entry_date"]).ToString("dd/MM/yyyy");
+                    post.specifications = ReadSpecification(reader);
+                    post.comments = GetSafeString(reader, "comments");
+                    posts.Add(post);
+                    }
             }
             return posts;
         }
