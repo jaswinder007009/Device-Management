@@ -90,13 +90,7 @@ import {MyDevices } from "./userHistory";
 	return false;
 
 	});
-	//function alertDelete() {
-	//	return confirm("Do You Want To Permanently Delete ?");
-
-
-//	}
-
-
+	
 $('#deleteModal').on('shown.bs.modal', function (e) {
     
 	this.querySelector('.userDeleteData').setAttribute("data-id",e.relatedTarget.id);
@@ -141,63 +135,34 @@ let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
 					  console.log(res);
 		            if(res.length>0)
 					 {   let i=0;
-						(document.getElementById("insideModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices "+ "<br>"
-
+						(document.getElementById("insideModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices And Cannot Be Inactivated"+ "<br>"
+						document.getElementById("ucs").disabled = true;
 		                 for(i=0;i<res.length;i++)
                          (document.getElementById("insideModel") as HTMLInputElement).innerHTML+=(i+1)+". "+res[i].type+" "+res[i].brand+" "+res[i].model+"<br> ";
-						 (document.getElementById("insideModel") as HTMLInputElement).innerHTML+="Making Inactive Will Delete Above Assigned Devices!";
-
+				
 						}
 					 else{
+						document.getElementById("ucs").disabled = false;
 						(document.getElementById("insideModel") as HTMLInputElement).innerHTML="";
+						
 					 }
                         });
 			 
 
 })
 
-
-//   async getCurrentDecice(id:number,search: string = "", sort: string = "") {
-// 	this.url = BASEURL + "/api/Device/current_device/"+id+"?search=" + search + sort;
-// 	let data = await this.getApiCall(this.url);
-// 	this.data = await data;
-// 	console.log(data);
-// 	this.size = data.length;
-// 	this.dynamicGenerate(this.table1);
-// 	return data;
-
-// }
-// document.getElementById("tab1").addEventListener('click', function (ev) {
-
-// 	if (ev.target.classList.contains("return")) {
-// 		const deviceid=ev.target.parentElement.parentElement.dataset.deviceId;
-// 		const userid=ev.target.parentElement.parentElement.dataset.userId;
-// 		console.log(userid);
-// 		console.log(deviceid);
-// 		mydevices.returnDevice(parseInt(userid),parseInt(deviceid)).then(function() {mydevices.getCurrentDecice(userId);});
-	
-// 	}
-
-// });
-
-
-
+$('#aiModal').on('hide.bs.modal', function (g) {
+setData();
+})
 
 	document.addEventListener("click", function (ea) {
-		//console.log("--------1------");
+	
 		if((ea.target as HTMLButtonElement).className == "userDeleteData"){
-		//	console.log("--------2------");
-			const id = parseInt((ea.target as HTMLButtonElement).dataset["id"]);
-		//	console.log("--------3------");
-			//if (alertDelete()) {
-				new GetUserApi(token).deleteData(id).then(function () { setData(); });
-			//	console.log("--------4------");
-		//	}
-			
+		const id = parseInt((ea.target as HTMLButtonElement).dataset["id"]);
+		new GetUserApi(token).deleteData(id).then(function () { setData(); });
 		}
 		else if(ea.target.tagName == 'TH')
 		{
-			//console.log("--------5------");
 			const returned = new Sort(token).sortBy(ea.target as HTMLTableHeaderCellElement);
 					returned.then(data => {
 					console.log(data);
@@ -211,29 +176,22 @@ let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
 			if((document.getElementById(userId.toString()) as HTMLInputElement).checked)
 			{
 				new GetUserApi(token).userInactive(userId , "inactive");
-				console.log("------------------1---------------");
-				//(document.getElementById(userId.toString()) as HTMLInputElement).checked=true;
 			}
 			else
 			{	
 				new GetUserApi(token).userInactive(userId , "active");
-				console.log("-----------------2----------------");
-
-				
 			}
-			console.log("-----------------3----------------");
 			setData();
 
 		}
 		else if(((ea.target) as HTMLInputElement).id == "closeFormButton")
 		{
-			console.log("calling remobvve");
+			console.log("calling remove");
 			remove();
 		}
 	});
 
-	//document.querySelector("#addresses1.city").addEventListener("")
-	function changeheadingText()
+function changeheadingText()
 			{
 			document.getElementById('headingText').innerHTML='Update User Details';
 			}
