@@ -6,6 +6,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     const token: string = JSON.parse(sessionStorage.getItem("user_info"))["token"];
     let adminId = JSON.parse(sessionStorage.getItem("user_info"))["id"];
     let globalUrl = BASEURL + "/api/request/";
+    let request = new Requests();
 
     function getPendingRequests(url: string) {
 
@@ -21,14 +22,14 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
                 tableData += "<tr>"
                     + "<td>" + data[i]['userId'] + "</td>"
                     + "<td>" + data[i]['deviceType'] + "</td>" + "<td>" + data[i]['deviceBrand'] + "</td>" + "<td>" + data[i]['deviceModel'] + "</td>"
-                    + "<td>" + util.concatSpecs(specs)+ "</td>"
-                    + "<td>" + util.concatName(requestedBy)+ "</td>"
+                    + "<td>" + util.concatSpecs(specs) + "</td>"
+                    + "<td>" + util.concatName(requestedBy) + "</td>"
                     + "<td>" + data[i]['requestDate'] + "</td>"
                     + "<td>" + data[i]['availability'] + "</td>";
                 if (data[i]['availability'] == true)
                     tableData += "<td>" + "<button class=\"accept-button\" data-requestid=\"" + data[i]['requestId'] + "\" >Accept</button>" + "</td>";
                 else
-                    tableData += "<td>" + "<button class=\"notify-button\" data-devicemodel=\""
+                    tableData += "<td>" + "<button class=\"show-users\" data-devicemodel=\""
                         + data[i]['deviceModel'] + "\"data-devicetype=\"" + data[i]['deviceType'] + "\" data-devicebrand=\""
                         + data[i]['deviceBrand'] + "\"data-ram=\"" + specs.ram + "\"data-connectivity=\"" + specs.connectivity
                         + "\"data-screensize=\"" + specs.screenSize + "\"data-storage=\"" + specs.storage + "\" >Notify</button>" + "</td>";
@@ -42,12 +43,34 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
 
     }
 
-    function requestAction(requestUrl, requestId, action) {
-        fetch(globalUrl +requestId + requestUrl,
-            {headers: new Headers({"Authorization": `Bearer ${token}`})
+    function getDeviceHolders(){
+        let tableData = "";
+        fetch(BASEURL+"/api/Device/search?status_name=allocated", {
+            headers: new Headers({ "Authorization": `Bearer ${token}` })
+        }).then(Response => Response.json()).then(data => {
+            for (var i = 0; i < data.length; i++) {
+                if (filterData(data[i], request)) {
+                    tableData += "<tr>"
+                        + "<td>" + data[i]['device_id'] + "</td>"
+                        + "<td>" + data[i]['assign_to']['first_name'] + " " + data[i]['assign_to']['middle_name'] + " " + data[i]['assign_to']['last_name'] + "</td>"
+                        + "<td>" + data[i]['return_date'] + "</td></tr>"
+                }
+
+            }
+            tableData += "<tr><td colspan=3><center><button class=\"notify-all\">Notify All</button></center></td></tr>";
+            document.getElementById("popupContent").innerHTML = tableData;
+            (document.querySelector('.popup') as HTMLDivElement).style.display = 'flex';
+
         });
+    }
+
+    function requestAction(requestUrl, requestId, action) {
+        fetch(globalUrl + requestId + requestUrl,
+            {
+                headers: new Headers({ "Authorization": `Bearer ${token}` })
+            });
         alert("Request " + requestId + " " + action);
-        getPendingRequests(globalUrl+"pending");
+        getPendingRequests(globalUrl + "pending");
 
     }
 
@@ -62,12 +85,22 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
         }
     }
 
+    function filterData(data, request) {
+        if ((data.type == request.deviceType) && (data.brand == request.deviceBrand)
+            && (data.model == request.deviceModel) && (data.specifications.ram == request.specs.ram) &&
+            (data.specifications.storage == request.specs.storage) && (data.specifications.screen_size == request.specs.screenSize) &&
+            (data.specifications.connectivity == request.specs.connectivity))
+            return true;
+        else
+            return false;
+    }
+
     function postNotification(data: Requests) {
 
         let data1 = JSON.stringify(data);
         fetch(BASEURL + "/api/Notification", {
             method: "POST",
-            headers: [["Content-Type", "application/json"],["Authorization", `Bearer ${token}`]],
+            headers: [["Content-Type", "application/json"], ["Authorization", `Bearer ${token}`]],
             body: data1,
         }).catch(Error => console.log(Error));
         alert("Notification sent");
@@ -85,23 +118,26 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
         getPendingRequests(globalUrl + "pending?search=" + searchField);
     });
 
+    document.querySelector('.close').addEventListener('click',
+        function () {
+            (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
+    });
 
     document.addEventListener("click", function (e) {
 
         if ((e.target as HTMLButtonElement).className == "reject-button") {
             let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
-            if(confirm("Are you sure you want to reject the request?"))
+            if (confirm("Are you sure you want to reject the request?"))
                 requestAction('?action=reject&id=' + adminId, requestId, 'rejected');
 
         }
         if ((e.target as HTMLButtonElement).className == "accept-button") {
             let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
-            if(confirm("Are you sure you want to accept the request?"))
+            if (confirm("Are you sure you want to accept the request?"))
                 requestAction('?action=accept&id=' + adminId, requestId, 'accepted');
 
         }
-        if ((e.target as HTMLButtonElement).className == "notify-button") {
-            let request = new Requests();
+        if ((e.target as HTMLButtonElement).className == "show-users") {
             request.deviceModel = (e.target as HTMLButtonElement).dataset.devicemodel;
             request.deviceBrand = (e.target as HTMLButtonElement).dataset.devicebrand;
             request.deviceType = (e.target as HTMLButtonElement).dataset.devicetype;
@@ -109,13 +145,20 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
             request.specs.connectivity = ((e.target as HTMLButtonElement).dataset.connectivity);
             request.specs.screenSize = ((e.target as HTMLButtonElement).dataset.screensize);
             request.specs.storage = ((e.target as HTMLButtonElement).dataset.storage);
-            postNotification(request);
+            getDeviceHolders();
+
 
         }
+        if ((e.target as HTMLButtonElement).className == "notify-all") {
+            if (confirm("Notify all?"))
+                postNotification(request);
+            (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
+        };
 
     });
 
-    getPendingRequests(globalUrl+"pending");
-    navigationBarsss("Admin","navigation");
+
+    getPendingRequests(globalUrl + "pending");
+    navigationBarsss("Admin", "navigation");
 
 })();
