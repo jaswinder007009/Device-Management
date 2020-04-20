@@ -1,15 +1,17 @@
- import { Api } from "./HitSubmissionApi";
-import { RequestDeviceModel } from "./deviceRequestModel";
+import { Api } from "./HitSubmissionApi";
+
 import { RequestSubmitModel } from "./SubmissionRequestModel";
 import { populateData } from "./genrateSubmissionRequest";
-import { RequestModel } from "./RequetsDatamodel";
+
 import { Sort } from "./user-profile/SortingUser";
-import { BASEURL } from "./globals";
+import { BASEURL , navigationBarsss, amIUser } from "./globals";
+
 
 
 (async function(){
     let address = BASEURL;
     let token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
+    let role = await amIUser(token) == true ? "User" : "Admin";
 
 
     (document.querySelector("#fixed-header-drawer-exp")  as HTMLInputElement).addEventListener("keypress" , event =>
@@ -94,4 +96,7 @@ import { BASEURL } from "./globals";
         });
     getAll();
 
+
+
+    navigationBarsss(role , "navigate" );
 })();

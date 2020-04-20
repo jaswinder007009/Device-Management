@@ -37,8 +37,11 @@ export class HitApi
             
 //     }
 	public async HitGetApi(uri: string) {
+
 		let res;
 		try {
+
+			
 			res = await fetch(uri,{
 				headers: new Headers({"Authorization": `Bearer ${this.token}`})
             });
