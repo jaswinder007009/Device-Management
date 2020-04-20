@@ -8,9 +8,7 @@ export class FalultyDevice
     uri : string = BASEURL
     tokenkey : string
     
-
-
-    constructor ()
+    constructor()
     {
         var obj =  Token.getInstance();
         this.tokenkey = obj.tokenKey;
@@ -22,30 +20,13 @@ export class FalultyDevice
          let url = this.uri + "/api/FaultyDevice" + params; 
         new HitApi(this.tokenkey).HitGetApi(url).then(data=>
             {
-                this.getData(data);
+                this.clear();
+                data.map(value =>
+                    {
+                        this.populateData(new FaultyDeviceModel(value));
+                    })
             });
-        // fetch(url).then(res => res.json()).then( data => 
-        //     {
-        //         this.getData(data);
-        //         console.log(data);
-            // data.map(value =>
-            // {         
-            //        this.populateData(new FaultyDevice(value));
-            // });
-            // });
            (document.getElementById("loading") as HTMLDivElement).style.display = "none";
-    }
-
-    getData(data:any)
-    {
-        this.clear();
-      
-        console.log(data);
-        for(let value of data)
-            {         console.log(value);
-                   this.populateData(new FaultyDeviceModel(value));
-            }
-        
     }
 
     getSearchData(id:any)
@@ -59,15 +40,9 @@ export class FalultyDevice
       document.getElementById(id).setAttribute("data-find" , find)
       return find; 
     }
-    
-
-
 
     populateData(data : any )
     {
-
-
-       
         var field =`
         <tr data-user-id=${data.userId} data-device-id =${data.deviceId} data-complaint-id=${data.complaintId}>
         <td>${data.userName}</td>
@@ -89,10 +64,7 @@ export class FalultyDevice
      
           }
     document.getElementById("Request_data").innerHTML +=  field + ""+ buttons;
-          
     }
-
-
     clear()
     {
         document.getElementById("Request_data").innerHTML = "";

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.AspNetCore.Authorization;
+using dm_backend.Models;
 
 namespace dm_backend.Controllers
 {
@@ -11,6 +12,8 @@ namespace dm_backend.Controllers
     [Route("api/[controller]")]
     public class FaultyDeviceController : ControllerBase
     {
+        
+
         public AppDb Db { get; }
 
         public FaultyDeviceController(AppDb db)
@@ -18,7 +21,7 @@ namespace dm_backend.Controllers
             Db = db;
         }
 
-           [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult GetDeviceLisT()
         {
@@ -59,11 +62,19 @@ namespace dm_backend.Controllers
 
             Db.Connection.Open();
 
-
+           
             var fault = new FaultyDevice(Db);
-
-                    var result =  fault.getFaultyDevice(userId, searchField, serialnumber  , status  ,  sortField, sortDirection, page, size);
-
+            object result;
+            try
+            {
+             result = fault.getFaultyDevice(userId, searchField, serialnumber, status, sortField, sortDirection, page, size);
+            }
+            catch(Exception e)
+            {
+               
+               return NoContent();
+            
+             }
             Db.Connection.Close();
             return new OkObjectResult(result);
 
@@ -71,25 +82,43 @@ namespace dm_backend.Controllers
 
 
 
-
-        [HttpGet("{status}/action")]
-        public IActionResult get(string action)
+        [Authorize(Roles = "admin")]
+        [HttpPut]
+        [Route("resolve")]
+        public IActionResult PutResolveRequest([FromBody]ReturnRequestModel request)
         {
-
-
             Db.Connection.Open();
-
-           // var x =  new 
-
-
-
-
+            request.Db = Db;
+            string result = null;
+            try
+            {
+                result = request.resolveRequest();
+            }
+            catch (NullReferenceException)
+            {
+                return NoContent();
+            }
             Db.Connection.Close();
-
-          
-            return Ok();
-           
-
+            return Ok(result);
+        }
+        [Authorize(Roles = "admin")]
+        [HttpPut]
+        [Route("markfaulty")]
+        public IActionResult PutReportFaultyRequest([FromBody]ReturnRequestModel request)
+        {
+            Db.Connection.Open();
+            request.Db = Db;
+            string result = null;
+            try
+            {
+                result = request.markFaultyRequest();
+            }
+            catch (NullReferenceException)
+            {
+                return NoContent();
+            }
+            Db.Connection.Close();
+            return Ok(result);
         }
     }
 }

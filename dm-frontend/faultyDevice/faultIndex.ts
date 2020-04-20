@@ -24,6 +24,20 @@ new FalultyDevice().getAllData();
 });
 
 
+
+document.addEventListener('click' , event =>
+{
+  if((event.target as HTMLButtonElement).id == "")
+  {
+    
+  }
+  if((event.target as HTMLButtonElement).id == "")
+  {
+
+  }
+});
+
+
 (document.querySelector("#tableHead") as HTMLTableHeaderCellElement).addEventListener("click", function (e) {
   let id = (e.target as HTMLInputElement).id;
   if (id === "user"|| id === "date" ||  id === "serialnumber" || id === "device") 
