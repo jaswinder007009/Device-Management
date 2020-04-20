@@ -61,7 +61,7 @@ namespace dm_backend.Models{
             return Ok(result);
         }
 
-        [Authorize(Roles="admin")]
+       
         [HttpGet]
         [Route("pending")]
         public IActionResult GetRequest()

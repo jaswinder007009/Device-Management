@@ -23,6 +23,7 @@ namespace dm_backend.Models
         public string deviceType { get; set; }  
         public SpecificationModel specs { get; set;}     
         public string returnDate { get; set; }
+         public string comment {get; set;}
         internal AppDb Db { get; set; }
 
         public ReturnRequestModel()
@@ -73,6 +74,22 @@ namespace dm_backend.Models
                 throw e;
             }
         }
+         public string AddFaultRequest()
+        {
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = @"insert_fault_request";
+            cmd.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                BindFaultProcedureParams(cmd);
+                cmd.ExecuteNonQuery();
+                return "Request sent";
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public string RejectReturnRequest()
         {
              using var cmd = Db.Connection.CreateCommand();
@@ -106,6 +123,13 @@ namespace dm_backend.Models
            
             cmd.Parameters.Add(new MySqlParameter("var_user_id", userId));
             cmd.Parameters.Add(new MySqlParameter("var_device_id", deviceId));
+            
+        }
+         private void BindFaultProcedureParams(MySqlCommand cmd){
+           
+            cmd.Parameters.Add(new MySqlParameter("var_user_id", userId));
+            cmd.Parameters.Add(new MySqlParameter("var_device_id", deviceId));
+            cmd.Parameters.Add(new MySqlParameter("comment", comment));
             
         }
 

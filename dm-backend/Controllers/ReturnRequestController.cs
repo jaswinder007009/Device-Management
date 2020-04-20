@@ -37,6 +37,23 @@ namespace dm_backend.Controllers
             return Ok(result);
         }
         
+         [HttpPost]
+         [Route("fault")]
+        public IActionResult PostFaultRequest([FromBody]ReturnRequestModel request)
+        {
+            Db.Connection.Open();
+            request.Db = Db;
+            string result = null;
+            try{
+                result = request.AddFaultRequest();
+            }
+            catch(NullReferenceException){
+                return NoContent();
+            }
+            Db.Connection.Close();
+            return Ok(result);
+        }
+        
         [HttpPut]
         [Route("reject")]
         public IActionResult PutReturnRequest([FromBody]ReturnRequestModel request)
