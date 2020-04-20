@@ -197,6 +197,7 @@ import { dynamicGenerate } from './user-profile/dynamic';
 
     document.querySelector('.close').addEventListener('click', function () {
         closeForm();
+        
 
     });
 
