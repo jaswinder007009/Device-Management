@@ -48,6 +48,24 @@ function RegisterUser()
         } 
     }).then(response => response.json()).catch(err=>{console.log(err)});
     }
+
+  function SendEmail()
+  {
+      let email = (window.document.getElementById("femail") as HTMLInputElement ).value;
+      console.log(email);
+      fetch("http://localhost:5000/api/auth/Reset", { 
+          method: "POST", 
+          body: JSON.stringify({ 
+              Email: email, 
+              }), 
+          headers: { 
+              "Content-type": "application/json; charset=UTF-8"
+          } 
+      }).catch(err=>{console.log(err)});
+}
+
+
+    
     
 
 
@@ -77,6 +95,7 @@ else {
 }
 });
 
+
 document.querySelector("#fp").addEventListener('click', function (e) {
     e.preventDefault();
     document.querySelector('.bg-model').style.display = 'flex' ;
@@ -85,6 +104,11 @@ document.querySelector('.x').addEventListener('click',
 function(){
     document.querySelector('.bg-model').style.display='none';
 });
+document.querySelector("#rmybtn1").addEventListener('click', function (e) {
+    e.preventDefault();
+    SendEmail();
+});
+
 
 
 

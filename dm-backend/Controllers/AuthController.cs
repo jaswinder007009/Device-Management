@@ -13,6 +13,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Internal;
+using dm_backend.Utilities;
 
 namespace dm_backend.Controllers
 {
@@ -40,8 +41,8 @@ namespace dm_backend.Controllers
 
             userforreg.Email = userforreg.Email.ToLower();
 
-            // if (await _repo.UserExists(userforreg.Email))
-            //     return BadRequest("Aleady Exist");
+             if (await _repo.UserExists(userforreg.Email))
+                return BadRequest("Aleady Exist");
 
             var userTocreate = new UserAuth
             {
@@ -51,10 +52,42 @@ namespace dm_backend.Controllers
             var createdUser = await _repo.Register(userTocreate, userforreg.Password);
             // return StatusCode(201);
             return Created("", createdUser);
+        }
+
+        [HttpPost("Reset")]
+        public async Task<IActionResult> FrogotPassword(ResetPassword rp)
+        {
+            rp.Email = rp.Email.ToLower();
+            if (!await _repo.UserExists(rp.Email))
+                return BadRequest("Not Exist");
+
+            new SendEmail(_context).Send_Email(rp.Email);
+            return StatusCode(201);
+
+
+        }
+        [HttpPost("Reset/setpassword")]
+
+        public async Task<IActionResult> SetPassword(ResetPassword rp)
+        {
+            byte[] passwordHash, passwordSalt;
+            Console.WriteLine("setpass");
+            _repo.CreatePasswordHash(rp.Password, out passwordHash, out passwordSalt);
+
+
+            Console.WriteLine(passwordSalt);
+            var user = _context.User.First(a => a.Guid == rp.Guid);
+            user.Hashpassword = passwordHash;
+            user.Saltpassword = passwordSalt;
+            Console.WriteLine("done !");
+            _context.SaveChanges();
+            return Ok(new { Result = "Done" });
 
 
 
         }
+
+      
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForAuth Userforlog)

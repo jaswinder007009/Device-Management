@@ -28,8 +28,10 @@ namespace dm_backend.EFModels
         public string Email { get; set; }
         public int? GenderId { get; set; }
         public int? Status { get; set; }
-        public string Hashpassword { get; set; }
-        public string Saltpassword { get; set; }
+        public byte[] Hashpassword { get; set; }
+        public byte[] Saltpassword { get; set; }
+
+        public string Guid { get; set; }
 
         public DepartmentDesignation DepartmentDesignation { get; set; }
         public Gender Gender { get; set; }
