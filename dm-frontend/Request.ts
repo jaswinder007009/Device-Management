@@ -53,11 +53,12 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
                     tableData += "<tr>"
                         + "<td>" + data[i]['device_id'] + "</td>"
                         + "<td>" + data[i]['assign_to']['first_name'] + " " + data[i]['assign_to']['middle_name'] + " " + data[i]['assign_to']['last_name'] + "</td>"
-                        + "<td>" + data[i]['return_date'] + "</td></tr>"
+                        + "<td>" + data[i]['return_date'] + "</td>"
+                        +"<td><button class=\"notify\" data-deviceid=" + data[i]['device_id'] + " >Notify</button></center></td></tr>"
                 }
 
             }
-            tableData += "<tr><td colspan=3><center><button class=\"notify-all\">Notify All</button></center></td></tr>";
+            tableData += "<tr><td colspan=4><center><button class=\"notify-all\">Notify All</button></center></td></tr>";
             document.getElementById("popupContent").innerHTML = tableData;
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'flex';
 
@@ -151,6 +152,18 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
         if ((e.target as HTMLButtonElement).className == "notify-all") {
             if (confirm("Notify all?"))
                 postNotification(request);
+            (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
+        };
+
+        if ((e.target as HTMLButtonElement).className == "notify") {
+            let deviceId:number=parseInt((e.target as HTMLButtonElement).dataset.deviceid,10);
+            if (confirm("Notify User?"))
+            fetch(BASEURL + "/api/Notification/"+deviceId,
+                {
+                    headers: new Headers({ "Authorization": `Bearer ${token}` })
+                });
+            console.log(deviceId);
+            alert("Notification sent");
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
         };
 

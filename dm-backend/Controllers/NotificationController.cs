@@ -28,19 +28,43 @@ namespace dm_backend.Controllers
         
         [Authorize(Roles="admin")]
         [HttpPost]
-        public IActionResult PostNotification([FromBody]NotificationModel notify)
+        public IActionResult PostMultipleNotifications([FromBody]NotificationModel notify)
         {
             Db.Connection.Open();
             notify.Db = Db;
             string result = null;
             try{
-                result = notify.AddNotification();
+                result = notify.AddNotifications();
             }
             catch(NullReferenceException){
                 return NoContent();
             }
             Db.Connection.Close();
             return Ok(result);
+        }
+
+        [Authorize(Roles="admin")]
+        [HttpGet]
+         [Route("{deviceId}")]
+        public IActionResult InsertOneNotification(int deviceId)
+        {
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            
+            cmd.CommandText = @"insert into notification(`user_id`,`notification_type`,`device_id`,
+	`notification_date`,`status_id`,`message`) (select user_id,'Public',device_id,now(),status.status_id,'Submit Possible?'
+	from status, assign_device inner join device using (device_id) where assign_device.device_id=@device_id
+    and status.status_name='Pending');"; 
+            try{
+                cmd.Parameters.AddWithValue("@device_id", deviceId);
+                cmd.ExecuteNonQuery();
+            }
+            catch(Exception e){
+                return NoContent();
+            }
+            Db.Connection.Close();
+            
+            return  Ok("Notification inserted");
         }
 
         [HttpGet]
