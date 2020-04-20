@@ -35,7 +35,7 @@ import { dynamicGenerate } from './user-profile/dynamic';
 
         }
         async getRequestHistory(id: number, searchField: string = "", sort: string = "") {
-            this.url = BASEURL + "/api/request/pending?id=" + id + "&search=" + searchField + sort;
+            this.url = BASEURL + "/api/request/pending?id="+id+"&search=" + searchField + sort;
             let data = await this.getApiCall(this.url);
             this.data = await data;
             console.log(data);
