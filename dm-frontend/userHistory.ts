@@ -189,7 +189,7 @@ if ((ev.target as HTMLButtonElement).classList.contains("return")) {
 
     document.querySelector('#faultpopup .submit').addEventListener('click', function (ev) {
         ev.preventDefault();
-        var comment = document.getElementById("comment").value;
+        var comment = (document.getElementById("comment")as HTMLTextAreaElement).value;
         var deviceid = parseInt(document.getElementById("faultpopup").dataset.deviceId);
         mydevices.reportFaultyDevice(parseInt(userId), deviceid, comment);
         closeForm();
@@ -218,7 +218,7 @@ if ((ev.target as HTMLButtonElement).classList.contains("return")) {
     document.getElementById("search3").addEventListener('keyup', function () {
 
 
-        mydevices.getRequestHistory(userId, document.getElementById("search3").value);
+        mydevices.getRequestHistory(userId,(document.getElementById("search3")as HTMLInputElement).value);
     });
 
     document.addEventListener("click", function (ea) {
@@ -234,22 +234,22 @@ if ((ev.target as HTMLButtonElement).classList.contains("return")) {
             }
             // else if(document.querySelector(".mdl-layout__tab-panel.is-active") == tab2) {
 
-                mydevices.getPreviousDecice(userId,(searchbox as HTMLInputElement).value, new Sort(token).getSortingUrl(ea.target as HTMLTableHeaderCellElement));
-            }
+            //     mydevices.getPreviousDecice(userId,(searchbox as HTMLInputElement).value, new Sort(token).getSortingUrl(ea.target as HTMLTableHeaderCellElement));
+            // }
             else{
                 mydevices.getRequestHistory(userId,(searchbox as HTMLInputElement).value,new Sort(token).getSortingUrl(ea.target as HTMLTableHeaderCellElement));
             }
         
-
+        }
 
     });
     function openForm() {
         document.getElementById("myFaultForm").style.display = "block";
-        document.getElementById("page").style = "filter : blur(10px);";
+        document.getElementById("page").style.filter = " blur(10px)";
     }
     function closeForm() {
         document.getElementById("myFaultForm").style.display = "none";
-        document.getElementById("page").style = "filter : blur();";
+        document.getElementById("page").style.filter = " blur()";
     }
     navigationBarsss(role, "navigation");
 
