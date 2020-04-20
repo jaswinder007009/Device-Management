@@ -62,4 +62,12 @@ export class HitApi
 			body: JSON.stringify(data)
 		});
 	}
+	public async HitPutApi(uri: string, data: any) {	
+		//console.log(data);
+		return fetch(uri, {
+			method: "PUT",
+			headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
+			body: JSON.stringify(data)
+		});
+	}
 }

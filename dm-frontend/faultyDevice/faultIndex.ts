@@ -27,13 +27,16 @@ new FalultyDevice().getAllData();
 
 document.addEventListener('click' , event =>
 {
-  if((event.target as HTMLButtonElement).id == "")
+  var element = (event.target as HTMLButtonElement).className;
+  if(element === "faulty-device" ||  element ==="fault-resolved")
   {
-    
-  }
-  if((event.target as HTMLButtonElement).id == "")
-  {
-
+  let url  = BASEURL + "/api/FaultyDevice"
+  let id = parseInt((event.target as HTMLButtonElement).dataset.complaint);
+  if(element == "faulty-device")
+    new HitApi(token.tokenKey).HitPutApi( url + "/markfaulty" , {complaintId  : id } )
+  if(element == "fault-resolved")
+    new HitApi(token.tokenKey).HitPutApi( url + "/resolve" ,  {complaintId  : id } )
+  new FalultyDevice().getAllData();
   }
 });
 
@@ -43,11 +46,9 @@ document.addEventListener('click' , event =>
   if (id === "user"|| id === "date" ||  id === "serialnumber" || id === "device") 
           {
             var element = (document.getElementById(id) as HTMLTableHeaderCellElement);
-      
             var direction =  "&direction=" + new Sort(token.tokenKey).checkSortType(element);;
             var attribute = "&sort=" + id;
             new FalultyDevice().getAllData( getSearch() + attribute + direction);
-     
   }});
 
 

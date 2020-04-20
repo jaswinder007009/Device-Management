@@ -90,13 +90,13 @@ namespace dm_backend.Controllers
             Db.Connection.Open();
             request.Db = Db;
             string result = null;
-            try
+        //    try
             {
                 result = request.resolveRequest();
             }
-            catch (NullReferenceException)
+         //   catch (NullReferenceException)
             {
-                return NoContent();
+        //        return NoContent();
             }
             Db.Connection.Close();
             return Ok(result);

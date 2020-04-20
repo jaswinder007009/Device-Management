@@ -57,8 +57,8 @@ export class FalultyDevice
           // if(data.status=="Unresolved" )
           {         
              buttons= ` <td>
-           <button class="faulty-device" data-userid = ${data.userId} data-value=${data.deviceId}>Faulty </button>
-            <button class="fault_resolve" data-userid = ${data.userId} data-value=${data.deviceId}>Reject </button>
+           <button  class="faulty-device" data-complaint = ${data.complaintId}>Faulty </button>
+            <button class="fault-resolved" data-complaint = ${data.complaintId}>Reject </button>
         </td>
     </tr> `;
      
