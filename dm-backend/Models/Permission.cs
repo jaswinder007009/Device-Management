@@ -7,8 +7,7 @@ namespace dm_backend.Models
 {
     public class Permission
     {
-
-        public int id { get; set; }
+        public int? PermissionId { get; set; }
         public string PermissionName { get; set; }
     }
 }

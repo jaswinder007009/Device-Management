@@ -1,5 +1,5 @@
  import { Api } from "./HitSubmissionApi";
-import { RequestDeviceModel } from "./deviceRequestModel";
+import { RequestDeviceModel } from "./Device-Request/deviceRequestModel";
 import { RequestSubmitModel } from "./SubmissionRequestModel";
 import { populateData } from "./genrateSubmissionRequest";
 import { RequestModel } from "./RequetsDatamodel";

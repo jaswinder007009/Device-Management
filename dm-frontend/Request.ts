@@ -147,7 +147,6 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
             request.specs.storage = ((e.target as HTMLButtonElement).dataset.storage);
             getDeviceHolders();
 
-
         }
         if ((e.target as HTMLButtonElement).className == "notify-all") {
             if (confirm("Notify all?"))
@@ -156,7 +155,6 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
         };
 
     });
-
 
     getPendingRequests(globalUrl + "pending");
     navigationBarsss("Admin", "navigation");

@@ -1,4 +1,4 @@
-import { BASEURL } from "./globals";
+import { BASEURL } from "../globals";
 class abc{
      
     id:Number
@@ -113,9 +113,9 @@ var ab=new abc();
 document.body.addEventListener('click',function(event)
     {
         //e.preventDefault();
-        if(event.target.dataset.id == "del_perm"){
+        if((event.target as HTMLButtonElement).dataset.id == "del_perm"){
             console.log("iiiiiiiii");
-            ab.DeletePermissionById(event.target.value)
+            ab.DeletePermissionById(parseInt((event.target as HTMLButtonElement).value));
            
         }
     }
@@ -163,8 +163,8 @@ document.addEventListener('click' ,e=>{
         if( (e.target as HTMLButtonElement).className ==="perm_up_date")
         {
             console.log("sdfghjkl");
-            console.log(event.target.value);
-            upp.update_perm(event.target.value);
+            console.log((event.target as HTMLButtonElement).value);
+            upp.update_perm(parseInt((event.target as HTMLButtonElement).value));
            // 
            
         }
@@ -291,8 +291,8 @@ document.addEventListener('click' ,e=>{
         {
             console.log("sdfghjkl");
             
-           console.log(event.target.value)
-            perm_update.updatePermission1(event.target.value);
+           console.log((e.target as HTMLButtonElement).value)
+            perm_update.updatePermission1(parseInt((e.target as HTMLButtonElement).value));
            
            
         }

@@ -2,13 +2,13 @@ import { Specification } from "./RequestModel";
 
 export function openForm() {
 	// document.getElementsByClassName("RegisterForm")[0].classList.add("active");
-	document.querySelector("#myForm").style.display="block";
+	(document.querySelector("#myForm") as HTMLFormElement).style.display="block";
 }
 ​
 export function closeForm() {
 	// document.getElementsByClassName("RegisterForm")[0].classList.remove("active");
-    document.querySelector("#myForm").style.display="none";
-    document.querySelector("#myForm").reset();
+    (document.querySelector("#myForm") as HTMLFormElement).style.display="none";
+    (document.querySelector("#myForm") as HTMLFormElement).reset();
 }
 export function formatDate1(date) {
     var d = new Date(date),
