@@ -9,8 +9,10 @@ import { findResult } from "./search";
 export class UserRequestStatus
 {
     domElements : HtmlElementsData
-    constructor()
+    token: string
+    constructor(token: string)
     {
+        this.token = token;
         this.domElements = new HtmlElementsData();
     }
 
@@ -26,6 +28,6 @@ export class UserRequestStatus
     {
         status = status.toLowerCase();
         let uri = this.generateRequestData(status);
-        new HitApi().HitGetApi(uri);
+        new HitApi(this.token).HitGetApi(uri);
     }
 }

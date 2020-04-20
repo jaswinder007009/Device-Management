@@ -1,15 +1,16 @@
  import { Api } from "./HitSubmissionApi";
-import { RequestDeviceModel } from "./deviceRequestModel";
+import { RequestDeviceModel } from "./Device-Request/deviceRequestModel";
 import { RequestSubmitModel } from "./SubmissionRequestModel";
 import { populateData } from "./genrateSubmissionRequest";
 import { RequestModel } from "./RequetsDatamodel";
 import { Sort } from "./user-profile/SortingUser";
-import { BASEURL } from "./globals";
+import { BASEURL, navigationBarsss } from "./globals";
 
 
 (async function(){
     let address = BASEURL;
     let token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
+    let adminId = JSON.parse(sessionStorage.getItem("user_info"))["id"];
 
 
     (document.querySelector("#fixed-header-drawer-exp")  as HTMLInputElement).addEventListener("keypress" , event =>
@@ -78,14 +79,25 @@ import { BASEURL } from "./globals";
         if ((event.target as HTMLButtonElement).className == "accept") {
             
             var returnId = (event.target as HTMLButtonElement).dataset.returnId
-
-
-            let url = address + "/api/RequestHistory/"+ returnId +"/accept";
-            new Api(token).hitGetApi(url);
-            getAll();
-
+            if(confirm("Are you sure you want to approve the return?"))
+            {   let url = address + "/api/ReturnRequest/"+ returnId +"?action=accept&id="+adminId;
+                alert("Device return approved");
+                new Api(token).hitGetApi(url);
+                getAll();
+            }
             
     }
+    else if ((event.target as HTMLButtonElement).className == "reject") {
+            
+        var returnId = (event.target as HTMLButtonElement).dataset.returnId
+        if(confirm("Are you sure you want to reject the return?"))
+        {   let url = address + "/api/ReturnRequest/"+ returnId +"?action=reject&id="+adminId;
+            alert("Device return rejected");
+            new Api(token).hitGetApi(url);
+            getAll();
+        }
+        
+}
     });
 
     document.querySelector("#getData").addEventListener("click" , event=>
@@ -93,5 +105,6 @@ import { BASEURL } from "./globals";
             getAll();
         });
     getAll();
+    navigationBarsss("Admin","navigation");
 
 })();

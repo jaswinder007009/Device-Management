@@ -19,7 +19,7 @@ let mode:string = "create";
                     console.log(data);
                     (document.getElementById("specification_data") as HTMLTableElement).innerHTML = "";
                     for (let i = 0; i < data.length; i++) {
-                        let res = new SpecificationList(data[i]);
+                        let res = new SpecificationList(data[i], token);
                         res.getSpecificationList();
                     }
                 })
