@@ -107,7 +107,9 @@ function checkTypeBrandModel() {
   console.log(myParam);
   e.preventDefault();
   const temp = new AddDevice(token);
+   
   if (myParam) {
+   // specificationDropdown(type.value, brand.value, model.value);
     temp.update_device(myParam);
     console.log("updated Successfully");
     alert("Device Updated");
@@ -133,4 +135,5 @@ const myParam = urlParams.get("device_id");
 
 if (myParam != null) {
   temp.getDataToForm();
+ 
 }

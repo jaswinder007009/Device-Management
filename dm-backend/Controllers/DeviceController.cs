@@ -33,7 +33,7 @@ namespace dm_backend.Controllers
         public IActionResult GetOneDevice(string device_id)
         {
             Db.Connection.Open();
-            var query = new devices(Db);
+            var query = new DeviceInsertUpdate(Db);
             var result = query.getdevicebyid(Int32.Parse(device_id));
             Db.Connection.Close();
             return Ok(result);
@@ -106,10 +106,10 @@ namespace dm_backend.Controllers
         [Authorize(Roles="admin")]
         [HttpPost]
         [Route("add")]
-        async public Task<IActionResult> Post([FromBody]val body)
+        async public Task<IActionResult> Post([FromBody]DeviceInsertUpdate body)
         {
             Db.Connection.Open();
-            var que = new logicinsert(Db);
+            var que = new DeviceInsertUpdate(Db);
             await que.addDevice(body);
             Db.Connection.Close();
             return Ok();
@@ -130,10 +130,10 @@ namespace dm_backend.Controllers
         [Authorize(Roles="admin")]
         [HttpPut]
         [Route("update/{device_id}")]
-        async public Task<IActionResult> Put(int device_id, [FromBody]val body)
+        async public Task<IActionResult> Put(int device_id, [FromBody]DeviceInsertUpdate body)
         {
             Db.Connection.Open();
-            var query = new logicinsert(Db);
+            var query = new DeviceInsertUpdate(Db);
             body.device_id = device_id;
             await query.updateDevice(body);
             Db.Connection.Close();
