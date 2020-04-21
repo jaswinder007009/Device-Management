@@ -6,7 +6,7 @@ using MySql.Data.MySqlClient;
 using dm_backend.Models;
 using dm_backend.Utilities;
 using dm_backend.Data;
-namespace dm_backend
+namespace dm_backend.Models
 {
     public class User : PartialUserModel
     {
@@ -136,7 +136,7 @@ namespace dm_backend
         }
         public int whatIs(String data1)
         {
-            return data1 == "inactive" ? 1 : 2;
+            return data1 == "inactive" ? 2 : 1;
 
         }
         public void MarkUserInactive(int data)

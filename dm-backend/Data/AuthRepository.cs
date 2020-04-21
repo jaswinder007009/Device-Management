@@ -13,25 +13,25 @@ namespace dm_backend.Data
             _context = context;
         }
 
-        public async Task<UserAuth> Register(UserAuth user, string password)
+        public async Task<User> Register(User  user, string password)
         {
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
+            
 
             user.Hashpassword = passwordHash;
             user.Saltpassword = passwordSalt;
 
 
-            await _context.UserAuth.AddAsync(user);
+            await _context.User.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;
 
         }
 
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-
+            Console.WriteLine(password);
             using var hmac = new System.Security.Cryptography.HMACSHA512();
             passwordSalt = hmac.Key;
             passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));

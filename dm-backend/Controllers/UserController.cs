@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using dm_backend.Models;
 namespace dm_backend.Controllers
 {
     [Authorize]

@@ -3,9 +3,10 @@ import { HtmlElementsData } from "./HtmlElementsId";
 import { BASEURL } from "./globals";
 import { findResult } from "./search";
 import { getStatus } from "./index";
+import { Sort } from "./user-profile/SortingUser";
 
 
-export class Sort 
+export class Sorting
 {    
     token:string;
     elements : HtmlElementsData;
@@ -16,41 +17,18 @@ export class Sort
     }
     sortBy(attributeId : string)
     {
-        
-        let  sortType = this.checkSortType(attributeId);
+        let  sortType = new Sort(this.token).checkSortType((document.getElementById(attributeId) as HTMLTableHeaderCellElement));
         let find = (document.getElementById( this.elements.search) as HTMLInputElement).value;
         this.setSortingApiCall(attributeId , find  , sortType);
-        
     }
-    checkSortType(value : string) : string
-    {
-        const type = document.getElementById(value).getAttribute("class");
-        (document.getElementById(this.elements.thead) as HTMLTableRowElement).setAttribute("sort", value);
-        if (type ===  this.elements.upArrow)
-        {
-         document.getElementById(value).setAttribute("class" ,  this.elements.downArrow);
-         (document.getElementById(this.elements.thead) as HTMLTableRowElement).setAttribute("sortby", "DESC");
-         return "DESC";
-        }
-        else{
-         document.getElementById(value).setAttribute("class" ,  this.elements.upArrow);
-         (document.getElementById(this.elements.thead) as HTMLTableRowElement).setAttribute("sortby", "ASC")
-         return "ASC";
-        }
-         
-    }
-
+   
     setSortingApiCall(sortAttribute : string , find  : string , sortType : string)
     
     {
         const status = getStatus((document.getElementById("request-status") as HTMLSelectElement).value);
         const uri= new findResult(this.token).searchUser() +"&status="+status+"&sort="+sortAttribute+"&sort-type="+sortType;
-        
         var populateSorting = new HitApi(this.token);
-        
         populateSorting.HitGetApi(uri);
     }
-
-
-    
+   
 }

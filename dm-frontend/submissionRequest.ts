@@ -2,10 +2,8 @@
 import { RequestDeviceModel } from "./Device-Request/deviceRequestModel";
 import { RequestSubmitModel } from "./SubmissionRequestModel";
 import { populateData } from "./genrateSubmissionRequest";
-import { RequestModel } from "./RequetsDatamodel";
 import { Sort } from "./user-profile/SortingUser";
 import { BASEURL, navigationBarsss } from "./globals";
-
 
 (async function(){
     let address = BASEURL;
@@ -49,7 +47,6 @@ import { BASEURL, navigationBarsss } from "./globals";
         let url = address +  "/api/ReturnRequest" + getSearchUrl() +"&sort="+sortAttributr +"&direction="+ sortType ;
             getData(url);
         }
-
     });
 
 
@@ -106,5 +103,4 @@ import { BASEURL, navigationBarsss } from "./globals";
         });
     getAll();
     navigationBarsss("Admin","navigation");
-
 })();
