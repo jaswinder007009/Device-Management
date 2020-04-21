@@ -41,14 +41,14 @@ class Notify
         let URL = "?id=" + id;
         this.getNotification(URL);
     }
-    notificationSearch(search:string)
+    notificationSearch(id:number,search:string)
     {
-        let URL = "?search="+search;
+        let URL = "?id=" + id+"&search="+search;
         this.getNotification(URL);
     }
-    notificationSort(sort:string,direction:string)
+    notificationSort(id:number,sort:string,direction:string)
     {
-        let URL = "?sort="+sort +"&direction=" +direction;
+        let URL = "?id=" + id+"&sort="+sort +"&direction=" +direction;
         this.getNotification(URL);
     }
     acceptNotification(data:Notify)
@@ -59,14 +59,11 @@ class Notify
             body: JSON.stringify(data),
         }).catch(Error => console.log(Error));   
     }   
-    rejectNotification(data:Notify)
+    rejectNotification(notificationId:number)
     {
-        let  data1 = JSON.stringify(data);
-        console.log(data);
-        fetch(BASEURL + "/api/ReturnRequest/reject", {
-            method: "PUT",
+        
+        fetch(BASEURL + "/api/Notification/reject/"+notificationId, {
             headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
-            body: data1,
         }).catch(Error => console.log(Error));   
     }   
 }
@@ -74,7 +71,7 @@ document.getElementById("fixed-header-drawer-exp").addEventListener("keyup",func
 {
     let search = (document.getElementById("fixed-header-drawer-exp")as HTMLInputElement).value;
     console.log(search);
-    notify.notificationSearch(search);    
+    notify.notificationSearch(user_id,search);    
 });
 document.addEventListener("click", function (e) {
 
@@ -86,7 +83,7 @@ document.addEventListener("click", function (e) {
 	    let sorts = new Sort(token);
         let direction =sorts.checkSortType(id);
         console.log(direction);
-        notify.notificationSort(column,direction);
+        notify.notificationSort(user_id,column,direction);
            
         }
         
@@ -101,12 +98,11 @@ document.addEventListener("click", function (e) {
                }
             }
         if ((e.target as HTMLButtonElement).className == "reject-button") {
-               if(confirm("Are you sure you donot want to submit the device?"))
+               if(confirm("Are you sure you don't want to submit the device?"))
                {
                 
-                notify.deviceId = +((e.target as HTMLButtonElement).dataset.value);
-                notify.userId = +(e.target as HTMLButtonElement).dataset.userid;
-                notify.rejectNotification(notify);
+                let notificationId = parseInt((e.target as HTMLButtonElement).dataset.notificationid,10);
+                notify.rejectNotification(notificationId);
                 
                }
                

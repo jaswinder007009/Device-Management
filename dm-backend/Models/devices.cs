@@ -159,7 +159,7 @@ namespace dm_backend.Models
             var spec1 = new Specification();
             spec1.RAM = GetSafeString(reader, "RAM");
             spec1.Storage = GetSafeString(reader, "Storage");
-            spec1.Screen_size = GetSafeString(reader, "Screen_size");
+            spec1.ScreenSize = GetSafeString(reader, "Screen_size");
             spec1.Connectivity = GetSafeString(reader, "Connectivity");
 
             return spec1;

@@ -127,29 +127,27 @@ import { openForm } from "./utilities";
 			window.location.href = "AddDevice.html?device_id=" + device_id;
 		}
 		if ((e.target as HTMLButtonElement).className == "delete-button") {
-			console.log("delete");
+			
 			if (confirm("Are you sure you want to delete this device?")) {
 				const temp = new GetApiForAdmin(token);
 				const device_id: any = (e.target as HTMLButtonElement).getAttribute(
 					"value"
 				);
-				console.log("device_id" + device_id);
+				
 				temp.deleteDevice(device_id);
-				console.log("device deleted");
+				
 	           window.location.reload();
 				temp.getData();
-			} else {
-				console.log("fail deleted");
-			}
+			} 
 		}
 		if((e.target as HTMLTableCellElement).className=="cards")
         {
-			console.log("abc");
+			
 			const device_id: any = (e.target as HTMLButtonElement).dataset.deviceid;
 			window.location.href = "./devicedetail.html?device_id=" + device_id;
         }
 		if ((e.target as HTMLButtonElement).className == "notify-button") {
-			console.log("notify");
+			
 			let request = new Requests();
 
 			request.deviceModel = (e.target as HTMLButtonElement).dataset.devicemodel;

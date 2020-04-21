@@ -15,7 +15,7 @@ namespace dm_backend.Models
 
         public string RAM { get; set; }
         public string Storage { get; set; }
-        public string Screen_size { get; set; }
+        public string ScreenSize { get; set; }
 
         public string Connectivity { get; set; }
 
@@ -46,12 +46,12 @@ namespace dm_backend.Models
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"select * from specification where specification.specification_id=@specification_id;";
-            
+
             cmd.Parameters.AddWithValue("@specification_id", specification_id);
             return await ReadSpecifications(cmd.ExecuteReader());
         }
 
-        public async Task<List<Specification>> getSpecificSpecification(string typeId , string brand , string model )
+        public async Task<List<Specification>> getSpecificSpecification(string typeId, string brand, string model)
         {
 
             using var cmd = Db.Connection.CreateCommand();
@@ -78,27 +78,17 @@ where db.brand = @brand  and dt.type = @type  and dm.model=@model group by s.spe
                     var spec1 = new Specification()
                     {
                         specification_id = reader.GetInt32(0),
-                        RAM = GetSafeString(reader , "RAM"),
-                        Storage = GetSafeString(reader , "storage"),
-                        Screen_size = GetSafeString(reader, "screen_size"),
+                        RAM = GetSafeString(reader, "RAM"),
+                        Storage = GetSafeString(reader, "storage"),
+                        ScreenSize = GetSafeString(reader, "screen_size"),
                         Connectivity = GetSafeString(reader, "connectivity")
 
-                     
+
                     };
                     specifications.Add(spec1);
                 }
             }
             return specifications;
-        }
-
-
-    }
-    public class insertspec
-    {
-        public AppDb Db { get; }
-        public insertspec(AppDb db)
-        {
-            Db = db;
         }
         async public Task addspecification(Specification s)
         {
@@ -112,54 +102,22 @@ where db.brand = @brand  and dt.type = @type  and dm.model=@model group by s.spe
         {
             cmd.Parameters.Add(new MySqlParameter("RAM", s.RAM));
             cmd.Parameters.Add(new MySqlParameter("storage", s.Storage));
-            cmd.Parameters.Add(new MySqlParameter("screen_size", s.Screen_size));
+            cmd.Parameters.Add(new MySqlParameter("screen_size", s.ScreenSize));
             cmd.Parameters.Add(new MySqlParameter("connectivity", s.Connectivity));
-        }
-    }
-    public class updatespec
-    {
-        public AppDb Db { get; }
-        public updatespec(AppDb db)
-        {
-            Db = db;
         }
         async public Task updatespecification(Specification s1)
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "updatespecification";
             cmd.CommandType = CommandType.StoredProcedure;
-            Bindspecs(cmd, s1);
+            Bindspec(cmd, s1);
+            BindSpecificationId(cmd,s1);
             await cmd.ExecuteNonQueryAsync();
         }
-        private void Bindspecs(MySqlCommand cmd, Specification s1)
+        private void BindSpecificationId(MySqlCommand cmd, Specification s1)
         {
             cmd.Parameters.Add(new MySqlParameter("specification_id", s1.specification_id));
-            cmd.Parameters.Add(new MySqlParameter("RAM", s1.RAM));
-            cmd.Parameters.Add(new MySqlParameter("storage", s1.Storage));
-            cmd.Parameters.Add(new MySqlParameter("screen_size", s1.Screen_size));
-            cmd.Parameters.Add(new MySqlParameter("connectivity", s1.Connectivity));
         }
-    }
-
-    public class SpecificationModel
-    {
-        
-        public string RAM { get; set; }
-        public string Storage { get; set; }
-        public string ScreenSize { get; set; }
-        public string Connectivity { get; set; }
-
-        internal AppDb Db { get; set; }
-
-        public SpecificationModel()
-        {
-
-        }
-        internal SpecificationModel(AppDb db)
-        {
-            Db = db;
-        }
-
         // Returns Specification ID from given specifications
         // Otherwise throws a NullReferenceException
         internal int GetSpecificationID(AppDb db)
@@ -187,5 +145,6 @@ where db.brand = @brand  and dt.type = @type  and dm.model=@model group by s.spe
             cmd.Parameters.Add(new MySqlParameter("var_screen_size", ScreenSize));
             cmd.Parameters.Add(new MySqlParameter("var_connectivity", Connectivity));
         }
+
     }
-}
+    }

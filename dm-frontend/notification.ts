@@ -1,6 +1,7 @@
 
 
 export class Notifications {
+    notification_id: number;
     device_id: number;
     user_id:number;
     type: string;
@@ -15,6 +16,7 @@ export class Notifications {
     message:string;
     token:string="";
     constructor(data: any,token:string) {
+        this.notification_id = data.notificationId;
         this.user_id = data.userId;
         this.device_id = data.deviceId;
         this.type = data.deviceType;
@@ -44,7 +46,7 @@ export class Notifications {
               if(this.status=="Pending"){         
                     var buttons= ` <td>
                <button class="accept-button" data-userid = ${this.user_id} data-value=${this.device_id}>Accept </button>
-                <button class="reject-button" data-userid = ${this.user_id} data-value=${this.device_id}>Reject </button>
+                <button class="reject-button" data-notificationid = ${this.notification_id}>Reject </button>
             </td>
         </tr>`;
               }
