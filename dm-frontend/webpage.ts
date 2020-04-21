@@ -46,15 +46,17 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 		{
 			if((e.target as HTMLButtonElement).id == "popup")
 			{
-				console.log("Button clicked");
-				(document.getElementById("email") as HTMLInputElement).disabled = false;
-				changeheading1Text();
-				util.openForm();
-				var user = new UserData(token);
-				user.getSalutation();
-				form_mode="create";
-			}
-		});
+				
+					console.log("Button clicked");
+					(document.getElementById("email") as HTMLInputElement).disabled = false;
+					changeheading1Text();
+                    util.openForm();
+					var user = new UserData(token);
+					user.getSalutation();
+					user.departmentcall();
+					form_mode="create";
+				}
+			});
 
 	const form = document.querySelector('.form-popup') as HTMLFormElement;
 	form.addEventListener('submit', function (e) {
@@ -262,7 +264,13 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 		}
 	});
 
-	let checkbox = document.querySelector('.sameaddress');
+
+document.querySelector("#department").addEventListener("click",function(e){
+	new UserData(token).departdesgcall();
+})
+
+
+		let checkbox = document.querySelector('.sameaddress');
 
 	checkbox.addEventListener('change', function() {
 		if(this.checked) {
