@@ -6,7 +6,8 @@ export function validateForm(formMode:string) {
     departmentvalidation()*
     designationvalidation()*
     emailvalidation()*
-    phone1validation();
+    phone1validation()*
+    dob()*doj()*ac();
 return result == 1 ? true : false;
 }
 export function remove() {
@@ -17,6 +18,9 @@ export function remove() {
     (document.getElementById('designations') as HTMLInputElement).innerHTML = "";
     (document.getElementById('emails') as HTMLInputElement).innerHTML = "";
     (document.getElementById('phone_number1s') as HTMLInputElement).innerHTML = "";
+    (document.getElementById('dobs') as HTMLInputElement).innerHTML = "";
+    (document.getElementById('dojs') as HTMLInputElement).innerHTML = "";
+    (document.getElementById('acs') as HTMLInputElement).innerHTML = "";
 }
 function firstNamevalidation() {
 
@@ -85,6 +89,36 @@ function designationvalidation() {
         return 0;
     } else {
         (document.getElementById('designations') as HTMLInputElement).innerHTML = "";
+        return 1;
+    }
+}
+function dob(){
+    var dobs = (document.getElementById('dob') as HTMLInputElement).value;
+    if (dobs == "") {
+        (document.getElementById('dobs') as HTMLInputElement).innerHTML = "Fill Date Of Birth";
+        return 0;
+    } else {
+        (document.getElementById('dobs') as HTMLInputElement).innerHTML = "";
+        return 1;
+    }
+}
+function doj(){
+    var dojs = (document.getElementById('doj') as HTMLInputElement).value;
+    if (dojs == "") {
+        (document.getElementById('dojs') as HTMLInputElement).innerHTML = "Fill Date Of Joining";
+        return 0;
+    } else {
+        (document.getElementById('dojs') as HTMLInputElement).innerHTML = "";
+        return 1;
+    }
+}
+function ac(){
+    var acs = (document.getElementById('ac') as HTMLInputElement).value;
+    if (acs == "") {
+        (document.getElementById('acs') as HTMLInputElement).innerHTML = "Fill Area Code";
+        return 0;
+    } else {
+        (document.getElementById('acs') as HTMLInputElement).innerHTML = "";
         return 1;
     }
 }

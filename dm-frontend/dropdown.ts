@@ -41,7 +41,15 @@ export class UserData {
         let data = await (response.json());       
         populateDropdown(selectElement, data);
 
-    }
+    }    
+    async departdesgcall(){
+        this.url = BASEURL + "/api/Dropdown/designation?id=" + (document.getElementById("department")as HTMLSelectElement).value;
+        this.dropdownApiCall(this.url, document.querySelector("#designationName.form-control"));
+        }
+        async departmentcall(){
+            this.url = BASEURL + "/api/Dropdown/department";
+            this.dropdownApiCall(this.url, document.querySelector("#department.form-control"));
+            }
 }
 
 //const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];

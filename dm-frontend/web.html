@@ -96,50 +96,27 @@
 
                     </div>
 
-                    <!-- <div class="form-group col-md-4">
-                        <label> Department: </label>
-                        <input type="text" name="departmentName" class="form-control" id="department">
-                        <span id="departments" class="text-danger font-weight-bold"></span>
-                    </div> -->
                     <div class="form-group col-md-4">
                         <label> Department: </label>
-                        <select type="text" name="departmentName" class="form-control" id="department">
-                            <option value="Web Development">Web Development</option>
-                            <option value="Andriod">Andriod</option>
-                            <option value="IOS">IOS</option>
-                            <option value="Data Analytics">Data Analytics</option>
-                            <option value="Machine Learning">Machine Learning</option>
-                            <option value="Game Development">Game Development</option>
-                            <option value="QA Tester">QA Tester</option>
-                            <option value="Human Resources">Human Resources</option>
+                        <select type="text" name="department" class="form-control" id="department">
+                           
                         </select>
                         <span id="departments" class="text-danger font-weight-bold"></span>
                     </div>
                     
-                    <!-- <div class="form-group col-md-4">
-                        <label> Designation: </label>
-                        <input type="text" name="designation" class="form-control" id="designationName">
-                        <span id="designations" class="text-danger font-weight-bold"></span>
-                    </div> -->
                     <div class="form-group col-md-4">
                         <label> Designation: </label>
                         <select type="text" name="designation" class="form-control" id="designationName">
-                            <option value="General Manager">General Manager</option>
-                            <option value="Senior Lead">Senior Lead</option>
-                            <option value="Asst. Lead">Asst. Lead</option>
-                            <option value="Project Manager">Project Manager</option>
-                            <option value="Intern">Intern</option>
+                        
                         </select>
                         <span id="designations" class="text-danger font-weight-bold"></span>
                     </div>
                 </div><br>
 
-
-
-
-                   <div class="form-row">
+                 <div class="form-row">
                     <div class="form-group col-md-4"><label for="DOB">Date Of Birth:</label>
                         <input type="text" id="dob" placeholder="dd-mm-YYYY" name="DOB" class="form-control">
+                        <span id="dobs" class="text-danger font-weight-bold"></span>
                     </div><br>
                     <div class="form-group col-md-4">
                         <label> Gender: </label>
@@ -153,6 +130,7 @@
 
                     <div class="form-group col-md-4"><label for="DOJ">Date Of Joining:</label>
                         <input type="text" id="doj" placeholder="dd-mm-YYYY" name="DOJ" class="form-control">
+                        <span id="dojs" class="text-danger font-weight-bold"></span>
                     </div>
                     </div><br>
                 </div><br>
@@ -199,7 +177,8 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="areacode">Area Code</label>
-                                        <input type="text" class="areaCode form-control" name="AreaCode">
+                                        <input type="text" class="areaCode form-control" id="ac" name="AreaCode"  maxlength="4">
+                                        <span id="acs" class="text-danger font-weight-bold"></span>
                                     </div>
                                 </div>
 
@@ -233,7 +212,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="areacode">Area Code</label>
-                                        <input type="text" class="areaCode form-control" name="AreaCode">
+                                        <input type="text" class="areaCode form-control" name="AreaCode" maxlength="4">
                                     </div>
                                 </div>
 
@@ -267,7 +246,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="areacode">Area Code</label>
-                                        <input type="text" class="areaCode form-control" name="AreaCode">
+                                        <input type="text" class="areaCode form-control" name="AreaCode" maxlength="4">
                                     </div>
                                 </div>
 
@@ -434,7 +413,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="" data-dismiss="modal">Close</button>
-              <button type="button"  class="userDeleteData" id="dis" data-dismiss="modal" value="Delete">Delete</button>
+              <button type="button"  class="userDeleteData" id="" name="dlt" data-dismiss="modal" value="Delete">Delete</button>
             </div>      </div>
         </div>
       </div>

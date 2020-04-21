@@ -52,9 +52,10 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 					console.log("Button clicked");
 					(document.getElementById("email") as HTMLInputElement).disabled = false;
 					changeheading1Text();
-					util.openForm();
+                    util.openForm();
 					var user = new UserData(token);
-			        user.getSalutation();
+					user.getSalutation();
+					user.departmentcall();
 					form_mode="create";
 				}
 			});
@@ -101,10 +102,10 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 	
 $('#deleteModal').on('shown.bs.modal', function (e) {
     
-	this.querySelector('.userDeleteData').setAttribute("data-id",(e.relatedTarget).id);
+	this.querySelector('.userDeleteData').setAttribute("data-id",(e.delegateTarget).id);
 	let userId:number = parseInt(((e.target) as HTMLInputElement).dataset.id);
-	
-	let url : string= BASEURL + "/api/Device/current_device/"+e.relatedTarget.id+"?search=" + "" + "";
+//	document.getElementsByTagName("dlt")[0].setAttribute("id", userId);
+	let url : string= BASEURL + "/api/Device/current_device/"+e.delegateTarget.id+"?search=" + "" + "";
 
 	 let data=new MyDevices(token).getApiCall(url)
 	 .then(res=>{
@@ -133,10 +134,10 @@ $('#deleteModal').on('shown.bs.modal', function (e) {
 $('#aiModal').on('shown.bs.modal', function (g) {
     console.log("in1");
 	
-this.querySelector('.userCheckStatus').setAttribute("data-id",g.relatedTarget.id);
+this.querySelector('.userCheckStatus').setAttribute("data-id",g.delegateTarget.id);
 let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
-			console.log(g.relatedTarget.id); //userid
-			let url : string= BASEURL + "/api/Device/current_device/"+g.relatedTarget.id+"?search=" + "" + "";
+			console.log(g.delegateTarget.id); //userid
+			let url : string= BASEURL + "/api/Device/current_device/"+g.delegateTarget.id+"?search=" + "" + "";
 
 			 let data=new MyDevices(token).getApiCall(url)
 			 .then(res=>{
@@ -237,6 +238,12 @@ function changeheadingText()
 				});
 			}
 		});
+
+
+document.querySelector("#department").addEventListener("click",function(e){
+	new UserData(token).departdesgcall();
+})
+
 
 		let checkbox = document.querySelector('.sameaddress');
 

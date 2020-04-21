@@ -124,6 +124,75 @@ namespace dm_backend.Controllers
         }
 
 
+
+
+        [HttpGet]
+        [Route("designation")]
+        public IActionResult designationTypes()
+        {
+            String fields = HttpContext.Request.Query["id"];
+            List<DropdownModel> desgTypes = new List<DropdownModel>();
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "select designation.designation_id,designation.designation_name from department,designation,department_designation where department.department_id=department_designation.department_id and designation.designation_id=department_designation.designation_id and department.department_name=@fields;";
+             cmd.Parameters.AddWithValue("@fields", fields);
+           
+            var reader = cmd.ExecuteReader();
+
+            using (reader)
+            {
+                while (reader.Read())
+                {
+                    desgTypes.Add(new DropdownModel()
+                    {
+                        id = reader.GetInt32(0),
+                        name = reader.GetString(1)
+                    });
+                }
+            }
+            Db.Connection.Close();
+            if (desgTypes.Count > 0)
+            {
+                return Ok(desgTypes);
+            }
+            else
+                return NoContent();
+        }
+
+
+
+        [HttpGet]
+        [Route("department")]
+        public IActionResult departmentTypes()
+        {
+          
+            List<DropdownModel> deptTypes = new List<DropdownModel>();
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "select * from department";
+           
+            var reader = cmd.ExecuteReader();
+
+            using (reader)
+            {
+                while (reader.Read())
+                {
+                    deptTypes.Add(new DropdownModel()
+                    {
+                        id = reader.GetInt32(0),
+                        name = reader.GetString(1)
+                    });
+                }
+            }
+            Db.Connection.Close();
+            if (deptTypes.Count > 0)
+            {
+                return Ok(deptTypes);
+            }
+            else
+                return NoContent();
+        }
+
         [Route("salutation")]
         public IActionResult Salutations()
         {
