@@ -91,22 +91,7 @@ namespace dm_backend.Models
                 throw e;
             }
         }
-        public string RejectReturnRequest()
-        {
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"reject_user_request";
-            cmd.CommandType = CommandType.StoredProcedure;
-            try
-            {
-                BindReturnProcedureParams(cmd);
-                cmd.ExecuteNonQuery();
-                return "Request rejected";
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
+        
         public string resolveRequest()
         {
             using var cmd = Db.Connection.CreateCommand();
@@ -152,14 +137,14 @@ namespace dm_backend.Models
             return ReadAll(reader);
         }
 
-        private void BindReturnProcedureParams(MySqlCommand cmd)
+        private void BindFaultyRequestProcedureParams(MySqlCommand cmd)
         {
 
             cmd.Parameters.Add(new MySqlParameter("var_complain_id", complaintId));
 
 
         }
-        private void BindFaultyRequestProcedureParams(MySqlCommand cmd)
+        private void BindReturnProcedureParams(MySqlCommand cmd)
         {
 
             cmd.Parameters.Add(new MySqlParameter("var_user_id", userId));
