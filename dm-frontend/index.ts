@@ -76,7 +76,7 @@ import {navigationBarsss} from "./globals";
         (document.getElementById(domElement.devicesearch)  as HTMLInputElement).setAttribute(domElement.deviceSerial , "");
         }
         
-        new UserRequestStatus().requestStatusResult(requestStatus);
+        new UserRequestStatus(token).requestStatusResult(requestStatus);
         
         // console.log(requestStatus);
     });

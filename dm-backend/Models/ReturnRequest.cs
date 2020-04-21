@@ -20,8 +20,8 @@ namespace dm_backend.Models
         public int deviceId { get; set; }
         public string deviceModel { get; set; }
         public string deviceBrand { get; set; }
-        public string deviceType { get; set; }
-        public SpecificationModel specs { get; set; }
+        public string deviceType { get; set; }  
+        public Specification specs { get; set;}     
         public string returnDate { get; set; }
         public string comment { get; set; }
         public int complaintId { get; set; }

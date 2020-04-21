@@ -17,7 +17,7 @@ namespace dm_backend.Models
         public string deviceModel { get; set; }
         public string deviceBrand { get; set; }
         public string deviceType { get; set; }
-        public SpecificationModel specs { get; set; }    
+        public Specification specs { get; set; }    
         public string notificationDate { get; set; }
         public string status { get; set; }
         public string message { get; set; }
@@ -31,7 +31,7 @@ namespace dm_backend.Models
             Db = db;
         }
 
-        public string AddNotification()
+        public string AddNotifications()
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = "insert_notification";

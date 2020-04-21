@@ -142,6 +142,12 @@ import { openForm } from "./utilities";
 				console.log("fail deleted");
 			}
 		}
+		if((e.target as HTMLTableCellElement).className=="cards")
+		{
+			console.log("abc");
+			const device_id: any = (e.target as HTMLButtonElement).dataset.deviceid;
+			console.log(device_id);
+		}
 		if ((e.target as HTMLButtonElement).className == "notify-button") {
 			console.log("notify");
 			let request = new Requests();
