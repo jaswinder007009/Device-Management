@@ -9,7 +9,7 @@ import { Sort } from "./user-profile/SortingUser";
 import { BASEURL,amIUser,navigationBarsss } from './globals';
 import { UserData }  from "./dropdown";
 import {MyDevices } from "./userHistory";
-let $: JQueryStatic = (window as any)["jQuery"];
+// let $: JQueryStatic = (window as any)["jQuery"];
 
 
 
@@ -98,113 +98,139 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 	});
 
 	
-	
-$('#deleteModal').on('shown.bs.modal', function (e) {
-    
-	this.querySelector('.userDeleteData').setAttribute("data-id",(e.relatedTarget).id);
-	let userId:number = parseInt(((e.target) as HTMLInputElement).dataset.id);
-	
-	let url : string= BASEURL + "/api/Device/current_device/"+e.relatedTarget.id+"?search=" + "" + "";
+	const modalFunctions = {
+		onDeleteModal : function (e) {
+			
+			// this.querySelector('.userDeleteData').setAttribute("data-id",(e.relatedTarget).id);
+			let userId:number = parseInt(((this) as HTMLInputElement).dataset.id);
+			
+			let url : string= BASEURL + "/api/Device/current_device/"+userId+"?search=" + "" + "";
 
-	 let data=new MyDevices(token).getApiCall(url)
-	 .then(res=>{
-	      
-			  console.log(res);
-			if(res.length>0)
-			 {   let i=0;
-				(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
-				(document.getElementById("errorMsg") as HTMLInputElement).innerHTML= "This User Already Has Assigned Devices So Can't Be Deleted";
-				(document.getElementById("dis")as HTMLInputElement).disabled = true;
-				 for(i=0;i<res.length;i++)
-				 (document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices "+ "<br>"+(i+1)+". "+res[i].type+" "+res[i].brand+" "+res[i].model+"<br> ";
+			new MyDevices(token).getApiCall(url)
+			.then(res=>{
+				
+				console.log(res);
+				if(res.length>0)
+				{   let i=0;
+					(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
+					(document.getElementById("errorMsg") as HTMLInputElement).innerHTML= "This User Already Has Assigned Devices So Can't Be Deleted";
+					(document.getElementById("dis")as HTMLInputElement).disabled = true;
+					for(i=0;i<res.length;i++)
+					(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices "+ "<br>"+(i+1)+". "+res[i].type+" "+res[i].brand+" "+res[i].model+"<br> ";
+					}
+				else
+				{
+					
+					(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
+					(document.getElementById("dis")as HTMLInputElement).disabled = false;
+					(document.getElementById("errorMsg") as HTMLInputElement).innerHTML= "This User Will Be Permanently Deleted <br> Do You Want To Proceed ?";
+					
 				}
-			 else
-			 {
-				
-				(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
-				(document.getElementById("dis")as HTMLInputElement).disabled = false;
-				(document.getElementById("errorMsg") as HTMLInputElement).innerHTML= "This User Will Be Permanently Deleted <br> Do You Want To Proceed ?";
-				
-			 }
-				});
- })
-
-
-$('#aiModal').on('shown.bs.modal', function (g) {
-    console.log("in1");
+			});
+		},
+		onStatusModal : function () {
+		    console.log("in1");
 	
-this.querySelector('.userCheckStatus').setAttribute("data-id",g.relatedTarget.id);
-let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
-			console.log(g.relatedTarget.id); //userid
-			let url : string= BASEURL + "/api/Device/current_device/"+g.relatedTarget.id+"?search=" + "" + "";
+			// this.querySelector('.userCheckStatus').setAttribute("data-id",g.relatedTarget.id);
+			let userId:number = parseInt(((this) as HTMLDivElement).dataset.id);
+			// console.log(g.relatedTarget.id); //userid
+			let url : string= BASEURL + "/api/Device/current_device/"+userId+"?search=" + "" + "";
 
-			 let data=new MyDevices(token).getApiCall(url)
-			 .then(res=>{
+			new MyDevices(token).getApiCall(url)
+			.then(res=>{
 					  console.log(res);
 		            if(res.length>0)
 					 {   let i=0;
 						(document.getElementById("insideModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices And Cannot Be Inactivated"+ "<br>";
 						(document.getElementById("ucs")as HTMLInputElement).disabled = true;
-		                 for(i=0;i<res.length;i++)
-                         (document.getElementById("insideModel") as HTMLInputElement).innerHTML+=(i+1)+". "+res[i].type+" "+res[i].brand+" "+res[i].model+"<br> ";
+		                for(i=0;i<res.length;i++)
+                        	(document.getElementById("insideModel") as HTMLInputElement).innerHTML+=(i+1)+". "+res[i].type+" "+res[i].brand+" "+res[i].model+"<br> ";
 				
-						}
-					 else{
+					}
+					else{
 						(document.getElementById("ucs")as HTMLInputElement).disabled = false;
 						(document.getElementById("insideModel") as HTMLInputElement).innerHTML="";
 						
-					 }
-                        });
+					}
+            });
 			 
 
-})
+		}
+	};
 
-$('#aiModal').on('hide.bs.modal', function (g) {
-setData();
-(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
-(document.getElementById("insideModel") as HTMLInputElement).innerHTML="";
-})
+// $('#aiModal').on('hide.bs.modal', function (g) {
+// setData();
+// (document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
+// (document.getElementById("insideModel") as HTMLInputElement).innerHTML="";
+// })
 
 	document.addEventListener("click", function (ea) {
 	
 		if((ea.target as HTMLButtonElement).className == "userDeleteData"){
-		const id = parseInt((ea.target as HTMLButtonElement).dataset["id"]);
-		new GetUserApi(token).deleteData(id).then(function () { setData(); });
+			const id = parseInt((ea.target as HTMLButtonElement).dataset["id"]);
+			new GetUserApi(token).deleteData(id).then(function () { setData(); });
 		}
 		else if((ea.target as HTMLTableHeaderCellElement).tagName == 'TH')
 		{
 			const returned = new Sort(token).sortBy(ea.target as HTMLTableHeaderCellElement);
-					returned.then(data => {
-					console.log(data);
-					populateTable(data)
-				});
+			returned.then(data => {
+				console.log(data);
+				populateTable(data)
+			});
 		}
 		else if (((ea.target) as HTMLInputElement).className == "userCheckStatus")
 		{   
-			let userId:number = parseInt(((ea.target) as HTMLInputElement).dataset.id);
-			console.log("this is id : "+userId);			
-			if((document.getElementById(userId.toString()) as HTMLInputElement).checked)
-			{
-				new GetUserApi(token).userInactive(userId , "inactive");
+			let modal = ea.target as HTMLElement;
+			while(true){
+				if ((modal.getAttribute("role") as string) == "dialog")
+					break;
+				modal = modal.parentElement;
 			}
-			else
-			{	
-				new GetUserApi(token).userInactive(userId , "active");
-			}
-			setData();
-
+			let userId:number = parseInt(modal.dataset.id);
+			console.log("this is id : "+userId);
+			let statusToSet = (ea.target as HTMLInputElement).checked ? "inactive" : "active";
+			// if((ea.target as HTMLInputElement).checked)
+			// {
+			// 	new GetUserApi(token).userInactive(userId , "inactive");
+			// }
+			// else
+			// {	
+				
+			// }
+			new GetUserApi(token).userInactive(userId , statusToSet).then(_ => {
+				setData();
+			});
+			util.closeModal(modal);
 		}
 		else if(((ea.target) as HTMLInputElement).id == "closeFormButton")
 		{
 			console.log("calling remove");
 			remove();
 		}
+		// Handler for buttons that open modals
+		else if ((ea.target as HTMLElement).getAttribute("data-toggle") == "modal"){
+			const modal = document.querySelector((ea.target as HTMLElement).dataset.target) as HTMLDivElement;
+			util.openModal(modal);
+			modal.setAttribute('data-id', (ea.target as HTMLElement).id);
+			modalFunctions[modal.dataset["operation"]].bind(this);
+		}
+		// Handler for cancel button in modals
+		else if ((ea.target as HTMLElement).getAttribute("data-dismiss") == "modal"){
+			let modal = ea.target as HTMLElement;
+			while(true){
+				if ((modal.getAttribute("role") as string) == "dialog")
+					break;
+				modal = modal.parentElement;
+			}
+			util.closeModal(modal);
+			modal.removeAttribute("data-id");
+		}
 	});
 
 function changeheadingText()
-			{
-			document.getElementById('headingText').innerHTML='Update User Details';
-			}
+{
+	document.getElementById('headingText').innerHTML='Update User Details';
+}
 	document.addEventListener('click' , ed =>
 	{
 		

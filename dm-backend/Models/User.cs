@@ -136,7 +136,7 @@ namespace dm_backend
         }
         public int whatIs(String data1)
         {
-            return data1 == "inactive" ? 1 : 2;
+            return data1 == "inactive" ? 2 : 1;
 
         }
         public void MarkUserInactive(int data)
