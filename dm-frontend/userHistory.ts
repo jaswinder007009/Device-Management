@@ -1,6 +1,6 @@
 import { BASEURL, amIAdmin, amIUser, navigationBarsss } from './globals';
 import { Sort } from './user-profile/SortingUser';
-import { dynamicGenerate } from './user-profile/dynamic';
+//import { dynamicGenerate } from './user-profile/dynamic';
 ( async function(){
     const userId=JSON.parse(sessionStorage.getItem("user_info"))["id"];
     const token=JSON.parse(sessionStorage.getItem("user_info"))["token"];

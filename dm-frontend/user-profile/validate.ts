@@ -94,10 +94,14 @@ function confirmpasswordvalidation() {
     var passwords = (document.getElementById('password') as HTMLInputElement).value;
 
     var confirmpasswords = (document.getElementById('confirmpassword') as HTMLInputElement).value;
+    if(passwords=="")
+    {
+        return true;
+    }
    
     if (confirmpasswords == "") {
         (document.getElementById('confirmpasswords') as HTMLInputElement).innerHTML = "Fill Confirm Password";
-        return false;
+        return true;
     } else if (confirmpasswords.length < 5 || confirmpasswords.length > 20) {
         (document.getElementById('confirmpasswords') as HTMLInputElement).innerHTML = "Confirm Password Should Be Between 5 and 20";
         return false;
