@@ -93,15 +93,20 @@ function emailvalidation() {
     if (emails == "") {
         (document.getElementById('emails') as HTMLInputElement).innerHTML = "Fill Email";
         return 0;
-    } else if (emails.indexOf('@') <= 0) {
-        (document.getElementById('emails') as HTMLInputElement).innerHTML = "@ Is At Invalid position";
+    }else if (emails.indexOf('@') <= 0) {
+        document.getElementById('useremails').innerHTML = "@ Is At Invalid position";
         return 0;
-    } else if ((emails.charAt(emails.length - 4) != '.') && (emails.charAt(emails.length - 3) != '.')) {
-        (document.getElementById('emails') as HTMLInputElement).innerHTML = ". Is At Invalid position";
-        return 0;
-    } else {
-        (document.getElementById('emails') as HTMLInputElement).innerHTML = "";
-        return 1;
+     } else {
+            let str = emails;
+        str=str.toLowerCase();
+        let st =str.split("@");
+        if(st[1]!="ex2india.com"){
+            document.getElementById('emails').innerHTML = "Not A Valid Domain";
+            return 0;
+        }
+            document.getElementById('emails').innerHTML = "";
+                return 1; 
+        }
     }
 function phone1validation() {
     var phone_number1s = (document.getElementById('phone_number1') as HTMLInputElement).value;

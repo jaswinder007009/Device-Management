@@ -175,6 +175,8 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
 
     document.getElementById("notifications").addEventListener('click', function (e) {
         window.location.href = "./notifiication.html";
+    })
+    document.getElementById("logout").addEventListener('click', function (e) {
         sessionStorage.clear();
         window.location.href = "/SJLogin/LoginRegiter.html";
     })

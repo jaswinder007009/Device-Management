@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using dm_backend.Logics;
+using System.Net;
+using Microsoft.AspNetCore.Authorization;
+
+namespace dm_backend.Models{
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]

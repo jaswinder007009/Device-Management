@@ -6,14 +6,14 @@ import { populateFormFromObject, createObjectFromForm } from "./user-profile/dat
 import { UserModel } from "./UserModel";
 import { remove, validateForm } from "./validation";
 import { Sort } from "./user-profile/SortingUser";
-import { amIUser,navigationBarsss } from './globals';
+import { BASEURL,amIUser,navigationBarsss } from './globals';
 import { UserData }  from "./dropdown";
+import {MyDevices } from "./userHistory";
+// let $: JQueryStatic = (window as any)["jQuery"];
 
 
 
-
-
-
+import {dropDownListen } from "./user-profile/dropDownListener";
 (async function(){
 	const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
 	const role = (await amIUser(token)) == true ? "User" : "Admin";
@@ -53,6 +53,8 @@ import { UserData }  from "./dropdown";
 					(document.getElementById("email") as HTMLInputElement).disabled = false;
 					changeheading1Text();
 					util.openForm();
+					var user = new UserData(token);
+			        user.getSalutation();
 					form_mode="create";
 				}
 			});
@@ -66,7 +68,8 @@ import { UserData }  from "./dropdown";
 			var userData=createObjectFromForm(this);
 			if(validateForm(form_mode)==true){
 			new CreateUserApi(token).createUserData(userData).then(function(){setData();});
-			new UserData(token);
+			//new UserData(token);
+			
 		}
 			else 
 			{
@@ -93,153 +96,141 @@ import { UserData }  from "./dropdown";
 	return false;
 
 	});
-	//function alertDelete() {
-	//	return confirm("Do You Want To Permanently Delete ?");
 
-
-//	}
-
-
-$('#deleteModal').on('shown.bs.modal', function (e) {
-    
-	this.querySelector('.userDeleteData').setAttribute("data-id",e.relatedTarget.id);
-	let userId:number = parseInt(((e.target) as HTMLInputElement).dataset.id);
 	
-	let url : string= BASEURL + "/api/Device/current_device/"+e.relatedTarget.id+"?search=" + "" + "";
+	const modalFunctions = {
+		onDeleteModal : function (e) {
+			
+			// this.querySelector('.userDeleteData').setAttribute("data-id",(e.relatedTarget).id);
+			let userId:number = parseInt(((this) as HTMLInputElement).dataset.id);
+			
+			let url : string= BASEURL + "/api/Device/current_device/"+userId+"?search=" + "" + "";
 
-	 let data=new MyDevices(token).getApiCall(url)
-	 .then(res=>{
-	      
-			  console.log(res);
-			if(res.length>0)
-			 {   let i=0;
-				(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
-				(document.getElementById("errorMsg") as HTMLInputElement).innerHTML= "This User Already Has Assigned Devices So Can't Be Deleted";
-				document.getElementById("dis").disabled = true;
-				 for(i=0;i<res.length;i++)
-				 (document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices "+ "<br>"+(i+1)+". "+res[i].type+" "+res[i].brand+" "+res[i].model+"<br> ";
+			new MyDevices(token).getApiCall(url)
+			.then(res=>{
+				
+				console.log(res);
+				if(res.length>0)
+				{   let i=0;
+					(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
+					(document.getElementById("errorMsg") as HTMLInputElement).innerHTML= "This User Already Has Assigned Devices So Can't Be Deleted";
+					(document.getElementById("dis")as HTMLInputElement).disabled = true;
+					for(i=0;i<res.length;i++)
+					(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices "+ "<br>"+(i+1)+". "+res[i].type+" "+res[i].brand+" "+res[i].model+"<br> ";
+					}
+				else
+				{
+					
+					(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
+					(document.getElementById("dis")as HTMLInputElement).disabled = false;
+					(document.getElementById("errorMsg") as HTMLInputElement).innerHTML= "This User Will Be Permanently Deleted <br> Do You Want To Proceed ?";
+					
 				}
-			 else
-			 {
-				
-				(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
-				document.getElementById("dis").disabled = false;
-				(document.getElementById("errorMsg") as HTMLInputElement).innerHTML= "This User Will Be Permanently Deleted <br> Do You Want To Proceed ?";
-				
-			 }
-				});
- })
-
-
-$('#aiModal').on('shown.bs.modal', function (g) {
-    console.log("in1");
+			});
+		},
+		onStatusModal : function () {
+		    console.log("in1");
 	
-this.querySelector('.userCheckStatus').setAttribute("data-id",g.relatedTarget.id);
-let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
-			console.log(g.relatedTarget.id); //userid
-			let url : string= BASEURL + "/api/Device/current_device/"+g.relatedTarget.id+"?search=" + "" + "";
+			// this.querySelector('.userCheckStatus').setAttribute("data-id",g.relatedTarget.id);
+			let userId:number = parseInt(((this) as HTMLDivElement).dataset.id);
+			// console.log(g.relatedTarget.id); //userid
+			let url : string= BASEURL + "/api/Device/current_device/"+userId+"?search=" + "" + "";
 
-			 let data=new MyDevices(token).getApiCall(url)
-			 .then(res=>{
+			new MyDevices(token).getApiCall(url)
+			.then(res=>{
 					  console.log(res);
 		            if(res.length>0)
 					 {   let i=0;
-						(document.getElementById("insideModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices "+ "<br>"
-
-		                 for(i=0;i<res.length;i++)
-                         (document.getElementById("insideModel") as HTMLInputElement).innerHTML+=(i+1)+". "+res[i].type+" "+res[i].brand+" "+res[i].model+"<br> ";
-						 (document.getElementById("insideModel") as HTMLInputElement).innerHTML+="Making Inactive Will Delete Above Assigned Devices!";
-
-						}
-					 else{
+						(document.getElementById("insideModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices And Cannot Be Inactivated"+ "<br>";
+						(document.getElementById("ucs")as HTMLInputElement).disabled = true;
+		                for(i=0;i<res.length;i++)
+                        	(document.getElementById("insideModel") as HTMLInputElement).innerHTML+=(i+1)+". "+res[i].type+" "+res[i].brand+" "+res[i].model+"<br> ";
+				
+					}
+					else{
+						(document.getElementById("ucs")as HTMLInputElement).disabled = false;
 						(document.getElementById("insideModel") as HTMLInputElement).innerHTML="";
-					 }
-                        });
+						
+					}
+            });
 			 
 
-})
+		}
+	};
 
-
-//   async getCurrentDecice(id:number,search: string = "", sort: string = "") {
-// 	this.url = BASEURL + "/api/Device/current_device/"+id+"?search=" + search + sort;
-// 	let data = await this.getApiCall(this.url);
-// 	this.data = await data;
-// 	console.log(data);
-// 	this.size = data.length;
-// 	this.dynamicGenerate(this.table1);
-// 	return data;
-
-// }
-// document.getElementById("tab1").addEventListener('click', function (ev) {
-
-// 	if (ev.target.classList.contains("return")) {
-// 		const deviceid=ev.target.parentElement.parentElement.dataset.deviceId;
-// 		const userid=ev.target.parentElement.parentElement.dataset.userId;
-// 		console.log(userid);
-// 		console.log(deviceid);
-// 		mydevices.returnDevice(parseInt(userid),parseInt(deviceid)).then(function() {mydevices.getCurrentDecice(userId);});
-	
-// 	}
-
-// });
-
-
-
+// $('#aiModal').on('hide.bs.modal', function (g) {
+// setData();
+// (document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
+// (document.getElementById("insideModel") as HTMLInputElement).innerHTML="";
+// })
 
 	document.addEventListener("click", function (ea) {
-		//console.log("--------1------");
+	
 		if((ea.target as HTMLButtonElement).className == "userDeleteData"){
-		//	console.log("--------2------");
 			const id = parseInt((ea.target as HTMLButtonElement).dataset["id"]);
-		//	console.log("--------3------");
-			//if (alertDelete()) {
-				new GetUserApi(token).deleteData(id).then(function () { setData(); });
-			//	console.log("--------4------");
-		//	}
-			
+			new GetUserApi(token).deleteData(id).then(function () { setData(); });
 		}
 		else if((ea.target as HTMLTableHeaderCellElement).tagName == 'TH')
 		{
-			//console.log("--------5------");
 			const returned = new Sort(token).sortBy(ea.target as HTMLTableHeaderCellElement);
-					returned.then(data => {
-					console.log(data);
-					populateTable(data)
-				});
+			returned.then(data => {
+				console.log(data);
+				populateTable(data)
+			});
 		}
 		else if (((ea.target) as HTMLInputElement).className == "userCheckStatus")
 		{   
-			let userId:number = parseInt(((ea.target) as HTMLInputElement).dataset.id);
-			console.log("this is id : "+userId);			
-			if((document.getElementById(userId.toString()) as HTMLInputElement).checked)
-			{
-				new GetUserApi(token).userInactive(userId , "inactive");
-				console.log("------------------1---------------");
-				//(document.getElementById(userId.toString()) as HTMLInputElement).checked=true;
+			let modal = ea.target as HTMLElement;
+			while(true){
+				if ((modal.getAttribute("role") as string) == "dialog")
+					break;
+				modal = modal.parentElement;
 			}
-			else
-			{	
-				new GetUserApi(token).userInactive(userId , "active");
-				console.log("-----------------2----------------");
-
+			let userId:number = parseInt(modal.dataset.id);
+			console.log("this is id : "+userId);
+			let statusToSet = (ea.target as HTMLInputElement).checked ? "inactive" : "active";
+			// if((ea.target as HTMLInputElement).checked)
+			// {
+			// 	new GetUserApi(token).userInactive(userId , "inactive");
+			// }
+			// else
+			// {	
 				
-			}
-			console.log("-----------------3----------------");
-			setData();
-
+			// }
+			new GetUserApi(token).userInactive(userId , statusToSet).then(_ => {
+				setData();
+			});
+			util.closeModal(modal);
 		}
 		else if(((ea.target) as HTMLInputElement).id == "closeFormButton")
 		{
-			console.log("calling remobvve");
+			console.log("calling remove");
 			remove();
+		}
+		// Handler for buttons that open modals
+		else if ((ea.target as HTMLElement).getAttribute("data-toggle") == "modal"){
+			const modal = document.querySelector((ea.target as HTMLElement).dataset.target) as HTMLDivElement;
+			util.openModal(modal);
+			modal.setAttribute('data-id', (ea.target as HTMLElement).id);
+			modalFunctions[modal.dataset["operation"]].bind(this);
+		}
+		// Handler for cancel button in modals
+		else if ((ea.target as HTMLElement).getAttribute("data-dismiss") == "modal"){
+			let modal = ea.target as HTMLElement;
+			while(true){
+				if ((modal.getAttribute("role") as string) == "dialog")
+					break;
+				modal = modal.parentElement;
+			}
+			util.closeModal(modal);
+			modal.removeAttribute("data-id");
 		}
 	});
 
-	//document.querySelector("#addresses1.city").addEventListener("")
-	function changeheadingText()
-			{
-			document.getElementById('headingText').innerHTML='Update User Details';
-			}
+function changeheadingText()
+{
+	document.getElementById('headingText').innerHTML='Update User Details';
+}
 	document.addEventListener('click' , ed =>
 	{
 		
@@ -257,6 +248,8 @@ let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
 		changeheadingText();
 		(document.getElementById("email") as HTMLInputElement).disabled = true;
 				util.openForm();
+				var user = new UserData(token);
+			   user.getSalutation();
 				form_mode="edit";
 				
 				const userId: number = parseInt((e.target as HTMLButtonElement).id) ;
@@ -264,7 +257,7 @@ let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
 				new GetUserApi(token).getUserById(userId).then(res => {
 					userObject = (res as unknown) as UserModel;
 					const form = document.forms["myForm"] as HTMLFormElement;
-					populateFormFromObject(userObject, form);
+					populateFormFromObject(userObject, form,token);
 					form_mode = "edit";
 					//util.disableEditing();
 				});
@@ -297,6 +290,12 @@ let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
 							(container1.querySelector(".state")as HTMLInputElement).value = perstate;
 							(container1.querySelector(".country")as HTMLInputElement).value= perpcountry;
 							(container1.querySelector(".pin")as HTMLInputElement).value= perpincode;
+							
+							// perpcountry.value=data.addresses[i].currcountry;
+                            // await dropDown.getState(state,country);
+							// perstate.value=data.addresses[i].currstate;
+							// await dropDown.getCity(city,state);
+							// percity.value=data.addresses[i].currcity;
 		} else {
 			var container1 = document.getElementById("addresses2");
 
@@ -308,6 +307,7 @@ let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
 			(container1.querySelector(".pin")as HTMLInputElement).value= "";
 		}
 	});
+
 	(document.querySelector('#fixed-header-drawer-exp')as HTMLInputElement).addEventListener('change', function (e) {
 		console.log("test");
 		const temp = new GetUserApi(token);
@@ -316,5 +316,9 @@ let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
 		});
 	});
 	navigationBarsss(role,"navigation");
+
+	
+	dropDownListen(form,token);
+
 
 })();

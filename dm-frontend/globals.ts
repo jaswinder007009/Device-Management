@@ -65,6 +65,8 @@ export function navigationBarsss(role:string , element:string) {
    {
     document.getElementById(element).innerHTML = navigation;
 }
+}
+
 export class Token    /// call static method that return an object 
 {
     userID:number 

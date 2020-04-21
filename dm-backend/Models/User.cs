@@ -136,14 +136,14 @@ namespace dm_backend.Models
         }
         public int whatIs(String data1)
         {
-            return data1 == "inactive" ? 1 : 2;
+            return data1 == "inactive" ? 2 : 1;
 
         }
         public void MarkUserInactive(int data)
         {
             Console.WriteLine("inside");
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"UPDATE `user` SET `status`=" + data + " WHERE `user_id` = @userr_id; delete from assign_device where `user_id` = @userr_id ; delete from return_request where `user_id`=@userr_id ;";
+            cmd.CommandText = @"UPDATE `user` SET `status`=" + data + " WHERE `user_id` = @userr_id;";
             Console.WriteLine("outside");
             Binduser_id(cmd);
             cmd.ExecuteNonQuery();

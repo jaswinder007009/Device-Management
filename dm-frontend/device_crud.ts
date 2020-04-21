@@ -73,6 +73,10 @@ export class AddDevice {
     populateDataToForm(data: any) {
         console.log(data[0].device_brand_id);
 
+        (document.getElementById("inputbrand") as HTMLInputElement).value = data[0].brand;
+        (document.getElementById("inputtype") as HTMLInputElement).value = data[0].type;
+        (document.getElementById("status") as HTMLInputElement).value = data[0].status_id;
+        (document.getElementById("inputmodel") as HTMLInputElement).value = data[0].model;
         (document.getElementById("color") as HTMLInputElement).value = data[0].color;
         (document.getElementById("price") as HTMLInputElement).value = data[0].price;
         (document.getElementById("warranty_year") as HTMLInputElement).value = data[0].warranty_year;

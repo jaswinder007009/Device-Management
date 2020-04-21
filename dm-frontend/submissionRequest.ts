@@ -48,8 +48,6 @@ import { BASEURL, navigationBarsss } from "./globals";
             getData(url);
         }
 
-    });
-
 
     function getAll()
     {
@@ -104,5 +102,4 @@ import { BASEURL, navigationBarsss } from "./globals";
         });
     getAll();
     navigationBarsss("Admin","navigation");
-   return null;
 })();

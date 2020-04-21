@@ -122,7 +122,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     document.querySelector('.close').addEventListener('click',
         function () {
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
-        });
+    });
 
     document.addEventListener("click", function (e) {
 
@@ -130,13 +130,6 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
             let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
             if (confirm("Are you sure you want to reject the request?"))
                 requestAction('?action=reject&id=' + adminId, requestId, 'rejected');
-
-        }
-        if ((e.target as HTMLButtonElement).className == "accept-button") {
-            const data = (e.target as HTMLButtonElement).dataset.requestid;
-            let requestId = parseInt(data, 10);
-            requestAction('/accept?id=' + adminId, requestId, 'accepted');
-          }
 
             let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
             if (confirm("Are you sure you want to accept the request?"))
