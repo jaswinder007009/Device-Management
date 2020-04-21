@@ -1,4 +1,5 @@
 import * as models from "../UserModel";
+import { UserData } from "../dropdown";
 
 export function createObjectFromForm(formElement: HTMLFormElement) {
 	let modelObject = new models.UserModel();
@@ -48,41 +49,72 @@ export function createObjectFromForm(formElement: HTMLFormElement) {
 	return modelObject;
 }
 
-export function populateFormFromObject(
+export async  function populateFormFromObject(
 	data: models.UserModel,
-	form: HTMLFormElement
+	form: HTMLFormElement,token:string
 ) {
     console.log(data, form);
-	var key;
-	for (var prop in data) 
-	{
-		var value = data[prop];
-		if (Array.isArray(value)) {
-			var i = 0;
-			value.forEach(function (element) {
-				++i;
-				var className = prop + i;
-				var container = <HTMLDivElement>form.querySelector("#" + className);
-				console.log(container);
-				for (var keyname in element) {
-					key = keyname;
-					var val = element[key];
-					console.log(key);
-					(<HTMLInputElement>container.querySelector("." + key)).value = val;
-				}
-			});
-		} else if (typeof value == "object") {
-			for (var keyname in value) {
-				key = keyname;
-				var val = value[key];
-				(<HTMLInputElement>form[key]).value = val;
-			}
-		} else {
-			key = prop;
-			(<HTMLInputElement>form[key]).value = value;
-		}
-	}
 
-	form["password"].value = "";
-	
+	form["salutation"].value   =data.salutation;
+	form["firstName"].value    =data.firstName;
+	form["middleName"].value   =data.middleName;
+	form["lastName"].value     =data.lastName;
+	form["department"].value   =data.departmentName;
+	form["designation"].value  =data.designationName;
+	form["email"].value        =data.email;
+	form["userId"].value       =data.userId;
+	form["password"].value     ="";
+	form["dob"].value          =data.dob;
+	form["gender"].value       =data.gender;
+	form["status"].value       =data.status;
+	form["roleName"].value     =data.roleName;
+	form["doj"].value          =data.doj;
+	//form["phones1"].value      =data.phones;
+	for(let i =0;i<3;i++)
+	{
+	 let container=form.querySelector("#phones"+(i+1));
+	 console.log(form);
+	 (container.querySelector(".contactNumberType")as HTMLInputElement).value=data.phones[i].contactNumberType;
+	 (container.querySelector(".number")as HTMLInputElement).value=data.phones[i].number;
+	 (container.querySelector(".countryCode")as HTMLInputElement).value=data.phones[i].countryCode;
+	 (container.querySelector(".areaCode")as HTMLInputElement).value=data.phones[i].areaCode;
+	}
+ 
+	const dropDown= new UserData(token);
+
+	for(let i =0;i<2;i++)
+	{
+		let container=form.querySelector("#addresses"+(i+1));
+		console.log(form);
+
+		(container.querySelector(".addressType")as HTMLInputElement).value=data.addresses[i].addressType;
+		(container.querySelector(".addressLine1")as HTMLInputElement).value=data.addresses[i].addressLine1;
+		(container.querySelector(".addressLine2")as HTMLInputElement).value=data.addresses[i].addressLine2;
+		(container.querySelector(".pin")as HTMLInputElement).value=data.addresses[i].pin;
+
+		var city=(container.querySelector(".city")as HTMLSelectElement);
+		var state=(container.querySelector(".state")as HTMLSelectElement);
+		var country=(container.querySelector(".country")as HTMLSelectElement);
+
+		await dropDown.getCountry(country);
+		country.value=data.addresses[i].country;
+
+		await dropDown.getState(state,country);
+		state.value=data.addresses[i].state;
+
+		await dropDown.getCity(city,state);
+		city.value=data.addresses[i].city;
+		
+	}
+   //form["addresses"].value        =data.addresses;
+	// form["addressType"].value       =data.addressType;
+	// form["addressLine1"].value      =data.addressLine1;
+	// form["addressLine2"].value      =data.addressLine2;
+	// form["city"].value              =data.city;
+	// form["state"].value             =data.state;
+	// form["country"].value           =data.country;
+	// form["pin"].value               =data.pin;
 }
+
+
+ 

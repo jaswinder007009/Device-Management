@@ -6,17 +6,24 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
     <!-- Popper JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
     <!-- Material Design Lite -->
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     <!-- Material Design icon font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <!-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet"> -->
+    <style>
+        .modal.show{
+            position: absolute;
+            /* top: 20%; */
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
@@ -96,14 +103,40 @@
 
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <!-- <div class="form-group col-md-4">
                         <label> Department: </label>
                         <input type="text" name="departmentName" class="form-control" id="department">
                         <span id="departments" class="text-danger font-weight-bold"></span>
-                    </div>
+                    </div> -->
                     <div class="form-group col-md-4">
+                        <label> Department: </label>
+                        <select type="text" name="departmentName" class="form-control" id="department">
+                            <option value="Web Development">Web Development</option>
+                            <option value="Andriod">Andriod</option>
+                            <option value="IOS">IOS</option>
+                            <option value="Data Analytics">Data Analytics</option>
+                            <option value="Machine Learning">Machine Learning</option>
+                            <option value="Game Development">Game Development</option>
+                            <option value="QA Tester">QA Tester</option>
+                            <option value="Human Resources">Human Resources</option>
+                        </select>
+                        <span id="departments" class="text-danger font-weight-bold"></span>
+                    </div>
+                    
+                    <!-- <div class="form-group col-md-4">
                         <label> Designation: </label>
                         <input type="text" name="designation" class="form-control" id="designationName">
+                        <span id="designations" class="text-danger font-weight-bold"></span>
+                    </div> -->
+                    <div class="form-group col-md-4">
+                        <label> Designation: </label>
+                        <select type="text" name="designation" class="form-control" id="designationName">
+                            <option value="General Manager">General Manager</option>
+                            <option value="Senior Lead">Senior Lead</option>
+                            <option value="Asst. Lead">Asst. Lead</option>
+                            <option value="Project Manager">Project Manager</option>
+                            <option value="Intern">Intern</option>
+                        </select>
                         <span id="designations" class="text-danger font-weight-bold"></span>
                     </div>
                 </div><br>
@@ -289,8 +322,9 @@
                                             id="c2" size="50" maxlength="50">
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>City:</label>
-                                        <select class="city form-control" id="c4" name="city1">
+                                        <label>Country:</label>
+                                        <select class="country form-control" id="c6" name="Country1">
+
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
@@ -299,10 +333,10 @@
 
                                         </select>
                                     </div>
+                                   
                                     <div class="form-group col-md-3">
-                                        <label>Country:</label>
-                                        <select class="country form-control" id="c6" name="Country1">
-
+                                        <label>City:</label>
+                                        <select class="city form-control" id="c4" name="city1">
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
@@ -343,8 +377,9 @@
                                             id="p2" size="50" maxlength="50">
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>City:</label>
-                                        <select id="p4" class="city form-control" name="city2">
+                                        <label>Country:</label>
+                                        <select id="p6" class="country form-control" name="Country2">
+
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
@@ -353,10 +388,10 @@
 
                                         </select>
                                     </div>
+                                    
                                     <div class="form-group col-md-3">
-                                        <label>Country:</label>
-                                        <select id="p6" class="country form-control" name="Country2">
-
+                                        <label>City:</label>
+                                        <select id="p4" class="city form-control" name="city2">
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
@@ -379,6 +414,72 @@
 
     </div>
     <!--form closing div-->
+
+
+
+
+
+
+
+   
+      
+      <!-- Modal For Delete-->
+      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true" data-operation="onDeleteModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Delete</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            <div id="errorMsg"></div>
+            <div id="insideDeleteModel">
+       
+            </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="" data-dismiss="modal">Close</button>
+              <button type="button"  class="userDeleteData" id="dis" data-dismiss="modal" value="Delete">Delete</button>
+            </div>      </div>
+        </div>
+      </div>
+<!--------Modal For Delete Ends Here-->
+
+
+
+ <!-- Modal For Active Inactive-->
+ <div class="modal fade" id="aiModal" tabindex="-1" role="dialog" aria-labelledby="aiModalLabel" aria-hidden="true" data-operation="onStatusModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="aiModalLabel">Status</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        Do You Want To Change Status For This User?<br>
+       <div id="insideModel">
+       
+       </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="aireset" data-dismiss="modal">Close</button>
+          <button type="button" data-dismiss="modal" id="ucs" class="userCheckStatus">Change</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--------Modal For Active Inactive Ends Here-->
+
+
+
+
+
+
+
     <!-- Always shows a header, even in smaller screens. -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
@@ -388,6 +489,10 @@
                 <!-- Add spacer, to align navigation to the right -->
                 <div class="mdl-layout-spacer"></div>
                 <div class="mdl-layout-spacer"></div>
+                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal">
+                    Launch demo modal
+                  </button> -->
+                <div > <button id="popup">Add New User</button></div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                   mdl-textfield--floating-label mdl-textfield--align-right">
                     <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
@@ -413,7 +518,8 @@
         <main class="mdl-layout__content">
             <div class="page-content">
                 <!-- Your content goes here -->
-                <button id="popup">Add New User</button> <!-- onclick="openForm()"-->
+                <!-- <button id="popup">Add New User</button> -->
+                 <!-- onclick="openForm()"-->
 
 
                 <div position : relative;>
