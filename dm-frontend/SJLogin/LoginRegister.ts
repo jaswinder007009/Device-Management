@@ -75,6 +75,11 @@ document.querySelector(".x").addEventListener("click", function() {
 	(document.querySelector(".bg-model") as HTMLDivElement).style.display =
 		"none";
 });
+document.querySelector("#rmybtn1").addEventListener('click', function (e) {
+    e.preventDefault();
+    SendEmail();
+});
+
 
 let password = document.querySelector('input[type="password"]');
 

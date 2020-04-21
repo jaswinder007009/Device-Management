@@ -1038,6 +1038,10 @@ namespace dm_backend.EFModels
                     .HasColumnName("middle_name")
                     .HasMaxLength(45);
 
+                entity.Property(e => e.Guid)
+                    .HasColumnName("guid")
+                    .HasMaxLength(45);
+
                 entity.Property(e => e.Saltpassword)
                     .HasColumnName("saltpassword")
                     .HasMaxLength(500);
