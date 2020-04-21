@@ -1,7 +1,7 @@
 import { PopulateData } from "./FillData";
 import { HitApi } from "./HitApi";
 import { findResult } from "./search"
-import { Sort } from "./Sorting";
+import { Sorting } from "./Sorting";
 import { HtmlElementsData } from "./HtmlElementsId";
 import { page } from "./paging";
 import { UserRequestStatus } from "./RequestStatus";
@@ -48,7 +48,7 @@ import {navigationBarsss} from "./globals";
         let id = (e.target as HTMLInputElement).id;
         if (id === "user"|| id === "admin" ||  id === "serialNumber" || id === "device_name") 
                 {
-            new Sort(token).sortBy(id);
+            new Sorting(token).sortBy(id);
             (document.getElementById("pagination") as HTMLDivElement).setAttribute("page" , "1");    // set page to 1
         }});
 

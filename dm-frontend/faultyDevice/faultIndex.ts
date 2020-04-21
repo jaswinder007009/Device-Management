@@ -52,8 +52,6 @@ document.addEventListener('click' , event =>
   }});
 
 
-
-
 (document.querySelector("#getdata") as HTMLInputElement).addEventListener("click", function (event) {
 
   (document.getElementById("waterfall-exp") as HTMLInputElement).value = "";
@@ -73,36 +71,11 @@ document.addEventListener('click' , event =>
   }
 });
 
-
-
-
 function getSearch() {
   let url = "";
   var obj = new FalultyDevice();
   url = "?search=" + obj.getSearchData("waterfall-exp") + "&serial-number=" +  obj.getSearchData("serial-number");
-  obj.getSearchData("serial-number");
-  
   return  url;
   
 }
 
-
-
-
-
-function checkSortType(value : HTMLTableHeaderCellElement) : string
-{
-   
-    const type = value.className;
-   
-    if (type ==="mdl-data-table__header--sorted-descending")
-    {
-       value.setAttribute("class" ,  "mdl-data-table__header--sorted-ascending");
-     return "asc";
-    }
-    else{
-       value.setAttribute("class" ,  "mdl-data-table__header--sorted-descending");
-  
-     return "desc";
-    }
-}

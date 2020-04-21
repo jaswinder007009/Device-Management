@@ -110,17 +110,17 @@ namespace dm_backend.Models
         public string resolveRequest()
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"resolve_complaint";
+            cmd.CommandText = @"resolve complaint";
             cmd.CommandType = CommandType.StoredProcedure;
-    //        try
+            try
             {
-                BindReturnProcedureParams(cmd);
+                BindFaultyRequestProcedureParams(cmd);
                 cmd.ExecuteNonQuery();
                 return "Request rejected";
             }
-      //      catch (Exception e)
+            catch (Exception e)
             {
-        //        throw e;
+                throw e;
             }
         }
         public string markFaultyRequest()

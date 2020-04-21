@@ -31,14 +31,13 @@ export class FalultyDevice
 
     getSearchData(id:any)
     {
-       
       var find = (document.getElementById(id) as HTMLInputElement).value
       if (find == "")
       {
         return ""
       }
       document.getElementById(id).setAttribute("data-find" , find)
-      return find; 
+      return encodeURI(find); 
     }
 
     populateData(data : any )
@@ -58,7 +57,7 @@ export class FalultyDevice
           {         
              buttons= ` <td>
            <button  class="faulty-device" data-complaint = ${data.complaintId}>Faulty </button>
-            <button class="fault-resolved" data-complaint = ${data.complaintId}>Reject </button>
+            <button class="fault-resolved" data-complaint = ${data.complaintId}>Resolve </button>
         </td>
     </tr> `;
      
