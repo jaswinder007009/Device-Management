@@ -9,10 +9,11 @@ import { Sort } from "./user-profile/SortingUser";
 import { BASEURL,amIUser,navigationBarsss } from './globals';
 import { UserData }  from "./dropdown";
 import {MyDevices } from "./userHistory";
-import $ from "jquery";
+let $: JQueryStatic = (window as any)["jQuery"];
 
 
 
+import {dropDownListen } from "./user-profile/dropDownListener";
 (async function(){
 	const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
 	const role = (await amIUser(token)) == true ? "User" : "Admin";
@@ -52,6 +53,8 @@ import $ from "jquery";
 					(document.getElementById("email") as HTMLInputElement).disabled = false;
 					changeheading1Text();
 					util.openForm();
+					var user = new UserData(token);
+			        user.getSalutation();
 					form_mode="create";
 				}
 			});
@@ -65,7 +68,8 @@ import $ from "jquery";
 			var userData=createObjectFromForm(this);
 			if(validateForm(form_mode)==true){
 			new CreateUserApi(token).createUserData(userData).then(function(){setData();});
-			new UserData(token);
+			//new UserData(token);
+			
 		}
 			else 
 			{
@@ -97,10 +101,10 @@ import $ from "jquery";
 	
 $('#deleteModal').on('shown.bs.modal', function (e) {
     
-	this.querySelector('.userDeleteData').setAttribute("data-id",(e.delegateTarget).id);
+	this.querySelector('.userDeleteData').setAttribute("data-id",(e.relatedTarget).id);
 	let userId:number = parseInt(((e.target) as HTMLInputElement).dataset.id);
 	
-	let url : string= BASEURL + "/api/Device/current_device/"+e.delegateTarget.id+"?search=" + "" + "";
+	let url : string= BASEURL + "/api/Device/current_device/"+e.relatedTarget.id+"?search=" + "" + "";
 
 	 let data=new MyDevices(token).getApiCall(url)
 	 .then(res=>{
@@ -129,10 +133,10 @@ $('#deleteModal').on('shown.bs.modal', function (e) {
 $('#aiModal').on('shown.bs.modal', function (g) {
     console.log("in1");
 	
-this.querySelector('.userCheckStatus').setAttribute("data-id",g.delegateTarget.id);
+this.querySelector('.userCheckStatus').setAttribute("data-id",g.relatedTarget.id);
 let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
-			console.log(g.delegateTarget.id); //userid
-			let url : string= BASEURL + "/api/Device/current_device/"+g.delegateTarget.id+"?search=" + "" + "";
+			console.log(g.relatedTarget.id); //userid
+			let url : string= BASEURL + "/api/Device/current_device/"+g.relatedTarget.id+"?search=" + "" + "";
 
 			 let data=new MyDevices(token).getApiCall(url)
 			 .then(res=>{
@@ -157,6 +161,8 @@ let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
 
 $('#aiModal').on('hide.bs.modal', function (g) {
 setData();
+(document.getElementById("insideDeleteModel") as HTMLInputElement).innerHTML="";
+(document.getElementById("insideModel") as HTMLInputElement).innerHTML="";
 })
 
 	document.addEventListener("click", function (ea) {
@@ -216,6 +222,8 @@ function changeheadingText()
 		changeheadingText();
 		(document.getElementById("email") as HTMLInputElement).disabled = true;
 				util.openForm();
+				var user = new UserData(token);
+			   user.getSalutation();
 				form_mode="edit";
 				
 				const userId: number = parseInt((e.target as HTMLButtonElement).id) ;
@@ -223,7 +231,7 @@ function changeheadingText()
 				new GetUserApi(token).getUserById(userId).then(res => {
 					userObject = (res as unknown) as UserModel;
 					const form = document.forms["myForm"] as HTMLFormElement;
-					populateFormFromObject(userObject, form);
+					populateFormFromObject(userObject, form,token);
 					form_mode = "edit";
 					//util.disableEditing();
 				});
@@ -256,6 +264,12 @@ function changeheadingText()
 							(container1.querySelector(".state")as HTMLInputElement).value = perstate;
 							(container1.querySelector(".country")as HTMLInputElement).value= perpcountry;
 							(container1.querySelector(".pin")as HTMLInputElement).value= perpincode;
+							
+							// perpcountry.value=data.addresses[i].currcountry;
+                            // await dropDown.getState(state,country);
+							// perstate.value=data.addresses[i].currstate;
+							// await dropDown.getCity(city,state);
+							// percity.value=data.addresses[i].currcity;
 		} else {
 			var container1 = document.getElementById("addresses2");
 
@@ -267,6 +281,7 @@ function changeheadingText()
 			(container1.querySelector(".pin")as HTMLInputElement).value= "";
 		}
 	});
+
 	(document.querySelector('#fixed-header-drawer-exp')as HTMLInputElement).addEventListener('change', function (e) {
 		console.log("test");
 		const temp = new GetUserApi(token);
@@ -275,5 +290,9 @@ function changeheadingText()
 		});
 	});
 	navigationBarsss(role,"navigation");
+
+	
+	dropDownListen(form,token);
+
 
 })();

@@ -52,13 +52,19 @@ namespace dm_backend.Controllers
 
         [HttpGet]
         [Route("state")]
-        public IActionResult states()
+        public IActionResult States()
         {
-
+            String fields = HttpContext.Request.Query["id"];
             List<DropdownModel> states = new List<DropdownModel>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select state_id, state_name from state limit 50";
+            cmd.CommandText = "select state_id, state_name from state";
+            if(!string.IsNullOrEmpty(fields)){
+            cmd.CommandText+= " inner join country using(country_id) where country_id=@c_id";
+            cmd.Parameters.AddWithValue("@c_id", fields);
+            }
+            cmd.CommandText+=" order by state_name asc";
+           
             var reader = cmd.ExecuteReader();
 
             using (reader)
@@ -85,12 +91,16 @@ namespace dm_backend.Controllers
         [Route("city")]
         public IActionResult Cities()
         {
-            //String fields = HttpContext.Request.Query["id"];
+            String fields = HttpContext.Request.Query["id"];
             List<DropdownModel> cities = new List<DropdownModel>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select city_id, city_name from city limit 6000 ";
-           // cmd.Parameters.AddWithValue("@c_id", fields);
+            cmd.CommandText = "select city_id, city_name from city";
+            if(!string.IsNullOrEmpty(fields)){
+                cmd.CommandText+=" inner join state using(state_id) where state_id=@c_id";
+            cmd.Parameters.AddWithValue("@c_id", fields);
+            } 
+             cmd.CommandText+=" order by city_name asc";
             var reader = cmd.ExecuteReader();
 
             using (reader)
@@ -112,6 +122,7 @@ namespace dm_backend.Controllers
             else
                 return NoContent();
         }
+
 
         [Route("salutation")]
         public IActionResult Salutations()
@@ -173,8 +184,7 @@ namespace dm_backend.Controllers
             else
                 return NoContent();
         }
-
-        [Route("addressType")]
+     [Route("addressType")]
         public IActionResult addressTypes()
         {
 

@@ -10,23 +10,23 @@ export class UserData {
         this.token = token;
     }
     
-    async getCountry() {
+    async getCountry(selectElement:HTMLSelectElement) {
         this.url = BASEURL + "/api/Dropdown/country";
-        this.dropdownApiCall(this.url, document.querySelector("#addresses1 .country"));
-        this.dropdownApiCall(this.url, document.querySelector("#addresses2 .country"));
-        return null;
+        return  this.dropdownApiCall(this.url,selectElement);
+      //  this.dropdownApiCall(this.url, document.querySelector("#addresses2 .country"));
+        //return null;
     }
-    async getState() {
-        this.url = BASEURL + "/api/Dropdown/state";
-        this.dropdownApiCall(this.url, document.querySelector("#addresses1 .state"));
-        this.dropdownApiCall(this.url, document.querySelector("#addresses2 .state"));
-        return null;
+    async getState(selectElement:HTMLSelectElement,dependentElement:HTMLSelectElement) {
+        this.url = BASEURL + "/api/Dropdown/state?id="+dependentElement.options[dependentElement.selectedIndex].dataset.id;
+        return this.dropdownApiCall(this.url, selectElement);
+       // this.dropdownApiCall(this.url, document.querySelector("#addresses2 .state"));
+       // return null;
     }
-    async getCity() {
-        this.url = BASEURL + "/api/Dropdown/city";
-        this.dropdownApiCall(this.url, document.querySelector("#addresses1 .city"));
-        this.dropdownApiCall(this.url, document.querySelector("#addresses2 .city"));
-
+    async getCity(selectElement:HTMLSelectElement,dependentElement:HTMLSelectElement) {
+        this.url = BASEURL + "/api/Dropdown/city?id="+dependentElement.options[dependentElement.selectedIndex].dataset.id;
+        return   this.dropdownApiCall(this.url,selectElement);
+       // this.dropdownApiCall(this.url, document.querySelector("#addresses2 .city"));
+     //  return null;
     }
     async getSalutation() {
         this.url = BASEURL + "/api/Dropdown/salutation";
@@ -44,13 +44,8 @@ export class UserData {
     }
 }
 
-const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
-var user = new UserData(token);
+//const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
 
-user.getCountry();
-user.getState();
-user.getCity();
-user.getSalutation();
 
 export function populateDropdown(selectElement: HTMLSelectElement, data) {
     let htmlString = '';
