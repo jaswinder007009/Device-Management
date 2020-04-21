@@ -16,7 +16,7 @@ module.exports = {
         'adddevice': './adddevice.ts',
         'request': './Request.ts',
         'getApiForAdmin': './getApiForAdmin.ts',
-        'faultIndex': './faultIndex.ts',
+        'faultIndex': './faultyDevice/faultIndex.ts',
         'getNotification': './getNotification.ts',
         'index': './index.ts', // No its not the main file. Just a file required by a page
         'specification': './specificationcrud.ts',

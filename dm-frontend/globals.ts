@@ -48,6 +48,10 @@ export function navigationBarsss(role:string , element:string) {
     <a class="mdl-navigation__link" href="/request-history.html">
         <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">history</i>Request History
     </a>
+    <a class="mdl-navigation__link" href="/faultyDevice/faultdevice.html">
+    <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">report_problem</i>
+    Complaints
+     </a>
    
     <a class="mdl-navigation__link" href="/device_role/role1.html">
         <i class="mdl-color-text--blue-grey-400 material-icons"
