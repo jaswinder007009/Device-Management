@@ -33,6 +33,9 @@ export function navigationBarsss(role:string , element:string) {
     </a>`;
     if (role == "Admin") {
         let nav = ` 
+        <a class="mdl-navigation__link" href="/specification.html">
+        <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">devices</i>All Specifications
+    </a>
     
    
     <a class="mdl-navigation__link" href="/web.html">

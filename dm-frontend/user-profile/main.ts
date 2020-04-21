@@ -78,19 +78,20 @@ user.getOneUser(userId);
 
 document.querySelector('form').addEventListener('click', function (ev) {
     ev.preventDefault();
-    if (ev.target.classList.contains("edit")) {
+    if ((ev.target as HTMLButtonElement).classList.contains("edit")) {
         util.openForm();
         var userObject: UserModel;
 
         user.getOneUser(userId).then(function (data) {
             userObject = data;
             const form = document.querySelector('form') as HTMLFormElement;
+            // @ts-ignore
             populateFormFromObject(userObject, form);
             
         });
 
     }
-    else if (ev.target.id == "savemydata") {
+    else if ((ev.target as HTMLButtonElement).id == "savemydata") {
         if (validate() == false) {
             return;
 

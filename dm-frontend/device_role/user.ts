@@ -108,9 +108,9 @@ import { BASEURL } from "../globals";
     document.body.addEventListener('click',function(event)
         {
             //e.preventDefault();
-            if(event.target.dataset.id == "see_roles"){
+            if((event.target as HTMLButtonElement).dataset.id == "see_roles"){
                 
-                var e4=event.target.value;
+                var e4=parseInt((event.target as HTMLButtonElement).value);
                 
                 u_role.getAllUserRole(e4);
             }
@@ -122,9 +122,9 @@ import { BASEURL } from "../globals";
         document.body.addEventListener('click',function(event)
         {
             //e.preventDefault();
-            if(event.target.dataset.id == "assign_role"){
+            if((event.target as HTMLButtonElement).dataset.id == "assign_role"){
                 
-                var e5=event.target.value;
+                var e5=parseInt((event.target as HTMLButtonElement).value);
                 
                 ass_role.assignRole(e5);
             }
@@ -251,7 +251,7 @@ import { BASEURL } from "../globals";
             {
                 
                 
-                u_role.DeleteRoleByUser(event.target.dataset.userId,event.target.value);
+                u_role.DeleteRoleByUser(parseInt((e.target as HTMLButtonElement).dataset.userId),parseInt((e.target as HTMLButtonElement).value));
             //    check1.updateRolePermission(event.target.dataset.roleId,event.target.value);
             // 
             
@@ -417,7 +417,7 @@ import { BASEURL } from "../globals";
 
             if( (e.target as HTMLButtonElement).className ==="add_r")
             {   
-            check1.updateRolePermission(event.target.dataset.userId,event.target.value); 
+            check1.updateRolePermission(parseInt((e.target as HTMLButtonElement).dataset.userId), parseInt((e.target as HTMLButtonElement).value)); 
             }
         
         }

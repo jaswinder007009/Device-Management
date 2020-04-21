@@ -120,10 +120,10 @@ document.body.addEventListener('click',function(event)
     {
         //e.preventDefault();
      
-        if(event.target.dataset.id == "del_permission1"){
+        if((event.target as HTMLButtonElement).dataset.id == "del_permission1"){
             console.log("iiiiiiiii");
       
-            get_role.DeleteRoleById(event.target.value);
+            get_role.DeleteRoleById(parseInt((event.target as HTMLButtonElement).value));
            
         }
     }
@@ -181,10 +181,9 @@ var up =new update1();
  document.body.addEventListener('click',function(event)
     {
         //e.preventDefault();
-        if(event.target.dataset.id == "role_update_1"){
+        if((event.target as HTMLButtonElement).dataset.id == "role_update_1"){
             console.log("lllllll");
-        console.log(event.log.value);
-            role_update.updateRole(event.target.value);
+            role_update.updateRole(parseInt((event.target as HTMLButtonElement).value));
       
             
            
@@ -310,14 +309,14 @@ var permission_role=new assign_permission();
 
 // document.body.addEventListener('click',function(event)
 //     {
-//         console.log("lllkkkk"+event.target.dataset.id);
+//         console.log("lllkkkk"+(event.target as HTMLButtonElement).dataset.id);
        
-//        if(event.target.dataset.id == "add2"){
+//        if((event.target as HTMLButtonElement).dataset.id == "add2"){
             
 //             console.log("data1");
 
            
-//              check.updateRolePermission(event.target.dataset.roleId,event.target.value);
+//              check.updateRolePermission((event.target as HTMLButtonElement).dataset.roleId,(event.target as HTMLButtonElement).value);
            
 //         }
 
@@ -468,10 +467,9 @@ var r_permission=new role_permission1();
 document.body.addEventListener('click',function(event)
     {
         //e.preventDefault();
-        if(event.target.dataset.id == "del_permission"){
+        if((event.target as HTMLButtonElement).dataset.id == "del_permission"){
             console.log("data111111111111");
-            console.log(event.target.value.id);
-            r_permission.DeleteRoleByPermission(event.target.dataset.roleId,event.target.value);
+            r_permission.DeleteRoleByPermission(parseInt((event.target as HTMLButtonElement).dataset.roleId),parseInt((event.target as HTMLButtonElement).value));
            
         }
     }
@@ -565,7 +563,7 @@ document.addEventListener('click' ,e=>{
         if( (e.target as HTMLButtonElement).className ==="xyz")
         {
             console.log("sdfghjkl");
-           check1.updateRolePermission(event.target.dataset.roleId,event.target.value);
+           check1.updateRolePermission(parseInt((event.target as HTMLButtonElement).dataset.roleId),parseInt((event.target as HTMLButtonElement).value));
            // 
            
         }
@@ -697,8 +695,8 @@ document.addEventListener('click' ,e=>{
         {
             console.log("sdfghjkl");
             
-           console.log(event.target.value)
-            role_update.updateRole(event.target.value);
+           console.log((event.target as HTMLButtonElement).value)
+            role_update.updateRole(parseInt((event.target as HTMLButtonElement).value));
            
            
         }
@@ -717,24 +715,24 @@ document.addEventListener('click' ,e=>{
 
 document.body.addEventListener('click',function(event)
 {
-    if(event.target.dataset.id=="view_permission"){
+    if((event.target as HTMLButtonElement).dataset.id=="view_permission"){
         console.log("jjjjjjj");
-        var e1=event.target.value;
+        var e1=parseInt((event.target as HTMLButtonElement).value);
         console.log(e1);
         r_permission.getAllRolePermission(e1);
     }
 
-    if(event.target.dataset.id=="assign_permission"){
+    if((event.target as HTMLButtonElement).dataset.id=="assign_permission"){
         console.log("jjjjjjj");
-        var e2=event.target.value;
+        var e2=parseInt((event.target as HTMLButtonElement).value);
         console.log(e2);
         permission_role.assignPermission(e2);
         // this.divs =document.querySelectorAll('.add_data');
     }
 
-    if(event.target.dataset.id== "del_permission1"){
+    if((event.target as HTMLButtonElement).dataset.id== "del_permission1"){
         console.log("jjjjjjj");
-        var e3=event.target.value;
+        var e3=parseInt((event.target as HTMLButtonElement).value);
         console.log(e3);
         get_role.DeleteRoleById(e3);
         

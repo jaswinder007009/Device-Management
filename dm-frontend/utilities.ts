@@ -1,12 +1,14 @@
+import { Specification } from "./RequestModel";
+
 export function openForm() {
 	// document.getElementsByClassName("RegisterForm")[0].classList.add("active");
-	document.querySelector("#myForm").style.display="block";
+	(document.querySelector("#myForm") as HTMLFormElement).style.display="block";
 }
 ​
 export function closeForm() {
 	// document.getElementsByClassName("RegisterForm")[0].classList.remove("active");
-    document.querySelector("#myForm").style.display="none";
-    document.querySelector("#myForm").reset();
+    (document.querySelector("#myForm") as HTMLFormElement).style.display="none";
+    (document.querySelector("#myForm") as HTMLFormElement).reset();
 }
 export function formatDate1(date) {
     var d = new Date(date),
@@ -18,4 +20,28 @@ export function formatDate1(date) {
     if (day.length < 2) day = '0' + day;
 
     return [year, month, day].join('-');
+}
+
+export function concatName(value : any )
+{
+    let name = "";
+    name += value.salutation + " " + value.firstName ;
+    if(value.middleName != "")
+    name+= " " + value.middleName ;
+    name +=  " " + value.lastName;
+    return name;
+}    
+export function concatSpecs(data : any)
+{
+    var specifications = "";
+    for(let [key , value] of Object.entries(data) ) 
+        
+        if( value != ""){     
+            specifications += key +":" + value +" ";
+            if(key=="storage")
+                specifications+="<br>";
+        }   
+             
+    return specifications;
+
 }

@@ -84,3 +84,18 @@ Roles supported currently are *admin*, *user*, *superadmin*
 Step 1. Inherit your controller from BaseController class (*present in Utilities/*)
 
 Step 2. Refer [this file on using the methods](https://github.com/rishikant05/Device-Management/blob/cc526302d41d36bbd1749c5c233d99565a6826ba/dm-backend/Controllers/UserController.cs#L21)
+
+### Webpack
+
+The file inside `data-main` attribute is now under `entry` property in [*webpack.config.js*](https://github.com/rishikant05/Device-Management/blob/frontend-with-webpack/dm-frontend/webpack.config.js)
+and the new way to use the script in html is `<script src="/assets/js/<filename>.js"></script>`
+
+While developing a new page don't forget to add your file in the entry object in [*webpack.config.js*](https://github.com/rishikant05/Device-Management/blob/frontend-with-webpack/dm-frontend/webpack.config.js) file.
+
+#### Usage
+
+Navigate to *dm-frontend/* and run `npm install`
+
+After installation finishes, run `npm run dev`. This starts the webpack watch-*like* server.
+
+**NOTE** From now on please do not ignore ts errors. Webpack does not compile without error-free typescript.

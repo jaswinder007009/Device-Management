@@ -4,10 +4,9 @@ import * as util from "./utilities";
 import { UpdateUserApi } from "./updateApi";
 import { populateFormFromObject, createObjectFromForm } from "./user-profile/databinding";
 import { UserModel } from "./UserModel";
-import { remove} from "validation";
-import { validateForm} from "validation";
+import { remove, validateForm } from "./validation";
 import { Sort } from "./user-profile/SortingUser";
-import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
+import { amIUser,navigationBarsss } from './globals';
 import { UserData }  from "./dropdown";
 
 
@@ -50,8 +49,8 @@ import { UserData }  from "./dropdown";
 			{
 				if((e.target as HTMLButtonElement).id == "popup")
 				{
-					console.log("Button clicked")
-					document.getElementById("email").disabled = false;
+					console.log("Button clicked");
+					(document.getElementById("email") as HTMLInputElement).disabled = false;
 					changeheading1Text();
 					util.openForm();
 					form_mode="create";
@@ -199,7 +198,7 @@ let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
 		//	}
 			
 		}
-		else if(ea.target.tagName == 'TH')
+		else if((ea.target as HTMLTableHeaderCellElement).tagName == 'TH')
 		{
 			//console.log("--------5------");
 			const returned = new Sort(token).sortBy(ea.target as HTMLTableHeaderCellElement);
@@ -256,7 +255,7 @@ let userId:number = parseInt(((g.target) as HTMLInputElement).dataset.id);
 	document.addEventListener("click", function(e) {
 	if ((e.target as HTMLButtonElement).className == "userEditData") {
 		changeheadingText();
-		document.getElementById("email").disabled = true;
+		(document.getElementById("email") as HTMLInputElement).disabled = true;
 				util.openForm();
 				form_mode="edit";
 				
