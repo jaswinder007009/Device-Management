@@ -13,8 +13,8 @@ namespace dm_backend.Models
     {
         public int? returnRequestId { get; set; }
         public int userId { get; set; }
-        public string  salutation { get; set; }
-        public string  firstName { get; set; }
+        public string salutation { get; set; }
+        public string firstName { get; set; }
         public string middleName { get; set; }
         public string lastName { get; set; }
         public int deviceId { get; set; }
@@ -107,14 +107,14 @@ namespace dm_backend.Models
                 throw e;
             }
         }
-         public string resolveRequest()
+        public string resolveRequest()
         {
-             using var cmd = Db.Connection.CreateCommand();
+            using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"resolve complaint";
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-                BindFaultyRequestProcedureParams(cmd);
+                 BindReturnProcedureParams(cmd);
                 cmd.ExecuteNonQuery();
                 return "Request rejected";
             }
@@ -123,14 +123,14 @@ namespace dm_backend.Models
                 throw e;
             }
         }
-         public string markFaultyRequest()
+        public string markFaultyRequest()
         {
-             using var cmd = Db.Connection.CreateCommand();
+            using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"report_faults";
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-                BindFaultyRequestProcedureParams(cmd);
+                BindReturnProcedureParams(cmd);
                 cmd.ExecuteNonQuery();
                 return "Request rejected";
             }
@@ -140,38 +140,39 @@ namespace dm_backend.Models
             }
         }
 
-        public List<ReturnRequestModel> GetReturnRequests(int userId,string sortField,string sortDirection,string searchField)
+        public List<ReturnRequestModel> GetReturnRequests(int userId, string sortField, string sortDirection, string searchField)
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = get_return_requests+searchQuery;
-            if(userId!=-1)
-                cmd.CommandText +=@" having user_id="+userId;
-            cmd.CommandText +=@" order by " + FindSortingAttribute(sortField) + " " + (sortDirection);
-            cmd.Parameters.AddWithValue("@search_field", searchField); 
-            using MySqlDataReader reader =  cmd.ExecuteReader();
+            cmd.CommandText = get_return_requests + searchQuery;
+            if (userId != -1)
+                cmd.CommandText += @" having user_id=" + userId;
+            cmd.CommandText += @" order by " + FindSortingAttribute(sortField) + " " + (sortDirection);
+            cmd.Parameters.AddWithValue("@search_field", searchField);
+            using MySqlDataReader reader = cmd.ExecuteReader();
             return ReadAll(reader);
         }
 
-       
-         private void BindFaultyRequestProcedureParams(MySqlCommand cmd){
-           
+        private void BindReturnProcedureParams(MySqlCommand cmd)
+        {
+
             cmd.Parameters.Add(new MySqlParameter("var_complain_id", complaintId));
-           
-            
+
+
         }
-         private void BindReturnProcedureParams(MySqlCommand cmd){
-           
+        private void BindFaultyRequestProcedureParams(MySqlCommand cmd)
+        {
+
             cmd.Parameters.Add(new MySqlParameter("var_user_id", userId));
             cmd.Parameters.Add(new MySqlParameter("var_device_id", deviceId));
-            
+
         }
-        
-         private void BindFaultProcedureParams(MySqlCommand cmd){
-           
+        private void BindFaultProcedureParams(MySqlCommand cmd)
+        {
+
             cmd.Parameters.Add(new MySqlParameter("var_user_id", userId));
             cmd.Parameters.Add(new MySqlParameter("var_device_id", deviceId));
             cmd.Parameters.Add(new MySqlParameter("comment", comment));
-            
+
         }
 
         private List<ReturnRequestModel> ReadAll(MySqlDataReader reader)
@@ -188,7 +189,7 @@ namespace dm_backend.Models
             }
             return requests;
         }
-        internal string get_return_requests= @"select return_request_id, user_id, salutation.salutation , user.first_name , user.middle_name , user.last_name , device_id
+        internal string get_return_requests = @"select return_request_id, user_id, salutation.salutation , user.first_name , user.middle_name , user.last_name , device_id
         , device_model.model, 
         device_type.type, device_brand.brand,specification.*, return_date
         from return_request
@@ -201,7 +202,7 @@ namespace dm_backend.Models
         inner join device_type using(device_type_id)
         inner join specification using(specification_id)";
 
-        internal string searchQuery= @"where  concat(user.first_name , ' ', if (user.middle_name is null, '' , concat(user.middle_name , ' ')) , user.last_name ) like concat('%' ,@search_field ,'%')";       
+        internal string searchQuery = @"where  concat(user.first_name , ' ', if (user.middle_name is null, '' , concat(user.middle_name , ' ')) , user.last_name ) like concat('%' ,@search_field ,'%')";
 
-    }   
+    }
 }

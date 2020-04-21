@@ -8,40 +8,32 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="../index.css">
 
 
     <!-- <script src="https://kit.fontawesome.com/7208822aa4.js" crossorigin="anonymous"></script> -->
 
-    <title>Document</title>
+    <title>Faulty Device</title>
 </head>
 
 <body>
-   
+
     <div class="demo-layout-waterfall mdl-layout mdl-js-layout">
         <header class="mdl-layout__header mdl-layout__header--waterfall">
             <!-- Top row, always visible -->
-           
+
             <div class="mdl-layout__header-row">
                 <!-- Title -->
-                <span class="mdl-layout-title" id="getdata" style="cursor:pointer">Request History</span>
+                <span class="mdl-layout-title" id="getdata" style="cursor:pointer"> Faulty Device</span>
                 <div class="mdl-layout-spacer"></div>
 
             </div>
             <!-- Bottom row, not visible on scroll -->
 
         </header>
-        <div class="mdl-layout__drawer" id="navigation">
-            <span class="mdl-layout-title">Admin</span>
-            <!-- <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="dashboard.html">
-                    <i class="mdl-color-text--blue-grey-400 material-icons"
-                        role="presentation">dashboard</i>Dashboard
-                </a>
-                <a class="mdl-navigation__link" href="">Dash-Board</a>
-                <a class="mdl-navigation__link" href="">Create New User</a>
-                <a class="mdl-navigation__link" href="">All Devices</a>
-            </nav> -->
+        <div class="mdl-layout__drawer" id="navigate">
+            <span class="mdl-layout-title">Faulty Device</span>
+
         </div>
         <main class="mdl-layout__content">
             <div class="page-content">
@@ -53,58 +45,63 @@
                             <i class="material-icons">search</i>
                         </label>
                         <div class="mdl-textfield__expandable-holder">
-                            <input class="mdl-textfield__input" type="text" name="sample" user="" id="waterfall-exp" value="">
+                            <input class="mdl-textfield__input" type="text" name="sample" user="" data-find=""
+                                id="waterfall-exp" value="">
                         </div>
-                        <div class="mdl-layout-spacer"></div>     
-                    <span>                  
+
+
+
+                        <div class="mdl-layout-spacer"></div>
+                        <!-- <span>                  
                           <input type="text" class="serial-number" id="device_serial_number"  name="search"  serialNumber="" placeholder="enter device serial number...">
-                    </span>
+                    </span> -->
 
                     </div>
-                    
-                    <div>
+                    <span  style="float: right; margin: 2%;"><input type='text' id="serial-number" data-find="" placeholder="enter serial number"
+                           ></span>
+                    <!-- <div>
                           <select id="request-status">
                             <option class="status" id="All">All</option>
                             <option class="status"  id ="ret">Returned</option>
                             <option class="status" id="rej">Rejected</option>
-                          </select>
+                          </select>  style="display: flex; justify-content: center;"
+                    </div> -->
+                    <div class="user_data_table" >
+                        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                            <thead id="tableHead" sort="" sortby="">
+                                <tr>
+                                    <th class="mdl-data-table__header--sorted-ascending" id="user">
+                                        User Name</th>
+
+                                    <th >
+                                        Device Type</th>
+
+                                    <th class="mdl-data-table__header--sorted-ascending"  id="device"> Device Name</th>
+
+                                    <th class="mdl-data-table__header--sorted-ascending" id="serialnumber">
+                                        Device Serial Number</th>
+
+                                    <th>Device Status</th>
+
+                                    <th>Complaint</th>
+
+                                    <th class="mdl-data-table__header--sorted-ascending" id="date">Complait Date</th>
+
+                                    <th id="admin">
+                                        Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="Request_data">
+
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="user_data_table"style="display: flex; justify-content: center;" >
-                    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" > 
-                        <thead id="tableHead" sort="" sortby="">
-                            <tr>
-                                <th class="mdl-data-table__header--sorted-ascending" id="user">
-                                    User Name</th>
 
-                                <th class="mdl-data-table__header--sorted-ascending" id="serialNumber">
-                                    Device Serial number</th>
-
-                                <th > Device Type</th>
-
-                                <th class="mdl-data-table__header--sorted-ascending" id="device_name">
-                                    Device Name</th>
-
-                                <th >Device Status</th>
-
-                                <th >Assign Date</th>
-
-                                <th>Device Return Date</th>
-
-                                <th class="mdl-data-table__header--sorted-ascending" id="admin">
-                                    Admin Handler Name</th>
-
-                            </tr>
-                        </thead>
-                        <tbody id="Request_data">
-
-                        </tbody>
-                    </table>
-                    </div>
-                   
                 </div>
                 <br />
-                <div class="paging" id="pagination" pageNum = "1" result-count="0">
-                    
+                <div class="paging" id="pagination" pageNum="1" result-count="0">
+
                     <!-- <input type="submit" class="page" id="1" value="1" >
                     <input type="submit" class="page" id="2" value="2" >
                     <input type="submit" class="page" id="3" value="3" > -->
@@ -118,8 +115,8 @@
     </div>
 
 
-
-    <script src="/assets/js/index.js"></script>
+    <script src="/assets/js/faultIndex.js"></script>
+    
 </body>
 
 </html>
