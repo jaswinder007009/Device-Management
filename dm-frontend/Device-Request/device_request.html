@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <style>
+    h1{
+      text-align: center;
+      color: rgb(27, 148, 108);
+      
+    }
+  </style>
+
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -26,52 +36,58 @@
             </nav>
           </div>
         </header>
-        <div class="mdl-layout__drawer">
-          <span class="mdl-layout-title">Title</span>
-          <nav class="mdl-navigation">
+        <div class="mdl-layout__drawer" id="navigations">
+          <span class="mdl-layout-title">Device Request</span>
+          <!-- <nav class="mdl-navigation">
             <a class="mdl-navigation__link" href="">Link</a>
             <a class="mdl-navigation__link" href="">Link</a>
             <a class="mdl-navigation__link" href="">Link</a>
             <a class="mdl-navigation__link" href="">Link</a>
-          </nav>
+          </nav> -->
         </div>
         <main class="mdl-layout__content">
           <div class="page-content"><!-- Your content goes here -->
         
             <div class="container">
+             
             <div class="request-form">
+              <div class="head">
+                <h1>
+                  Select Device
+                </h1>
+                </div>
+
                 <label>  Number of Days </label>
-                <input type="text"
-                 onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+                <input type="text" id="expected-days" value = ""  onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
 
                 <br />
 
                 <label> Device Type </label>
-                <select class="device" id="type">
+                <select class="device" id="types">
 
                 </select>
 
                 <br />
                 <label> Device Brand </label>
-                <select class="device" id = "brand"> 
+                <select class="device" id = "brands"> 
 
                 </select>
 
                 <br />
                 <label> Device Model </label>
-                <select class="device" id="model">
+                <select class="device" id="models">
 
                 </select>
 
                 <br />
                 <label> Device Specification </label>
-                <select class="specs" id="Specification">
+                <select class="specs" id="specification">
 
                 </select >
                 <br />
 
                 <label> your Message </label>
-                <textarea rows="4" cols="50" > </textarea>
+                <textarea  id="comment" rows="4" cols="50" > </textarea>
 
                 <br />
                 <input type="submit" id="request" value="Submit">

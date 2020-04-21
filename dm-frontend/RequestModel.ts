@@ -15,5 +15,17 @@ export class Specification
     storage: string ="";
     screenSize: string ="";
     connectivity: string ="";
-        
+}
+export class PartialUserModel {
+    salutation: string = ""
+    firstName: string = ""
+    middleName: string = ""
+    lastName: string = ""
+    departmentName: string = ""
+    designationName: string = ""
+    email: string = ""
+    dob: string = ""
+    gender: string = ""
+    doj: string = ""
+
 }

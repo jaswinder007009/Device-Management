@@ -5,6 +5,10 @@ import { amIUser } from "./globals";
 import { Requests } from "./RequestModel";
 import { openForm } from "./utilities";
 
+
+
+
+
 (async function() {
 	const token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
 	const role = (await amIUser(token)) == true ? 0 : 1;

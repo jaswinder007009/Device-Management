@@ -52,7 +52,7 @@ user.getState();
 user.getCity();
 user.getSalutation();
 
-function populateDropdown(selectElement: HTMLSelectElement, data) {
+export function populateDropdown(selectElement: HTMLSelectElement, data) {
     let htmlString = '';
     for (let dataPair of data) {
         htmlString += '<option data-id="' + dataPair.id + '" value="' + dataPair.name + '">' + dataPair.name + '</option>';
