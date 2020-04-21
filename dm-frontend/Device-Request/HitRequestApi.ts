@@ -37,8 +37,11 @@ export class HitApi
             
 //     }
 	public async HitGetApi(uri: string) {
+
 		let res;
 		try {
+
+			
 			res = await fetch(uri,{
 				headers: new Headers({"Authorization": `Bearer ${this.token}`})
             });
@@ -55,6 +58,14 @@ export class HitApi
 		//console.log(data);
 		return fetch(uri, {
 			method: "POST",
+			headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
+			body: JSON.stringify(data)
+		});
+	}
+	public async HitPutApi(uri: string, data: any) {	
+		//console.log(data);
+		return fetch(uri, {
+			method: "PUT",
 			headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
 			body: JSON.stringify(data)
 		});

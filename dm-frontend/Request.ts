@@ -43,9 +43,9 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
 
     }
 
-    function getDeviceHolders(){
+    function getDeviceHolders() {
         let tableData = "";
-        fetch(BASEURL+"/api/Device/search?status_name=allocated", {
+        fetch(BASEURL + "/api/Device/search?status_name=allocated", {
             headers: new Headers({ "Authorization": `Bearer ${token}` })
         }).then(Response => Response.json()).then(data => {
             for (var i = 0; i < data.length; i++) {
@@ -54,7 +54,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
                         + "<td>" + data[i]['device_id'] + "</td>"
                         + "<td>" + data[i]['assign_to']['first_name'] + " " + data[i]['assign_to']['middle_name'] + " " + data[i]['assign_to']['last_name'] + "</td>"
                         + "<td>" + data[i]['return_date'] + "</td>"
-                        +"<td><button class=\"notify\" data-deviceid=" + data[i]['device_id'] + " >Notify</button></center></td></tr>"
+                        + "<td><button class=\"notify\" data-deviceid=" + data[i]['device_id'] + " >Notify</button></center></td></tr>"
                 }
 
             }
@@ -89,7 +89,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     function filterData(data, request) {
         if ((data.type == request.deviceType) && (data.brand == request.deviceBrand)
             && (data.model == request.deviceModel) && (data.specifications.ram == request.specs.ram) &&
-            (data.specifications.storage == request.specs.storage) && (data.specifications.screen_size == request.specs.screenSize) &&
+            (data.specifications.storage == request.specs.storage) && (data.specifications.screenSize == request.specs.screenSize) &&
             (data.specifications.connectivity == request.specs.connectivity))
             return true;
         else
@@ -122,7 +122,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     document.querySelector('.close').addEventListener('click',
         function () {
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
-    });
+        });
 
     document.addEventListener("click", function (e) {
 
@@ -156,14 +156,14 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
         };
 
         if ((e.target as HTMLButtonElement).className == "notify") {
-            let deviceId:number=parseInt((e.target as HTMLButtonElement).dataset.deviceid,10);
-            if (confirm("Notify User?"))
-            fetch(BASEURL + "/api/Notification/"+deviceId,
-                {
-                    headers: new Headers({ "Authorization": `Bearer ${token}` })
-                });
-            console.log(deviceId);
-            alert("Notification sent");
+            let deviceId: number = parseInt((e.target as HTMLButtonElement).dataset.deviceid, 10);
+            if (confirm("Notify User?")) {
+                fetch(BASEURL + "/api/Notification/" + deviceId,
+                    {
+                        headers: new Headers({ "Authorization": `Bearer ${token}` })
+                    });
+                alert("Notification sent");
+            }
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
         };
 
