@@ -85,8 +85,6 @@ export class AddDevice {
         (document.getElementById("warranty_year") as HTMLInputElement).value = data[0].warranty_year;
         (document.getElementById("purchase_date") as HTMLInputElement).value = formatDate1(data[0].purchase_date);
         (document.getElementById("specification") as HTMLInputElement).value = data[0].specification_id;
-        console.log(data[0].specification_id);
-        console.log((document.getElementById("specification") as HTMLInputElement).value);
         (document.getElementById("entry_date") as HTMLInputElement).value = formatDate1(data[0].entry_date);
         
     }

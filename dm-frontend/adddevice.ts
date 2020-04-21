@@ -22,16 +22,6 @@ function checkTypeBrandModel() {
 
   return (brand.value && type.value && model.value);
 }
-// specification.addEventListener('blur', function (e) {
-//   console.log("sg");
-//   if (checkTypeBrandModel())
-//   specificationDropdown(type.value, brand.value, model.value);
-  
-//    else
-//     {
-//       alert("please fill type,brand and model");
-//     }
-// });
 (document.querySelector('#inputtype') as HTMLInputElement).addEventListener('change', function (e) {
   console.log((document.getElementById("inputtype") as HTMLInputElement).value)
   let types = checkDropDown("type",type);
@@ -92,6 +82,7 @@ function checkTypeBrandModel() {
   e.preventDefault();
   const temp = new AddDevice(token);
   temp.addNewSpecification();
+  
   (document.getElementById("popupForm") as HTMLFormElement).style.display = "none";
   // temp.specificationDropdown();
 
@@ -109,7 +100,7 @@ function checkTypeBrandModel() {
   const temp = new AddDevice(token);
    
   if (myParam) {
-   // specificationDropdown(type.value, brand.value, model.value);
+   
     temp.update_device(myParam);
     console.log("updated Successfully");
     alert("Device Updated");

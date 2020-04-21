@@ -21,7 +21,7 @@ public class PartialDeviceModel
         public string serial_number { get; set; }
         public string warranty_year { get; set; }
         public string purchase_date { get; set; }
-       // public int user_id {get;set;}
+       
          internal AppDb Db { get; set; }
 
         public PartialDeviceModel()
@@ -136,17 +136,13 @@ public class PartialDeviceModel
     }
     public class Assign:devices
     {
-        public name names {get;set;}
-       // public int device_id { get; set; }
-        // public string return_date { get; set; }
-    //     public string first_name { get; set; }
-    //     public string middle_name { get; set; }
-    //     public string last_name { get; set; }
-    //    // internal AppDb Db { get; set; }
-
+        public string first_name { get; set; }
+        public string middle_name { get; set; }
+        public string last_name { get; set; }
+       
         public Assign()
         {
-            names = new name();
+
         }
 
         internal Assign(AppDb db)
@@ -168,9 +164,9 @@ public class PartialDeviceModel
         {
             cmd.Parameters.Add(new MySqlParameter("device_id", d.device_id));
             cmd.Parameters.Add(new MySqlParameter("return_date", d.return_date));
-            cmd.Parameters.Add(new MySqlParameter("first_name", d.names.first_name));
-            cmd.Parameters.Add(new MySqlParameter("middle_name", d.names.middle_name));
-            cmd.Parameters.Add(new MySqlParameter("last_name", d.names.last_name));
+            cmd.Parameters.Add(new MySqlParameter("first_name", d.first_name));
+            cmd.Parameters.Add(new MySqlParameter("middle_name", d.middle_name));
+            cmd.Parameters.Add(new MySqlParameter("last_name", d.last_name));
 
         }
     }
@@ -184,7 +180,7 @@ public class PartialDeviceModel
         public name assign_to { get; set; }
         public name assign_by { get; set; }
 
-       // internal AppDb Db { get; set; }
+       
 
         public devices()
         {

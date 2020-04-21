@@ -140,7 +140,7 @@ namespace dm_backend.Controllers
             return Ok();
         }
 
-        //Specification
+        // Specification
         // [HttpGet("specid")]
         // async public Task<IActionResult> get_specification_id()
         // {
