@@ -34,12 +34,17 @@ function  LoginUser()
 }
 function RegisterUser()
 {
+    let fname=(window.document.getElementById("fname") as HTMLInputElement ).value;
+    let lname=(window.document.getElementById("lname") as HTMLInputElement ).value;
+
     let remail=(window.document.getElementById("remail") as HTMLInputElement ).value;
     let rpassword=(window.document.getElementById("rpassword") as HTMLInputElement ).value;
-    console.log(remail+"  "+rpassword)
+    console.log(remail+"  "+rpassword+" "+fname+" "+lname);
     fetch("http://localhost:5000/api/auth/register", { 
         method: "POST", 
         body: JSON.stringify({ 
+            FirstName : fname,
+            LastName : lname,
             email: remail, 
             password: rpassword, 
         }), 

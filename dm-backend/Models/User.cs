@@ -6,7 +6,7 @@ using MySql.Data.MySqlClient;
 using dm_backend.Models;
 using dm_backend.Utilities;
 using dm_backend.Data;
-namespace dm_backend
+namespace dm_backend.Models
 {
     public class User : PartialUserModel
     {

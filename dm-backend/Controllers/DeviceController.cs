@@ -140,9 +140,6 @@ namespace dm_backend.Controllers
             return Ok();
         }
 
-        //TODO below three routes
-        // and same in dropdown controller
-
         //Specification
         [HttpGet("specid")]
         async public Task<IActionResult> get_specification_id()
@@ -187,8 +184,6 @@ namespace dm_backend.Controllers
             Db.Connection.Open();
             var que = new insertspec(Db);
             await que.addspecification(body);
-            // item.Db = Db;
-            //var result = item.Insert();
             Db.Connection.Close();
             return Ok();
         }
@@ -205,38 +200,14 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok();
         }
-        [HttpGet("type")]
-        public async Task<IActionResult> GetAlltypes()
-        {
-            await Db.Connection.OpenAsync();
-            var query = new type(Db);
-            var result = await query.getalltypes();
-            return new OkObjectResult(result);
-        }
-        [HttpGet("model")]
-        public async Task<IActionResult> GetAllmodel()
-        {
-            await Db.Connection.OpenAsync();
-            var query = new Model(Db);
-            var result = await query.getallmodel();
-            return new OkObjectResult(result);
-        }
-        [HttpGet("brand")]
-        public async Task<IActionResult> GetAllbrands()
-        {
-            await Db.Connection.OpenAsync();
-            var query = new Brand(Db);
-            var result = await query.getallbrands();
-            return new OkObjectResult(result);
-        }
 
         [Authorize(Roles="admin")]
         [HttpPost]
         [Route("type")]
-        async public Task<IActionResult> PostTYPE([FromBody]type body)
+        async public Task<IActionResult> PostTYPE([FromBody]TypeBrandModel body)
         {
             Db.Connection.Open();
-            var que = new type(Db);
+            var que = new TypeBrandModel(Db);
             await que.addType(body);
             Db.Connection.Close();
             return Ok();
@@ -245,10 +216,10 @@ namespace dm_backend.Controllers
         [Authorize(Roles="admin")]
         [HttpPost]
         [Route("brand")]
-        async public Task<IActionResult> PostBrand([FromBody]Brand body)
+        async public Task<IActionResult> PostBrand([FromBody]TypeBrandModel body)
         {
             Db.Connection.Open();
-            var que = new Brand(Db);
+            var que = new TypeBrandModel(Db);
             await que.addbrand(body);
             Db.Connection.Close();
             return Ok();
@@ -257,10 +228,10 @@ namespace dm_backend.Controllers
         [Authorize(Roles="admin")]
         [HttpPost]
         [Route("model")]
-        async public Task<IActionResult> Postmodel([FromBody]Model body)
+        async public Task<IActionResult> Postmodel([FromBody]TypeBrandModel body)
         {
             Db.Connection.Open();
-            var que = new Model(Db);
+            var que = new TypeBrandModel(Db);
             await que.addmodel(body);
             Db.Connection.Close();
             return Ok();

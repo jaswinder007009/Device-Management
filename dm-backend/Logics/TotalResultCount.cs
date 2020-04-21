@@ -22,7 +22,7 @@ namespace dm_backend.Models{
             cmd.CommandText = @"select count(*)  as total_count from (" + querry + ") as history ;";
             var bind = new SortRequestHistoryData(Db);
             bind.BindLimitParams( cmd , offset , limit);
-            bind.BindSearchParms(cmd, find, serialNumber , status);
+            bind.BindSearchParms(cmd, find, serialNumber , status); 
 
             cmd.CommandType = CommandType.Text;
             return BindResult(await cmd.ExecuteReaderAsync(), data);

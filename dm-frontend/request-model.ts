@@ -45,7 +45,7 @@ import { BASEURL, navigationBarsss, amIUser } from "./globals";
 
     function submitForm()
     {
-        const url = BASEURL + "/request/add"
+        const url = BASEURL + "/api/request/add"
         let data = fun()
         console.log(data);
         

@@ -13,17 +13,17 @@ namespace dm_backend.Data
             _context = context;
         }
 
-        public async Task<UserAuth> Register(UserAuth  user, string password)
+        public async Task<User> Register(User  user, string password)
         {
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
+            
 
             user.Hashpassword = passwordHash;
             user.Saltpassword = passwordSalt;
 
 
-            await _context.UserAuth.AddAsync(user);
+            await _context.User.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;
 

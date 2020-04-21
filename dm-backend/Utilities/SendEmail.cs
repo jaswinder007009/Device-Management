@@ -21,7 +21,12 @@ namespace dm_backend.Utilities
         {
             _context = context;
         }
-
+        public string EnryptString(string strEncrypted)
+        {
+            byte[] b = System.Text.ASCIIEncoding.ASCII.GetBytes(strEncrypted);
+            string encrypted = Convert.ToBase64String(b);
+            return encrypted;
+        }
 
 
         public async Task<bool> Send_Email(string email)
@@ -29,7 +34,10 @@ namespace dm_backend.Utilities
             email = email.ToLower();
                 var fromEmail = new MailAddress("sjangra@ex2india.com", "Forgot Password");
                 var toEmail = new MailAddress(email);
-            var fromEmailPassword = "Jeffhardy@619";
+            string ans = Dec("SmVmZmhhcmR5QDYxOQ==");
+            var fromEmailPassword = ans;
+            
+
 
                 string ui = Guid.NewGuid().ToString();
             Console.WriteLine(ui);
@@ -65,6 +73,22 @@ namespace dm_backend.Utilities
 
 
             return true;
+        }
+
+        private string Dec(string v)
+        {
+            byte[] b;
+            string decrypted;
+            try
+            {
+                b = Convert.FromBase64String(v);
+                decrypted = System.Text.ASCIIEncoding.ASCII.GetString(b);
+            }
+            catch (FormatException fe)
+            {
+                decrypted = "";
+            }
+            return decrypted;
         }
     }
 }
