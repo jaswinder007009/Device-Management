@@ -52,13 +52,19 @@ namespace dm_backend.Controllers
 
         [HttpGet]
         [Route("state")]
-        public IActionResult states()
+        public IActionResult States()
         {
-
+            String fields = HttpContext.Request.Query["id"];
             List<DropdownModel> states = new List<DropdownModel>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select state_id, state_name from state limit 50";
+            cmd.CommandText = "select state_id, state_name from state";
+            if(!string.IsNullOrEmpty(fields)){
+            cmd.CommandText+= " inner join country using(country_id) where country_id=@c_id";
+            cmd.Parameters.AddWithValue("@c_id", fields);
+            }
+            cmd.CommandText+=" order by state_name asc";
+           
             var reader = cmd.ExecuteReader();
 
             using (reader)
@@ -85,12 +91,16 @@ namespace dm_backend.Controllers
         [Route("city")]
         public IActionResult Cities()
         {
-            //String fields = HttpContext.Request.Query["id"];
+            String fields = HttpContext.Request.Query["id"];
             List<DropdownModel> cities = new List<DropdownModel>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select city_id, city_name from city limit 6000 ";
-           // cmd.Parameters.AddWithValue("@c_id", fields);
+            cmd.CommandText = "select city_id, city_name from city";
+            if(!string.IsNullOrEmpty(fields)){
+                cmd.CommandText+=" inner join state using(state_id) where state_id=@c_id";
+            cmd.Parameters.AddWithValue("@c_id", fields);
+            } 
+             cmd.CommandText+=" order by city_name asc";
             var reader = cmd.ExecuteReader();
 
             using (reader)
@@ -108,6 +118,76 @@ namespace dm_backend.Controllers
             if (cities.Count > 0)
             {
                 return Ok(cities);
+            }
+            else
+                return NoContent();
+        }
+
+
+
+
+        [HttpGet]
+        [Route("designation")]
+        public IActionResult designationTypes()
+        {
+            String fields = HttpContext.Request.Query["id"];
+            List<DropdownModel> desgTypes = new List<DropdownModel>();
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "select designation.designation_id,designation.designation_name from department,designation,department_designation where department.department_id=department_designation.department_id and designation.designation_id=department_designation.designation_id and department.department_name=@fields;";
+             cmd.Parameters.AddWithValue("@fields", fields);
+           
+            var reader = cmd.ExecuteReader();
+
+            using (reader)
+            {
+                while (reader.Read())
+                {
+                    desgTypes.Add(new DropdownModel()
+                    {
+                        id = reader.GetInt32(0),
+                        name = reader.GetString(1)
+                    });
+                }
+            }
+            Db.Connection.Close();
+            if (desgTypes.Count > 0)
+            {
+                return Ok(desgTypes);
+            }
+            else
+                return NoContent();
+        }
+
+
+
+        [HttpGet]
+        [Route("department")]
+        public IActionResult departmentTypes()
+        {
+          
+            List<DropdownModel> deptTypes = new List<DropdownModel>();
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "select * from department";
+           
+            var reader = cmd.ExecuteReader();
+
+            using (reader)
+            {
+                while (reader.Read())
+                {
+                    deptTypes.Add(new DropdownModel()
+                    {
+                        id = reader.GetInt32(0),
+                        name = reader.GetString(1)
+                    });
+                }
+            }
+            Db.Connection.Close();
+            if (deptTypes.Count > 0)
+            {
+                return Ok(deptTypes);
             }
             else
                 return NoContent();
@@ -173,8 +253,7 @@ namespace dm_backend.Controllers
             else
                 return NoContent();
         }
-
-        [Route("addressType")]
+     [Route("addressType")]
         public IActionResult addressTypes()
         {
 

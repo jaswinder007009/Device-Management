@@ -15,7 +15,7 @@ export function formatDate1(date) {
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
         year = d.getFullYear();
-
+    
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
 
@@ -44,4 +44,12 @@ export function concatSpecs(data : any)
              
     return specifications;
 
+}
+export function openModal(modalElement: HTMLElement){
+    document.body.classList.add("modal-open");
+	modalElement.classList.add("show");
+}
+export function closeModal(modalElement: HTMLElement){
+    document.body.classList.remove("modal-open");
+	modalElement.classList.remove("show");
 }

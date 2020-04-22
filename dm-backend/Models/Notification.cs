@@ -31,21 +31,17 @@ namespace dm_backend.Models
             Db = db;
         }
 
-        public string AddNotifications()
+
+        public void AddOneNotification(MySqlCommand cmd)
         {
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "insert_notification";
-            cmd.CommandType = CommandType.StoredProcedure;
-            try
-            {
-                BindNotificationProcedureParams(cmd);
+            cmd.CommandText = @"insert into notification(`user_id`,`notification_type`,`device_id`,
+	`notification_date`,`status_id`,`message`) (select user_id,'Public',device_id,now(),status.status_id,'Submit Possible?'
+	from status, assign_device inner join device using (device_id) where assign_device.device_id=@device_id
+    and status.status_name='Pending');"; 
+                BindParams(cmd);
                 cmd.ExecuteNonQuery();
-                return "Notification sent";
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+                cmd.Parameters.Clear();
+            
         }
 		
 
@@ -67,6 +63,12 @@ namespace dm_backend.Models
             cmd.Parameters.Add(new MySqlParameter("var_device_type", deviceType));
             cmd.Parameters.Add(new MySqlParameter("specification_id", specs.GetSpecificationID(Db)));
             
+        }
+
+        public void BindParams(MySqlCommand cmd) { 
+        
+            cmd.Parameters.Add(new MySqlParameter("@device_id", deviceId));
+           
         }
 
         private List<NotificationModel> ReadAll(MySqlDataReader reader)

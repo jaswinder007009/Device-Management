@@ -60,8 +60,7 @@ namespace dm_backend.Models{
             Db.Connection.Close();
             return Ok(result);
         }
-
-        [Authorize(Roles="admin")]
+        
         [HttpGet]
         [Route("pending")]
         public IActionResult GetRequest()

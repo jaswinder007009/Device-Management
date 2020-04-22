@@ -56,15 +56,15 @@ namespace dm_backend.Controllers
         }
 
         [HttpGet]
-        [Route("{email}/devices/returndates")]
-        public IActionResult getDeviceReturnDates(string email)
+        [Route("{id}/returndates")]
+        public IActionResult getDeviceReturnDates(int id)
         {
             List<Overview> returnDateOverview = new List<Overview>();
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "device_return_dates";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@email", email);
+            cmd.CommandText = @" SELECT device_type.type,device_model.model,assign_device.return_date FROM device
+            inner join device_type using(device_type_id) inner join device_model using(device_model_id) inner join assign_device using(device_id)
+            where user_id="+id+";";
             var reader = cmd.ExecuteReader();
 
             using (reader)

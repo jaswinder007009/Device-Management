@@ -13,25 +13,29 @@ namespace dm_backend.Data
             _context = context;
         }
 
-        public async Task<UserAuth> Register(UserAuth user, string password)
+        public async Task<User> Register(User  user, string password)
         {
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
+            
+             Console.WriteLine(user.FirstName);
+             Console.WriteLine(user.LastName);
+             Console.WriteLine(user.Email);
+             Console.WriteLine(password);
 
             user.Hashpassword = passwordHash;
             user.Saltpassword = passwordSalt;
 
 
-            await _context.UserAuth.AddAsync(user);
+            await _context.User.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;
 
         }
 
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-
+            Console.WriteLine(password);
             using var hmac = new System.Security.Cryptography.HMACSHA512();
             passwordSalt = hmac.Key;
             passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
@@ -39,15 +43,18 @@ namespace dm_backend.Data
 
         public async Task<UserAuth> Login(string email, string password)
         {
-
+      //  Console.WriteLine(email);
             var user = await _context.UserAuth.FirstOrDefaultAsync(x => x.Email == email);
-
+            
+Console.WriteLine(user.Email);
+// Console.WriteLine(user.Saltpassword);
             if (user == null)
             {
                 Console.WriteLine("yes");
                 return null;
             }
-
+Console.WriteLine(user.Hashpassword);
+Console.WriteLine(user.Saltpassword);
             if (!Verify(password, user.Hashpassword, user.Saltpassword))
                 return null;
 
