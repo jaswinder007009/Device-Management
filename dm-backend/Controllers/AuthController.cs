@@ -38,13 +38,19 @@ namespace dm_backend.Controllers
         {
 
             userforreg.Email = userforreg.Email.ToLower();
+            Console.WriteLine(userforreg.FirstName);
+            Console.WriteLine(userforreg.LastName);
+            Console.WriteLine(userforreg.Email);
+            Console.WriteLine(userforreg.Password);
 
              if (await _repo.UserExists(userforreg.Email))
                 return BadRequest("Aleady Exist");
 
             var userTocreate = new User
             {
-                Email = userforreg.Email
+                Email = userforreg.Email,
+                FirstName =userforreg.FirstName,
+                LastName=userforreg.LastName
             };
 
             var createdUser = await _repo.Register(userTocreate, userforreg.Password);
@@ -126,6 +132,7 @@ namespace dm_backend.Controllers
 
             var tokenhandler = new JwtSecurityTokenHandler();
             var token = tokenhandler.CreateToken(tokenDescriptor);
+            Console.WriteLine(token);
 
             var result = new RedirectResult("http://127.0.0.1:1234/dashboard.html?token=" + tokenhandler.WriteToken(token) + "&id=" + usertorepo.Id.ToString());
             return result;

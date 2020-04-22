@@ -22,7 +22,7 @@ namespace dm_backend.EFModels
         public int UserId { get; set; }
         public int? SalutationId { get; set; }
         public string FirstName { get; set; }
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
         public string LastName { get; set; }
         public int? DepartmentDesignationId { get; set; }
         public string Email { get; set; }
@@ -31,7 +31,7 @@ namespace dm_backend.EFModels
         public byte[] Hashpassword { get; set; }
         public byte[] Saltpassword { get; set; }
 
-        public string Guid { get; set; }
+        public string? Guid { get; set; }
 
         public DepartmentDesignation DepartmentDesignation { get; set; }
         public Gender Gender { get; set; }

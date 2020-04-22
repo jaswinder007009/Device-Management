@@ -18,6 +18,10 @@ namespace dm_backend.Data
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
             
+             Console.WriteLine(user.FirstName);
+             Console.WriteLine(user.LastName);
+             Console.WriteLine(user.Email);
+             Console.WriteLine(password);
 
             user.Hashpassword = passwordHash;
             user.Saltpassword = passwordSalt;
@@ -39,15 +43,18 @@ namespace dm_backend.Data
 
         public async Task<UserAuth> Login(string email, string password)
         {
-
+      //  Console.WriteLine(email);
             var user = await _context.UserAuth.FirstOrDefaultAsync(x => x.Email == email);
-
+            
+Console.WriteLine(user.Email);
+// Console.WriteLine(user.Saltpassword);
             if (user == null)
             {
                 Console.WriteLine("yes");
                 return null;
             }
-
+Console.WriteLine(user.Hashpassword);
+Console.WriteLine(user.Saltpassword);
             if (!Verify(password, user.Hashpassword, user.Saltpassword))
                 return null;
 

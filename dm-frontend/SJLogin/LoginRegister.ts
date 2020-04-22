@@ -40,10 +40,11 @@ function RegisterUser() {
 	fetch(BASEURL + "/api/auth/register", {
 		method: "POST",
 		body: JSON.stringify({
-			Email: remail,
-			Password: rpassword,
-		   FirstName:fname,
-		   LastName:lname
+			
+				FirstName:fname,
+				LastName:lname,
+				Email: remail,
+			    Password: rpassword
 		}),
 		headers: {
 			"Content-type": "application/json; charset=UTF-8"
