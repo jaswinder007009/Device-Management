@@ -267,47 +267,11 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 
 document.querySelector("#department").addEventListener("click",function(e){
 	new UserData(token).departdesgcall();
-})
+});
+util.addressCheck();
 
 
-		let checkbox = document.querySelector('.sameaddress');
-
-	checkbox.addEventListener('change', function() {
-		if(this.checked) {
-			var container = document.getElementById("addresses1")
-			var curradd1 =(container.querySelector(".addressLine1")as HTMLInputElement).value;
-			var curradd2 =(container.querySelector(".addressLine2")as HTMLInputElement).value;
-			var currcity =(container.querySelector(".city")as HTMLInputElement).value;
-			var currstate =(container.querySelector(".state")as HTMLInputElement).value;
-			var currcountry =(container.querySelector(".country")as HTMLInputElement).value;
-			var currpincode =(container.querySelector(".pin")as HTMLInputElement).value;
-			
-			var peradd1 =curradd1 ;
-			var peradd2 =curradd2 ;
-			var percity =currcity ;
-			var perstate =currstate ;
-			var perpcountry =currcountry ;
-			var perpincode =currpincode ;
-
-			var container1 = document.getElementById("addresses2");
-			(container1.querySelector(".addressLine1")as HTMLInputElement).value = peradd1;
-			(container1.querySelector(".addressLine2")as HTMLInputElement).value = peradd2;
-			(container1.querySelector(".city")as HTMLInputElement).value = percity;
-			(container1.querySelector(".state")as HTMLInputElement).value = perstate;
-			(container1.querySelector(".country")as HTMLInputElement).value= perpcountry;
-			(container1.querySelector(".pin")as HTMLInputElement).value= perpincode;
-		} else {
-			var container1 = document.getElementById("addresses2");
-
-			(container1.querySelector(".addressLine1")as HTMLInputElement).value = "";
-			(container1.querySelector(".addressLine2")as HTMLInputElement).value = "";
-			(container1.querySelector(".city")as HTMLInputElement).value = "";
-			(container1.querySelector(".state")as HTMLInputElement).value = "";
-			(container1.querySelector(".country")as HTMLInputElement).value=  "";
-			(container1.querySelector(".pin")as HTMLInputElement).value= "";
-		}
-	});
-
+	
 	(document.querySelector('#fixed-header-drawer-exp')as HTMLInputElement).addEventListener('change', function (e) {
 		console.log("test");
 		const temp = new GetUserApi(token);

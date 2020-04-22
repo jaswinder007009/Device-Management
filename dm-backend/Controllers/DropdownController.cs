@@ -19,6 +19,7 @@ namespace dm_backend.Controllers
         {
             Db = db;
         }
+        [AllowAnonymous]
         [HttpGet]
         [Route("country")]
         public IActionResult Countries()
@@ -49,6 +50,7 @@ namespace dm_backend.Controllers
             else
                 return NoContent();
         }
+         [AllowAnonymous]
 
         [HttpGet]
         [Route("state")]
@@ -86,6 +88,7 @@ namespace dm_backend.Controllers
             else
                 return NoContent();
         }
+         [AllowAnonymous]
 
         [HttpGet]
         [Route("city")]
