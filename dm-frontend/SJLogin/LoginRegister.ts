@@ -55,25 +55,25 @@ function RegisterUser() {
 			console.log(err);
 		});
 }
-function SendEmail()
-{
-	let useremail = (document.getElementById("femails") as HTMLInputElement).value;
-	fetch(BASEURL + "/api/auth/Reset", {
-		method: "POST",
-		body: JSON.stringify({
-			email: useremail
+// function SendEmail()
+// {
+// 	let useremail = (document.getElementById("femails") as HTMLInputElement).value;
+// 	fetch(BASEURL + "/api/auth/Reset", {
+// 		method: "POST",
+// 		body: JSON.stringify({
+// 			email: useremail
 		
-		}),
-		headers: {
-			"Content-type": "application/json; charset=UTF-8"
-		}
-	})
+// 		}),
+// 		headers: {
+// 			"Content-type": "application/json; charset=UTF-8"
+// 		}
+// 	})
 		
-		.catch(err => {
-			console.log(err);
-		});
+// 		.catch(err => {
+// 			console.log(err);
+// 		});
 
-}
+// }
 
 document.querySelector("#mybtn").addEventListener("click", function(e) {
 	e.preventDefault();
@@ -105,6 +105,24 @@ document.querySelector("#rmybtn1").addEventListener('click', function (e) {
     e.preventDefault();
     SendEmail();
 });
+
+function SendEmail()
+{
+	let useremail = (document.getElementById("femail") as HTMLInputElement).value;
+	console.log(useremail);
+    fetch(BASEURL + "/api/auth/Reset", {
+        method: "POST",
+        body: JSON.stringify({
+            Email: useremail
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+        .catch(err => {
+            console.log(err);
+        });
+}
 
 let password = document.querySelector('input[type="password"]');
 
