@@ -27,18 +27,18 @@ namespace dm_backend.Models
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"select JSON_OBJECT('roles',json_arrayagg(JSON_OBJECT(
-                #'roleId', role_id,
+                'roleId', role_id,
                 'roleName', role_name,
                 'permissions', (
                     select json_arrayagg(json_object(
-                        #'permissionId', permission_id,
+                        'permissionId', permission_id,
                         'permissionName', permission_name
                     )) from role_to_permission inner join permission using(permission_id) where role_to_permission.role_id=role.role_id
                 )
             )),
             'permissions', (
                 select json_arrayagg(json_object(
-					#'permissionId', permission_id,
+					'permissionId', permission_id,
 					'permissionName', permission_name
 			    )) from permission order by permission_name)
             )from role order by role_id;";
