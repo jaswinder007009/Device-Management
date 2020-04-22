@@ -48,7 +48,7 @@ namespace dm_backend.Utilities
             _context.SaveChanges();
 
 
-            var link = "http://127.0.0.1:8080/SJLogin/Reset.html?id="+ui;
+            var link = "http://127.0.0.1:1234/SJLogin/Reset.html?id="+ui;
 
                  string subject = "Reset Password ";
                 string body = "Hi, <br><br> We got request for reset account password . Please Click on the link given below. <br><br> <a href=" + link + "> Reset Password link </a> ";
