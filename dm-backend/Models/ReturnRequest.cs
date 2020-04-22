@@ -83,7 +83,7 @@ namespace dm_backend.Models
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-                BindFaultProcedureParams(cmd);
+                BindFaultyRequestProcedureParams(cmd);
                 cmd.ExecuteNonQuery();
                 return "Request sent";
             }
@@ -96,7 +96,7 @@ namespace dm_backend.Models
         public string resolveRequest()
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"resolve complaint";
+            cmd.CommandText = @"resolve_complaint";
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {

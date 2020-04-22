@@ -26,7 +26,7 @@ export class FalultyDevice
                         this.populateData(new FaultyDeviceModel(value));
                     })
             });
-           (document.getElementById("loading") as HTMLDivElement).style.display = "none";
+        (document.getElementById("loading") as HTMLDivElement).style.display = "none";
     }
 
     getSearchData(id:any)
