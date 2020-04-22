@@ -10,6 +10,7 @@ import { openForm } from "./utilities";
 
 
 (async function() {
+	const id= JSON.parse(sessionStorage.getItem("user_info"))["id"];
 	const token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
 	const role = (await amIUser(token)) == true ? 0 : 1;
 	class Assign_device {
@@ -18,7 +19,7 @@ import { openForm } from "./utilities";
 		first_name: string = "";
 		middle_name: string = "";
 		last_name: string = "";
-		
+		admin_id:number=0;
 	}
 
 	class GetApiForAdmin {
@@ -128,27 +129,25 @@ import { openForm } from "./utilities";
 			window.location.href = "AddDevice.html?device_id=" + device_id;
 		}
 		if ((e.target as HTMLButtonElement).className == "delete-button") {
-			console.log("delete");
+			
 			if (confirm("Are you sure you want to delete this device?")) {
 				const temp = new GetApiForAdmin(token);
 				const device_id: any = (e.target as HTMLButtonElement).getAttribute(
 					"value"
 				);
-				console.log("device_id" + device_id);
+				
 				temp.deleteDevice(device_id);
-				console.log("device deleted");
+				
 	           window.location.reload();
 				temp.getData();
-			} else {
-				console.log("fail deleted");
-			}
+			} 
 		}
 		if((e.target as HTMLTableCellElement).className=="cards")
-		{
-			console.log("abc");
+        {
+			
 			const device_id: any = (e.target as HTMLButtonElement).dataset.deviceid;
-			console.log(device_id);
-		}
+			window.location.href = "./devicedetail.html?device_id=" + device_id;
+        }
 		if ((e.target as HTMLButtonElement).className == "notify-button") {
 			console.log("notify");
 			let deviceId: number = parseInt((e.target as HTMLButtonElement).dataset.deviceid, 10);
@@ -156,6 +155,7 @@ import { openForm } from "./utilities";
 			temp.postNotification(JSON.stringify({ "notify": [{ deviceId }] }));
 		}
 		if ((e.target as HTMLButtonElement).className == "assign-button") {
+			console.log(id);
 			console.log("notify");
 			temp.openForm1("popupForm2");
 			(document.getElementById(
@@ -187,11 +187,20 @@ import { openForm } from "./utilities";
 			assign.last_name = (document.getElementById(
 				"last_name"
 			) as HTMLInputElement).value;
+			console.log(id);
+			assign.admin_id = +id;
 			temp.assign_device(assign);
 			console.log("assign");
 			temp.closeForm1("popupForm2");
+			//window.location.reload();
 		}
 	});
+	(document.querySelector("#device_id") as HTMLTableElement).addEventListener(
+		"click",
+		function(e) {
+			window.location.href="./devicedetail.html";
+		}
+	);
 	(document.querySelector("#tablecol") as HTMLTableElement).addEventListener(
 		"click",
 		function(e) {
