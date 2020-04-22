@@ -1,12 +1,14 @@
 using System;
 using System.Threading.Tasks;
 using dm_backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 namespace dm_backend.Controllers
 {
-    [Route("api/[controller]")]
-    public class RolepermissionController : ControllerBase
+    [Authorize(Roles="admin")]
+    [Route("api/")]
+    public class RolepermissionController : BaseController
     {
         public RolepermissionController(AppDb db)
         {
@@ -14,24 +16,54 @@ namespace dm_backend.Controllers
         }
         public AppDb Db { get; }
         
-        // [HttpGet("role")]
-        // public async Task<IActionResult> GetAllRoles()
-        // {
-        //     await Db.Connection.OpenAsync();
-        //     var query = new Role(Db);
-        //     var result = await query.getallroles();
-        //     return new OkObjectResult(result);
-        // }
-        // [HttpGet("permission")]
-        // public async Task<IActionResult> GetAllPermissions()
-        // {
-        //     await Db.Connection.OpenAsync();
-        //     var query = new Permission(Db);
-        //     var result = await query.getallpermisions();
-        //     return new OkObjectResult(result);
-        // }
+        /*
+        *   Returns an JSON object with an array of Roles along with an array of permissions
+        *   {
+        *     Roles: [
+        *       { 
+        *         RoleName, 
+        *         Permissions: [
+        *           {PermissionName}
+        *         ]
+        *       }
+        *     ]
+        *   }
+        */
+        [HttpGet]
+        [Route("rolepermission")]
+        public IActionResult getAllRoles(){
+            var result = new RolePermission(Db).GetAllRoles();
+            string JSON = JsonConvert.SerializeObject(result, new JsonSerializerSettings(){
+                NullValueHandling = NullValueHandling.Ignore
+            });
+            return Ok(JSON);
+        }
+
+        [HttpGet]
+        [Route("role/{role_id}")]
+        public IActionResult getRoleById(int role_id){
+            Role RoleObj = new Role(Db);
+            return Ok(RoleObj.GetRoleById(role_id));
+        }
+        
+        /*
+        *   Requires the same object as received from GET endpoint with updated values
+        */
+        [HttpPut]
+        [Route("rolepermission/update")]
+        public IActionResult UpdateRoles([FromBody]RolePermission RolePerms){
+            RolePerms.Db = Db;
+            try{
+                RolePerms.SaveChanges();
+            }
+            catch(Exception e){
+                return StatusCode(500);
+            }
+            return Ok();
+        }
+
         [HttpPost]
-        [Route("addrole")]
+        [Route("role/add")]
         public IActionResult Postrole([FromBody]Role body)
         {
             try{
@@ -45,7 +77,7 @@ namespace dm_backend.Controllers
             }
         }
         [HttpPost]
-        [Route("addpermission")]
+        [Route("permission/add")]
         public IActionResult Postpermission([FromBody]Permission body)
         {
             try{
@@ -59,7 +91,7 @@ namespace dm_backend.Controllers
             }
         }
         [HttpPut]
-        [Route("updaterole/{role_id}")]
+        [Route("role/{role_id}/update")]
         public IActionResult Putrole(int role_id, [FromBody]Role body)
         {
             Console.WriteLine(body.RoleName);
@@ -76,7 +108,7 @@ namespace dm_backend.Controllers
             
         }
         [HttpPut]
-        [Route("updatepermissions/{permission_id}")]
+        [Route("permission/{permission_id}/update")]
         public IActionResult Putpermission(int permission_id, [FromBody]Permission body)
         {
             try{
@@ -91,7 +123,7 @@ namespace dm_backend.Controllers
             }
         }
         [HttpDelete]
-        [Route("delrole/{role_id}")]
+        [Route("role/{role_id}/delete")]
         public IActionResult Deleterole(int role_id)
         {
             Role query = new Role(Db);
@@ -100,13 +132,27 @@ namespace dm_backend.Controllers
             return Ok();
         }
         [HttpDelete]
-        [Route("delpermission/{permission_id}")]
+        [Route("permission/{permission_id}/delete")]
         public IActionResult Deletepermission(int permission_id)
         {
             Permission query = new Permission(Db);
             query.PermissionId = permission_id;
             query.DeletePermission();
             return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("is_user")]
+        public IActionResult AmIUser(){
+            return Ok(new{ result= GetUserRoles().Contains("user") });
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("is_admin")]
+        public IActionResult AmIAdmin(){
+            return Ok(new{ result= GetUserRoles().Contains("admin") });
         }
     }
 }
