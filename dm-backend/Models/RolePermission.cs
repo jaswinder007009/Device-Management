@@ -10,6 +10,8 @@ namespace dm_backend.Models
     public class RolePermission
     {
         public List<Role> Roles { get; set; }
+
+        public List<Permission>? Permissions { get; set; }
         internal AppDb Db { get; set; }
 
         internal RolePermission(AppDb db)
@@ -33,7 +35,13 @@ namespace dm_backend.Models
                         'permissionName', permission_name
                     )) from role_to_permission inner join permission using(permission_id) where role_to_permission.role_id=role.role_id
                 )
-            ))) from role order by role_id;";
+            )),
+            'permissions', (
+                select json_arrayagg(json_object(
+					#'permissionId', permission_id,
+					'permissionName', permission_name
+			    )) from permission order by permission_name)
+            )from role order by role_id;";
             using var reader = cmd.ExecuteReader();
             reader.Read();
             string result = reader.GetString(0);
@@ -41,7 +49,7 @@ namespace dm_backend.Models
             Db.Connection.Close();
             return abc;
         }
-        
+
         // TODO : Update a role iff role is changed
         public void SaveChanges()
         {

@@ -8,7 +8,7 @@ namespace dm_backend.Models
 {
     public class Role
     {
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
         public string RoleName { get; set; }
         public List<Permission>? Permissions { get; set; }
         internal AppDb Db { get; }
