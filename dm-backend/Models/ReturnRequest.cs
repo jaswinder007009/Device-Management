@@ -23,8 +23,9 @@ namespace dm_backend.Models
         public string deviceType { get; set; }  
         public Specification specs { get; set;}     
         public string returnDate { get; set; }
-         public string comment {get; set;}
-         public int complaintId {get; set;}
+        public string comment {get; set;}
+        public int complaintId {get; set;}
+        
         internal AppDb Db { get; set; }
 
         public ReturnRequestModel()
@@ -75,7 +76,7 @@ namespace dm_backend.Models
                 throw e;
             }
         }
-         public string AddFaultRequest()
+        public string AddFaultRequest()
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"insert_fault_request";
@@ -93,12 +94,12 @@ namespace dm_backend.Models
         }
         public string RejectReturnRequest()
         {
-             using var cmd = Db.Connection.CreateCommand();
+            using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"reject_user_request";
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-                BindReturnProcedureParams(cmd);
+                BindFaultyRequestProcedureParams(cmd);
                 cmd.ExecuteNonQuery();
                 return "Request rejected";
             }
@@ -114,7 +115,8 @@ namespace dm_backend.Models
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-                 BindReturnProcedureParams(cmd);
+                BindReturnProcedureParams(cmd);
+                
                 cmd.ExecuteNonQuery();
                 return "Request rejected";
             }

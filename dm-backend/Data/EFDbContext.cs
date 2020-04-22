@@ -1,8 +1,9 @@
 ﻿using System;
+using dm_backend.EFModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace dm_backend.EFModels
+namespace dm_backend.Data
 {
     public partial class EFDbContext : DbContext
     {
@@ -1036,6 +1037,10 @@ namespace dm_backend.EFModels
 
                 entity.Property(e => e.MiddleName)
                     .HasColumnName("middle_name")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.Guid)
+                    .HasColumnName("guid")
                     .HasMaxLength(45);
 
                 entity.Property(e => e.Saltpassword)
