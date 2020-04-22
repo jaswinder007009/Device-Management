@@ -26,7 +26,7 @@ export default class role {
 		this.token = token;
 	}
 	async getroles() {
-		this.url = BASEURL + "/api/device/role";
+		this.url = BASEURL + "/api/rolepermission";
 		let data = await this.getApiCall(this.url);
 		this.data = data["Roles"].map(roleObj => {
 			return { RoleId: roleObj["RoleId"], RoleName: roleObj["RoleName"] };
@@ -38,7 +38,7 @@ export default class role {
 	}
 	//get permissions
 	async getpermissions() {
-		this.url = BASEURL + "/api/device/role";
+		this.url = BASEURL + "/api/rolepermission";
 		let data = await this.getApiCall(this.url);
 		this.data = data["Permissions"].map(permObj => {
 			return {
@@ -52,7 +52,9 @@ export default class role {
 		return data;
 	}
 	async getApiCall(URL: any) {
-		let response = await fetch(URL);
+		let response = await fetch(URL,{
+			headers: new Headers({"Authorization": `Bearer ${this.token}`})
+		});
 		let data = await response.json();
 		console.log(data);
 		return await data;
@@ -106,13 +108,11 @@ export default class role {
 	async DeleteRoleById(id1: number) {
 		let x = id1;
 		if (confirm("Are you sure you want to delete this role?")) {
-			let uri = BASEURL + "/api/rolepermission/delrole/" + x;
-			console.log(uri);
-			let response = await fetch(uri, {
-				method: "DELETE"
-				//headers: new Headers({"Authorization": `Bearer ${token}`})
+			let uri = BASEURL + "/api/role/" + x + "/delete";
+			await fetch(uri, {
+				method: "DELETE",
+				headers: new Headers({"Authorization": `Bearer ${this.token}`})
 			});
-			console.log(this.data);
 			this.getroles();
 		} else {
 			console.log("delete failed");
@@ -121,13 +121,12 @@ export default class role {
 	async DeletePermissionById(id2: number) {
 		let y = id2;
 		if (confirm("Are you sure you want to delete this permission?")) {
-			let uri = BASEURL + "/api/rolepermission/delpermission/" + y;
+			let uri = BASEURL + "/api/permission/" + y + "/delete";
 			console.log(uri);
-			let response = await fetch(uri, {
-				method: "DELETE"
-				//headers: new Headers({"Authorization": `Bearer ${token}`})
+			await fetch(uri, {
+				method: "DELETE",
+				headers: new Headers({"Authorization": `Bearer ${this.token}`})
 			});
-			console.log(this.data);
 			this.getpermissions();
 		} else {
 			console.log("delete failed");
@@ -150,7 +149,7 @@ export default class role {
 	}
 	postData() {
 		console.log("lll");
-		let url = BASEURL + "/api/rolepermission/addrole";
+		let url = BASEURL + "/api/role/add";
 		fetch(url, {
 			method: "POST",
 			headers: {
@@ -188,7 +187,7 @@ export default class role {
 		this.postData1();
 	}
 	postData1() {
-		let url = BASEURL + "/api/rolepermission/addpermission";
+		let url = BASEURL + "/api/permission/add";
 		fetch(url, {
 			method: "POST",
 			headers: {
@@ -237,7 +236,7 @@ export default class role {
 	}
 	postData_1(x: number) {
 		console.log(x);
-		let url = BASEURL + "/api/rolepermission/updaterole/" + x;
+		let url = BASEURL + "/api/role/" + x + "/update";
 		fetch(url, {
 			method: "PUT",
 			headers: {
@@ -287,7 +286,7 @@ export default class role {
 	}
 	postData_2(y: number) {
 		console.log(y);
-		let url = BASEURL + "/api/rolepermission/updatepermissions/" + y;
+		let url = BASEURL + "/api/permission/" + y + "/update";
 		fetch(url, {
 			method: "PUT",
 			headers: {

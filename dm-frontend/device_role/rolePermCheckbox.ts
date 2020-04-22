@@ -10,7 +10,7 @@ export class RolePermission{
     }
 
     getRolesAndPermissions(token){
-        return fetch(BASEURL + "/api/device/role", {
+        return fetch(BASEURL + "/api/rolepermission", {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -85,7 +85,7 @@ export class RolePermission{
         });
     }
     save(){
-        fetch(BASEURL + "/api/device/role", {
+        fetch(BASEURL + "/api/rolepermission/update", {
             method: "PUT",
             headers: {
                 "Authorization": `Bearer ${this.token}`,
