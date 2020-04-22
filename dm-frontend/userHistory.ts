@@ -153,7 +153,7 @@ export class MyDevices {
 
     }
     async getRequestHistory(id: number, searchField: string = "", sort: string = "") {
-        this.url = BASEURL + "/request/pending?id="+id+"&search=" + searchField + sort;
+        this.url = BASEURL + "/api/request/pending?id="+id+"&search=" + searchField + sort;
         let data = await this.getApiCall(this.url);
         this.data = await data;
         console.log(data);
@@ -177,7 +177,7 @@ export class MyDevices {
         });
     }
     deleteRequestHistory(requestID: number) {
-        return fetch(BASEURL + "/request/" + requestID + "/cancel", {
+        return fetch(BASEURL + "/api/request/" + requestID + "/cancel", {
             method: "DELETE",headers: new Headers({"Authorization": `Bearer ${this.token}`})
         });
     }
