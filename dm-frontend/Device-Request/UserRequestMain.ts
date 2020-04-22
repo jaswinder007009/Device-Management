@@ -54,9 +54,9 @@ export async function specificationDropdown(
   console.log(data);
   (document.getElementById("specification") as HTMLSelectElement).innerHTML =
     "";
-  (document.getElementById(
-    "specification"
-  ) as HTMLSelectElement).innerHTML += `<option value=""> </option>`;
+  // (document.getElementById(
+  //   "specification"
+  // ) as HTMLSelectElement).innerHTML += `<option value=""> </option>`;
   for (let i = 0; i < data.length; i++) {
     (document.getElementById("specification") as HTMLSelectElement).innerHTML +=
       '<option value="' + data[i].specification_id +'">' + ( data[i].ram == "" ? "" : " RAM: " +
