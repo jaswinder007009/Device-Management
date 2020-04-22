@@ -85,7 +85,7 @@ token :string="";
                 if(token==1){
 
 
-                const buttons =  `<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="">
+                const buttons =  `<button class="mdl-button mdl-js-button mdl-button--raised" id="">
                         <a href = "./AddDevice.html" style="color: black;">
                             Add Device</a>
                         </button>`;
