@@ -18,7 +18,7 @@ module.exports = {
         'getApiForAdmin': './getApiForAdmin.ts',
         'faultIndex': './faultyDevice/faultIndex.ts',
         'getNotification': './getNotification.ts',
-        'index': './index.ts', // No its not the main file. Just a file required by a page
+        'index': './request-history/index.ts', // No its not the main file. Just a file required by a page
         'specification': './specificationcrud.ts',
         'submissionRequest': './submissionRequest.ts',
         'request-model': './request-model.ts',

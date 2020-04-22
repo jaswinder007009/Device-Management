@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server",
-    "build": "rm -rf build && webpack",
+    "dev": "tsc && webpack-dev-server",
+    "build": "tsc && rm -rf build && webpack",
     "start": "webpack"
   },
   "keywords": [],
