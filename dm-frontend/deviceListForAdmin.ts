@@ -10,7 +10,7 @@ token :string="";
         warranty_year: string;
         purchase_date: string;
         status: string;
-
+        comments :  string;
 
         ram: string;
         storage: string;
@@ -38,6 +38,7 @@ token :string="";
             this.warranty_year = data.warranty_year;
             this.purchase_date = data.purchase_date;
             this.status = data.status;
+            this.comments = data.comments;
             this.ram = data.specifications.ram;
             this.storage = data.specifications.storage;
             this.screen_size = data.specifications.screenSize;
@@ -95,8 +96,14 @@ token :string="";
                             </td>`;
                         if(this.status=="Allocated")
                         var val = `<td>  <button class="notify-button" data-deviceid=${this.device_id}>Notify</button></td> </tr>`;
-                        else 
+                        else if(this.status == "Free")
+                        {
                             val = `<td>  <button class="assign-button" data-id=${this.device_id}>Assign Device</button></td> </tr> `;
+                        }
+                        else
+                        {
+                            val=`<td><label style="color: red;">Device Faulty</label></td></tr>`;
+                        }
                             (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value +editbutton+ val;
                     }
             else

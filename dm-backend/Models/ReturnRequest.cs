@@ -100,7 +100,7 @@ namespace dm_backend.Models
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-                BindReturnProcedureParams(cmd);
+                BindFaultyRequestProcedureParams(cmd);
                 
                 cmd.ExecuteNonQuery();
                 return "Request rejected";
@@ -117,7 +117,7 @@ namespace dm_backend.Models
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-                BindReturnProcedureParams(cmd);
+                BindFaultyRequestProcedureParams(cmd);
                 cmd.ExecuteNonQuery();
                 return "Request rejected";
             }
