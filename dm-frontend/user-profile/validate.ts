@@ -1,7 +1,7 @@
 export function validate() {
     return Firstnamevalidation() && Middlenamevalidation() &&
     Lastnamevalidation() &&
-    emailvalidation()&&passwordvalidation()&&addressvalidation("addresses1")&&addressvalidation("addresses2")&&
+    emailvalidation()&&passwordvalidation()&&confirmpasswordvalidation()&&addressvalidation("addresses1")&&addressvalidation("addresses2")&&
     addressvalidation1("addresses1")&&addressvalidation1("addresses2")&&date0fbirthvalidation()&&
     pinvalidation("addresses1")&&pinvalidation("addresses2")&&phonevalidation("phones1")&&
     phonevalidation("phones3");
@@ -11,8 +11,8 @@ function Firstnamevalidation() {
     if (firstnames == "") {
         document.getElementById('firstnames').innerHTML = "Fill First Name";
         return false;
-    } else if (firstnames.length < 5 || firstnames.length > 20) {
-        document.getElementById('firstnames').innerHTML = "FirstName Should Be Between 5 and 20";
+    } else if (firstnames.length > 20) {
+        document.getElementById('firstnames').innerHTML = "FirstName Should Not Be More Than 20 Characters";
         return false;
     }
     else {
@@ -26,8 +26,8 @@ function Middlenamevalidation() {
     {
         return true;
     }
-     else if (middlenames.length < 2 || middlenames.length > 20) {
-        document.getElementById('middlenames').innerHTML = "MiddleName Should Be Between 2 and 20";
+     else if (middlenames.length > 20) {
+        document.getElementById('middlenames').innerHTML = "MiddleName Should Not Be More Than 20 Characters";
         return false;
     }
     else {
@@ -40,8 +40,8 @@ function Lastnamevalidation() {
     if (lastnames == "") {
         document.getElementById('lastnames').innerHTML = "Fill Last Name";
         return false;
-    } else if (lastnames.length < 3 || lastnames.length > 20) {
-        document.getElementById('lastnames').innerHTML = "LastName Should Be Between 3 and 20";
+    } else if (lastnames.length > 20) {
+        document.getElementById('lastnames').innerHTML = "LastName Should Not Be More Than 20 Characters";
         return false;
     }
     else {
@@ -89,13 +89,37 @@ function passwordvalidation() {
         document.getElementById('passwords').innerHTML = "";
         return true; }
 }
+function confirmpasswordvalidation() {
+
+    var passwords = (document.getElementById('password') as HTMLInputElement).value;
+
+    var confirmpasswords = (document.getElementById('confirmpassword') as HTMLInputElement).value;
+    if(passwords=="")
+    {
+        return true;
+    }
+   
+    if (confirmpasswords == "") {
+        (document.getElementById('confirmpasswords') as HTMLInputElement).innerHTML = "Fill Confirm Password";
+        return true;
+    } else if (confirmpasswords.length < 5 || confirmpasswords.length > 20) {
+        (document.getElementById('confirmpasswords') as HTMLInputElement).innerHTML = "Confirm Password Should Be Between 5 and 20";
+        return false;
+    } else if (passwords != confirmpasswords) {
+        (document.getElementById('confirmpasswords') as HTMLInputElement).innerHTML = "Passwords Dont Match";
+        return false;
+    } else {
+        (document.getElementById('confirmpasswords') as HTMLInputElement).innerHTML = "";
+        return true;
+    }
+}
 function addressvalidation(containerId: string) {
     var addresses1 = (document.querySelector("#" + containerId + ' .addressLine1') as HTMLInputElement).value;
     if (addresses1 == "") {
         document.querySelector("#" + containerId + ' .addressLine1span').innerHTML = "Fill  addresss line1";
         return false;
-    } else if (addresses1.length < 5 || addresses1.length > 30) {
-        document.querySelector("#" + containerId + ' .addressLine1span').innerHTML = "addressline1 Should Be Between 5 and 30";
+    } else if (addresses1.length > 30) {
+        document.querySelector("#" + containerId + ' .addressLine1span').innerHTML = "addressline1 Should Not Be More Than 30 Characters";
         return false;
     }
     else {
@@ -108,8 +132,8 @@ function addressvalidation1(containerId: string) {
     if (addresses2 == "") {
         return true;
     }
-     else if (addresses2.length < 5 || addresses2.length > 30) {
-        document.querySelector("#" + containerId + ' .addressLine2span').innerHTML = "addressline2 Should Be Between 5 and 30";
+     else if (addresses2.length > 30) {
+        document.querySelector("#" + containerId + ' .addressLine2span').innerHTML = "addressline2 Should Not Be More Than 30 Characters";
         return false;
     }
     else {
