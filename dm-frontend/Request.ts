@@ -102,7 +102,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     }
 
     function postNotification(data) {
-        if (confirm("Notify all?")) {
+        if (confirm("Notify ?")) {
             fetch(BASEURL + "/api/Notification", {
                 method: "POST",
                 headers: [["Content-Type", "application/json"], ["Authorization", `Bearer ${token}`]],
@@ -155,7 +155,8 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
 
         }
         if ((e.target as HTMLButtonElement).className == "notify-all") {
-            postNotification(JSON.stringify(obj));
+            console.log(JSON.stringify(obj));
+            //postNotification(JSON.stringify(obj));
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
         };
 
