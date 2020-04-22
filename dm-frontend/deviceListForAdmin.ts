@@ -94,13 +94,7 @@ token :string="";
                             <button class="delete-button" value=${this.device_id}>Delete </button>
                             </td>`;
                         if(this.status=="Allocated")
-                        var val = `<td>  <button class="notify-button" data-devicemodel=${this.model} 
-                                    data-devicetype= ${this.type} data-devicebrand= ${this.brand} 
-                                    data-ram= ${this.ram}
-                                    data-connectivity= ${this.connectivity}
-                                    data-screensize= ${this.screen_size}
-                                    data-storage= ${this.storage}
-                                    >Notify</button></td> </tr>`;
+                        var val = `<td>  <button class="notify-button" data-deviceid=${this.device_id}>Notify</button></td> </tr>`;
                         else 
                             val = `<td>  <button class="assign-button" data-id=${this.device_id}>Assign Device</button></td> </tr> `;
                             (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value +editbutton+ val;

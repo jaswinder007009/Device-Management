@@ -2,6 +2,7 @@ import { BASEURL } from "./globals";
 import { formatDate1 } from "./utilities";
 import { HitApi } from "./Device-Request/HitRequestApi";
 import { populateDropdown } from "./dropdown";
+import { specificationDropdown } from "./Device-Request/UserRequestMain";
 
 export class AddDevice {
     field:string
@@ -71,19 +72,20 @@ export class AddDevice {
         return null;
     }
     populateDataToForm(data: any) {
-        console.log(data[0].device_brand_id);
+        
 
         (document.getElementById("inputbrand") as HTMLInputElement).value = data[0].brand;
         (document.getElementById("inputtype") as HTMLInputElement).value = data[0].type;
         (document.getElementById("status") as HTMLInputElement).value = data[0].status_id;
         (document.getElementById("inputmodel") as HTMLInputElement).value = data[0].model;
+        specificationDropdown(data[0].type,data[0].brand,data[0].model);
         (document.getElementById("color") as HTMLInputElement).value = data[0].color;
         (document.getElementById("price") as HTMLInputElement).value = data[0].price;
-        (document.getElementById("serial_number") as HTMLInputElement).value = data[0].serial_number;
         (document.getElementById("warranty_year") as HTMLInputElement).value = data[0].warranty_year;
         (document.getElementById("purchase_date") as HTMLInputElement).value = formatDate1(data[0].purchase_date);
         (document.getElementById("specification") as HTMLInputElement).value = data[0].specification_id;
         (document.getElementById("entry_date") as HTMLInputElement).value = formatDate1(data[0].entry_date);
+        
     }
 
     update_device(device_id: any) {

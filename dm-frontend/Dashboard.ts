@@ -11,7 +11,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
         id = url.searchParams.get("id");
         sessionStorage.setItem("user_info", JSON.stringify({ token, id }));
     }
-    let email = 'abc@gmail.com';
+    //let email = 'abc@gmail.com';
     token = JSON.parse(sessionStorage.getItem("user_info"))["token"]; 
 
     
@@ -123,6 +123,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
 
     }
     function getHistory(url: string) {
+        console.log(url);
         var tableTitle = "<TH COLSPAN='3'><center>MY HISTORY</center></th>";
         var tableHeading = "";
         tableHeading += "<th>Type</th>"
@@ -181,11 +182,10 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
         window.location.href = "/SJLogin/LoginRegiter.html";
     })
     
-    document.getElementById('email').innerHTML = email;
-    // document.getElementById('userRole').innerHTML = role;
+    document.getElementById('role').innerHTML = role;
     if (role == 'User') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
-        getDeviceReturnDates(BASEURL + "/api/dashboard/" + email + "/devices/returndates");
+        getDeviceReturnDates(BASEURL + "/api/dashboard/" + id + "/returndates");
         getHistory(BASEURL + "/api/device/previous_device/" + id);
     }
     else if (role == 'Admin') {

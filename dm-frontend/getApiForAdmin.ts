@@ -90,14 +90,15 @@ import { openForm } from "./utilities";
 			});
 		}
 
-		postNotification(data: Requests) {
-			let data1 = JSON.stringify(data);
-			fetch(BASEURL + "/api/Notification", {
-				method: "POST",
-                headers:new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
-				body: data1
-			}).catch(Error => console.log(Error));
-			alert("Notification sent");
+		postNotification(data) {
+			if (confirm("Notify all?")) {
+				fetch(BASEURL + "/api/Notification", {
+					method: "POST",
+					headers: [["Content-Type", "application/json"], ["Authorization", `Bearer ${token}`]],
+					body: data,
+				}).catch(Error => console.log(Error));
+				alert("Notification sent");
+			}
 		}
 		assign_device(data: Assign_device) {
 			let data1 = JSON.stringify(data);
@@ -150,18 +151,9 @@ import { openForm } from "./utilities";
 		}
 		if ((e.target as HTMLButtonElement).className == "notify-button") {
 			console.log("notify");
-			let request = new Requests();
-
-			request.deviceModel = (e.target as HTMLButtonElement).dataset.devicemodel;
-			request.deviceBrand = (e.target as HTMLButtonElement).dataset.devicebrand;
-			request.deviceType = (e.target as HTMLButtonElement).dataset.devicetype;
-			request.specs.ram = (e.target as HTMLButtonElement).dataset.ram + " GB";
-			request.specs.connectivity = (e.target as HTMLButtonElement).dataset.connectivity;
-			request.specs.screenSize = (e.target as HTMLButtonElement).dataset.screensize;
-			request.specs.storage =
-				(e.target as HTMLButtonElement).dataset.storage + " GB";
-			console.log(request);
-			temp.postNotification(request);
+			let deviceId: number = parseInt((e.target as HTMLButtonElement).dataset.deviceid, 10);
+			console.log(deviceId);
+			temp.postNotification(JSON.stringify({ "notify": [{ deviceId }] }));
 		}
 		if ((e.target as HTMLButtonElement).className == "assign-button") {
 			console.log("notify");
