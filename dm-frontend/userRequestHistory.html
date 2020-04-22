@@ -17,11 +17,12 @@
       position: absolute;
       left: 30%;
       top: 5%;
-      opacity: 5px;
       background-color: white;
-
       display: none;
       z-index: 9;
+    }
+    p{
+      text-align: center;
     }
   </style>
 </head>
@@ -33,19 +34,14 @@
     <header class="mdl-layout__header">
       <div class="mdl-layout__header-row">
 
-        <!-- Title -->
-
         <span class="mdl-layout-title">
           <h4>MY DEVICES</h4>
         </span>
 
       </div>
-
-
-      <!-- Tabs -->
+ 
       <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
         <a href="#fixed-tab-1" class="mdl-layout__tab is-active" id="one">CURRENT DEVICE</a>
-        <!-- <a href="#fixed-tab-2" class="mdl-layout__tab" id="two">PREVIOUS DEVICE</a> -->
         <a href="#fixed-tab-3" class="mdl-layout__tab" id="three">REQUESTED DEVICE</a>
       </div>
     </header>
@@ -60,13 +56,15 @@
             <div class="col-lg-7 m-auto d-block">
               <div class="content" style="padding-top: 10px;">
                 <div class="form-group col-md-12">
-                  <center><label><b>Description </b></label></center>
+                 <p><label><b>Description </b></label></p>
                   <textarea type="text" class="form-control" id="comment"></textarea>
+                  <span id="description" class="text-danger font-weight-bold"></span>
                 </div>
-                <div class="form-group text-center">
+               <p>
                   <button  name="submit"  class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored submit">SUBMIT</button>
-                  <button  id="closeFormButton" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored close">CLOSE</button>
-                </div>
+                  <button  name="submit"  class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored closed">CLOSE</button>
+                  </p>
+               
 
               </div>
             </div>
@@ -106,30 +104,7 @@
 
       </section>
 
-      <!-- <section class="mdl-layout__tab-panel" id="fixed-tab-2">
-        <div class="page-content">
-          <div class="mdl-layout-spacer"></div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-            mdl-textfield--floating-label mdl-textfield--align-right">
-            <label class="mdl-button mdl-js-button mdl-button--icon" for="search2">
-              <i class="material-icons">search</i>
-            </label>
-            <div class="mdl-textfield__expandable-holder">
-              <input class="mdl-textfield__input" type="text" name="sample" id="search2">
-            </div>
-          </div>
-          <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp" id="tab2">
-            <tr>
-              <th class="mdl-data-table__header--sorted-descending" data-id="type"  data-sortable=true>DEVICE TYPE</th>
-              <th class="mdl-data-table__header--sorted-descending" data-id="brand" data-sortable=true>DEVICE BRAND</th>
-              <th class="mdl-data-table__header--sorted-descending" data-id="model" data-sortable=true>DEVICE MODEL</th>
-              <th class="mdl-data-table__header--sorted-descending" data-id="assign_date" data-sortable=true>ASSIGN_DATE</th>
-              <th class="mdl-data-table__header--sorted-descending" data-id="return_date" data-sortable=true>RETURN_DATE</th>
-            </tr>
-
-          </table>
-        </div>
-      </section> -->
+     
       <section class="mdl-layout__tab-panel" id="fixed-tab-3">
         <div class="page-content">
           <div class="mdl-layout-spacer"></div>

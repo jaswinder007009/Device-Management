@@ -39,6 +39,17 @@ namespace dm_backend.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("{device_id}")]
+        public IActionResult GetDeviceFullDetails(string device_id)
+        {
+            Db.Connection.Open();
+            var query = new devices(Db);
+            var result = query.getDeviceDescriptionbyid(Int32.Parse(device_id));
+            Db.Connection.Close();
+            return Ok(result);
+        }
+
 
         [HttpGet]
         [Route("search")]

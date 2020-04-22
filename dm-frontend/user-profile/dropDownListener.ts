@@ -23,5 +23,12 @@ export async function dropDownListen(form:HTMLFormElement,token:string){
         })
 
      }
+
     return null;
+}
+export async function deptdesgListen(form:HTMLFormElement){
+    form.querySelector("#department").addEventListener("click",function(e){
+        let dept=(form.querySelector("#designation")as HTMLSelectElement);
+        new UserData().departdesgcall(dept,this);
+    });
 }

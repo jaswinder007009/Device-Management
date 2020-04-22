@@ -54,11 +54,15 @@ if ((ev.target as HTMLButtonElement).classList.contains("return")) {
         ev.preventDefault();
         var comment = (document.getElementById("comment")as HTMLTextAreaElement).value;
         var deviceid = parseInt(document.getElementById("faultpopup").dataset.deviceId);
+        if (mydevices.descriptionboxvalidation() == false) {
+            return;
+
+        }
         mydevices.reportFaultyDevice(parseInt(userId), deviceid, comment);
         closeForm();
     });
 
-    document.querySelector('.close').addEventListener('click', function (e) {
+    document.querySelector('.closed').addEventListener('click', function (e) {
       e.preventDefault();
         closeForm();
         
@@ -66,19 +70,11 @@ if ((ev.target as HTMLButtonElement).classList.contains("return")) {
     });
 
 
-
-
-
-
     document.getElementById("search1").addEventListener('keyup', function () {
 
         mydevices.getCurrentDecice(userId,(document.getElementById("search1") as HTMLInputElement).value);
     });
-    // document.getElementById("search2").addEventListener('keyup', function () {
-
-
-    //     mydevices.getPreviousDecice(userId,document.getElementById("search2").value);
-    // });
+    
     document.getElementById("search3").addEventListener('keyup', function () {
 
 
@@ -89,17 +85,12 @@ if ((ev.target as HTMLButtonElement).classList.contains("return")) {
 
         if ((ea.target as HTMLTableHeaderCellElement).tagName == 'TH' && (ea.target as HTMLTableHeaderCellElement).dataset.sortable=="true") {
             var tab1: HTMLLIElement = document.getElementById("fixed-tab-1") as HTMLLIElement;
-            // var tab2: HTMLLIElement = document.getElementById("fixed-tab-2") as HTMLLIElement;
 
             const searchbox = tab1.querySelector(".mdl-textfield__input")
             if (document.querySelector(".mdl-layout__tab-panel.is-active") == tab1) {
 
                 mydevices.getCurrentDecice(userId,(searchbox as HTMLInputElement).value, new Sort(token).getSortingUrl(ea.target as HTMLTableHeaderCellElement));
             }
-            // else if(document.querySelector(".mdl-layout__tab-panel.is-active") == tab2) {
-
-            //     mydevices.getPreviousDecice(userId,(searchbox as HTMLInputElement).value, new Sort(token).getSortingUrl(ea.target as HTMLTableHeaderCellElement));
-            // }
             else{
                 mydevices.getRequestHistory(userId,(searchbox as HTMLInputElement).value,new Sort(token).getSortingUrl(ea.target as HTMLTableHeaderCellElement));
             }
@@ -109,11 +100,11 @@ if ((ev.target as HTMLButtonElement).classList.contains("return")) {
     });
     function openForm() {
         document.getElementById("myFaultForm").style.display = "block";
-        document.getElementById("page").style.filter = " blur()";
+        (document.getElementById('description') as HTMLInputElement).innerHTML = "";
     }
     function closeForm() {
         document.getElementById("myFaultForm").style.display = "none";
-        document.getElementById("page").style.filter = " blur()";
+        (document.getElementById('description') as HTMLInputElement).innerHTML = "";
     }
     navigationBarsss(role, "navigation");
 
@@ -125,23 +116,12 @@ export class MyDevices {
     url: string;
     token : string;
     table1: HTMLTableElement = document.getElementById("tab1") as HTMLTableElement;
-    table2: HTMLTableElement = document.getElementById("tab2") as HTMLTableElement;
     table3: HTMLTableElement = document.getElementById("tab3") as HTMLTableElement;
      constructor (token : string)
      {
          this.token=token;
      }
-    
-    async getPreviousDecice(id:number,search: string = "", sort: string = "") {
-        this.url = BASEURL + "/api/Device/previous_device/"+id+"?search=" + search + sort;
-        let data = await this.getApiCall(this.url);
-        this.data = await data;
-        console.log(data);
-        this.size = data.length;
-        this.dynamicGenerate(this.table2);
-        return data;
-
-    }
+   
   async getCurrentDecice(id:number,search: string = "", sort: string = "") {
         this.url = BASEURL + "/api/Device/current_device/"+id+"?search=" + search + sort;
         let data = await this.getApiCall(this.url);
@@ -153,7 +133,7 @@ export class MyDevices {
 
     }
     async getRequestHistory(id: number, searchField: string = "", sort: string = "") {
-        this.url = BASEURL + "/request/pending?id="+id+"&search=" + searchField + sort;
+        this.url = BASEURL + "/api/request/pending?id="+id+"&search=" + searchField + sort;
         let data = await this.getApiCall(this.url);
         this.data = await data;
         console.log(data);
@@ -177,7 +157,7 @@ export class MyDevices {
         });
     }
     deleteRequestHistory(requestID: number) {
-        return fetch(BASEURL + "/request/" + requestID + "/cancel", {
+        return fetch(BASEURL + "/api/request/" + requestID + "/cancel", {
             method: "DELETE",headers: new Headers({"Authorization": `Bearer ${this.token}`})
         });
     }
@@ -191,6 +171,18 @@ export class MyDevices {
         let data = await (response.json());
         return ( data);
     }
+    descriptionboxvalidation() {
+        var description = (document.getElementById('comment') as HTMLInputElement).value;
+        if (description == "") {
+            (document.getElementById('description') as HTMLInputElement).innerHTML = "Fill Details";
+            return false;
+        }
+         
+        else {
+            (document.getElementById('description') as HTMLInputElement).innerHTML = "";
+            return true;
+        }
+    }
 
 
     dynamicGenerate(table: any) {
@@ -200,7 +192,6 @@ export class MyDevices {
         for (loop = 0; loop < this.data.length; loop++) {
             var row = table.insertRow(loop + 1);
             row.setAttribute("data-device-id", this.data[loop]["device_id"])
-            // row.setAttribute("data-user-id",this.data[loop]["user_id"])
             var cell = row.insertCell(0);
             var cell1 = row.insertCell(1);
             var cell2 = row.insertCell(2);
