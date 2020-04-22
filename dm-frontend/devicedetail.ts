@@ -1,9 +1,11 @@
 import { DeviceListForAdmin } from './deviceListForAdmin';
-import { BASEURL, navigationBarsss, Token } from "./globals";
+import { BASEURL, navigationBarsss, Token, amIUser } from "./globals";
 
-
+(async function() {
+	const token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
+	const role = (await amIUser(token)) == true ? "User" : "Admin";
 // var data1 = new DeviceListForAdmin(data,token);
-const token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
+// const token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
 function getDeviceDetailById(device_id : any) {
     return fetch(BASEURL + "/api/device/" + device_id,
     {
@@ -35,3 +37,5 @@ function devicedetails(data : any){
 const urlParams = new URLSearchParams(window.location.search);
 const myParam = urlParams.get("device_id");
 getDeviceDetailById(myParam);
+navigationBarsss(role,"navigation");
+})();

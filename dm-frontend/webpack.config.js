@@ -29,6 +29,7 @@ module.exports = {
         'role_permission': './device_role/role_permission.ts',
         'permission': './device_role/permission.ts',
         'user': './device_role/user.ts',
+        'devicedetail': './devicedetail.ts',
     },
     resolve: {
         extensions: [".js", ".ts"]
