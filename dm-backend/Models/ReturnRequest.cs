@@ -23,8 +23,9 @@ namespace dm_backend.Models
         public string deviceType { get; set; }  
         public Specification specs { get; set;}     
         public string returnDate { get; set; }
-        public string comment { get; set; }
-        public int complaintId { get; set; }
+        public string comment {get; set;}
+        public int complaintId {get; set;}
+        
         internal AppDb Db { get; set; }
 
         public ReturnRequestModel()
@@ -99,7 +100,8 @@ namespace dm_backend.Models
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-                BindFaultyRequestProcedureParams(cmd);
+                BindReturnProcedureParams(cmd);
+                
                 cmd.ExecuteNonQuery();
                 return "Request rejected";
             }

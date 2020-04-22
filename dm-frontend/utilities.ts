@@ -45,3 +45,11 @@ export function concatSpecs(data : any)
     return specifications;
 
 }
+export function openModal(modalElement: HTMLElement){
+    document.body.classList.add("modal-open");
+	modalElement.classList.add("show");
+}
+export function closeModal(modalElement: HTMLElement){
+    document.body.classList.remove("modal-open");
+	modalElement.classList.remove("show");
+}

@@ -7,12 +7,11 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using dm_backend.Data;
 using dm_backend.EFModels;
-using dm_backend.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Internal;
+using dm_backend.Utilities;
 
 namespace dm_backend.Controllers
 {
@@ -35,29 +34,67 @@ namespace dm_backend.Controllers
 
         [HttpPost("register")]
 
-        public async Task<IActionResult> Register(UserForAuth userforreg)
+        public async Task<IActionResult> Register(Registration userforreg)
         {
 
             userforreg.Email = userforreg.Email.ToLower();
+            Console.WriteLine(userforreg.FirstName);
+            Console.WriteLine(userforreg.LastName);
+            Console.WriteLine(userforreg.Email);
+            Console.WriteLine(userforreg.Password);
 
-            // if (await _repo.UserExists(userforreg.Email))
-            //     return BadRequest("Aleady Exist");
+             if (await _repo.UserExists(userforreg.Email))
+                return BadRequest("Aleady Exist");
 
-            var userTocreate = new UserAuth
+            var userTocreate = new User
             {
-                Email = userforreg.Email
+                Email = userforreg.Email,
+                FirstName =userforreg.FirstName,
+                LastName=userforreg.LastName
             };
 
             var createdUser = await _repo.Register(userTocreate, userforreg.Password);
             // return StatusCode(201);
             return Created("", createdUser);
+        }
+
+        [HttpPost("Reset")]
+        public async Task<IActionResult> FrogotPassword(ResetPassword rp)
+        {
+            rp.Email = rp.Email.ToLower();
+            if (!await _repo.UserExists(rp.Email))
+                return BadRequest("Not Exist");
+
+            new SendEmail(_context).Send_Email(rp.Email);
+            return StatusCode(201);
+
+
+        }
+        [HttpPost("Reset/setpassword")]
+
+        public async Task<IActionResult> SetPassword(ResetPassword rp)
+        {
+            byte[] passwordHash, passwordSalt;
+            Console.WriteLine("setpass");
+            _repo.CreatePasswordHash(rp.Password, out passwordHash, out passwordSalt);
+
+
+            Console.WriteLine(passwordSalt);
+            var user = _context.User.First(a => a.Guid == rp.Guid);
+            user.Hashpassword = passwordHash;
+            user.Saltpassword = passwordSalt;
+            Console.WriteLine("done !");
+            _context.SaveChanges();
+            return Ok(new { Result = "Done" });
 
 
 
         }
 
+      
+
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserForAuth Userforlog)
+        public async Task<IActionResult> Login(LoginDto Userforlog)
         {
             var usertorepo = await _repo.Login(Userforlog.Email, Userforlog.Password);
             if (usertorepo == null)
@@ -95,14 +132,11 @@ namespace dm_backend.Controllers
 
             var tokenhandler = new JwtSecurityTokenHandler();
             var token = tokenhandler.CreateToken(tokenDescriptor);
+            Console.WriteLine(token);
 
             var result = new RedirectResult("http://127.0.0.1:1234/dashboard.html?token=" + tokenhandler.WriteToken(token) + "&id=" + usertorepo.Id.ToString());
             return result;
         }
     }
-    public class UserForAuth
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
+   
 }
