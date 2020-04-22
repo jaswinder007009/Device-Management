@@ -7,15 +7,17 @@ export class HitApi {
   }
   public async HitGetApi(uri: string) {
     let res;
-    try {
+    // try {
       res = await fetch(uri, {
         headers: new Headers({ Authorization: `Bearer ${this.token}` }),
       });
+      // debugger
       console.log(res.status);
-    } catch {
-      console.log("error while hittiing api");
-    }
-    const data = await res?.json();
+    // } catch {
+        // console.log("error while hittiing api");
+        // return null;
+    // }
+    const data = await res.json();
     return await data;
   }
 
