@@ -10,7 +10,7 @@ token :string="";
         warranty_year: string;
         purchase_date: string;
         status: string;
-
+        comments :  string;
 
         ram: string;
         storage: string;
@@ -38,6 +38,7 @@ token :string="";
             this.warranty_year = data.warranty_year;
             this.purchase_date = data.purchase_date;
             this.status = data.status;
+            this.comments = data.comments;
             this.ram = data.specifications.ram;
             this.storage = data.specifications.storage;
             this.screen_size = data.specifications.screenSize;

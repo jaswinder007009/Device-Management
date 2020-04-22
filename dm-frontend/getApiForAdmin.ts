@@ -128,27 +128,25 @@ import { openForm } from "./utilities";
 			window.location.href = "AddDevice.html?device_id=" + device_id;
 		}
 		if ((e.target as HTMLButtonElement).className == "delete-button") {
-			console.log("delete");
+			
 			if (confirm("Are you sure you want to delete this device?")) {
 				const temp = new GetApiForAdmin(token);
 				const device_id: any = (e.target as HTMLButtonElement).getAttribute(
 					"value"
 				);
-				console.log("device_id" + device_id);
+				
 				temp.deleteDevice(device_id);
-				console.log("device deleted");
+				
 	           window.location.reload();
 				temp.getData();
-			} else {
-				console.log("fail deleted");
-			}
+			} 
 		}
 		if((e.target as HTMLTableCellElement).className=="cards")
-		{
-			console.log("abc");
+        {
+			
 			const device_id: any = (e.target as HTMLButtonElement).dataset.deviceid;
-			console.log(device_id);
-		}
+			window.location.href = "./devicedetail.html?device_id=" + device_id;
+        }
 		if ((e.target as HTMLButtonElement).className == "notify-button") {
 			console.log("notify");
 			let deviceId: number = parseInt((e.target as HTMLButtonElement).dataset.deviceid, 10);
@@ -192,6 +190,12 @@ import { openForm } from "./utilities";
 			temp.closeForm1("popupForm2");
 		}
 	});
+	(document.querySelector("#device_id") as HTMLTableElement).addEventListener(
+		"click",
+		function(e) {
+			window.location.href="./devicedetail.html";
+		}
+	);
 	(document.querySelector("#tablecol") as HTMLTableElement).addEventListener(
 		"click",
 		function(e) {
