@@ -110,6 +110,9 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
             }).catch(Error => console.log(Error));
             alert("Notification sent");
         }
+        obj = {
+            notify: []
+        };
     }
 
     (document.querySelector('#tablecol') as HTMLTableElement).addEventListener("click", function (e) {
@@ -157,9 +160,6 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
         if ((e.target as HTMLButtonElement).className == "notify-all") {
             console.log(JSON.stringify(obj));
             postNotification(JSON.stringify(obj));
-            obj = {
-                notify: []
-            };
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
         };
 
