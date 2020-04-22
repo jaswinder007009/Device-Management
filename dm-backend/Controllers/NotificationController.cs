@@ -15,7 +15,7 @@ using MySql.Data.MySqlClient;
 
 namespace dm_backend.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [Route("api/[controller]")]
     public class NotificationController : ControllerBase
     {
@@ -26,40 +26,16 @@ namespace dm_backend.Controllers
             Db = db;
         }
         
-        [Authorize(Roles="admin")]
         [HttpPost]
-        public IActionResult PostMultipleNotifications([FromBody]NotificationModel notify)
+        public IActionResult PostMultipleNotifications([FromBody]MultipleNotifications item)
         {
             Db.Connection.Open();
-            notify.Db = Db;
-            string result = null;
-            try{
-                result = notify.AddNotifications();
-            }
-            catch(NullReferenceException){
-                return NoContent();
-            }
+            item.Db = Db;
+            var result = item.AddMultipleNotifications();
             Db.Connection.Close();
-            return Ok(result);
+            return new OkObjectResult(item);
         }
 
-        [HttpGet]
-        [Route("{deviceId}")]
-        public IActionResult InsertOneNotification(int deviceId)
-        {
-            Db.Connection.Open();
-            NotificationModel query = new NotificationModel(Db);
-            query.deviceId = deviceId;
-            string result = null;
-            try{
-                result=query.AddOneNotification();
-            }
-            catch(NullReferenceException){
-                return NoContent();
-            }
-            Db.Connection.Close();
-            return Ok(result);
-        }
 
         [HttpGet]
          public IActionResult GetNotification()
@@ -113,6 +89,44 @@ namespace dm_backend.Controllers
             return  Ok("Request rejected");
         }
 
+
+    }
+
+    public class MultipleNotifications
+    {
+        public List<NotificationModel> notify { get; set; }
+
+        internal AppDb Db { get; set; }
+
+        public MultipleNotifications()
+        {   notify = new List<NotificationModel>();
+        }
+
+        internal MultipleNotifications(AppDb db)
+        {
+            Db = db;
+        }
+        public string AddMultipleNotifications()
+        {   using var cmd = Db.Connection.CreateCommand();
+            try
+            {
+                
+                foreach (NotificationModel notif in notify)
+                {
+                    notif.AddOneNotification(cmd);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                Db.Connection.Close();
+            }
+
+            return "Insert failed";
+        }
 
     }
 
