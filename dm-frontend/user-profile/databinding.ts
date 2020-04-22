@@ -61,7 +61,8 @@ export async  function populateFormFromObject(
 	form["middleName"].value   =data.middleName;
 	form["lastName"].value     =data.lastName;
 	form["department"].value   =data.departmentName;
-	form["designation"].value  =data.designationName;
+	await new UserData(token).departdesgcall();
+	
 	form["email"].value        =data.email;
 	form["userId"].value       =data.userId;
 	form["password"].value     ="";
@@ -106,15 +107,9 @@ export async  function populateFormFromObject(
 		await dropDown.getCity(city,state);
 		city.value=data.addresses[i].city;
 		
+		form["designation"].value  =data.designationName;
 	}
-   //form["addresses"].value        =data.addresses;
-	// form["addressType"].value       =data.addressType;
-	// form["addressLine1"].value      =data.addressLine1;
-	// form["addressLine2"].value      =data.addressLine2;
-	// form["city"].value              =data.city;
-	// form["state"].value             =data.state;
-	// form["country"].value           =data.country;
-	// form["pin"].value               =data.pin;
+
 }
 
 

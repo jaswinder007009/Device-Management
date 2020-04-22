@@ -78,6 +78,7 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 		else if(form_mode=="edit")
 		{
 		
+		
 			var userData1=createObjectFromForm(this);
 
 			console.log(userData1);
@@ -250,6 +251,8 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 			util.openForm();
 			var user = new UserData(token);
 			user.getSalutation();
+			user.departmentcall();
+
 			form_mode="edit";
 				
 			const userId: number = parseInt((e.target as HTMLButtonElement).id) ;
