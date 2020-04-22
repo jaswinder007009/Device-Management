@@ -31,22 +31,6 @@ namespace dm_backend.Models
             Db = db;
         }
 
-        public string AddNotifications()
-        {
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "insert_notification";
-            cmd.CommandType = CommandType.StoredProcedure;
-            try
-            {
-                BindNotificationProcedureParams(cmd);
-                cmd.ExecuteNonQuery();
-                return "Notification sent";
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
 
         public void AddOneNotification(MySqlCommand cmd)
         {
