@@ -27,7 +27,11 @@ function LoginUser() {
 		});
 }
 function RegisterUser() {
-	let remail = (window.document.getElementById("remail") as HTMLInputElement)
+		let remail = (window.document.getElementById("remail") as HTMLInputElement)
+		.value;
+		let fname = (window.document.getElementById("fname") as HTMLInputElement)
+		.value;
+		let lname = (window.document.getElementById("lname") as HTMLInputElement)
 		.value;
 	let rpassword = (window.document.getElementById(
 		"rpassword"
@@ -36,8 +40,11 @@ function RegisterUser() {
 	fetch(BASEURL + "/api/auth/register", {
 		method: "POST",
 		body: JSON.stringify({
-			email: remail,
-			password: rpassword
+			
+				FirstName:fname,
+				LastName:lname,
+				Email: remail,
+			    Password: rpassword
 		}),
 		headers: {
 			"Content-type": "application/json; charset=UTF-8"
@@ -47,6 +54,25 @@ function RegisterUser() {
 		.catch(err => {
 			console.log(err);
 		});
+}
+function SendEmail()
+{
+	let useremail = (document.getElementById("femails") as HTMLInputElement).value;
+	fetch(BASEURL + "/api/auth/Reset", {
+		method: "POST",
+		body: JSON.stringify({
+			email: useremail
+		
+		}),
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
+	})
+		
+		.catch(err => {
+			console.log(err);
+		});
+
 }
 
 document.querySelector("#mybtn").addEventListener("click", function(e) {
@@ -75,6 +101,28 @@ document.querySelector(".x").addEventListener("click", function() {
 	(document.querySelector(".bg-model") as HTMLDivElement).style.display =
 		"none";
 });
+document.querySelector("#rmybtn1").addEventListener('click', function (e) {
+    e.preventDefault();
+    SendEmail();
+});
+
+function SendEmail()
+{
+	let useremail = (document.getElementById("femail") as HTMLInputElement).value;
+	console.log(useremail);
+    fetch(BASEURL + "/api/auth/Reset", {
+        method: "POST",
+        body: JSON.stringify({
+            Email: useremail
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+        .catch(err => {
+            console.log(err);
+        });
+}
 
 let password = document.querySelector('input[type="password"]');
 

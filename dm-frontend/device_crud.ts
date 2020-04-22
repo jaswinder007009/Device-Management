@@ -79,7 +79,6 @@ export class AddDevice {
         (document.getElementById("inputmodel") as HTMLInputElement).value = data[0].model;
         (document.getElementById("color") as HTMLInputElement).value = data[0].color;
         (document.getElementById("price") as HTMLInputElement).value = data[0].price;
-        (document.getElementById("serial_number") as HTMLInputElement).value = data[0].serial_number;
         (document.getElementById("warranty_year") as HTMLInputElement).value = data[0].warranty_year;
         (document.getElementById("purchase_date") as HTMLInputElement).value = formatDate1(data[0].purchase_date);
         (document.getElementById("specification") as HTMLInputElement).value = data[0].specification_id;

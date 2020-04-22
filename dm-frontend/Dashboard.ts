@@ -181,7 +181,6 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
         window.location.href = "/SJLogin/LoginRegiter.html";
     })
     
-    document.getElementById('email').innerHTML = email;
     // document.getElementById('userRole').innerHTML = role;
     if (role == 'User') {
         getStatistics(BASEURL + "/api/dashboard/statistics");

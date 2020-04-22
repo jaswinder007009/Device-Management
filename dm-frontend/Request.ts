@@ -122,7 +122,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     document.querySelector('.close').addEventListener('click',
         function () {
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
-        });
+    });
 
     document.addEventListener("click", function (e) {
 
@@ -131,9 +131,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
             if (confirm("Are you sure you want to reject the request?"))
                 requestAction('?action=reject&id=' + adminId, requestId, 'rejected');
 
-        }
-        if ((e.target as HTMLButtonElement).className == "accept-button") {
-            let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
+         
             if (confirm("Are you sure you want to accept the request?"))
                 requestAction('?action=accept&id=' + adminId, requestId, 'accepted');
 

@@ -47,7 +47,6 @@ import { BASEURL, navigationBarsss } from "./globals";
         let url = address +  "/api/ReturnRequest" + getSearchUrl() +"&sort="+sortAttributr +"&direction="+ sortType ;
             getData(url);
         }
-
     });
 
 
@@ -104,5 +103,4 @@ import { BASEURL, navigationBarsss } from "./globals";
         });
     getAll();
     navigationBarsss("Admin","navigation");
-   return null;
 })();

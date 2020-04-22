@@ -77,13 +77,13 @@ export class UserModel
 					<td>${this.phones[0].number} </td>
 					<td>
 						<label class="switch">
-							<input type="checkbox" id="${this.userId}" class="userCheckStatus" ${status}>
+							<input type="checkbox" id="${this.userId}" class="userCheckStatus"  data-toggle="modal"  data-target="#aiModal" ${status}>
 							<span class="slider round"></span>
 						</label>
 					</td>
 					<td><input  type="button" id="${this.userId}" class="userEditData" value="Edit" /></td>
-					<td><input  type="button" data-id="${this.userId}" class="userDeleteData" value="Delete" /></td>
-		        </tr>`;
+					<td><input  type="button" id="${this.userId}" class="userDeleteData" data-toggle="modal" value="Delete" data-target="#deleteModal" /></td>
+		        </tr>`;//class="userDeleteData" value="Delete"
 
 	 }
 	
