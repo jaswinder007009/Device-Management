@@ -69,7 +69,7 @@ export async  function populateFormFromObject(
 	form["gender"].value       =data.gender;
 	form["status"].value       =data.status;
 	form["roleName"].value     =data.roleName;
-	form["doj"].value          =data.doj;zz
+	form["doj"].value          =data.doj;
 	//form["phones1"].value      =data.phones;
 	for(let i =0;i<3;i++)
 	{
