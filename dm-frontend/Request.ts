@@ -122,7 +122,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     document.querySelector('.close').addEventListener('click',
         function () {
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
-    });
+        });
 
     document.addEventListener("click", function (e) {
 

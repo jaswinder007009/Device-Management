@@ -1,6 +1,6 @@
-import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
+import { BASEURL, amIAdmin, amIUser, navigationBarsss } from './globals';
 import { Sort } from './user-profile/SortingUser';
-import { dynamicGenerate } from './user-profile/dynamic';
+//import { dynamicGenerate } from './user-profile/dynamic';
 ( async function(){
     const userId=JSON.parse(sessionStorage.getItem("user_info"))["id"];
     const token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
@@ -13,11 +13,11 @@ import { dynamicGenerate } from './user-profile/dynamic';
 
         mydevices.getCurrentDecice(userId);
     });
-    document.getElementById("two").addEventListener('click', function () {
+    // document.getElementById("two").addEventListener('click', function () {
 
 
-        mydevices.getPreviousDecice(userId);
-    });
+    //     mydevices.getPreviousDecice(userId);
+    // });
     document.getElementById("three").addEventListener('click', function () {
 
 
@@ -34,14 +34,38 @@ import { dynamicGenerate } from './user-profile/dynamic';
     });
     document.getElementById("tab1").addEventListener('click', function (ev) {
 
-        if ((ev.target as HTMLButtonElement).classList.contains("return")) {
+if ((ev.target as HTMLButtonElement).classList.contains("return")) {
             const deviceid=(ev.target as HTMLButtonElement).parentElement.parentElement.dataset.deviceId;
             console.log(deviceid);
-            mydevices.returnDevice(parseInt(userId),parseInt(deviceid)).then(function() {mydevices.getCurrentDecice(userId);});
-        
+            mydevices.returnDevice(parseInt(userId), parseInt(deviceid)).then(function () { mydevices.getCurrentDecice(userId); });
+
         }
 
+       else if ((ev.target as HTMLButtonElement).classList.contains("fault")) {
+            openForm();
+            const deviceid=(ev.target as HTMLButtonElement).parentElement.parentElement.dataset.deviceId;
+            document.getElementById("faultpopup").setAttribute("data-device-id", deviceid)
+        }
+        
+
     });
+
+    document.querySelector('#faultpopup .submit').addEventListener('click', function (ev) {
+        ev.preventDefault();
+        var comment = (document.getElementById("comment")as HTMLTextAreaElement).value;
+        var deviceid = parseInt(document.getElementById("faultpopup").dataset.deviceId);
+        mydevices.reportFaultyDevice(parseInt(userId), deviceid, comment);
+        closeForm();
+    });
+
+    document.querySelector('.close').addEventListener('click', function (e) {
+      e.preventDefault();
+        closeForm();
+        
+
+    });
+
+
 
 
 
@@ -50,39 +74,48 @@ import { dynamicGenerate } from './user-profile/dynamic';
 
         mydevices.getCurrentDecice(userId,(document.getElementById("search1") as HTMLInputElement).value);
     });
-    document.getElementById("search2").addEventListener('keyup', function () {
+    // document.getElementById("search2").addEventListener('keyup', function () {
 
 
-        mydevices.getPreviousDecice(userId,(document.getElementById("search2") as HTMLInputElement).value);
-    });
+    //     mydevices.getPreviousDecice(userId,document.getElementById("search2").value);
+    // });
     document.getElementById("search3").addEventListener('keyup', function () {
 
 
-        mydevices.getRequestHistory(userId,(document.getElementById("search3") as HTMLInputElement).value);
+        mydevices.getRequestHistory(userId,(document.getElementById("search3")as HTMLInputElement).value);
     });
 
     document.addEventListener("click", function (ea) {
 
         if ((ea.target as HTMLTableHeaderCellElement).tagName == 'TH' && (ea.target as HTMLTableHeaderCellElement).dataset.sortable=="true") {
             var tab1: HTMLLIElement = document.getElementById("fixed-tab-1") as HTMLLIElement;
-            var tab2: HTMLLIElement = document.getElementById("fixed-tab-2") as HTMLLIElement;
+            // var tab2: HTMLLIElement = document.getElementById("fixed-tab-2") as HTMLLIElement;
 
             const searchbox = tab1.querySelector(".mdl-textfield__input")
             if (document.querySelector(".mdl-layout__tab-panel.is-active") == tab1) {
 
                 mydevices.getCurrentDecice(userId,(searchbox as HTMLInputElement).value, new Sort(token).getSortingUrl(ea.target as HTMLTableHeaderCellElement));
             }
-            else if(document.querySelector(".mdl-layout__tab-panel.is-active") == tab2) {
+            // else if(document.querySelector(".mdl-layout__tab-panel.is-active") == tab2) {
 
-                mydevices.getPreviousDecice(userId,(searchbox as HTMLInputElement).value, new Sort(token).getSortingUrl(ea.target as HTMLTableHeaderCellElement));
-            }
+            //     mydevices.getPreviousDecice(userId,(searchbox as HTMLInputElement).value, new Sort(token).getSortingUrl(ea.target as HTMLTableHeaderCellElement));
+            // }
             else{
                 mydevices.getRequestHistory(userId,(searchbox as HTMLInputElement).value,new Sort(token).getSortingUrl(ea.target as HTMLTableHeaderCellElement));
             }
+        
         }
 
     });
-    navigationBarsss(role,"navigation");
+    function openForm() {
+        document.getElementById("myFaultForm").style.display = "block";
+        document.getElementById("page").style.filter = " blur()";
+    }
+    function closeForm() {
+        document.getElementById("myFaultForm").style.display = "none";
+        document.getElementById("page").style.filter = " blur()";
+    }
+    navigationBarsss(role, "navigation");
 
 })();
 export class MyDevices {
@@ -136,6 +169,13 @@ export class MyDevices {
             headers:new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]])
         });
     }
+    reportFaultyDevice(userId: number, deviceId: number, comment: string) {
+        return fetch(BASEURL + "/api/ReturnRequest/fault", {
+            method: "POST",
+            body: JSON.stringify({ userId, deviceId, comment }),
+            headers: new Headers([["Content-Type", "application/json"], ["Authorization", `Bearer ${this.token}`]])
+        });
+    }
     deleteRequestHistory(requestID: number) {
         return fetch(BASEURL + "/request/" + requestID + "/cancel", {
             method: "DELETE",headers: new Headers({"Authorization": `Bearer ${this.token}`})
@@ -159,8 +199,8 @@ export class MyDevices {
 
         for (loop = 0; loop < this.data.length; loop++) {
             var row = table.insertRow(loop + 1);
-            row.setAttribute("data-device-id",this.data[loop]["device_id"])
-            row.setAttribute("data-user-id",this.data[loop]["user_id"])
+            row.setAttribute("data-device-id", this.data[loop]["device_id"])
+            // row.setAttribute("data-user-id",this.data[loop]["user_id"])
             var cell = row.insertCell(0);
             var cell1 = row.insertCell(1);
             var cell2 = row.insertCell(2);
@@ -172,10 +212,14 @@ export class MyDevices {
             cell3.innerHTML = this.data[loop]["assign_date"]
             cell4.innerHTML = this.data[loop]["return_date"]
             if (table == this.table1) {
-                var cell5 = row.insertCell(5); 
+                var cell5 = row.insertCell(5);
                 cell5.innerHTML = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored return">
             RETURN
         </button>`
+                var cell6 = row.insertCell(6);
+                cell6.innerHTML = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored fault">
+    REPORT
+</button>`
             }
 
 

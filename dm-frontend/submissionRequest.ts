@@ -103,4 +103,5 @@ import { BASEURL, navigationBarsss } from "./globals";
         });
     getAll();
     navigationBarsss("Admin","navigation");
+    return null;
 })();

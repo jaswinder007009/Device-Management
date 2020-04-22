@@ -4,8 +4,26 @@
   <!-- Material Design Lite -->
   <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <!-- Material Design icon font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <style>
+    .fault-form-popup {
+      padding: 10px;
+      margin: auto;
+      width: 400px;
+      border-radius: 5px;
+      border: 5px solid blue;
+      position: absolute;
+      left: 30%;
+      top: 5%;
+      opacity: 5px;
+      background-color: white;
+
+      display: none;
+      z-index: 9;
+    }
+  </style>
 </head>
 
 <body>
@@ -20,23 +38,42 @@
         <span class="mdl-layout-title">
           <h4>MY DEVICES</h4>
         </span>
-       
+
       </div>
 
 
       <!-- Tabs -->
       <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
         <a href="#fixed-tab-1" class="mdl-layout__tab is-active" id="one">CURRENT DEVICE</a>
-        <a href="#fixed-tab-2" class="mdl-layout__tab" id="two">PREVIOUS DEVICE</a>
+        <!-- <a href="#fixed-tab-2" class="mdl-layout__tab" id="two">PREVIOUS DEVICE</a> -->
         <a href="#fixed-tab-3" class="mdl-layout__tab" id="three">REQUESTED DEVICE</a>
       </div>
     </header>
     <div class="mdl-layout__drawer" id="navigation">
-</div>
+    </div>
 
     <main class="mdl-layout__content">
       <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
-        <div class="page-content">
+        <div class="faultform " id="faultpopup">
+          <form class="fault-form-popup" id="myFaultForm">
+            <h1 id="headingText" class="text-center">Raise Complaint</h1>
+            <div class="col-lg-7 m-auto d-block">
+              <div class="content" style="padding-top: 10px;">
+                <div class="form-group col-md-12">
+                  <center><label><b>Description </b></label></center>
+                  <textarea type="text" class="form-control" id="comment"></textarea>
+                </div>
+                <div class="form-group text-center">
+                  <button  name="submit"  class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored submit">SUBMIT</button>
+                  <button  id="closeFormButton" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored close">CLOSE</button>
+                </div>
+
+              </div>
+            </div>
+          </form>
+
+        </div>
+        <div class="page-content" id="page">
           <div class="mdl-layout-spacer"></div>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
             mdl-textfield--floating-label mdl-textfield--align-right">
@@ -47,22 +84,29 @@
               <input class="mdl-textfield__input" type="text" name="sample" id="search1">
             </div>
           </div>
+
           <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp" id="tab1">
             <thead>
               <tr>
-                <th class="mdl-data-table__header--sorted-descending" data-id="type"  data-sortable=true>DEVICE TYPE</th>
-                <th class="mdl-data-table__header--sorted-descending" data-id="brand" data-sortable=true>DEVICE BRAND</th>
-                <th class="mdl-data-table__header--sorted-descending" data-id="model" data-sortable=true>DEVICE MODEL</th>
-                <th class="mdl-data-table__header--sorted-descending" data-id="assign_date" data-sortable=true>ASSIGN_DATE</th>
-                <th class="mdl-data-table__header--sorted-descending" data-id="return_date" data-sortable=true>RETURN_DATE</th>
+                <th class="mdl-data-table__header--sorted-descending" data-id="type" data-sortable=true>DEVICE TYPE</th>
+                <th class="mdl-data-table__header--sorted-descending" data-id="brand" data-sortable=true>DEVICE BRAND
+                </th>
+                <th class="mdl-data-table__header--sorted-descending" data-id="model" data-sortable=true>DEVICE MODEL
+                </th>
+                <th class="mdl-data-table__header--sorted-descending" data-id="assign_date" data-sortable=true>
+                  ASSIGN_DATE</th>
+                <th class="mdl-data-table__header--sorted-descending" data-id="return_date" data-sortable=true>
+                  RETURN_DATE</th>
                 <th data-id="action" data-sortable=false>ACTION</th>
               </tr>
             </thead>
 
           </table>
         </div>
+
       </section>
-      <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+
+      <!-- <section class="mdl-layout__tab-panel" id="fixed-tab-2">
         <div class="page-content">
           <div class="mdl-layout-spacer"></div>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
@@ -85,7 +129,7 @@
 
           </table>
         </div>
-      </section>
+      </section> -->
       <section class="mdl-layout__tab-panel" id="fixed-tab-3">
         <div class="page-content">
           <div class="mdl-layout-spacer"></div>
@@ -101,10 +145,10 @@
           <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp" id="tab3">
             <tr>
               <th class="mdl-data-table__header--sorted-descending" data-id="type" data-sortable=true>DEVICE TYPE</th>
-              <th class="mdl-data-table__header--sorted-descending" data-id="brand" data-sortable=true >DEVICE BRAND</th>
+              <th class="mdl-data-table__header--sorted-descending" data-id="brand" data-sortable=true>DEVICE BRAND</th>
               <th class="mdl-data-table__header--sorted-descending" data-id="model" data-sortable=true>DEVICE MODEL</th>
-              <th  data-id="assign_date">REQUEST DATE</th>
-              <th  data-id="return_date">NO OF DAYS</th>
+              <th data-id="assign_date">REQUEST DATE</th>
+              <th data-id="return_date">NO OF DAYS</th>
               <th data-sortable=false>ACTION</th>
             </tr>
 
