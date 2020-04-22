@@ -5,21 +5,19 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
 
 
     const url = new URL(window.location.href);
-    let token, id;
+    let token,id;
     if(url.searchParams.has("token") && url.searchParams.has("id")){
         token = url.searchParams.get("token");
         id = url.searchParams.get("id");
         sessionStorage.setItem("user_info", JSON.stringify({ token, id }));
     }
     //let email = 'abc@gmail.com';
+    id = JSON.parse(sessionStorage.getItem("user_info"))["id"];
     token = JSON.parse(sessionStorage.getItem("user_info"))["token"]; 
-
     
   let role = await amIUser(token) == true ? "User" : "Admin";
     //let role = 'User';
  
-
-
     (function(){
         if (role=="Admin")
         {

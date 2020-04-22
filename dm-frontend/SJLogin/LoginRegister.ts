@@ -106,24 +106,6 @@ document.querySelector("#rmybtn1").addEventListener('click', function (e) {
     SendEmail();
 });
 
-function SendEmail()
-{
-	let useremail = (document.getElementById("femail") as HTMLInputElement).value;
-	console.log(useremail);
-    fetch(BASEURL + "/api/auth/Reset", {
-        method: "POST",
-        body: JSON.stringify({
-            Email: useremail
-        }),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-    })
-        .catch(err => {
-            console.log(err);
-        });
-}
-
 let password = document.querySelector('input[type="password"]');
 
 password.addEventListener("focus", a => {
