@@ -9,7 +9,7 @@ import { Sort } from "./user-profile/SortingUser";
 import { BASEURL,amIUser,navigationBarsss } from './globals';
 import { UserData }  from "./dropdown";
 import {MyDevices } from "./userHistory";
-import {dropDownListen } from "./user-profile/dropDownListener";
+import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 
 (async function(){
 	const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
@@ -53,7 +53,7 @@ import {dropDownListen } from "./user-profile/dropDownListener";
                     util.openForm();
 					var user = new UserData(token);
 					user.getSalutation();
-					user.departmentcall();
+					//user.departmentcall();
 					form_mode="create";
 				}
 			});
@@ -77,6 +77,7 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 		}
 		else if(form_mode=="edit")
 		{
+		
 		
 			var userData1=createObjectFromForm(this);
 
@@ -250,6 +251,8 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 			util.openForm();
 			var user = new UserData(token);
 			user.getSalutation();
+		//	user.departmentcall();
+
 			form_mode="edit";
 				
 			const userId: number = parseInt((e.target as HTMLButtonElement).id) ;
@@ -265,10 +268,8 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 	});
 
 
-document.querySelector("#department").addEventListener("click",function(e){
-	new UserData(token).departdesgcall();
-});
-util.addressCheck();
+
+ util.addressCheck();
 
 
 	
@@ -281,7 +282,7 @@ util.addressCheck();
 	});
 	navigationBarsss(role,"navigation");
 
-	
+	deptdesgListen(form);
 	dropDownListen(form,token);
 
 

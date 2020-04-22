@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace dm_backend.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class DropdownController : ControllerBase

@@ -198,7 +198,7 @@ namespace dm_backend.Models
                     var post = (User)Readers.ReadPartialUser(reader);
                     post.UserId = (int)reader["user_id"];
                     post.RoleName = GetSafeString(reader, "role_name");
-                    post.Password = GetSafeString(reader, "password");
+                 //   post.Password = GetSafeString(reader, "password");
                     post.Status = GetSafeString(reader, "status_name");
                     post.addresses.Add(ReadAddress(reader, "current"));
                     post.addresses.Add(ReadAddress(reader, "permanant"));
@@ -304,14 +304,14 @@ namespace dm_backend.Models
             cmd.Parameters.Add(new MySqlParameter("email", Email));
            
             if(string.IsNullOrEmpty(Password))
-            {  cmd.Parameters.AddWithValue("password", DBNull.Value);
+            { // cmd.Parameters.AddWithValue("password", DBNull.Value);
             cmd.Parameters.AddWithValue("passwordSalt", DBNull.Value);
             cmd.Parameters.AddWithValue("passwordHash", DBNull.Value);}
             else
             {
                 byte[] passwordHash, passwordSalt;
                 CreatePasswordHash(Password, out passwordHash, out passwordSalt);
-                cmd.Parameters.Add(new MySqlParameter("password", Password));
+               // cmd.Parameters.Add(new MySqlParameter("password", Password));
                 cmd.Parameters.Add(new MySqlParameter("passwordSalt", passwordSalt));
                 cmd.Parameters.Add(new MySqlParameter("passwordHash", passwordHash));
             }
@@ -341,8 +341,8 @@ namespace dm_backend.Models
             cmd.Parameters.Add(outputEmailParam);
             return outputEmailParam;
         }
-
-        internal string GetAllUsersquery = @"select user_id,salutation,first_name,middle_name,last_name,password,role_name,department_name,designation_name,email,gender,date_of_birth,date_of_joining,status.status_name,
+//password
+        internal string GetAllUsersquery = @"select user_id,salutation,first_name,middle_name,last_name,role_name,department_name,designation_name,email,gender,date_of_birth,date_of_joining,status.status_name,
           group_concat(distinct if(address_type='Current',address_Line1,NULL)) as 'current_address_Line1',
           group_concat(distinct if(address_type='Current',address_Line2,NULL)) as 'current_address_Line2',
           group_concat(distinct if(address_type='Current',city_name,NULL)) as 'current_city',

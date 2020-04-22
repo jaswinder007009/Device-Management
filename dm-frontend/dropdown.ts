@@ -45,18 +45,17 @@ export class UserData {
         return;     
            } 
 
-    async departdesgcall(){
-        this.url = BASEURL + "/api/Dropdown/designation?id=" + (document.getElementById("department")as HTMLSelectElement).value;
-        this.selectElement=document.querySelector("#designationName.form-control");
-        await this.dropdownApiCall(this.url,this.selectElement);
-        populateDropdown(this.selectElement, this.data);
+    async departdesgcall(selectElement:HTMLSelectElement,dependentElement:HTMLSelectElement){
+       this.url = BASEURL + "/api/Dropdown/designation?id="+dependentElement.value;
+        await this.dropdownApiCall(this.url, selectElement);
+        populateDropdown(selectElement, this.data);
         }
        
-         async departmentcall(){
+         async departmentcall(selectElement:HTMLSelectElement){
             this.url = BASEURL + "/api/Dropdown/department";
-            this.selectElement=document.querySelector("#department.form-control");
-            await this.dropdownApiCall(this.url, this.selectElement);
-            populateDropdown(this.selectElement, this.data);
+      //      this.selectElement=document.querySelector("#department.form-control");
+            await this.dropdownApiCall(this.url,selectElement);
+            populateDropdown(selectElement, this.data);
             }
 
             async getCountryCode(selectElement:HTMLSelectElement){
