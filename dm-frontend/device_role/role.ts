@@ -70,10 +70,10 @@ export default class role {
 			if (table == this.table2) {
 				var cell1 = row.insertCell(1);
 				var cell2 = row.insertCell(1);
-				cell1.innerHTML = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored return" data-id="update_role"  value="${this.data[loop]["RoleId"]}">
+				cell1.innerHTML = `<button class="mdl-button mdl-js-button mdl-button--primary mdl-button--colored return" data-id="update_role"  value="${this.data[loop]["RoleId"]}">
     Edit
     </button>`;
-				cell2.innerHTML = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored return"data-id="del_role"  value="${this.data[loop]["RoleId"]}">
+				cell2.innerHTML = `<button class="mdl-button mdl-js-button mdl-button--primary mdl-button--colored return txt-danger" data-id="del_role"  value="${this.data[loop]["RoleId"]}">
     Delete
     </button>`;
 			}
@@ -90,10 +90,8 @@ export default class role {
 			if (table == this.table3) {
 				var cell1 = row.insertCell(1);
 				var cell2 = row.insertCell(1);
-				cell1.innerHTML = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored return" data-id="update_permission"  value="${this.data[loop]["PermissionId"]}">
-    Edit
-    </button>`;
-				cell2.innerHTML = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored return"data-id="del_permission"  value="${this.data[loop]["PermissionId"]}" >
+				cell1.innerHTML = `<button class="mdl-button mdl-js-button mdl-button--primary mdl-button--colored return" data-id="update_permission"  value="${this.data[loop]["PermissionId"]}">Edit</button>`;
+				cell2.innerHTML = `<button class="mdl-button mdl-js-button mdl-button--primary mdl-button--colored return txt-danger" data-id="del_permission"  value="${this.data[loop]["PermissionId"]}" >
     Delete
     </button>`;
 			}
