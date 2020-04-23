@@ -73,7 +73,6 @@ namespace dm_backend.Models
                         {
                             cmd.CommandText = $@"insert into role_to_permission 
                             select role_id, permission_id from role, permission where role_name='{roleObj.RoleName}' and permission_name='{permObj.PermissionName}'";
-                            Console.WriteLine(cmd.CommandText);
                             cmd.ExecuteNonQuery();
                         }
                     }

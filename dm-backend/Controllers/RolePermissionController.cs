@@ -94,7 +94,6 @@ namespace dm_backend.Controllers
         [Route("role/{role_id}/update")]
         public IActionResult Putrole(int role_id, [FromBody]Role body)
         {
-            Console.WriteLine(body.RoleName);
             try{
                 body.Db = Db;
                 body.RoleId = role_id;
