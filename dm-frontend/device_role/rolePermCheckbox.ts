@@ -20,7 +20,8 @@ export class RolePermission{
     }
 
     renderTable(){
-        let htmlString = `
+        const parser = new DOMParser();
+        let html = parser.parseFromString(`
             <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                 <tr>
                     <td></td>
@@ -54,9 +55,9 @@ export class RolePermission{
                     )
                 }
             </table>
-        `;
+        `, 'text/html');
         document.querySelector('#fixed-tab-1 .mdl-spinner').classList.remove("is-active");
-        document.querySelector('#fixed-tab-1 .main').innerHTML = htmlString;
+        document.querySelector('#fixed-tab-1 .main').appendChild(html.body);
     }
 
     checkboxListener(event: MouseEvent){
