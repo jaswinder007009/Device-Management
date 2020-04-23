@@ -65,7 +65,6 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
             tableData += "<tr><td colspan=4><center><button class=\"notify-all\">Notify All</button></center></td></tr>";
             document.getElementById("popupContent").innerHTML = tableData;
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'flex';
-            //console.log(obj.notify);
 
         });
     }
@@ -109,10 +108,12 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
                 body: data,
             }).catch(Error => console.log(Error));
             alert("Notification sent");
+            (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
+            obj = {
+                notify: []
+            };
         }
-        obj = {
-            notify: []
-        };
+        
     }
 
     (document.querySelector('#tablecol') as HTMLTableElement).addEventListener("click", function (e) {
@@ -130,17 +131,20 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     document.querySelector('.close').addEventListener('click',
         function () {
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
+            obj = {
+                notify: []
+            };
         });
 
     document.addEventListener("click", function (e) {
-
+        let requestId:number;
         if ((e.target as HTMLButtonElement).className == "reject-button") {
-            let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
+            requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
             if (confirm("Are you sure you want to reject the request?"))
                 requestAction('?action=reject&id=' + adminId, requestId, 'rejected');
         }
         if ((e.target as HTMLButtonElement).className == "accept-button") {
-            let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
+            requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
             if (confirm("Are you sure you want to accept the request?"))
                 requestAction('?action=accept&id=' + adminId, requestId, 'accepted');
 
@@ -158,15 +162,12 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
 
         }
         if ((e.target as HTMLButtonElement).className == "notify-all") {
-            console.log(JSON.stringify(obj));
             postNotification(JSON.stringify(obj));
-            (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
         };
 
         if ((e.target as HTMLButtonElement).className == "notify") {
             let deviceId: number = parseInt((e.target as HTMLButtonElement).dataset.deviceid, 10);
             postNotification(JSON.stringify({ "notify": [{ deviceId }] }));
-            (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
         };
 
     });

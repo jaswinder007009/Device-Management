@@ -92,42 +92,4 @@ namespace dm_backend.Controllers
 
     }
 
-    public class MultipleNotifications
-    {
-        public List<NotificationModel> notify { get; set; }
-
-        internal AppDb Db { get; set; }
-
-        public MultipleNotifications()
-        {   notify = new List<NotificationModel>();
-        }
-
-        internal MultipleNotifications(AppDb db)
-        {
-            Db = db;
-        }
-        public string AddMultipleNotifications()
-        {   using var cmd = Db.Connection.CreateCommand();
-            try
-            {
-                
-                foreach (NotificationModel notif in notify)
-                {
-                    notif.AddOneNotification(cmd);
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            finally
-            {
-                Db.Connection.Close();
-            }
-
-            return "Insert failed";
-        }
-
-    }
-
 }
