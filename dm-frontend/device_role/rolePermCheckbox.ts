@@ -56,7 +56,6 @@ export class RolePermission{
                 }
             </table>
         `, 'text/html');
-        console.log(htmlString);
         document.querySelector('#fixed-tab-1 .mdl-spinner').classList.remove("is-active");
         emptyElement(document.querySelector('#fixed-tab-1 .main'));
         document.querySelector('#fixed-tab-1 .main').appendChild(htmlString.body.firstChild);
