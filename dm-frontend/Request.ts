@@ -137,14 +137,12 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
         });
 
     document.addEventListener("click", function (e) {
-        let requestId:number;
+        let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
         if ((e.target as HTMLButtonElement).className == "reject-button") {
-            requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
             if (confirm("Are you sure you want to reject the request?"))
                 requestAction('?action=reject&id=' + adminId, requestId, 'rejected');
         }
         if ((e.target as HTMLButtonElement).className == "accept-button") {
-            requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
             if (confirm("Are you sure you want to accept the request?"))
                 requestAction('?action=accept&id=' + adminId, requestId, 'accepted');
 
