@@ -21,7 +21,7 @@ export class RolePermission{
 
     renderTable(){
         const parser = new DOMParser();
-        let html = parser.parseFromString(`
+        let htmlString = parser.parseFromString(`
             <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                 <tr>
                     <td></td>
@@ -32,7 +32,7 @@ export class RolePermission{
                     }
                 </tr>
                 ${
-                    this.mapping.reduce((acc, roleObject) => 
+                    this.mapping.reduce((acc, roleObject, rowIdx) => 
                         {
                             return acc + `
                             <tr>
@@ -40,11 +40,11 @@ export class RolePermission{
                                     ${roleObject["RoleName"]}
                                 </th>
                                 ${
-                                    this.permissions.reduce((acc, permissionObject, idx) => 
+                                    this.permissions.reduce((acc, permissionObject, colIdx) => 
                                         acc + `
                                             <td class="mdl-data-table__cell" onmouseenter="mouseOverTD(this);" onmouseleave="mouseOutTD(this);">
-                                                <label class="mdl-checkbox mdl-js-checkbox" for="checkbox-${idx}">
-                                                    <input type="checkbox" id="checkbox-${idx}" class="mdl-checkbox__input" ${roleObject["Permissions"] && roleObject["Permissions"].find(perm => perm["PermissionName"] == permissionObject["PermissionName"]) ? 'checked': ''}>
+                                                <label class="mdl-checkbox mdl-js-checkbox" for="checkbox-${rowIdx}-${colIdx}">
+                                                    <input type="checkbox" id="checkbox-${rowIdx}-${colIdx}" class="mdl-checkbox__input" ${roleObject["Permissions"] && roleObject["Permissions"].find(perm => perm["PermissionName"] == permissionObject["PermissionName"]) ? 'checked': ''}>
                                                     <span class="mdl-checkbox__label"></span>
                                                 </label>
                                             </td>`
@@ -56,8 +56,10 @@ export class RolePermission{
                 }
             </table>
         `, 'text/html');
+        console.log(htmlString);
         document.querySelector('#fixed-tab-1 .mdl-spinner').classList.remove("is-active");
-        document.querySelector('#fixed-tab-1 .main').appendChild(html.body);
+        emptyElement(document.querySelector('#fixed-tab-1 .main'));
+        document.querySelector('#fixed-tab-1 .main').appendChild(htmlString.body.firstChild);
     }
 
     checkboxListener(event: MouseEvent){
@@ -113,6 +115,11 @@ function mouseOutTD(tdElement){
     const columnTH = tdElement.parentElement.parentElement.firstElementChild.children[tdElement.cellIndex] as HTMLTableHeaderCellElement;
     rowTH.classList.remove("activate");
     columnTH.classList.remove("activate");
+}
+function emptyElement(element: HTMLElement){
+    while(element.firstChild){
+        element.removeChild(element.firstChild);
+    }
 }
 window["mouseOverTD"] = mouseOverTD;
 window["mouseOutTD"] = mouseOutTD;
