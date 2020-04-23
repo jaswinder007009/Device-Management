@@ -116,7 +116,7 @@
     width: 100%;
     top: 0;
     left: 0;
-    display: flex;
+    display: none;
     position: fixed;
     justify-content: center;
     background-color: #41434436;

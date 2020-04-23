@@ -45,7 +45,7 @@ export function navigationBarsss(role:string , element:string) {
         <i class="mdl-color-text--blue-grey-400 material-icons"
             role="presentation">import_export</i>All Requests
     </a>
-    <a class="mdl-navigation__link" href="/request-history.html">
+    <a class="mdl-navigation__link" href="/request-history/request-history.html">
         <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">history</i>Request History
     </a>
     <a class="mdl-navigation__link" href="/faultyDevice/faultdevice.html">
@@ -57,7 +57,6 @@ export function navigationBarsss(role:string , element:string) {
         <i class="mdl-color-text--blue-grey-400 material-icons"
             role="presentation">perm_device_information</i>Permissions
     </a></nav>
-
     `;
         document.getElementById(element).innerHTML = navigation + nav;
     }

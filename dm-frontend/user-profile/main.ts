@@ -1,8 +1,8 @@
 import { UserModel } from './UserModel';
 import { createObjectFromForm, populateFormFromObject } from './databinding';
-//import * as util from "./utility";
 import { validate } from "./validate";
-import {dropDownListen } from "./dropDownListener";
+import { dropDownListen } from "./dropDownListener";
+ import * as util from "../utilities";
 import { BASEURL, navigationBarsss, amIUser } from '../globals';
 (async function () {
     let token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
@@ -21,9 +21,7 @@ import { BASEURL, navigationBarsss, amIUser } from '../globals';
             let data = await this.getApiCall(this.url);
             this.data = await data;
             return data;
-
         }
-       
         async updateData(data, userId: string) {
             return fetch(BASEURL + "/api/user/" + userId + "/update", {
                 method: 'PUT',
@@ -31,7 +29,6 @@ import { BASEURL, navigationBarsss, amIUser } from '../globals';
                 body: JSON.stringify(data)
             });
         }
-
         async getApiCall(URL: any) {
             let response = await fetch(URL,
                 { headers: new Headers({ "Authorization": `Bearer ${token}` }) });
@@ -41,38 +38,27 @@ import { BASEURL, navigationBarsss, amIUser } from '../globals';
         }
     }
     const userId = JSON.parse(sessionStorage.getItem("user_info"))["id"];
-
     var user = new UserData(token);
     var userObject: UserModel;
     const form = document.querySelector('form') as HTMLFormElement;
-    
-
-    dropDownListen(form,token);
+    dropDownListen(form, token);
     user.getOneUser(userId).then(function (data) {
         userObject = data;
         // @ts-ignore
-        populateFormFromObject(userObject, form,token);
+        populateFormFromObject(userObject, form, token);
 
     });
-
-
+     util.addressCheck();
     document.querySelector('form').addEventListener('click', function (ev) {
-        ev.preventDefault();
        
-        if ((ev.target as HTMLButtonElement).id == "savemydata") {
+        if ((ev.target as HTMLInputElement).className.includes("savemydata")) {
+            ev.preventDefault();
             if (validate() == false) {
                 return;
-
-            }
+            }          
             user.updateData(createObjectFromForm(this), userId).then(function () { user.getOneUser(userId); })
             alert("Record Updated");
-          
-
         }
-        
-        return false;
-
     });
-
     navigationBarsss(role, "navigation");
 })();

@@ -141,6 +141,7 @@ public class PartialDeviceModel
         public string first_name { get; set; }
         public string middle_name { get; set; }
         public string last_name { get; set; }
+        public int admin_id{get;set;}
        
         public Assign()
         {
@@ -169,6 +170,7 @@ public class PartialDeviceModel
             cmd.Parameters.Add(new MySqlParameter("first_name", d.first_name));
             cmd.Parameters.Add(new MySqlParameter("middle_name", d.middle_name));
             cmd.Parameters.Add(new MySqlParameter("last_name", d.last_name));
+            cmd.Parameters.Add(new MySqlParameter("admin_id",d.admin_id));
 
         }
     }

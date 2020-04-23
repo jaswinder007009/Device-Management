@@ -102,7 +102,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     }
 
     function postNotification(data) {
-        if (confirm("Notify all?")) {
+        if (confirm("Notify?")) {
             fetch(BASEURL + "/api/Notification", {
                 method: "POST",
                 headers: [["Content-Type", "application/json"], ["Authorization", `Bearer ${token}`]],
@@ -110,6 +110,9 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
             }).catch(Error => console.log(Error));
             alert("Notification sent");
         }
+        obj = {
+            notify: []
+        };
     }
 
     (document.querySelector('#tablecol') as HTMLTableElement).addEventListener("click", function (e) {
@@ -135,8 +138,9 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
             let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
             if (confirm("Are you sure you want to reject the request?"))
                 requestAction('?action=reject&id=' + adminId, requestId, 'rejected');
-
-         
+        }
+        if ((e.target as HTMLButtonElement).className == "accept-button") {
+            let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
             if (confirm("Are you sure you want to accept the request?"))
                 requestAction('?action=accept&id=' + adminId, requestId, 'accepted');
 
@@ -154,6 +158,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
 
         }
         if ((e.target as HTMLButtonElement).className == "notify-all") {
+            console.log(JSON.stringify(obj));
             postNotification(JSON.stringify(obj));
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
         };
