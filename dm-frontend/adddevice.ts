@@ -92,14 +92,14 @@ function checkDropDown(elements: string,compareElement) {
   window.location.href = "./deviceListForadmin.html";
 });
 
-(document.querySelector('#submit') as HTMLButtonElement).addEventListener('click', function (e) {
+window.addEventListener('submit', function (e) {
   console.log("add");
   const urlParams = new URLSearchParams(window.location.search);
   const myParam = urlParams.get("device_id");
   console.log(myParam);
   e.preventDefault();
   const temp = new AddDevice(token);
-   if(validation()){
+   
   if (myParam) {
    
     temp.update_device(myParam);
@@ -112,7 +112,7 @@ function checkDropDown(elements: string,compareElement) {
    
     //window.location.href = "./deviceListForadmin.html";
   }
-   }
+   
 
 });
 navigationBarsss("Admin", "navigation");
@@ -128,67 +128,3 @@ if (myParam != null) {
   temp.getDataToForm();
  
 }
-function validation()
-      {
-        
-          let flag=1;
-          var device_color=(document.getElementById("color")as HTMLInputElement).value;
-          var device_price=(document.getElementById("price")as HTMLInputElement).value;
-          var device_serial_number=(document.getElementById("serial_number")as HTMLInputElement).value;
-          var device_warranty_year=(document.getElementById("warranty_year")as HTMLInputElement).value;
-          var device_purchase_date=(document.getElementById("purchase_date")as HTMLInputElement).value;
-          var device_entry_date=(document.getElementById("entry_date")as HTMLInputElement).value;
-         if(type.value=="")
-         {
-          document.getElementById("types").innerHTML="*please enter the Device Type";
-          flag=0; 
-          }
-          if(brand.value=="")
-         {
-          document.getElementById("brands").innerHTML="*please enter the Device Brand";
-          flag=0;
-          }
-          if(model.value=="")
-         {
-          document.getElementById("models").innerHTML="*please enter the Device Model";
-          flag=0;
-          }
-          if(device_color=="")
-          {
-            
-              document.getElementById("colors").innerHTML="*please enter the color";
-              flag=0;
-          }
-          if(device_price=="")
-          {
-            document.getElementById("prices").innerHTML="*please enter the price";
-            flag=0;
-          }
-          if(device_serial_number=="")
-          {
-            document.getElementById("serial_numbers").innerHTML="*please enter the serial number";
-            flag=0;
-          }
-          if(device_warranty_year=="")
-          {
-            document.getElementById("warranty_years").innerHTML="*please enter the warranty year";
-            flag=0;
-          }
-          if(device_purchase_date=="")
-          {
-            document.getElementById("purchase_dates").innerHTML="*please enter the purchase date";
-            flag=0;
-          }
-          if(device_entry_date=="")
-          {
-            document.getElementById("entry_dates").innerHTML="*please enter the entry date";
-            flag=0;
-          }
-       if(flag==0)
-       {
-         return false;
-       }   
-       else{
-         return true;
-       }
-      }
