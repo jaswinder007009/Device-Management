@@ -1,16 +1,15 @@
+import { HitApi } from "./Device-Request/HitRequestApi";
+
 export const BASEURL = "http://localhost:5000";
 
 export function amIAdmin(token: string){
-    return fetch(BASEURL + "/api/device/is_admin",{
-        headers: new Headers({"Authorization": `Bearer ${token}`})
-    }
-    ).then(res => res.json()).then(res => res.result as boolean);
+   return new HitApi(token).HitGetApi(BASEURL + "/api/device/is_admin")
+    .then(res => res.result as boolean);
 }
 export function amIUser(token: string){
-    return fetch(BASEURL + "/api/device/is_user",{
-        headers: new Headers({"Authorization": `Bearer ${token}`})
-    }
-    ).then(res => res.json()).then(res => res.result as boolean);
+    return new HitApi(token).HitGetApi(BASEURL + "/api/device/is_user")
+    .then(res => res.result as boolean);
+
 }
 export function navigationBarsss(role:string , element:string) {
     var navigation = `<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800" >
@@ -70,17 +69,12 @@ export class Token    /// call static method that return an object
 {
     userID:number 
     tokenKey :string
-    
-
     private constructor(){ 
         this.tokenKey = JSON.parse(sessionStorage.getItem("user_info"))["token"];
         this.userID = parseInt(JSON.parse(sessionStorage.getItem("user_info"))["id"]);
      }
-
      static  getInstance():Token
     {
-       
         return new Token();
     }
-
 }

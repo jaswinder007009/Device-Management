@@ -14,17 +14,30 @@ import { CreateUserApi } from "../createApi";
 var device = [].map.call(document.querySelectorAll(".device"), (e) => {
   return e;
 });
-startup();
-
-
-function startup() {
-  device.map(function (e: any) {
-    const path = BASEURL + "/api/dropdown/" + e.id;
-    let data = GetData(path, e.id);
-  });
-}
+(function (){
+    let path = BASEURL + "/api/dropdown/" +device[0].id;
+    let data = GetData(path, device[0].id);
+})();
 
 document.addEventListener("change", (event) => {
+  let dropdownlist  = new populateDropDown();
+  if ((event.target as HTMLSelectElement).id == "types")
+  {
+    dropdownlist.clear(device[1].id);
+    dropdownlist.clear(device[2].id);
+    dropdownlist.clear("specification");
+    GetData( BASEURL + "/api/dropdown/" + device[1].id+"/" + device[0].value , device[1].id);
+   
+  }
+  if ((event.target as HTMLSelectElement).id == "brands")
+  {
+
+    dropdownlist.clear(device[2].id);
+    dropdownlist.clear("specification");
+    GetData( BASEURL + "/api/dropdown/" + device[2].id+"/" + device[1].value , device[2].id);
+
+  }
+
   if ((event.target as HTMLSelectElement).className == "device") {
     if (validateDevice()) {
       specificationDropdown(device[0].value, device[1].value, device[2].value);
@@ -37,7 +50,7 @@ export async function specificationDropdown(
   brands: string,
   models: string
 ) {
-  console.log(types + " " + brands + " " + models);
+
   let uri =
     BASEURL +
     "/api/Dropdown/" +
@@ -51,22 +64,16 @@ export async function specificationDropdown(
 
   let data = await new HitApi(obj.tokenKey).HitGetApi(uri);
 
-  console.log(data);
-  (document.getElementById("specification") as HTMLSelectElement).innerHTML =
-    "";
-  // (document.getElementById(
-  //   "specification"
-  // ) as HTMLSelectElement).innerHTML += `<option value=""> </option>`;
+
+  (document.getElementById("specification") as HTMLSelectElement).innerHTML = "";
   for (let i = 0; i < data.length; i++) {
-    (document.getElementById("specification") as HTMLSelectElement).innerHTML +=
-      '<option value="' + data[i].specification_id +'">' + ( data[i].ram == "" ? "" : " RAM: " +
-      data[i].ram)  +
-      (data[i].storage == "" ? "" : " Storage: " +
-      data[i].storage) +
-      (data[i].screenSize == "" ? "" : " Screen Size: " +
-      data[i].screenSize) +
-      (data[i].connectivity == "" ? "" : " Connectivity: " +
-      data[i].connectivity) +
+    (document.getElementById("specification") as HTMLSelectElement).innerHTML += '<option value="' + data[i].specification_id +'">' +
+      (data[i].ram == "" ? "" : " RAM: " + data[i].ram) +
+      (data[i].storage == "" ? "" : " Storage: " + data[i].storage) +
+      (data[i].screenSize == "" ? "" : " Screen Size: " + data[i].screenSize) +
+      (data[i].connectivity == ""
+        ? ""
+        : " Connectivity: " + data[i].connectivity) +
       "</option>";
   }
   return null;
@@ -76,7 +83,6 @@ async function GetData(uri: string, column: string) {
   let obj = Token.getInstance();
 
   let data = await new HitApi(obj.tokenKey).HitGetApi(uri);
-  console.log(data);
   new populateDropDown().populateDevice(data, column);
   return data;
 }
@@ -84,7 +90,6 @@ async function GetData(uri: string, column: string) {
 document.querySelector("#request")?.addEventListener("click", (e) => {
   let obj = Token.getInstance();
   var body = bindData(obj.userID);
-  console.log(JSON.stringify(body));
   if (validate()) {
     let uri = BASEURL + "/api/request/device";
 
@@ -97,13 +102,12 @@ document.querySelector("#request")?.addEventListener("click", (e) => {
 });
 
 function clearData() {
-  device.map((data) => {
-    data.selectedIndex = 0;
-  });
+  let dropdownlist  = new populateDropDown();
+  (device[0] as HTMLSelectElement).selectedIndex = 0;
+  dropdownlist.clear(device[1].id);
+  dropdownlist.clear(device[2].id);
   (document.getElementById("expected-days") as HTMLInputElement).value = "";
-  (document.getElementById(
-    "specification"
-  ) as HTMLSelectElement).selectedIndex = 0;
+  (document.getElementById("specification") as HTMLSelectElement).innerHTML = "";
   (document.getElementById("comment") as HTMLTextAreaElement).value = "";
 }
 
