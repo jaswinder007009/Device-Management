@@ -85,7 +85,7 @@ export async  function populateFormFromObject(
 	 (container.querySelector(".contactNumberType")as HTMLInputElement).value=data.phones[i].contactNumberType;
 	 (container.querySelector(".number")as HTMLInputElement).value=data.phones[i].number;
 	 var countryCode=(container.querySelector(".countryCode")as HTMLSelectElement);
-	   await dropDown.getCountryCode(countryCode);
+	 await dropDown.getCountryCode(countryCode);
 	 countryCode.value=data.phones[i].countryCode;
 
 	 (container.querySelector(".areaCode")as HTMLInputElement).value=data.phones[i].areaCode;
