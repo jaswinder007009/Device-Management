@@ -52,8 +52,8 @@ import { BASEURL, amIAdmin, amIUser, navigationBarsss } from './globals';
                 if (role == "Admin") {
                     createCard("Assigned Devices:" + data.assignedDevices,"allocated");
                     createCard("Requests Rejected:" + data.rejectedRequests,"history");
-                    createCard("Total Requests:" + data.deviceRequests,"requests");
-                    createCard("Total Faults:"+ data.faults,"faults");
+                    // createCard("Total Requests:" + data.deviceRequests,"requests");
+                    // createCard("Total Faults:"+ data.faults,"faults");
                 }
                 if (role == "User") {
                     createCard("Total Requests:" + data.deviceRequests,"");
@@ -140,7 +140,7 @@ import { BASEURL, amIAdmin, amIUser, navigationBarsss } from './globals';
     }
     function getPendingRequests(url: string) {
 
-        var tableTitle = "<TH COLSPAN='4'><center>REQUESTS</center></th>";
+        var tableTitle = "<TH COLSPAN='4'><center><a href='/adminRequestPage.html'>REQUESTS</a></center></th>";
         var tableHeading = "";
         tableHeading += "<th>User Id</th>"
             + "<th>Type</th>"
@@ -177,11 +177,12 @@ import { BASEURL, amIAdmin, amIUser, navigationBarsss } from './globals';
         let action = (e.target as HTMLButtonElement).dataset.card;
         if(action=="total")
             window.open("/deviceListForadmin.html","_self");
-        if(action=="faults")
-            window.open("/faultyDevice/faultdevice.html","_self");
-        if(action=="requests")
-            window.open("/adminRequestPage.html","_self");
-        /*if(action=="history"){
+        // if(action=="faults")
+        //     window.open("/faultyDevice/faultdevice.html","_self");
+        // if(action=="requests")
+        //     window.open("/adminRequestPage.html","_self");
+
+        if(action=="history"){
             //Get all rejected requests
         }   
         if(action=="free"){
@@ -189,7 +190,7 @@ import { BASEURL, amIAdmin, amIUser, navigationBarsss } from './globals';
         }    
         if(action=="allocated"){
             //Get all allocated devices
-        }*/
+        }
         
 
     });
@@ -202,8 +203,8 @@ import { BASEURL, amIAdmin, amIUser, navigationBarsss } from './globals';
     }
     else if (role == 'Admin') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
-        // getFaults(BASEURL + "/api/dashboard/faults");
-        // getPendingRequests(BASEURL + "/api/request/pending");
+        getFaults(BASEURL + "/api/dashboard/faults");
+        getPendingRequests(BASEURL + "/api/request/pending");
 
     }
 })();
