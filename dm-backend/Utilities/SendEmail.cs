@@ -40,14 +40,14 @@ namespace dm_backend.Utilities
 
 
                 string ui = Guid.NewGuid().ToString();
-            Console.WriteLine(ui);    
+            Console.WriteLine(ui);
 
             var author = _context.User.First(a => a.Email == email);
             
             author.Guid = ui; 
             _context.SaveChanges();
 
-                
+
             var link = "http://127.0.0.1:1234/SJLogin/Reset.html?id="+ui;
 
                  string subject = "Reset Password ";
