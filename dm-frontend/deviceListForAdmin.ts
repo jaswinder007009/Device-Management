@@ -92,17 +92,18 @@ token :string="";
                         (document.getElementById("buttons") as HTMLStyleElement).innerHTML = buttons;    
                     const editbutton = `<td>
                             <button class="edit-button" value=${this.device_id}>Edit </button>
-                            <button class="delete-button" value=${this.device_id}>Delete </button>
                             </td>`;
                         if(this.status=="Allocated")
                         var val = `<td>  <button class="notify-button" data-deviceid=${this.device_id}>Notify</button></td> </tr>`;
                         else if(this.status == "Free")
                         {
-                            val = `<td>  <button class="assign-button" data-id=${this.device_id}>Assign Device</button></td> </tr> `;
+                            val = `<td>  <button class="delete-button" value=${this.device_id}>Delete </button><br><br>
+                             <button class="assign-button" data-id=${this.device_id}>Assign Device</button></td> </tr> `;
                         }
                         else
                         {
-                            val=`<td><label style="color: red;">Device Faulty</label></td></tr>`;
+                            val=`<td> <button class="delete-button" value=${this.device_id}>Delete </button><br><br>
+                            <label style="color: red;">Device Faulty</label></td></tr>`;
                         }
                             (document.getElementById("Request_data") as HTMLStyleElement).innerHTML += value +editbutton+ val;
                     }
