@@ -68,7 +68,7 @@ namespace dm_backend.Controllers
          public IActionResult Post([FromBody]User item)
          {
              Db.Connection.Open();
-             Console.WriteLine("------------" + item.addresses[0].AddressLine1 + "----------------");
+            // Console.WriteLine("------------" + item.addresses[0].AddressLine1 + "----------------");
               //Console.WriteLine("------------" + item.addresses[1].AddressLine2 + "----------------");
              item.Db = Db;
              var result = item.AddOneUser();
