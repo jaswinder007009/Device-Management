@@ -295,6 +295,8 @@ namespace dm_backend.Models
 
         private void BindUserProcParams(MySqlCommand cmd)
         {
+           
+           
             cmd.Parameters.Add(new MySqlParameter("salut", Salutation));
             cmd.Parameters.Add(new MySqlParameter("f_name", FirstName));
             cmd.Parameters.Add(new MySqlParameter("m_name", MiddleName));
@@ -365,21 +367,21 @@ namespace dm_backend.Models
           group_concat(distinct if(contact_type='Home',area_code,NULL)) as 'home_area_code',
           group_concat(distinct if(contact_type='Home',number,NULL)) as 'home_number'
           from user
-          inner join salutation using(salutation_id)
-          inner join department_designation using(department_designation_id)
-          inner join department using(department_id)
-          inner join designation using(designation_id)
-          inner join gender using(gender_id)
-          inner join status on status.status_id=user.status
-          inner join user_to_role using(user_id)
-          inner join role using(role_id)
+          left join salutation using(salutation_id)
+          left join department_designation using(department_designation_id)
+          left join department using(department_id)
+          left join designation using(designation_id)
+          left join gender using(gender_id)
+          left join status on status.status_id=user.status
+          left join user_to_role using(user_id)
+          left join role using(role_id)
           left join address using(user_id)
-          inner join address_type using(address_type_id)
-          inner join city using(city_id)
-          inner join state using(state_id)
-          inner join country c on c.country_id=state.country_id
+          left join address_type using(address_type_id)
+          left join city using(city_id)
+          left join state using(state_id)
+          left join country c on c.country_id=state.country_id
           left join contact_number using(user_id)
-          inner join contact_type using(contact_type_id)
-          inner join country ca on ca.country_id=contact_number.country_id ";
+          left join contact_type using(contact_type_id)
+          left join country ca on ca.country_id=contact_number.country_id ";
     }
 }

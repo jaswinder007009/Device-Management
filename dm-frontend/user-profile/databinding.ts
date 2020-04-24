@@ -53,10 +53,20 @@ export async  function populateFormFromObject(
 ) {
     console.log(data, form);
 
+
+	
 	form["salutation"].value   =data.salutation;
 	form["firstName"].value    =data.firstName;
 	form["middleName"].value   =data.middleName;
 	form["lastName"].value     =data.lastName;
+	form["email"].value        =data.email;
+	form["userId"].value       =data.userId;
+	form["password"].value     ="";
+	form["dob"].value          =data.dob;
+	form["gender"].value       =data.gender;
+	form["status"].value       =data.status;
+	form["roleName"].value     =data.roleName;
+	form["doj"].value          =data.doj;
 //	form["department"].value   =data.departmentName;
 	//await new UserData(token).departdesgcall();
 	const dropDown = new UserData(token);
@@ -69,14 +79,7 @@ export async  function populateFormFromObject(
 	designationElement.value = data.designationName;
 
 	//form["designation"].value  =data.designationName;
-	form["email"].value        =data.email;
-	form["userId"].value       =data.userId;
-	form["password"].value     ="";
-	form["dob"].value          =data.dob;
-	form["gender"].value       =data.gender;
-	form["status"].value       =data.status;
-	form["roleName"].value     =data.roleName;
-	form["doj"].value          =data.doj;
+	
 //	const dropDown= new UserData(token);
 	for(let i =0;i<3;i++)
 	{
