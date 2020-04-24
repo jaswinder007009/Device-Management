@@ -1,46 +1,32 @@
-import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
+import { BASEURL, amIAdmin, amIUser, navigationBarsss } from './globals';
 
 (async function () {
-    let cardTitle = ['Total Devices', 'Free Devices', 'Faults', 'Assigned Devices', 'Device Requests', 'Rejected Requests'];
-
-
+ 
     const url = new URL(window.location.href);
-    let token,id;
-    if(url.searchParams.has("token") && url.searchParams.has("id")){
+    let token, id;
+    if (url.searchParams.has("token") && url.searchParams.has("id")) {
         token = url.searchParams.get("token");
         id = url.searchParams.get("id");
         sessionStorage.setItem("user_info", JSON.stringify({ token, id }));
     }
-    //let email = 'abc@gmail.com';
     id = JSON.parse(sessionStorage.getItem("user_info"))["id"];
-    token = JSON.parse(sessionStorage.getItem("user_info"))["token"]; 
-    
-  let role = await amIUser(token) == true ? "User" : "Admin";
-    //let role = 'User';
- 
-    (function(){
-        if (role=="Admin")
-        {
-            (document.getElementById("submissionNotification") as HTMLSpanElement).innerText ="check_circle";
+    token = JSON.parse(sessionStorage.getItem("user_info"))["token"];
+
+    let role = await amIUser(token) == true ? "User" : "Admin";
+
+    (function () {
+        if (role == "Admin") {
+            (document.getElementById("submissionNotification") as HTMLSpanElement).innerText = "check_circle";
         }
     })();
 
-    document.querySelector("#submissionNotification").addEventListener('click',e=>
-        {
-            if(role=="Admin")
-            {
-                window.location.href="./submissionRequestPage.html";
-            }
-        });
-    function createCard(index, key, cardData) {
-        var cardCreationCode: string = "<div class='demo-card-event mdl-card mdl-shadow--2dp mdl-color--blue-grey-200' id='card'>"
-            + "<div class='mdl-card__title mdl-card--expand'>"
-            + "<h5 class='mdl-color-text--blue-grey-800' >" + cardTitle[index] + ': ' + cardData + "</h5>"
-            + "</div>"
-            + "</div>";
-        if (((key == 'assignedDevices' || key == 'rejectedRequests') && (role == 'User')) || ((key == 'deviceRequests' || key == 'faults') && (role == 'Admin'))) {
-            return;
+    document.querySelector("#submissionNotification").addEventListener('click', e => {
+        if (role == "Admin") {
+            window.location.href = "./submissionRequestPage.html";
         }
+    });
+    function createCard(cardData,action) {
+        let cardCreationCode="<button class='mdl-color--blue-grey-200' id='card' data-card=" + action +">"+cardData+ "</button>";
         document.getElementById("content").innerHTML += cardCreationCode;
     }
 
@@ -61,18 +47,25 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
             headers: new Headers({ "Authorization": `Bearer ${token}` })
         }).then(Response => Response.json())
             .then(data => {
-                let index = 0;
-                for (var key in data) {
-                    createCard(index, key, data[key]);
-                    index++;
+                createCard("Total Devices:"+ data.totalDevices,"total");
+                createCard("Free Devices:" + data.freeDevices,"free");
+                if (role == "Admin") {
+                    createCard("Assigned Devices:" + data.assignedDevices,"allocated");
+                    createCard("Requests Rejected:" + data.rejectedRequests,"history");
+                    createCard("Total Requests:" + data.deviceRequests,"requests");
+                    createCard("Total Faults:"+ data.faults,"faults");
                 }
-
+                if (role == "User") {
+                    createCard("Total Requests:" + data.deviceRequests,"");
+                    createCard("Total Faults:"+ data.faults,"");
+                }
             });
+
     }
 
     function getFaults(url: string) {
 
-        var tableTitle = "<TH COLSPAN='3'><center>FAULTS</center></th>";
+        var tableTitle = "<TH COLSPAN='3'><center><a href='/faultyDevice/faultdevice.html'>FAULTS</a></center></th>";
         var tableHeading = "";
         tableHeading += "<th>Type</th>"
             + "<th>Model</th>"
@@ -97,7 +90,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
     }
 
     function getDeviceReturnDates(url: string) {
-        var tableTitle = "<TH COLSPAN='3'><center>DEVICE RETURN DATES</center></th>";
+        var tableTitle = "<TH COLSPAN='3'><center><a href='/userRequestHistory.html'>DEVICE RETURN DATES</a></center></th>";
         var tableHeading = "";
         tableHeading += "<th>Type</th>"
             + "<th>Model</th>"
@@ -170,7 +163,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
             });
 
     }
-    navigationBarsss(role,"navigation");
+    navigationBarsss(role, "navigation");
 
     document.getElementById("notifications").addEventListener('click', function (e) {
         window.location.href = "./notifiication.html";
@@ -180,6 +173,27 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
         window.location.href = "/SJLogin/LoginRegiter.html";
     })
     
+    document.addEventListener("click", function (e) {
+        let action = (e.target as HTMLButtonElement).dataset.card;
+        if(action=="total")
+            window.open("/deviceListForadmin.html","_self");
+        if(action=="faults")
+            window.open("/faultyDevice/faultdevice.html","_self");
+        if(action=="requests")
+            window.open("/adminRequestPage.html","_self");
+        /*if(action=="history"){
+            //Get all rejected requests
+        }   
+        if(action=="free"){
+            //Get all free devices
+        }    
+        if(action=="allocated"){
+            //Get all allocated devices
+        }*/
+        
+
+    });
+
     document.getElementById('role').innerHTML = role;
     if (role == 'User') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
@@ -188,9 +202,9 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
     }
     else if (role == 'Admin') {
         getStatistics(BASEURL + "/api/dashboard/statistics");
-        getFaults(BASEURL + "/api/dashboard/faults");
-        getPendingRequests(BASEURL + "/api/request/pending");
-        
+        // getFaults(BASEURL + "/api/dashboard/faults");
+        // getPendingRequests(BASEURL + "/api/request/pending");
+
     }
-    })();
-    
+})();
+
