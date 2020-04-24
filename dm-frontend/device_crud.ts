@@ -43,15 +43,54 @@ export class AddDevice {
         populateDropdown((document.getElementById("model") as HTMLSelectElement),models);
     return null;
     }
-    Create_device() {
+    async statusDropdown()
+    {
+        const URL =BASEURL +"/api/Device/status";
+        const status = await new HitApi(this.token).HitGetApi(URL);
+        let htmlString = '';
+        for (let dataPair of status) {
+            htmlString += '<option  value="' + dataPair.id + '">' + dataPair.name + '</option>';
+        }
+        (document.getElementById("status") as HTMLSelectElement).innerHTML = htmlString;
+    
+        return null;
+    }
+   async  getSpecificationDropdown()
+    {
+        let res = await fetch(BASEURL + "/api/Device/specification", {
+            headers: new Headers({ Authorization: `Bearer ${this.token}` }),
+          });
+         let data= await res.json();
+        (document.getElementById("specification") as HTMLSelectElement).innerHTML ="";
+        for (let i = 0; i < data.length; i++) {
+        (document.getElementById("specification") as HTMLSelectElement).innerHTML +=
+          '<option value="' + data[i].specification_id +'">' + ( data[i].ram == "" ? "" : " RAM: " +
+          data[i].ram)  +
+          (data[i].storage == "" ? "" : " Storage: " +
+          data[i].storage) +
+          (data[i].screenSize == "" ? "" : " Screen Size: " +
+          data[i].screenSize) +
+          (data[i].connectivity == "" ? "" : " Connectivity: " +
+          data[i].connectivity) +
+          "</option>";
+      }
+     return null;
+    }
+    async Create_device() {
         let data = this.addDataFromForm();
         console.log(data);
-        fetch(BASEURL + "/api/Device/add", {
+        let res=await fetch(BASEURL + "/api/Device/add", {
             method: "POST",
             headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data,
-        }).catch(Error => console.log(Error));
-
+        });
+       
+        if(res.status==200)
+        {
+            console.log("added Successfully");
+            alert("Device Added");
+        }
+       return null;
     }
     async getDataToForm() {
         let data: any
@@ -78,7 +117,7 @@ export class AddDevice {
         (document.getElementById("inputtype") as HTMLInputElement).value = data[0].type;
         (document.getElementById("status") as HTMLInputElement).value = data[0].status_id;
         (document.getElementById("inputmodel") as HTMLInputElement).value = data[0].model;
-        specificationDropdown(data[0].type,data[0].brand,data[0].model);
+        (document.getElementById("serial_number") as HTMLInputElement).value = data[0].serial_number;
         (document.getElementById("color") as HTMLInputElement).value = data[0].color;
         (document.getElementById("price") as HTMLInputElement).value = data[0].price;
         (document.getElementById("warranty_year") as HTMLInputElement).value = data[0].warranty_year;
@@ -88,15 +127,19 @@ export class AddDevice {
         
     }
 
-    update_device(device_id: any) {
+    async update_device(device_id: any) {
         let data = this.addDataFromForm();
         console.log(data);
-        fetch(BASEURL + "/api/Device/update/" + device_id, {
+        let res = await fetch(BASEURL + "/api/Device/update/" + device_id, {
             method: "PUT",
             headers: new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data,
-        }).catch(Error => console.log(Error));
-
+        });
+        if(res.status==200){
+        console.log("updated Successfully");
+        alert("Device Updated");
+        }
+        
     }
     addDataFromForm() {
         this.type = ((document.getElementById("inputtype") as HTMLSelectElement).value);
@@ -151,6 +194,13 @@ export class AddDevice {
             headers:new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
             body: data1,
         });
+        if(data.status==200)
+        {
+            this.getSpecificationDropdown();    
+        }
+        else{
+            alert("Incorrect Specifications");
+        }
         return null;
     }
 

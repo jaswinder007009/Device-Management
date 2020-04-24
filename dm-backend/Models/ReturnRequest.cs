@@ -83,7 +83,7 @@ namespace dm_backend.Models
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-                BindFaultyRequestProcedureParams(cmd);
+                BindFaultProcedureParams(cmd);
                 cmd.ExecuteNonQuery();
                 return "Request sent";
             }

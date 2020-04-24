@@ -92,7 +92,7 @@ import { openForm } from "./utilities";
 		}
 
 		postNotification(data) {
-			if (confirm("Notify all?")) {
+			if (confirm("Notify?")) {
 				fetch(BASEURL + "/api/Notification", {
 					method: "POST",
 					headers: [["Content-Type", "application/json"], ["Authorization", `Bearer ${token}`]],

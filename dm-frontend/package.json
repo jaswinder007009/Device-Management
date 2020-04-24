@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc && webpack-dev-server",
+    "dev": "webpack-dev-server",
     "build": "rm -rf build && webpack",
     "start": "webpack"
   },

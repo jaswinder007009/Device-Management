@@ -10,6 +10,8 @@ namespace dm_backend.Models
     public class RolePermission
     {
         public List<Role> Roles { get; set; }
+
+        public List<Permission>? Permissions { get; set; }
         internal AppDb Db { get; set; }
 
         internal RolePermission(AppDb db)
@@ -25,15 +27,21 @@ namespace dm_backend.Models
             Db.Connection.Open();
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = @"select JSON_OBJECT('roles',json_arrayagg(JSON_OBJECT(
-                #'roleId', role_id,
+                'roleId', role_id,
                 'roleName', role_name,
                 'permissions', (
                     select json_arrayagg(json_object(
-                        #'permissionId', permission_id,
+                        'permissionId', permission_id,
                         'permissionName', permission_name
                     )) from role_to_permission inner join permission using(permission_id) where role_to_permission.role_id=role.role_id
                 )
-            ))) from role order by role_id;";
+            )),
+            'permissions', (
+                select json_arrayagg(json_object(
+					'permissionId', permission_id,
+					'permissionName', permission_name
+			    )) from permission order by permission_name)
+            )from role order by role_id;";
             using var reader = cmd.ExecuteReader();
             reader.Read();
             string result = reader.GetString(0);
@@ -41,7 +49,7 @@ namespace dm_backend.Models
             Db.Connection.Close();
             return abc;
         }
-        
+
         // TODO : Update a role iff role is changed
         public void SaveChanges()
         {
@@ -65,7 +73,6 @@ namespace dm_backend.Models
                         {
                             cmd.CommandText = $@"insert into role_to_permission 
                             select role_id, permission_id from role, permission where role_name='{roleObj.RoleName}' and permission_name='{permObj.PermissionName}'";
-                            Console.WriteLine(cmd.CommandText);
                             cmd.ExecuteNonQuery();
                         }
                     }

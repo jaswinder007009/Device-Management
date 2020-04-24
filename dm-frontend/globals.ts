@@ -52,9 +52,9 @@ export function navigationBarsss(role:string , element:string) {
     Complaints
      </a>
    
-    <a class="mdl-navigation__link" href="/device_role/role1.html">
+    <a class="mdl-navigation__link" href="/device_role/role.html">
         <i class="mdl-color-text--blue-grey-400 material-icons"
-            role="presentation">perm_device_information</i>Permissions
+            role="presentation">perm_device_information</i>Roles
     </a></nav>
     `;
         document.getElementById(element).innerHTML = navigation + nav;
