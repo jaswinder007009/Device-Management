@@ -1,13 +1,13 @@
 export const BASEURL = "http://localhost:5000";
 
 export function amIAdmin(token: string){
-    return fetch(BASEURL + "/api/device/is_admin",{
+    return fetch(BASEURL + "/api/is_admin",{
         headers: new Headers({"Authorization": `Bearer ${token}`})
     }
     ).then(res => res.json()).then(res => res.result as boolean);
 }
 export function amIUser(token: string){
-    return fetch(BASEURL + "/api/device/is_user",{
+    return fetch(BASEURL + "/api/is_user",{
         headers: new Headers({"Authorization": `Bearer ${token}`})
     }
     ).then(res => res.json()).then(res => res.result as boolean);
@@ -45,7 +45,7 @@ export function navigationBarsss(role:string , element:string) {
         <i class="mdl-color-text--blue-grey-400 material-icons"
             role="presentation">import_export</i>All Requests
     </a>
-    <a class="mdl-navigation__link" href="/request-history.html">
+    <a class="mdl-navigation__link" href="/request-history/request-history.html">
         <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">history</i>Request History
     </a>
     <a class="mdl-navigation__link" href="/faultyDevice/faultdevice.html">
@@ -53,11 +53,10 @@ export function navigationBarsss(role:string , element:string) {
     Complaints
      </a>
    
-    <a class="mdl-navigation__link" href="/device_role/role1.html">
+    <a class="mdl-navigation__link" href="/device_role/role.html">
         <i class="mdl-color-text--blue-grey-400 material-icons"
-            role="presentation">perm_device_information</i>Permissions
+            role="presentation">perm_device_information</i>Roles
     </a></nav>
-
     `;
         document.getElementById(element).innerHTML = navigation + nav;
     }

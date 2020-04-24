@@ -18,7 +18,7 @@ module.exports = {
         'getApiForAdmin': './getApiForAdmin.ts',
         'faultIndex': './faultyDevice/faultIndex.ts',
         'getNotification': './getNotification.ts',
-        'index': './index.ts', // No its not the main file. Just a file required by a page
+        'index': './request-history/index.ts', // No its not the main file. Just a file required by a page
         'specificationcrud': './specificationcrud.ts',
         'submissionRequest': './submissionRequest.ts',
         'request-model': './request-model.ts',
@@ -26,9 +26,8 @@ module.exports = {
         'webpage': './webpage.ts',
         'main': './user-profile/main.ts',
         'userRequestMain': './Device-Request/UserRequestMain.ts',
-        'role_permission': './device_role/role_permission.ts',
-        'permission': './device_role/permission.ts',
-        'user': './device_role/user.ts',
+        'devicedetail': './devicedetail.ts',
+        'user_role': './device_role/user_role.ts'
     },
     resolve: {
         extensions: [".js", ".ts"]

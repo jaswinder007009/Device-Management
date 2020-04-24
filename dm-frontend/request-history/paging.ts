@@ -1,6 +1,5 @@
 import { HtmlElementsData } from "./HtmlElementsId";
-import { HitApi } from "./HitApi";
-import { BASEURL } from "./globals";
+import { Sorting } from "./Sorting";
 
 export class page 
 {
@@ -20,9 +19,10 @@ export class page
         let userName = (document.getElementById(new HtmlElementsData().search)  as HTMLInputElement).getAttribute(this.domElements.userName);
         var sortAttribute = (document.getElementById(this.domElements.thead) as HTMLTableRowElement).getAttribute(this.domElements.sortAttributr);       
         var sortType  =  (document.getElementById(this.domElements.thead) as HTMLTableRowElement).getAttribute(this.domElements.sortType);
-        let uri = BASEURL+ "/sorting" +"?user-name="+encodeURI(userName)+"&sort="+sortAttribute+"&sort-type="+sortType+"&page="+offset+"&page-size="+this.totalRowsInTable;
-        console.log(uri)
-        new HitApi(this.token).HitGetApi(uri);     
+        let requestStatus = new Sorting(this.token).getStatus();
+        let uri = "?user-name="+encodeURI(userName)+"&sort="+sortAttribute+"&sort-type="+sortType+"&page="+offset+"&page-size="+this.totalRowsInTable +"&status="+requestStatus;
+        return uri;
+         
     }
 
 

@@ -56,7 +56,6 @@ function RegisterUser() {
 		});
 }
 
-
 document.querySelector("#mybtn").addEventListener("click", function(e) {
 	e.preventDefault();
 	if (validationLogin() == true) {

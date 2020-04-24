@@ -23,5 +23,26 @@ export async function dropDownListen(form:HTMLFormElement,token:string){
         })
 
      }
+    for(let i =0;i<3;i++){
+		let container=form.querySelector("#phones"+(i+1));
+       
+
+        dropDown.getCountryCode(container.querySelector(".countryCode"));
+    }
+    
+    await dropDown.departmentcall(form["department"]);
+    deptdesgListen(form);
     return null;
+}
+export async function deptdesgListen(form:HTMLFormElement){
+ 
+  
+    form["department"].addEventListener("click",function(e){
+        
+        let dept=(form["designation"]as HTMLSelectElement);
+    
+        new UserData().departdesgcall(dept,this);
+       
+    
+    });
 }

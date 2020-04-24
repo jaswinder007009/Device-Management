@@ -6,7 +6,9 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     const token: string = JSON.parse(sessionStorage.getItem("user_info"))["token"];
     let adminId = JSON.parse(sessionStorage.getItem("user_info"))["id"];
     let globalUrl = BASEURL + "/api/request/";
-    let request = new Requests();
+    let obj = {
+        notify: []
+    };
 
     function getPendingRequests(url: string) {
 
@@ -43,7 +45,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
 
     }
 
-    function getDeviceHolders() {
+    function getDeviceHolders(request) {
         let tableData = "";
         fetch(BASEURL + "/api/Device/search?status_name=allocated", {
             headers: new Headers({ "Authorization": `Bearer ${token}` })
@@ -55,6 +57,8 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
                         + "<td>" + data[i]['assign_to']['first_name'] + " " + data[i]['assign_to']['middle_name'] + " " + data[i]['assign_to']['last_name'] + "</td>"
                         + "<td>" + data[i]['return_date'] + "</td>"
                         + "<td><button class=\"notify\" data-deviceid=" + data[i]['device_id'] + " >Notify</button></center></td></tr>"
+                    let deviceId = data[i].device_id;
+                    obj.notify.push({ "deviceId": deviceId });
                 }
 
             }
@@ -91,20 +95,25 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
             && (data.model == request.deviceModel) && (data.specifications.ram == request.specs.ram) &&
             (data.specifications.storage == request.specs.storage) && (data.specifications.screenSize == request.specs.screenSize) &&
             (data.specifications.connectivity == request.specs.connectivity))
-            return true;
+            return 1;
         else
-            return false;
+            return 0;
     }
 
-    function postNotification(data: Requests) {
-
-        let data1 = JSON.stringify(data);
-        fetch(BASEURL + "/api/Notification", {
-            method: "POST",
-            headers: [["Content-Type", "application/json"], ["Authorization", `Bearer ${token}`]],
-            body: data1,
-        }).catch(Error => console.log(Error));
-        alert("Notification sent");
+    function postNotification(data) {
+        if (confirm("Notify?")) {
+            fetch(BASEURL + "/api/Notification", {
+                method: "POST",
+                headers: [["Content-Type", "application/json"], ["Authorization", `Bearer ${token}`]],
+                body: data,
+            }).catch(Error => console.log(Error));
+            alert("Notification sent");
+            (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
+            obj = {
+                notify: []
+            };
+        }
+        
     }
 
     (document.querySelector('#tablecol') as HTMLTableElement).addEventListener("click", function (e) {
@@ -122,21 +131,24 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
     document.querySelector('.close').addEventListener('click',
         function () {
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
+            obj = {
+                notify: []
+            };
         });
 
     document.addEventListener("click", function (e) {
-
+        let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
         if ((e.target as HTMLButtonElement).className == "reject-button") {
-            let requestId = parseInt((e.target as HTMLButtonElement).dataset.requestid, 10);
             if (confirm("Are you sure you want to reject the request?"))
                 requestAction('?action=reject&id=' + adminId, requestId, 'rejected');
-
-         
+        }
+        if ((e.target as HTMLButtonElement).className == "accept-button") {
             if (confirm("Are you sure you want to accept the request?"))
                 requestAction('?action=accept&id=' + adminId, requestId, 'accepted');
 
         }
         if ((e.target as HTMLButtonElement).className == "show-users") {
+            let request = new Requests();
             request.deviceModel = (e.target as HTMLButtonElement).dataset.devicemodel;
             request.deviceBrand = (e.target as HTMLButtonElement).dataset.devicebrand;
             request.deviceType = (e.target as HTMLButtonElement).dataset.devicetype;
@@ -144,25 +156,16 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
             request.specs.connectivity = ((e.target as HTMLButtonElement).dataset.connectivity);
             request.specs.screenSize = ((e.target as HTMLButtonElement).dataset.screensize);
             request.specs.storage = ((e.target as HTMLButtonElement).dataset.storage);
-            getDeviceHolders();
+            getDeviceHolders(request);
 
         }
         if ((e.target as HTMLButtonElement).className == "notify-all") {
-            if (confirm("Notify all?"))
-                postNotification(request);
-            (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
+            postNotification(JSON.stringify(obj));
         };
 
         if ((e.target as HTMLButtonElement).className == "notify") {
             let deviceId: number = parseInt((e.target as HTMLButtonElement).dataset.deviceid, 10);
-            if (confirm("Notify User?")) {
-                fetch(BASEURL + "/api/Notification/" + deviceId,
-                    {
-                        headers: new Headers({ "Authorization": `Bearer ${token}` })
-                    });
-                alert("Notification sent");
-            }
-            (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
+            postNotification(JSON.stringify({ "notify": [{ deviceId }] }));
         };
 
     });

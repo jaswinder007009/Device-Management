@@ -92,30 +92,15 @@ namespace dm_backend.Models
                 throw e;
             }
         }
-        public string RejectReturnRequest()
+        
+        public string resolveRequest()
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"reject_user_request";
+            cmd.CommandText = @"resolve_complaint";
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
                 BindFaultyRequestProcedureParams(cmd);
-                cmd.ExecuteNonQuery();
-                return "Request rejected";
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-        public string resolveRequest()
-        {
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"resolve complaint";
-            cmd.CommandType = CommandType.StoredProcedure;
-            try
-            {
-                BindReturnProcedureParams(cmd);
                 
                 cmd.ExecuteNonQuery();
                 return "Request rejected";
@@ -132,7 +117,7 @@ namespace dm_backend.Models
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-                BindReturnProcedureParams(cmd);
+                BindFaultyRequestProcedureParams(cmd);
                 cmd.ExecuteNonQuery();
                 return "Request rejected";
             }
@@ -154,14 +139,14 @@ namespace dm_backend.Models
             return ReadAll(reader);
         }
 
-        private void BindReturnProcedureParams(MySqlCommand cmd)
+        private void BindFaultyRequestProcedureParams(MySqlCommand cmd)
         {
 
             cmd.Parameters.Add(new MySqlParameter("var_complain_id", complaintId));
 
 
         }
-        private void BindFaultyRequestProcedureParams(MySqlCommand cmd)
+        private void BindReturnProcedureParams(MySqlCommand cmd)
         {
 
             cmd.Parameters.Add(new MySqlParameter("var_user_id", userId));

@@ -15,7 +15,7 @@ using dm_backend.Data;
 
 namespace dm_backend.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [Route("api/[controller]")]
     public class NotificationController : ControllerBase
     {
@@ -28,40 +28,16 @@ namespace dm_backend.Controllers
             _context=context;
         }
         
-        [Authorize(Roles="admin")]
         [HttpPost]
-        public IActionResult PostMultipleNotifications([FromBody]NotificationModel notify)
+        public IActionResult PostMultipleNotifications([FromBody]MultipleNotifications item)
         {
             Db.Connection.Open();
-            notify.Db = Db;
-            string result = null;
-            try{
-                result = notify.AddNotifications();
-            }
-            catch(NullReferenceException){
-                return NoContent();
-            }
+            item.Db = Db;
+            var result = item.AddMultipleNotifications();
             Db.Connection.Close();
-            return Ok(result);
+            return new OkObjectResult(item);
         }
 
-        [HttpGet]
-        [Route("{deviceId}")]
-        public IActionResult InsertOneNotification(int deviceId)
-        {
-            Db.Connection.Open();
-            NotificationModel query = new NotificationModel(Db);
-            query.deviceId = deviceId;
-            string result = null;
-            try{
-                result=query.AddOneNotification();
-            }
-            catch(NullReferenceException){
-                return NoContent();
-            }
-            Db.Connection.Close();
-            return Ok(result);
-        }
 
         [HttpGet]
          public IActionResult GetNotification()

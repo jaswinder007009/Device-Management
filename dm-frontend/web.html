@@ -30,8 +30,8 @@
     <div class="userForm accordion" id="accordion1">
         <!--form division-->
         <form class="form-popup" id="myForm">
-            <h1 id="headingText" class="text-success text-center">User Registration</h1>
-            <div class="col-lg-7 m-auto d-block">
+            <h2 id="headingText" class="text-success text-center">User Registration</h2>
+            <div class="col-lg-12 m-auto d-block">
                 <!-- <form action="#"> -->
                 <div class="form-group">
                 </div>
@@ -62,6 +62,7 @@
                         <div class="form-group col-md-3">
                             <label for="lastName">Last Name</label>
                             <input type="text" class="form-control" id="lastName">
+                            <span id="lastNames" class="text-danger font-weight-bold"></span>
                         </div>
                     </div>
                     <div class="form-row ">
@@ -292,13 +293,14 @@
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label>Adddress Line 1:</label>
-                                        <input type="text" name="CurrentAddress1" class="addressLine1 form-control"
-                                            id="c1" size="50" maxlength="50">
+                                        <input type="text" name="CurrentAddress1" class="addressLine1 form-control" id="c1" size="50" maxlength="50">
+                                        <span id="c1s" class="text-danger font-weight-bold"></span>
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label>Adddress Line 2:</label>
                                         <input type="text" name="CurrentAddress2" class="addressLine2 form-control"
                                             id="c2" size="50" maxlength="50">
+                                            <span id="c2s" class="text-danger font-weight-bold"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Country:</label>
@@ -309,19 +311,23 @@
                                     <div class="form-group col-md-3">
                                         <label>State:</label>
                                         <select class="state form-control" id="c5" name="State1">
-
+                                          
                                         </select>
+                                        <span id="c5s" class="text-danger font-weight-bold"></span>
                                     </div>
                                    
                                     <div class="form-group col-md-3">
                                         <label>City:</label>
                                         <select class="city form-control" id="c4" name="city1">
+                                         
                                         </select>
+                                        <span id="c4s" class="text-danger font-weight-bold"></span> 
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Pincode</label>
                                         <input type="text" name="pincode1" id="c3" class="pin form-control"
                                             maxlength="6">
+                                            <span id="c3s" class="text-danger font-weight-bold"></span>
                                     </div>
                                 </div><br>
 
@@ -349,11 +355,13 @@
                                         <label>Adddress Line 1:</label>
                                         <input type="text" name="PermanentAddress1" class="addressLine1 form-control"
                                             id="p1" size="50" maxlength="50">
+                                            <span id="p1s" class="text-danger font-weight-bold"></span>
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label>Adddress Line 2:</label>
                                         <input type="text" name="PermanentAddress2" class="addressLine2 form-control"
                                             id="p2" size="50" maxlength="50">
+                                            <span id="p2s" class="text-danger font-weight-bold"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Country:</label>

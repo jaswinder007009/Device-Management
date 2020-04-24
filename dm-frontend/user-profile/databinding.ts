@@ -1,6 +1,5 @@
 import * as models from "../UserModel";
 import { UserData } from "../dropdown";
-//import {formatDate1} from "../utilities"
 
 export function createObjectFromForm(formElement: HTMLFormElement) {
 	let modelObject = new models.UserModel();
@@ -12,8 +11,6 @@ export function createObjectFromForm(formElement: HTMLFormElement) {
 	modelObject.designationName = (formElement["designation"] as HTMLInputElement).value;
 	modelObject.email = (formElement["email"] as HTMLInputElement).value;
 	modelObject.userId = parseInt((formElement["userId"] as HTMLInputElement).value);
-	//modelObject.altEmail =(formElement["altEmail"] as HTMLInputElement).value || null;
-	//modelObject.userName = (formElement["userName"] as HTMLInputElement).value;
 	modelObject.password = (formElement["password"] as HTMLInputElement).value;
 	modelObject.dob = (formElement["dob"] as HTMLInputElement).value;
 	modelObject.gender = (formElement["gender"] as HTMLInputElement).value;
@@ -60,8 +57,18 @@ export async  function populateFormFromObject(
 	form["firstName"].value    =data.firstName;
 	form["middleName"].value   =data.middleName;
 	form["lastName"].value     =data.lastName;
-	form["department"].value   =data.departmentName;
-	form["designation"].value  =data.designationName;
+//	form["department"].value   =data.departmentName;
+	//await new UserData(token).departdesgcall();
+	const dropDown = new UserData(token);
+	const departmentElement = form["department"] as HTMLSelectElement;
+	const designationElement = form["designation"] as HTMLSelectElement;
+	console.log("-----------------"+departmentElement+"------------------");
+	await dropDown.departmentcall(departmentElement);
+	departmentElement.value = data.departmentName;
+	await dropDown.departdesgcall(designationElement, departmentElement);
+	designationElement.value = data.designationName;
+
+	//form["designation"].value  =data.designationName;
 	form["email"].value        =data.email;
 	form["userId"].value       =data.userId;
 	form["password"].value     ="";
@@ -70,18 +77,19 @@ export async  function populateFormFromObject(
 	form["status"].value       =data.status;
 	form["roleName"].value     =data.roleName;
 	form["doj"].value          =data.doj;
-	//form["phones1"].value      =data.phones;
+//	const dropDown= new UserData(token);
 	for(let i =0;i<3;i++)
 	{
 	 let container=form.querySelector("#phones"+(i+1));
 	 console.log(form);
 	 (container.querySelector(".contactNumberType")as HTMLInputElement).value=data.phones[i].contactNumberType;
 	 (container.querySelector(".number")as HTMLInputElement).value=data.phones[i].number;
-	 (container.querySelector(".countryCode")as HTMLInputElement).value=data.phones[i].countryCode;
+	 var countryCode=(container.querySelector(".countryCode")as HTMLSelectElement);
+	 await dropDown.getCountryCode(countryCode);
+	 countryCode.value=data.phones[i].countryCode;
+
 	 (container.querySelector(".areaCode")as HTMLInputElement).value=data.phones[i].areaCode;
 	}
- 
-	const dropDown= new UserData(token);
 
 	for(let i =0;i<2;i++)
 	{
@@ -106,15 +114,9 @@ export async  function populateFormFromObject(
 		await dropDown.getCity(city,state);
 		city.value=data.addresses[i].city;
 		
+		
 	}
-   //form["addresses"].value        =data.addresses;
-	// form["addressType"].value       =data.addressType;
-	// form["addressLine1"].value      =data.addressLine1;
-	// form["addressLine2"].value      =data.addressLine2;
-	// form["city"].value              =data.city;
-	// form["state"].value             =data.state;
-	// form["country"].value           =data.country;
-	// form["pin"].value               =data.pin;
+  
 }
 
 

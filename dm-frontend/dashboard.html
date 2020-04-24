@@ -24,9 +24,9 @@
                     <nav class="mdl-navigation">
                         <div
                             class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label">
-                            <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable2">
+                            <!-- <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable2">
                                 <i class="material-icons">search</i>
-                            </label>
+                            </label> -->
                             <div class="mdl-textfield__expandable-holder">
                                 <input class="mdl-textfield__input" type="text" id="search-expandable2">
                                 <label class="mdl-textfield__label" for="search-expandable2">
@@ -41,7 +41,9 @@
                         <button id="profile" class="mdl-button mdl-js-button mdl-button--icon">
                             <i class="material-icons">person_pin</i>
                         </button>
-                            <a href='user-profile/index.html'><li class="mdl-menu__item" id="#userProfile" >Profile</li></a>
+                        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="profile">
+                            <a href='user-profile/index.html'>
+                                <li class="mdl-menu__item" id="#userProfile" >Profile</li></a>
                             
                             <li class="mdl-menu__item" id="logout">Logout</li>
                         </ul>
@@ -54,7 +56,7 @@
                 aria-hidden="true">
                 <header class="demo-drawer-header">
                     <div class="demo-avatar-dropdown"><br>
-                        <span id="email"></span>
+                        <span id="role"></span>
                         <div class="mdl-layout-spacer"></div>
                         <br>
                     </div>

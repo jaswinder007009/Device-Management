@@ -11,22 +11,23 @@ namespace dm_backend.Logics
 {
     public class FaultyDevice
     {
-        public string querryAll = @"select  c.user_id ,s.salutation ,   u.first_name , u.middle_name  , u.last_name , 
+        public string querryAll = @"select  c.employee_id ,s.salutation ,   u.first_name , u.middle_name  , u.last_name , 
 d.device_id  ,  dt.type , db.brand , dm.model , d.serial_number , c.complaint_id ,
  c.comments , st.status_name , c.complaint_date from complaints as c
-inner join status as st on st.status_id = c.status_id 
-inner join user as u using(user_id) inner  join salutation as s using (salutation_id)
+inner join status as st on st.status_id = c.complaint_status_id 
+inner join user as u on u.user_id = c.employee_id
+ inner  join salutation as s using (salutation_id)
 inner join device as d using (device_id)
 inner join device_model  as dm using(device_model_id)
 inner join device_brand as db using(device_brand_id)
-inner join device_type as dt using(device_type_id)  
+inner join device_type as dt using(device_type_id)
 where concat(u.first_name , ' ', if (u.middle_name is null, '' ,  concat(u.middle_name, ' ')) , u.last_name ) like concat('%' ,@find ,'%') 
 and  if(@status is null ,  st.status_name like '%' OR st.status_name is null  , st.status_name = @status)
-and if(@serialNumber is null ,d.serial_number like '%'  OR d.serial_number is null , d.serial_number = @serialNumber ) and st.status_name = 'Unresolve'";
+and if(@serialNumber is null ,d.serial_number like '%'  OR d.serial_number is null , d.serial_number = @serialNumber ) and st.status_name = 'Unresolved'";
       //  public string getUserID = "  and  u.user_id = @userid)";
 
         public AppDb Db { get;  }
-
+            
         public FaultyDevice(AppDb db)
         {
             Db = db;
@@ -116,7 +117,7 @@ and if(@serialNumber is null ,d.serial_number like '%'  OR d.serial_number is nu
                     posts.Add(new FaultyDeviceModel()
                     {
                         complaintId = reader.GetInt32(reader.GetOrdinal("complaint_id")),
-                        userId = reader.GetInt32(reader.GetOrdinal("user_id")),
+                        userId = reader.GetInt32(reader.GetOrdinal("employee_id")),
                         deviceId = reader.GetInt32(reader.GetOrdinal("device_id")),
                         salutation = reader.GetString("salutation"),
                         userName = new name()
