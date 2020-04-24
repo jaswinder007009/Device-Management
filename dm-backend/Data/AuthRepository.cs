@@ -41,20 +41,16 @@ namespace dm_backend.Data
             passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
 
-        public async Task<UserAuth> Login(string email, string password)
+        public async Task<User> Login(string email, string password)
         {
-      //  Console.WriteLine(email);
-            var user = await _context.UserAuth.FirstOrDefaultAsync(x => x.Email == email);
+            var user = await _context.User.FirstOrDefaultAsync(x => x.Email == email);
             
-Console.WriteLine(user.Email);
-// Console.WriteLine(user.Saltpassword);
             if (user == null)
             {
                 Console.WriteLine("yes");
                 return null;
             }
-Console.WriteLine(user.Hashpassword);
-Console.WriteLine(user.Saltpassword);
+
             if (!Verify(password, user.Hashpassword, user.Saltpassword))
                 return null;
 
