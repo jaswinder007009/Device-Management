@@ -1,4 +1,8 @@
-
+#card,table{
+    margin-top: 10px;
+    margin-left: 40px;
+	
+}
 #card{
     font-size: small;
     font: 1em sans-serif;
