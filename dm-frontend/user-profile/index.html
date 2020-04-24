@@ -6,7 +6,23 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  
   <style>
+    div.mdl-layout__drawer
+{
+  border: none;
+}
+nav.mdl-navigation
+    {
+      height: unset;
+      box-shadow: none;
+    }
+    nav.mdl-navigation i
+    {
+      display: inline-block;
+    }
+
+    
     select {
       display: block !important;
     }
@@ -29,7 +45,7 @@
         <div class="mdl-layout-spacer"></div>
       </div>
     </header>
-    <div class="mdl-layout__drawer" id="navigation">
+    <div class="mdl-layout__drawer mdl-color--blue-grey-800" id="navigation">
     </div>
     <main class="mdl-layout__content">
       <div class="page-content">
