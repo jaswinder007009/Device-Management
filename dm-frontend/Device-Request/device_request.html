@@ -6,8 +6,38 @@
     h1 {
       text-align: center;
       color: rgb(27, 148, 108);
+}
+/* 
+.bg-model{
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  position: absolute;
+  top : 0 ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+ 
+}
+.model-content{
+  
+  width: 30%;
+  height: 30%;
+  background-color: rgba(155, 143, 143, 0.986);
+  border-radius: 4px;
+ position: relative;
+}
+.x{
+   position: absolute;
+   top : 7px;
+   right:7px ;
+   font-size: 30px;
+   transform: rotate(45deg);
+   cursor: pointer;
 
-    }
+} */
+
   </style>
 
 
@@ -18,6 +48,7 @@
 
   
   <link rel="stylesheet" type="text/css" href="../SJLogin/Styles.css">
+  <link rel="stylesheet" type="text/css" href="../index.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
  
 
@@ -60,7 +91,7 @@
 
 
         <div class="bg-model">
-          <div class="model-content">
+          <div class="model-content" style="  width: 30%; height: 30%;"> 
             <div class="x">+</div>
             <h5 id="device-request-message" style="text-align: center;margin-top: 15%;"></h5>
 
@@ -127,6 +158,9 @@
 
 
       </div>
+      <div class="load" id="loading">
+        <div class= "loader"></div>
+    </div>
     </main>
   </div>
   <script src="/assets/js/userRequestMain.js"></script>

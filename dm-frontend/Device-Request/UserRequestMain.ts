@@ -80,10 +80,13 @@ export async function specificationDropdown(
 }
 
 async function GetData(uri: string, column: string) {
+  
+  (document.getElementById("loading") as HTMLDivElement).style.display = "flex"; 
   let obj = Token.getInstance();
 
   let data = await new HitApi(obj.tokenKey).HitGetApi(uri);
   new populateDropDown().populateDevice(data, column);
+  (document.getElementById("loading") as HTMLDivElement).style.display = "none";    
   return data;
 }
 

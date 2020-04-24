@@ -3,11 +3,11 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 export const BASEURL = "http://localhost:5000";
 
 export function amIAdmin(token: string){
-   return new HitApi(token).HitGetApi(BASEURL + "/api/device/is_admin")
+   return new HitApi(token).HitGetApi(BASEURL + "/api/is_admin")
     .then(res => res.result as boolean);
 }
 export function amIUser(token: string){
-    return new HitApi(token).HitGetApi(BASEURL + "/api/device/is_user")
+    return new HitApi(token).HitGetApi(BASEURL + "/api/is_user")
     .then(res => res.result as boolean);
 
 }
