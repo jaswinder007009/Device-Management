@@ -150,21 +150,7 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok();
         }
-
-        // Specification
-        // [HttpGet("specid")]
-        // async public Task<IActionResult> get_specification_id()
-        // {
-        //     string ram = (HttpContext.Request.Query["ram"]);
-        //     string screen = (HttpContext.Request.Query["screen"]);
-        //     string conn = (HttpContext.Request.Query["connec"]);
-        //     string stor = (HttpContext.Request.Query["storage"]);
-        //     await Db.Connection.OpenAsync();
-        //     var result = new spec(Db);
-        //     var data = await result.getSpecificationId(ram, screen, conn, stor);
-        //     return new OkObjectResult(data);
-        // }
-
+       
         [HttpGet("specification")]
         public async Task<IActionResult> GetAllSpecification()
         {
@@ -246,6 +232,14 @@ namespace dm_backend.Controllers
             await que.addmodel(body);
             Db.Connection.Close();
             return Ok();
+        }
+       [HttpGet("status")]
+        public async Task<IActionResult> GetAllstatus()
+        {
+            await Db.Connection.OpenAsync();
+            var query = new Status(Db);
+            var result = await query.getallstatus();
+            return new OkObjectResult(result);
         }
 
 

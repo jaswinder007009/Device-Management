@@ -120,7 +120,7 @@ where db.brand = @brand  and dt.type = @type  and dm.model=@model group by s.spe
         }
         // Returns Specification ID from given specifications
         // Otherwise throws a NullReferenceException
-        internal int GetSpecificationID(AppDb db)
+        public int GetSpecificationID(AppDb db)
         {
             using var cmd = db.Connection.CreateCommand();
 

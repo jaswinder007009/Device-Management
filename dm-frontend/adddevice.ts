@@ -18,10 +18,10 @@ function checkDropDown(elements: string,compareElement) {
 
   return flag;
 }
-function checkTypeBrandModel() {
+// function checkTypeBrandModel() {
 
-  return (brand.value && type.value && model.value);
-}
+//   return (brand.value && type.value && model.value);
+// }
 (document.querySelector('#inputtype') as HTMLInputElement).addEventListener('change', function (e) {
   console.log((document.getElementById("inputtype") as HTMLInputElement).value)
   let types = checkDropDown("type",type);
@@ -37,8 +37,8 @@ function checkTypeBrandModel() {
       (document.getElementById("inputtype") as HTMLInputElement).value="";
     }
   }
-  if (checkTypeBrandModel())
-  specificationDropdown(type.value, brand.value, model.value);
+  // if (checkTypeBrandModel())
+  // specificationDropdown(type.value, brand.value, model.value);
  
 });
 (document.querySelector('#inputbrand') as HTMLInputElement).addEventListener('change', function (e) {
@@ -55,8 +55,8 @@ function checkTypeBrandModel() {
       (document.getElementById("inputbrand") as HTMLInputElement).value="";
     }
   }
-  if (checkTypeBrandModel())
-  specificationDropdown(type.value, brand.value, model.value);
+  // if (checkTypeBrandModel())
+  // specificationDropdown(type.value, brand.value, model.value);
  
 });
 (document.querySelector('#inputmodel') as HTMLInputElement).addEventListener('change', function (e) {
@@ -73,8 +73,8 @@ function checkTypeBrandModel() {
       (document.getElementById("inputmodel") as HTMLInputElement).value="";
     }
   }
-  if (checkTypeBrandModel())
-  specificationDropdown(type.value, brand.value, model.value);
+  // if (checkTypeBrandModel())
+  // specificationDropdown(type.value, brand.value, model.value);
  
 });
 (document.querySelector('#popup_specification') as HTMLButtonElement).addEventListener('submit', function (e) {
@@ -92,7 +92,8 @@ function checkTypeBrandModel() {
   window.location.href = "./deviceListForadmin.html";
 });
 
-(document.querySelector('#submit') as HTMLButtonElement).addEventListener('submit', function (e) {
+window.addEventListener('submit', function (e) {
+  console.log("add");
   const urlParams = new URLSearchParams(window.location.search);
   const myParam = urlParams.get("device_id");
   console.log(myParam);
@@ -102,18 +103,16 @@ function checkTypeBrandModel() {
   if (myParam) {
    
     temp.update_device(myParam);
-    console.log("updated Successfully");
-    alert("Device Updated");
+    
     // window.location.href = "./deviceListForadmin.html";
   }
   else {
-
+    
     temp.Create_device();
-    console.log("added Successfully");
-    alert("Device Added");
+   
     //window.location.href = "./deviceListForadmin.html";
   }
-
+   
 
 });
 navigationBarsss("Admin", "navigation");
@@ -121,9 +120,10 @@ const temp = new AddDevice(token);
 temp.brandDropdown();
 temp.typeDropdown();
 temp.modelDropdown();
+temp.getSpecificationDropdown();
+temp.statusDropdown();
 const urlParams = new URLSearchParams(window.location.search);
 const myParam = urlParams.get("device_id");
-
 if (myParam != null) {
   temp.getDataToForm();
  
