@@ -3,12 +3,14 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 export const BASEURL = "http://localhost:5000";
 
 export function amIAdmin(token: string){
+
    return new HitApi(token).HitGetApi(BASEURL + "/api/device/is_admin")
     .then(res => res.result as boolean);
 }
 export function amIUser(token: string){
     return new HitApi(token).HitGetApi(BASEURL + "/api/device/is_user")
     .then(res => res.result as boolean);
+
 
 }
 export function navigationBarsss(role:string , element:string) {
@@ -52,9 +54,9 @@ export function navigationBarsss(role:string , element:string) {
     Complaints
      </a>
    
-    <a class="mdl-navigation__link" href="/device_role/role1.html">
+    <a class="mdl-navigation__link" href="/device_role/role.html">
         <i class="mdl-color-text--blue-grey-400 material-icons"
-            role="presentation">perm_device_information</i>Permissions
+            role="presentation">perm_device_information</i>Roles
     </a></nav>
     `;
         document.getElementById(element).innerHTML = navigation + nav;

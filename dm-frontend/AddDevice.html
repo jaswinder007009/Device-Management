@@ -73,14 +73,12 @@
                                     <option value=""></option>
                                    </datalist>
                                 <input id="inputmodel" autoComplete="on" list="model" required/>
-                               
-                                
                                 <label for="color" style="margin-left:60px ;"> Color:</label>
                                 <input type="text" id="color" name="color" required><br><br>
                                 <label for="price"> Price:</label>
                                 <input type="text" id="price" name="price" required>
                                 <label for="serial number" style="margin-left:45px ;"> Serial number:</label>
-                                <input type="number" id="serial_number" name="serial number" required><br><br>
+                                <input type="text" id="serial_number" name="serial number" required><br><br>
                                 <label for="warranty year"> Warranty Year :</label>
                                 <input type="number" id="warranty_year" name="warranty year" required>
                                 <label for="purchase date" style="margin-left:50px ;"> Purchase Date :</label>
@@ -91,9 +89,9 @@
                                 </select> <input type="button" value="Add Specifications" onclick="openForm('popupForm')" />
                                 <br><br><label for="Status" style="margin-left:50px ;"> Status:</label>
                                 <select id="status" required>
-                                    <option value="3">Allocated</option>
-                                    <option value="4">Free</option>
-                                    <option value="13">Faulty</option>
+                                    <!-- <option value="3">Allocated</option>
+                                    <option value="4" selected>Free</option>
+                                    <option value="13">Faulty</option> -->
                                 </select>
                                 
                                 <label for="entry date"> entry date :</label>

@@ -1,28 +1,52 @@
 <html>
 
 <head>
-  <!-- Material Design Lite -->
   <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <!-- Material Design icon font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <style>
+    .faultform{
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      z-index: 100;
+      background-color: rgba(255, 255, 255, 0.7);
+      display: none;
+    }
     .fault-form-popup {
       padding: 10px;
-      margin: auto;
-      width: 400px;
+      width: 350px;
+      height: 270px;
       border-radius: 5px;
-      border: 5px solid blue;
+      border: 1px solid blue;
       position: absolute;
-      left: 30%;
-      top: 5%;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
       background-color: white;
       display: none;
-      z-index: 9;
+      z-index: 101;
+      text-align: center;
+      margin: auto;
+      
+    }
+    .faultform.active,.faultform.active .fault-form-popup
+    {
+      display: block;
     }
     p{
       text-align: center;
+      margin-top: 8px;
+      
+    }
+    textarea{
+      height: 60px;
+      width: 300px;
+    }
+    label{
+      text-align: center;
+      height: 60px;
     }
   </style>
 </head>
@@ -50,27 +74,8 @@
 
     <main class="mdl-layout__content">
       <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
-        <div class="faultform " id="faultpopup">
-          <form class="fault-form-popup" id="myFaultForm">
-            <h1 id="headingText" class="text-center">Raise Complaint</h1>
-            <div class="col-lg-7 m-auto d-block">
-              <div class="content" style="padding-top: 10px;">
-                <div class="form-group col-md-12">
-                 <p><label><b>Description </b></label></p>
-                  <textarea type="text" class="form-control" id="comment"></textarea>
-                  <span id="description" class="text-danger font-weight-bold"></span>
-                </div>
-               <p>
-                  <button  name="submit"  class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored submit">SUBMIT</button>
-                  <button  name="submit"  class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored closed">CLOSE</button>
-                  </p>
-               
-
-              </div>
-            </div>
-          </form>
-
-        </div>
+       
+       
         <div class="page-content" id="page">
           <div class="mdl-layout-spacer"></div>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
@@ -95,7 +100,7 @@
                   ASSIGN_DATE</th>
                 <th class="mdl-data-table__header--sorted-descending" data-id="return_date" data-sortable=true>
                   RETURN_DATE</th>
-                <th data-id="action" data-sortable=false>ACTION</th>
+               
               </tr>
             </thead>
 
@@ -124,7 +129,7 @@
               <th class="mdl-data-table__header--sorted-descending" data-id="model" data-sortable=true>DEVICE MODEL</th>
               <th data-id="assign_date">REQUEST DATE</th>
               <th data-id="return_date">NO OF DAYS</th>
-              <th data-sortable=false>ACTION</th>
+              
             </tr>
 
           </table>
@@ -132,6 +137,24 @@
       </section>
     </main>
   </div>
+  <div class="faultform " id="faultpopup">
+    <form class="fault-form-popup mdl-grid" id="myFaultForm">
+      <h2 id="headingText">Raise Complaint</h2>
+         
+          <p><label><b>Description </b></label></p>
+            <textarea type="text" class="form-control" id="comment"></textarea>
+            <br>
+            <span id="description" style="color: red;"></span>
+          
+         <p>
+            <button  name="submit"  class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored submit">SUBMIT</button>
+            <button  name="submit"  class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored closed">CLOSE</button>
+            </p>
+     
+    </form>
+
+  </div>
+  
   <script src="/assets/js/userHistory.js"></script>
 </body>
 
