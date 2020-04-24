@@ -53,7 +53,8 @@ import { BASEURL, navigationBarsss, amIUser } from '../globals';
        
         if ((ev.target as HTMLInputElement).className.includes("savemydata")) {
             ev.preventDefault();
-            if (validate() == false) {
+            if (validate() == 0) {
+                alert("please fill the required details");
                 return;
             }          
             user.updateData(createObjectFromForm(this), userId).then(function () { user.getOneUser(userId); })
