@@ -55,25 +55,6 @@ function RegisterUser() {
 			console.log(err);
 		});
 }
-// function SendEmail()
-// {
-// 	let useremail = (document.getElementById("femails") as HTMLInputElement).value;
-// 	fetch(BASEURL + "/api/auth/Reset", {
-// 		method: "POST",
-// 		body: JSON.stringify({
-// 			email: useremail
-		
-// 		}),
-// 		headers: {
-// 			"Content-type": "application/json; charset=UTF-8"
-// 		}
-// 	})
-		
-// 		.catch(err => {
-// 			console.log(err);
-// 		});
-
-// }
 
 document.querySelector("#mybtn").addEventListener("click", function(e) {
 	e.preventDefault();
