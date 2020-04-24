@@ -57,6 +57,17 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
         document.getElementById("content").innerHTML += tableData;
 
     }
+    function NotificationCount()
+    {
+        fetch("http://localhost:5000/api/Notification/Count/"+id)
+        .then(Response=> Response.json())
+        .then(data=>{
+            console.log(data);
+            (document.getElementById("notifications") as HTMLElement).dataset.badge=data;
+          })
+        .catch(err=>console.log(err));
+    }
+    NotificationCount();
 
     function getStatistics(url: string) {
         fetch(url, {
@@ -194,4 +205,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
         
     }
     })();
+
+
+   
     
