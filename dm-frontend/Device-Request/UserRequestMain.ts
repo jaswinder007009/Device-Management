@@ -94,11 +94,45 @@ document.querySelector("#request")?.addEventListener("click", (e) => {
     let uri = BASEURL + "/api/request/device";
 
     new HitApi(obj.tokenKey).HitPostApi(uri, body).then((res) => {
-      if (res.status == 200) alert("device request submitted ");
-      else alert("device request submission failed ");
+      if (res.status == 200)
+      { 
+        hide(".container")
+        display(".bg-model")
+        document.getElementById("device-request-message").innerHTML = "Your request submitted"
+        
+    }
+      else{ 
+        display(".bg-model");
+        hide(".container");
+        document.getElementById("device-request-message").innerHTML = "Sorry for inconvenience. Please try after some time..."
+  }
     });
     clearData();
   }
+});
+
+
+function  display(value)
+{
+  (document.querySelector(value) as HTMLDivElement).style.display =
+        "flex";
+}
+function hide(value)
+{
+  (document.querySelector(value) as HTMLDivElement).style.display =
+        "none";
+}
+
+document.querySelector("#rmybtn1").addEventListener('click', function (e) {
+  hide(".bg-model");
+  display(".container");
+ 
+  document.getElementById("device-request-message").innerHTML = ""
+});
+document.querySelector(".x").addEventListener("click", function() {
+  hide(".bg-model");
+  display(".container");
+    document.getElementById("device-request-message").innerHTML = ""
 });
 
 function clearData() {
