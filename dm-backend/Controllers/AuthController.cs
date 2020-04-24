@@ -105,7 +105,7 @@ namespace dm_backend.Controllers
             var entryPoint = (from us in _context.User
                               join rl in _context.UserToRole on us.UserId equals rl.UserId
                               join r in _context.Role on rl.RoleId equals r.RoleId
-                              where us.UserId == usertorepo.Id
+                              where us.UserId == usertorepo.UserId
                               select new
                               {
                                   Role = r.RoleName
@@ -113,7 +113,7 @@ namespace dm_backend.Controllers
 
             var claims = new List<Claim>();
 
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, usertorepo.Id.ToString()));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, usertorepo.UserId.ToString()));
             claims.Add(new Claim(ClaimTypes.Name, usertorepo.Email, usertorepo.Email));
             foreach (var role in entryPoint)
             {
@@ -134,7 +134,7 @@ namespace dm_backend.Controllers
             var token = tokenhandler.CreateToken(tokenDescriptor);
             Console.WriteLine(token);
 
-            var result = new RedirectResult("http://127.0.0.1:1234/dashboard.html?token=" + tokenhandler.WriteToken(token) + "&id=" + usertorepo.Id.ToString());
+            var result = new RedirectResult("http://127.0.0.1:1234/dashboard.html?token=" + tokenhandler.WriteToken(token) + "&id=" + usertorepo.UserId.ToString());
             return result;
         }
     }

@@ -6,7 +6,23 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  
   <style>
+    div.mdl-layout__drawer
+{
+  border: none;
+}
+nav.mdl-navigation
+    {
+      height: unset;
+      box-shadow: none;
+    }
+    nav.mdl-navigation i
+    {
+      display: inline-block;
+    }
+
+    
     select {
       display: block !important;
     }
@@ -29,7 +45,11 @@
         <div class="mdl-layout-spacer"></div>
       </div>
     </header>
+<<<<<<< HEAD
  <div class="mdl-layout__drawer" id="navigation">
+=======
+    <div class="mdl-layout__drawer mdl-color--blue-grey-800" id="navigation">
+>>>>>>> d5e11fdfc2b49e69c7e761d8c7108643166c6d8a
     </div>
 <main class="mdl-layout__content">
       <div class="page-content">
@@ -169,11 +189,13 @@
 
                         <label><b> State</b> </label>
                         <select style="height: 46px;" class="state" name="state"> </select>
+                        <span class="text-danger font-weight-bold statespan"></span>
                       </div>
                       <div class="form-group col-md-3">
 
                         <label> <b>City</b> </label>
                         <select style="height: 46px;" class="city" name="city"></select>
+                        <span class="text-danger font-weight-bold cityspan"></span>
                       </div>
                       <div class="form-group col-md-3">
 
@@ -216,11 +238,13 @@
 
                         <label><b> State</b> </label>
                         <select style="height: 46px;" class="state" name="state"> </select>
+                        <span class="text-danger font-weight-bold statespan"></span>
                       </div>
                       <div class="form-group col-md-3">
 
                         <label> <b>City</b> </label>
                         <select style="height: 46px;" class="city" name="city"></select>
+                        <span class="text-danger font-weight-bold cityspan"></span>
                       </div>
                       <div class="form-group col-md-3">
 
@@ -267,6 +291,7 @@
 
                         <label><b>Area Code</b></label>
                         <input type="text" class="areaCode" name="AreaCode">
+                        <span class="text-danger font-weight-bold areacodespan"></span>
 
 
 
@@ -301,6 +326,7 @@
 
                         <label><b>Area Code</b></label>
                         <input type="text" class="areaCode" name="AreaCode">
+                        <span class="text-danger font-weight-bold areacodespan"></span>
                       </div>
                     </div>
 
@@ -331,6 +357,7 @@
 
                         <label><b>Area Code</b></label>
                         <input type="text" class="areaCode" name="AreaCode">
+                        <span class="text-danger font-weight-bold areacodespan"></span>
                       </div>
                     </div>
 
