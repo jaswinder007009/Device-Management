@@ -31,7 +31,6 @@ export default class role {
 		this.data = data["Roles"].map(roleObj => {
 			return { RoleId: roleObj["RoleId"], RoleName: roleObj["RoleName"] };
 		});
-		console.log(this.data);
 		this.size = data.length;
 		this.dynamicGenerate(this.table2);
 		return data;
@@ -46,7 +45,6 @@ export default class role {
 				PermissionName: permObj["PermissionName"]
 			};
 		});
-		console.log(this.data);
 		this.size = data.length;
 		this.dynamicGenerate1(this.table3);
 		return data;
@@ -56,8 +54,7 @@ export default class role {
 			headers: new Headers({"Authorization": `Bearer ${this.token}`})
 		});
 		let data = await response.json();
-		console.log(data);
-		return await data;
+		return data;
 	}
 	dynamicGenerate(table: any) {
 		let loop = 0;
@@ -120,7 +117,6 @@ export default class role {
 		let y = id2;
 		if (confirm("Are you sure you want to delete this permission?")) {
 			let uri = BASEURL + "/api/permission/" + y + "/delete";
-			console.log(uri);
 			await fetch(uri, {
 				method: "DELETE",
 				headers: new Headers({"Authorization": `Bearer ${this.token}`})
@@ -134,19 +130,15 @@ export default class role {
 		this.roleName = (document.getElementById(
 			"roleName"
 		) as HTMLInputElement).value;
-		console.log(this.roleName);
 		this.data = {
 			RoleName: this.roleName
 		};
-		console.log(this.data);
 	}
 	updateRole() {
-		console.log("hhh");
 		this.bindData();
 		this.postData();
 	}
 	postData() {
-		console.log("lll");
 		let url = BASEURL + "/api/role/add";
 		fetch(url, {
 			method: "POST",
@@ -156,7 +148,6 @@ export default class role {
 			},
 			body: JSON.stringify(this.data)
 		}).then(response => {
-			console.log(response.status);
 			if (!response.ok) {
 				alert("duplicate role");
 				throw new Error(response.statusText);
@@ -167,18 +158,15 @@ export default class role {
 		(document.getElementById("roleName") as HTMLInputElement).value == "";
 		document.getElementById("popup").style.display = "none";
 		this.getroles();
-		//navigationBarsss(role,"navigation");
 	}
 	//insert new permission
 	bindData1() {
 		this.PermissionName = (document.getElementById(
 			"PermissionName"
 		) as HTMLInputElement).value;
-		console.log(this.PermissionName);
 		this.data = {
 			PermissionName: this.PermissionName
 		};
-		console.log(this.data);
 	}
 	updatePermission() {
 		this.bindData1();
@@ -194,7 +182,6 @@ export default class role {
 			},
 			body: JSON.stringify(this.data)
 		}).then(response => {
-			console.log(response.status);
 			if (!response.ok) {
 				alert("duplicate role");
 				throw new Error(response.statusText);
@@ -207,9 +194,7 @@ export default class role {
 		this.getpermissions();
 	} //update role
 	update_data1(x: number) {
-		console.log(x);
 		this.headerTag34.innerHTML == "";
-		console.log("jjjjjjj");
 		this.headerTag34.innerHTML = `
         <div style="border-radius: 10px;border:5px ; background-color:linen; padding:10px; margin: auto; width:500px;">
         <label> Enter The New Role Name </label>
@@ -221,19 +206,15 @@ export default class role {
 		this.Role_up = (document.getElementById(
 			"RoleName111"
 		) as HTMLInputElement).value;
-		console.log(this.Role_up);
 		this.data = {
 			RoleName: this.Role_up
 		};
-		console.log(this.data);
 	}
 	updateRole_1(x: number) {
-		console.log(x);
 		this.bindData_1();
 		this.postData_1(x);
 	}
 	postData_1(x: number) {
-		console.log(x);
 		let url = BASEURL + "/api/role/" + x + "/update";
 		fetch(url, {
 			method: "PUT",
@@ -243,7 +224,6 @@ export default class role {
 			},
 			body: JSON.stringify(this.data)
 		}).then(response => {
-			console.log(response.status);
 			if (!response.ok) {
 				alert("role is there");
 				throw new Error(response.statusText);
@@ -253,13 +233,10 @@ export default class role {
 			this.getroles();
 		});
 		this.getroles();
-		console.log("kkkkkkkkk");
 		// navigationBarsss(role,"navigation");
 	} //update permission
 	update_data2(y: number) {
-		console.log(y);
 		this.headerTag35.innerHTML == "";
-		console.log("jjjjjjj");
 		this.headerTag35.innerHTML = `
         <div style="border-radius: 10px;border:5px ; background-color:linen; padding:10px; margin: auto; width:500px;">
         <label> Enter The New Permission Name </label>
@@ -271,19 +248,15 @@ export default class role {
 		this.permission_up = (document.getElementById(
 			"PermissionName111"
 		) as HTMLInputElement).value;
-		console.log(this.permission_up);
 		this.data = {
 			PermissionName: this.permission_up
 		};
-		console.log(this.data);
 	}
 	updatePermission_1(y: number) {
-		console.log(y);
 		this.bindData_2();
 		this.postData_2(y);
 	}
 	postData_2(y: number) {
-		console.log(y);
 		let url = BASEURL + "/api/permission/" + y + "/update";
 		fetch(url, {
 			method: "PUT",
@@ -293,7 +266,6 @@ export default class role {
 			},
 			body: JSON.stringify(this.data)
 		}).then(response => {
-			console.log(response.status);
 			if (!response.ok) {
 				alert("permission is there");
 				throw new Error(response.statusText);
@@ -303,7 +275,5 @@ export default class role {
 			this.getpermissions();
 		});
 		this.getpermissions();
-		console.log("kkkkkkkkk");
-		// navigationBarsss(role,"navigation");
 	}
 }
