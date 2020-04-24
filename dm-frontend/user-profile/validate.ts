@@ -2,9 +2,10 @@ export function validate() {
     return Firstnamevalidation() && Middlenamevalidation() &&
     Lastnamevalidation() &&
     emailvalidation()&&passwordvalidation()&&confirmpasswordvalidation()&&addressvalidation("addresses1")&&addressvalidation("addresses2")&&
-    addressvalidation1("addresses1")&&addressvalidation1("addresses2")&&date0fbirthvalidation()&&
+    addressvalidation1("addresses1")&&addressvalidation1("addresses2")&&cityvalidation("addresses1")&&cityvalidation("addresses2")
+    &&statevalidation("addresses1")&&statevalidation("addresses2")&&date0fbirthvalidation()&&
     pinvalidation("addresses1")&&pinvalidation("addresses2")&&phonevalidation("phones1")&&
-    phonevalidation("phones3");
+    phonevalidation("phones3")&&areacodevalidation("phones1")&&areacodevalidation("phones2")&&areacodevalidation("phones3");
 }
 function Firstnamevalidation() {
     var firstnames = (document.getElementById('firstName') as HTMLInputElement).value;
@@ -141,14 +142,60 @@ function addressvalidation1(containerId: string) {
         return true;
     }
 }
+function statevalidation(containerId: string) {
+    var state1 = (document.querySelector("#" + containerId + ' .state') as HTMLInputElement).value;
+    if (state1 == "") {
+        document.querySelector("#" + containerId + ' .statespan').innerHTML = "Please Select The State";
+        return false;
+    } 
+    else {
+        document.querySelector("#" + containerId + ' .statespan').innerHTML = "";
+        return true;
+    }
+}
+    function cityvalidation(containerId: string) {
+        var city1 = (document.querySelector("#" + containerId + ' .city') as HTMLInputElement).value;
+        if (city1 == "") {
+            document.querySelector("#" + containerId + ' .cityspan').innerHTML = "Please Select The City";
+            return false;
+        } 
+        else {
+            document.querySelector("#" + containerId + ' .cityspan').innerHTML = "";
+            return true;
+        }
+}
 function pinvalidation(containerId: string) {
     var pin = (document.querySelector("#" + containerId + ' .pin') as HTMLInputElement).value;
-     if (isNaN(parseInt(pin))) {
+    if(pin=="")
+    {
+        document.querySelector("#" + containerId + ' .pinspan').innerHTML = "";
+        return true;
+
+    }
+    
+     else if (isNaN(parseInt(pin))) {
         document.querySelector("#" + containerId + ' .pinspan').innerHTML = "pincode must be in digit";
         return false;
     }
     else {
         document.querySelector("#" + containerId + ' .pinspan').innerHTML = "";
+        return true;
+    }
+}
+function areacodevalidation(containerId: string) {
+    var areacode1 = (document.querySelector("#" + containerId + ' .areaCode') as HTMLInputElement).value;
+    if(areacode1=="")
+    {
+        document.querySelector("#" + containerId + ' .areacodespan').innerHTML = "";
+        return true;
+
+    }
+    else if (isNaN(parseInt(areacode1))) {
+        document.querySelector("#" + containerId + ' .areacodespan').innerHTML = "areacode must be in digits";
+        return false;
+    }
+    else {
+        document.querySelector("#" + containerId + ' .areacodespan').innerHTML = "";
         return true;
     }
 }
