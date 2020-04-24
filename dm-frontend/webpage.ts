@@ -202,7 +202,7 @@ import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 				util.closeModal(modal);
 			});
 		}
-		else if (((ea.target) as HTMLInputElement).className == "userDeleteData")
+		else if (((ea.target) as HTMLInputElement).className.includes("userDeleteData"))
 		{   const target = ea.target as HTMLInputElement;
 			const modal = document.querySelector((ea.target as HTMLElement).dataset.target) as HTMLDivElement;
 			const userId:number = parseInt(target.id);
@@ -245,7 +245,8 @@ import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 	}
 
 	document.addEventListener("click", function(e) {
-		if ((e.target as HTMLButtonElement).className == "userEditData") {
+		console.log(e.currentTarget);
+		if ((e.target as HTMLButtonElement).className.includes("userEditData")) {
 			changeheadingText();
 			(document.getElementById("email") as HTMLInputElement).disabled = true;
 			util.openForm();
@@ -281,7 +282,7 @@ import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 		});
 	});
 	navigationBarsss(role,"navigation");
-
+    
 	deptdesgListen(form);
 	dropDownListen(form,token);
 

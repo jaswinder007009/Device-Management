@@ -77,7 +77,7 @@ namespace dm_backend.Models{
                     sortField = "concat(first_name ,'', middle_name , '' ,  last_name)";
                     break;
                 case "specification":
-                    sortField = "concat(RAM,'', storage ,'' ,screenSize ,'',connectivity)";
+                    sortField = "concat(RAM,'', storage ,'' ,screen_size ,'',connectivity)";
                     break;
             }
             Db.Connection.Open();
