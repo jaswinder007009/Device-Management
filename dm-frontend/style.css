@@ -164,14 +164,14 @@ position: relative;
 left: 50%;
 top: 1%;
 transform: translate(-45%, 5%);
-border: 2px solid #666;
+border: 2px solid rgb(0, 77, 192);
 z-index: 9;
 
 }
 
 
 .form-popup {
-max-width: 1200px;
+max-width: 850;
 padding: 20px;
 background-color: #fff;
 }
