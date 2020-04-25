@@ -26,7 +26,7 @@ export function createObjectFromForm(formElement: HTMLFormElement) {
 		let number = (container.querySelector(".number") as HTMLInputElement).value;
 		let countryCode = (container.querySelector(".countryCode") as HTMLInputElement).value;
 		let areaCode = (container.querySelector(".areaCode") as HTMLInputElement).value;
-		if (number)modelObject.phones.push
+		if (number||countryCode)modelObject.phones.push
 		({contactNumberType,number,countryCode,areaCode});
 	}
 
