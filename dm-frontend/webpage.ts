@@ -9,7 +9,7 @@ import { Sort } from "./user-profile/SortingUser";
 import { BASEURL,amIUser,navigationBarsss } from './globals';
 import { UserData }  from "./dropdown";
 import {MyDevices } from "./userHistory";
-import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
+import {dropDownListen } from "./user-profile/dropDownListener";
 
 (async function(){
 	const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
@@ -38,10 +38,7 @@ import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 		}
 		
 		setData();
-		function changeheading1Text()
-		{
-			document.getElementById('headingText').innerHTML='Register User';
-		}
+
 		document.addEventListener('click' , e =>
 		{
 			if((e.target as HTMLButtonElement).id == "popup")
@@ -49,12 +46,10 @@ import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 				
 					console.log("Button clicked");
 					(document.getElementById("email") as HTMLInputElement).disabled = false;
-					changeheading1Text();
-                    util.openForm();
-					var user = new UserData(token);
-					user.getSalutation();
-					//user.departmentcall();
+					changeheadingText();
 					form_mode="create";
+                    util.openForm(form_mode);
+					var user = new UserData(token);
 				}
 			});
 
@@ -67,8 +62,6 @@ import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 			var userData=createObjectFromForm(this);
 			if(validateForm(form_mode)==true){
 				new CreateUserApi(token).createUserData(userData).then(function(){setData();});
-				//new UserData(token);
-			
 			}
 			else 
 			{
@@ -77,11 +70,7 @@ import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 		}
 		else if(form_mode=="edit")
 		{
-		
-		
 			var userData1=createObjectFromForm(this);
-
-			console.log(userData1);
 			if(validateForm(form_mode)==true){
 				new UpdateUserApi(token).updateUserData(userData1).then(function(){
 					setData();
@@ -97,7 +86,10 @@ import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 
 	});
 
-	
+	function changeheadingText()
+	{
+		document.getElementById('headingText').innerHTML= form_mode == "create" ? 'Register User' : "Update User details";
+	}
 	const modalFunctions = {
 		onDeleteModal : function (callback) {
 			let userId:number = parseInt(((this) as HTMLInputElement).dataset.id);
@@ -138,7 +130,7 @@ import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 			}
 		},
 		onStatusModal : function (callback) {
-			let userId:number = parseInt(((this) as HTMLDivElement).dataset.id);
+			let userId:number = parseInt((this as HTMLDivElement).dataset.id);
 			let url : string= BASEURL + "/api/Device/current_device/"+userId+"?search=" + "" + "";
 			
 			(document.getElementById("ucs")as HTMLInputElement).addEventListener('click', ucs);
@@ -146,9 +138,9 @@ import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 			
 			new MyDevices(token).getApiCall(url)
 			.then(res=>{
-				console.log(res);
 				if(res.length>0)
-					{   let i=0;
+				{
+					let i=0;
 					(document.getElementById("insideModel") as HTMLInputElement).innerHTML="This User Has "+res.length+" Devices And Cannot Be Inactivated"+ "<br>";
 					(document.getElementById("ucs")as HTMLInputElement).disabled = true;
 					for(i=0;i<res.length;i++)
@@ -239,22 +231,12 @@ import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 		}
 	});
 
-	function changeheadingText()
-	{
-		document.getElementById('headingText').innerHTML='Update User Details';
-	}
-
 	document.addEventListener("click", function(e) {
-		console.log(e.currentTarget);
 		if ((e.target as HTMLButtonElement).className.includes("userEditData")) {
 			changeheadingText();
 			(document.getElementById("email") as HTMLInputElement).disabled = true;
-			util.openForm();
-			var user = new UserData(token);
-			user.getSalutation();
-		//	user.departmentcall();
-
 			form_mode="edit";
+			util.openForm(form_mode);
 				
 			const userId: number = parseInt((e.target as HTMLButtonElement).id) ;
 			var userObject: UserModel;
@@ -263,14 +245,9 @@ import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 				const form = document.forms["myForm"] as HTMLFormElement;
 				populateFormFromObject(userObject, form,token);
 				form_mode = "edit";
-				//util.disableEditing();
 			});
 		}
 	});
-
-
-
- util.addressCheck();
 
 
 	
@@ -283,7 +260,6 @@ import {dropDownListen,deptdesgListen } from "./user-profile/dropDownListener";
 	});
 	navigationBarsss(role,"navigation");
     
-	deptdesgListen(form);
 	dropDownListen(form,token);
 
 
