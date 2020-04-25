@@ -11,7 +11,7 @@ using dm_backend.Logics;
 using dm_backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using MySql.Data.MySqlClient;
-
+using dm_backend.Data;
 
 namespace dm_backend.Controllers
 {
@@ -20,10 +20,12 @@ namespace dm_backend.Controllers
     public class NotificationController : ControllerBase
     {
         public AppDb Db { get; }
+        private readonly EFDbContext _context;
 
-        public NotificationController(AppDb db)
+        public NotificationController(AppDb db,EFDbContext context)
         {
             Db = db;
+            _context=context;
         }
         
         [HttpPost]
@@ -87,6 +89,15 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             
             return  Ok("Request rejected");
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("Count/{id}")]
+        public int GetCount(int id)
+         {
+            var values = _context.Notification.Count(w => (w.UserId == id)&& (w.StatusId==9) );
+            return values;
+
         }
 
 

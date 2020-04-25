@@ -1,27 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <style>
-    h1{
+    h1 {
       text-align: center;
       color: rgb(27, 148, 108);
-      
-    }
+}
+
+
   </style>
 
 
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <link rel="stylesheet" href="Request.css">
 
-    <title>Document</title>
+  
+  <link rel="stylesheet" type="text/css" href="../SJLogin/Styles.css">
+  <link rel="stylesheet" type="text/css" href="../index.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+ 
+
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <link rel="stylesheet" href="Request.css">
+
+  <title>Document</title>
 </head>
+
 <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
@@ -39,68 +50,94 @@
         <div class="mdl-layout__drawer" id="navigations">
           <span class="mdl-layout-title">Device Request</span>
           <!-- <nav class="mdl-navigation">
+<<<<<<< HEAD
+=======
+>>>>>>> 08b78443734991b3dd95f99097d3d4d40f5051e6
             <a class="mdl-navigation__link" href="">Link</a>
             <a class="mdl-navigation__link" href="">Link</a>
             <a class="mdl-navigation__link" href="">Link</a>
             <a class="mdl-navigation__link" href="">Link</a>
           </nav> -->
+    </div>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        <!-- Your content goes here -->
+
+
+        <div class="bg-model">
+          <div class="model-content" style="  width: 30%; height: 30%;"> 
+            <div class="x">+</div>
+            <h5 id="device-request-message" style="text-align: center;margin-top: 15%;"></h5>
+
+            <!-- <input type="text" id="femail" ><br> -->
+            <!-- <p id="device-request-message" style="display: flex;" ></p> -->
+            <span id="femails" class="text-danger font-weight-bold"></span><br>
+            <button style="width: 100px;margin-left: 30%; margin-top: 7%; align-self: center;" id="rmybtn1"
+              class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+              Submit
+            </button>
+
+          </div>
         </div>
-        <main class="mdl-layout__content">
-          <div class="page-content"><!-- Your content goes here -->
-        
-            <div class="container">
-             
-            <div class="request-form">
-              <div class="head">
-                <h1>
-                  Select Device
-                </h1>
-                </div>
 
-                <label>  Number of Days </label>
-                <input type="text" id="expected-days" value = ""  onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+        <div class="container">
 
-                <br />
-
-                <label> Device Type </label>
-                <select class="device" id="types">
-
-                </select>
-
-                <br />
-                <label> Device Brand </label>
-                <select class="device" id = "brands"> 
-
-                </select>
-
-                <br />
-                <label> Device Model </label>
-                <select class="device" id="models">
-
-                </select>
-
-                <br />
-                <label> Device Specification </label>
-                <select class="specs" id="specification">
-
-                </select >
-                <br />
-
-                <label> your Message </label>
-                <textarea  id="comment" rows="4" cols="50" > </textarea>
-
-                <br />
-                <input type="submit" id="request" value="Submit">
-
+          <div class="request-form">
+            <div class="head">
+              <h1>
+                Select Device
+              </h1>
             </div>
-        
+
+            <label> Number of Days </label>
+            <input type="text" id="expected-days" value=""
+              onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+
+            <br />
+
+            <label> Device Type </label>
+            <select class="device" id="types">
+
+            </select>
+
+            <br />
+            <label> Device Brand </label>
+            <select class="device" id="brands">
+
+            </select>
+
+            <br />
+            <label> Device Model </label>
+            <select class="device" id="models">
+
+            </select>
+
+            <br />
+            <label> Device Specification </label>
+            <select class="specs" id="specification">
+
+            </select>
+            <br />
+
+            <label> your Message </label>
+            <textarea id="comment" rows="4" cols="50"> </textarea>
+
+            <br />
+            <input type="submit" id="request" value="Submit">
+
+          </div>
+
         </div>
-        
-        
-        
-        </div>
-        </main>
+
+
+
       </div>
-      <script src="/assets/js/userRequestMain.js"></script>
+      <div class="load" id="loading">
+        <div class= "loader"></div>
+    </div>
+    </main>
+  </div>
+  <script src="/assets/js/userRequestMain.js"></script>
 </body>
+
 </html>

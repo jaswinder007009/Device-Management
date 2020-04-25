@@ -706,32 +706,39 @@ namespace dm_backend.Data
             {
                 entity.ToTable("notification");
 
-                entity.HasIndex(e => e.EmployeeId)
+                entity.HasIndex(e => e.DeviceId)
+                    .HasName("notification_to_device_idx");
+
+                entity.HasIndex(e => e.StatusId)
+                    .HasName("notification_to_status_idx");
+
+                entity.HasIndex(e => e.UserId)
                     .HasName("employee_id_notification_idx");
 
                 entity.Property(e => e.NotificationId).HasColumnName("notification_id");
 
-                entity.Property(e => e.EmployeeId).HasColumnName("employee_id");
+                entity.Property(e => e.DeviceId).HasColumnName("device_id");
 
                 entity.Property(e => e.Message)
-                    .IsRequired()
                     .HasColumnName("message")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.NotificationDate)
-                    .HasColumnName("notification_date")
-                    .HasColumnType("datetime");
+                    .HasMaxLength(45);
 
                 entity.Property(e => e.NotificationType)
                     .IsRequired()
                     .HasColumnName("notification_type")
                     .HasMaxLength(50);
 
-                entity.HasOne(d => d.Employee)
+                entity.Property(e => e.StatusId).HasColumnName("status_id");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+
+
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.Notification)
-                    .HasForeignKey(d => d.EmployeeId)
+                    .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("employee_id_notification");
+                    .HasConstraintName("notification_to_user");
             });
 
             modelBuilder.Entity<Permission>(entity =>

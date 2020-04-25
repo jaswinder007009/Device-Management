@@ -149,6 +149,28 @@ function addressvalidation1(containerId: string) {
         return true;
     }
 }
+function statevalidation(containerId: string) {
+    var state1 = (document.querySelector("#" + containerId + ' .state') as HTMLInputElement).value;
+    if (state1 == "") {
+        document.querySelector("#" + containerId + ' .statespan').innerHTML = "Please Select The State";
+        return false;
+    } 
+    else {
+        document.querySelector("#" + containerId + ' .statespan').innerHTML = "";
+        return true;
+    }
+}
+    function cityvalidation(containerId: string) {
+        var city1 = (document.querySelector("#" + containerId + ' .city') as HTMLInputElement).value;
+        if (city1 == "") {
+            document.querySelector("#" + containerId + ' .cityspan').innerHTML = "Please Select The City";
+            return false;
+        } 
+        else {
+            document.querySelector("#" + containerId + ' .cityspan').innerHTML = "";
+            return true;
+        }
+}
 function pinvalidation(containerId: string) {
     var pin = (document.querySelector("#" + containerId + ' .pin') as HTMLInputElement).value;
     if(pin=="")
@@ -170,6 +192,23 @@ function pinvalidation(containerId: string) {
     }
     else {
         document.querySelector("#" + containerId + ' .pinspan').innerHTML = "";
+        return true;
+    }
+}
+function areacodevalidation(containerId: string) {
+    var areacode1 = (document.querySelector("#" + containerId + ' .areaCode') as HTMLInputElement).value;
+    if(areacode1=="")
+    {
+        document.querySelector("#" + containerId + ' .areacodespan').innerHTML = "";
+        return true;
+
+    }
+    else if (isNaN(parseInt(areacode1))) {
+        document.querySelector("#" + containerId + ' .areacodespan').innerHTML = "areacode must be in digits";
+        return false;
+    }
+    else {
+        document.querySelector("#" + containerId + ' .areacodespan').innerHTML = "";
         return true;
     }
 }
