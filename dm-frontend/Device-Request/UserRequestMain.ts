@@ -15,8 +15,8 @@ var device = [].map.call(document.querySelectorAll(".device"), (e) => {
   return e;
 });
 (function (){
-  let path = BASEURL + "/api/dropdown/" +device[0].id;
-  let data = GetData(path, device[0].id);
+    let path = BASEURL + "/api/dropdown/" +device[0].id;
+    let data = GetData(path, device[0].id);
 })();
 
 document.addEventListener("change", (event) => {
@@ -27,11 +27,11 @@ document.addEventListener("change", (event) => {
     dropdownlist.clear(device[2].id);
     dropdownlist.clear("specification");
     GetData( BASEURL + "/api/dropdown/" + device[1].id+"/" + device[0].value , device[1].id);
-
+   
   }
   if ((event.target as HTMLSelectElement).id == "brands")
   {
-   
+
     dropdownlist.clear(device[2].id);
     dropdownlist.clear("specification");
     GetData( BASEURL + "/api/dropdown/" + device[2].id+"/" + device[1].value , device[2].id);
@@ -64,7 +64,7 @@ export async function specificationDropdown(
 
   let data = await new HitApi(obj.tokenKey).HitGetApi(uri);
 
-  
+
   (document.getElementById("specification") as HTMLSelectElement).innerHTML = "";
   for (let i = 0; i < data.length; i++) {
     (document.getElementById("specification") as HTMLSelectElement).innerHTML += '<option value="' + data[i].specification_id +'">' +
@@ -80,13 +80,13 @@ export async function specificationDropdown(
 }
 
 async function GetData(uri: string, column: string) {
-
-  (document.getElementById("loading") as HTMLDivElement).style.display = "flex";   let obj = Token.getInstance();
-
   
+  (document.getElementById("loading") as HTMLDivElement).style.display = "flex"; 
+  let obj = Token.getInstance();
+
   let data = await new HitApi(obj.tokenKey).HitGetApi(uri);
   new populateDropDown().populateDevice(data, column);
-  (document.getElementById("loading") as HTMLDivElement).style.display = "none";   
+  (document.getElementById("loading") as HTMLDivElement).style.display = "none";    
   return data;
 }
 
@@ -102,7 +102,7 @@ document.querySelector("#request")?.addEventListener("click", (e) => {
         hide(".container")
         display(".bg-model")
         document.getElementById("device-request-message").innerHTML = "Your request submitted"
-
+        
     }
       else{ 
         display(".bg-model");
@@ -114,8 +114,8 @@ document.querySelector("#request")?.addEventListener("click", (e) => {
   }
 });
 
-function clearData() {
-  function  display(value)
+
+function  display(value)
 {
   (document.querySelector(value) as HTMLDivElement).style.display =
         "flex";
@@ -129,7 +129,7 @@ function hide(value)
 document.querySelector("#rmybtn1").addEventListener('click', function (e) {
   hide(".bg-model");
   display(".container");
-
+ 
   document.getElementById("device-request-message").innerHTML = ""
 });
 document.querySelector(".x").addEventListener("click", function() {
