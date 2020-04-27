@@ -10,10 +10,11 @@
     <!-- Popper JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <!-- Latest compiled JavaScript -->
+    
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <!-- Material Design Lite -->
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-green.min.css" />
     <!-- Material Design icon font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet"> -->
@@ -23,6 +24,10 @@
             /* top: 20%; */
             display: block;
         }
+        .mdl-layout__drawer-button i.material-icons
+{
+  line-height: 2;
+}
     </style>
 </head>
 
@@ -49,6 +54,7 @@
                                 <option value="Ms">Ms</option>
                                 <option value="Dr">Dr</option>
                             </select>
+                            <span id="salutations" class="text-danger font-weight-bold"></span>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="firstName">First Name</label>
@@ -101,6 +107,7 @@
                         <option value="admin">Admin</option>
                         <option value="superadmin">Super Admin</option>
                          </select>
+                         <span id="roleNames" class="text-danger font-weight-bold"></span>
 
                     </div>
 
@@ -123,7 +130,7 @@
 
                  <div class="form-row">
                     <div class="form-group col-md-4"><label for="DOB">Date Of Birth:</label>
-                        <input type="date" id="dob" placeholder="dd-mm-YYYY" name="DOB" class="form-control">
+                        <input type="date" id="dob" placeholder="dd-mm-YYYY" value="0001-01-01" name="DOB" class="form-control">
                         <span id="dobs" class="text-danger font-weight-bold"></span>
                     </div><br>
                     <div class="form-group col-md-4">
@@ -137,7 +144,7 @@
                     </div>
 
                     <div class="form-group col-md-4"><label for="DOJ">Date Of Joining:</label>
-                        <input type="date" id="doj" placeholder="dd-mm-YYYY" name="DOJ" class="form-control">
+                        <input type="date" id="doj" placeholder="dd-mm-YYYY" value="0001-01-01" name="DOJ" class="form-control">
                         <span id="dojs" class="text-danger font-weight-bold"></span>
                     </div>
                     </div><br>
@@ -155,7 +162,7 @@
                         </h2>
                     </div>
 
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
                         data-parent="#accordion1">
                         <div class="card-body">
                             <label> Contact 1 Details </label><br>
@@ -165,16 +172,25 @@
                                         <label for="type">Type</label>
                                         <select id="contactNumberType" name="Contact"
                                             class="contactNumberType form-control">
-                                            <option value="home">Home</option>
                                             <option value="mobile">Mobile</option>
+                                            <option value="home">Home</option>
                                             <option value="work">Work</option>
                                         </select>
+                                        <span id="Contact1" class="text-danger font-weight-bold typespan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="number">Number</label>
                                         <input type="text" id="phone_number1" name="phone_number1" maxlength="10"
                                             class="number form-control">
-                                        <span id="phone_number1s" class="text-danger font-weight-bold"></span>
+                                        <!-- <input type="tel" id="phone_number1" name="phone_number1" maxlength="12" class="number form-control" placeholder="XXX-XXXX-XXX" pattern="[0-9]{3}-[0-9]{4}-[0-9]{3}">-->
+                                        <!-- <small>Format: XXX-XXX-XXXX</small><br><br> -->
+
+                                            <!-- <label for="phone">Enter a phone number:</label><br><br>
+                                            <input type="tel" id="phone" name="phone" placeholder="XXX-XXXX-XXX" pattern="[0-9]{3}-[0-9]{4}-[0-9]{3}" required><br><br>
+                                            <small>Format: 123-45-678</small><br><br> -->
+
+
+                                        <span id="phone_number1s" class="text-danger font-weight-bold numberspan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="country">Country Code</label>
@@ -182,11 +198,12 @@
                                             <option value="91">India</option>
 
                                         </select>
+                                        <span id="CountryCodes1" class="text-danger font-weight-bold CountryCodeSpan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="areacode">Area Code</label>
-                                        <input type="text" class="areaCode form-control" id="ac" name="AreaCode"  maxlength="4">
-                                        <span id="acs" class="text-danger font-weight-bold"></span>
+                                        <input type="text" class="areaCode form-control" id="ac1" name="AreaCode"  maxlength="4">
+                                        <span id="ac1s" class="text-danger font-weight-bold areaCodeSpan"></span>
                                     </div>
                                 </div>
 
@@ -204,12 +221,14 @@
                                             <option value="mobile">Mobile</option>
                                             <option value="work">Work</option>
                                         </select>
+                                        <span id="Contact2" class="text-danger font-weight-bold typespan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="number">Number</label>
-                                        <input type="text" name="phone_number2" maxlength="10"
+                                        <input type="text" id="phone_number2" name="phone_number2" maxlength="10"
                                             class="number form-control">
-
+                                            <!-- <small>Format: XXX-XXX-XXXX</small><br><br> -->
+                                            <span id="phone_number2s" class="text-danger font-weight-bold numberspan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="country">Country Code</label>
@@ -217,10 +236,12 @@
                                             <option value="91">India</option>
 
                                         </select>
+                                        <span id="CountryCodes2" class="text-danger font-weight-bold CountryCodeSpan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="areacode">Area Code</label>
-                                        <input type="text" class="areaCode form-control" name="AreaCode" maxlength="4">
+                                        <input type="text" id="ac2" class="areaCode form-control" name="AreaCode" maxlength="4">
+                                        <span id="ac2s" class="text-danger font-weight-bold areaCodeSpan"></span>
                                     </div>
                                 </div>
 
@@ -234,16 +255,19 @@
                                         <label for="type">Type</label>
                                         <select id="contactNumberType" name="Contact"
                                             class="contactNumberType form-control">
+                                            <option value="work">Work</option>
                                             <option value="home">Home</option>
                                             <option value="mobile">Mobile</option>
-                                            <option value="work">Work</option>
+                                           
                                         </select>
+                                        <span id="Contact3" class="text-danger font-weight-bold typespan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="number">Number</label>
-                                        <input type="text" name="phone_number2" maxlength="10"
+                                        <input type="text" id="phone_number3" name="phone_number3" maxlength="10"
                                             class="number form-control">
-
+                                            <!-- <small>Format: XXX-XXX-XXXX</small><br><br> -->
+                                            <span id="phone_number3s" class="text-danger font-weight-bold numberspan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="country">Country Code</label>
@@ -251,10 +275,12 @@
                                             <option value="91">India</option>
 
                                         </select>
+                                        <span id="CountryCodes3" class="text-danger font-weight-bold CountryCodeSpan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="areacode">Area Code</label>
-                                        <input type="text" class="areaCode form-control" name="AreaCode" maxlength="4">
+                                        <input type="text" id="ac3" class="areaCode form-control" name="AreaCode" maxlength="4">
+                                        <span id="ac3s" class="text-danger font-weight-bold areaCodeSpan"></span>
                                     </div>
                                 </div>
 
@@ -286,34 +312,36 @@
                                 <div class="form-row" id="addresses1">
                                     <div class="form-group col-md-2">
                                         <label for="type">Type:</label>
-                                        <select class="addressType form-control">
+                                        <select class="addressType form-control" id="addressType">
                                             <option value="current">Current</option>
                                             <option value="permanant">Permanent</option>
                                         </select>
+                                        <span id="addressType1" class="text-danger font-weight-bold addressTypeSpan"></span>
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label>Adddress Line 1:</label>
                                         <input type="text" name="CurrentAddress1" class="addressLine1 form-control" id="c1" size="50" maxlength="50">
-                                        <span id="c1s" class="text-danger font-weight-bold"></span>
+                                        <span id="c1s" class="text-danger font-weight-bold addressLine1Span"></span>
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label>Adddress Line 2:</label>
                                         <input type="text" name="CurrentAddress2" class="addressLine2 form-control"
                                             id="c2" size="50" maxlength="50">
-                                            <span id="c2s" class="text-danger font-weight-bold"></span>
+                                            <span id="c2s" class="text-danger font-weight-bold addressLine2Span"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Country:</label>
                                         <select class="country form-control" id="c6" name="Country1">
 
                                         </select>
+                                        <span id="c6s" class="text-danger font-weight-bold countrySpan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>State:</label>
                                         <select class="state form-control" id="c5" name="State1">
                                           
                                         </select>
-                                        <span id="c5s" class="text-danger font-weight-bold"></span>
+                                        <span id="c5s" class="text-danger font-weight-bold stateSpan"></span>
                                     </div>
                                    
                                     <div class="form-group col-md-3">
@@ -321,13 +349,13 @@
                                         <select class="city form-control" id="c4" name="city1">
                                          
                                         </select>
-                                        <span id="c4s" class="text-danger font-weight-bold"></span> 
+                                        <span id="c4s" class="text-danger font-weight-bold citySpan"></span> 
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Pincode</label>
                                         <input type="text" name="pincode1" id="c3" class="pin form-control"
                                             maxlength="6">
-                                            <span id="c3s" class="text-danger font-weight-bold"></span>
+                                            <span id="c3s" class="text-danger font-weight-bold pinSpan"></span>
                                     </div>
                                 </div><br>
 
@@ -346,45 +374,51 @@
                                 <div class="form-row" id="addresses2">
                                     <div class="form-group col-md-2">
                                         <label for="type">Type:</label>
-                                        <select class="addressType form-control">
-                                            <option value="current">Current</option>
+                                        <select class="addressType form-control" id="addressType">
                                             <option value="permanant">Permanent</option>
+                                            <option value="current">Current</option>
+                                           
                                         </select>
+                                        <span id="addressType2" class="text-danger font-weight-bold addressTypeSpan"></span>
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label>Adddress Line 1:</label>
                                         <input type="text" name="PermanentAddress1" class="addressLine1 form-control"
                                             id="p1" size="50" maxlength="50">
-                                            <span id="p1s" class="text-danger font-weight-bold"></span>
+                                            <span id="p1s" class="text-danger font-weight-bold addressLine1Span"></span>
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label>Adddress Line 2:</label>
                                         <input type="text" name="PermanentAddress2" class="addressLine2 form-control"
                                             id="p2" size="50" maxlength="50">
-                                            <span id="p2s" class="text-danger font-weight-bold"></span>
+                                            <span id="p2s" class="text-danger font-weight-bold addressLine2Span"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Country:</label>
                                         <select id="p6" class="country form-control" name="Country2">
 
                                         </select>
+                                        <span id="" class="text-danger font-weight-bold countrySpan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>State:</label>
                                         <select id="p5" class="state form-control" name="State2">
 
                                         </select>
+                                        <span id="" class="text-danger font-weight-bold stateSpan"></span>
                                     </div>
                                     
                                     <div class="form-group col-md-3">
                                         <label>City:</label>
                                         <select id="p4" class="city form-control" name="city2">
                                         </select>
+                                        <span id="" class="text-danger font-weight-bold citySpan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Pincode</label>
                                         <input type="text" id="p3" name="pincode2" class="pin form-control"
                                             maxlength="6">
+                                            <span id="" class="text-danger font-weight-bold pinSpan"></span>
                                     </div>
                                 </div><br>
 
@@ -493,7 +527,7 @@
             </div>
         </header>
 
-        <div class="mdl-layout__drawer" id="navigation">
+        <div class="mdl-layout__drawer mdl-color--blue-grey-800 " id="navigation">
             <!-- <span class="mdl-layout-title">Go To</span>
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" href="">Role & Permission</a>

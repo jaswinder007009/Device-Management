@@ -94,6 +94,7 @@ document.addEventListener("click", function (e) {
                     notify.deviceId = +(e.target as HTMLButtonElement).dataset.value;
                     notify.userId = +(e.target as HTMLButtonElement).dataset.userid;
                     notify.acceptNotification(notify);
+                    notify.notification(user_id);
                  console.log("notification accepted");
                }
             }
@@ -103,6 +104,7 @@ document.addEventListener("click", function (e) {
                 
                 let notificationId = parseInt((e.target as HTMLButtonElement).dataset.notificationid,10);
                 notify.rejectNotification(notificationId);
+                notify.notification(user_id);
                 
                }
                

@@ -51,24 +51,11 @@ export async  function populateFormFromObject(
 	data: models.UserModel,
 	form: HTMLFormElement,token:string
 ) {
-    console.log(data, form);
 
 	form["salutation"].value   =data.salutation;
 	form["firstName"].value    =data.firstName;
 	form["middleName"].value   =data.middleName;
 	form["lastName"].value     =data.lastName;
-//	form["department"].value   =data.departmentName;
-	//await new UserData(token).departdesgcall();
-	const dropDown = new UserData(token);
-	const departmentElement = form["department"] as HTMLSelectElement;
-	const designationElement = form["designation"] as HTMLSelectElement;
-	console.log("-----------------"+departmentElement+"------------------");
-	await dropDown.departmentcall(departmentElement);
-	departmentElement.value = data.departmentName;
-	await dropDown.departdesgcall(designationElement, departmentElement);
-	designationElement.value = data.designationName;
-
-	//form["designation"].value  =data.designationName;
 	form["email"].value        =data.email;
 	form["userId"].value       =data.userId;
 	form["password"].value     ="";
@@ -77,35 +64,50 @@ export async  function populateFormFromObject(
 	form["status"].value       =data.status;
 	form["roleName"].value     =data.roleName;
 	form["doj"].value          =data.doj;
-//	const dropDown= new UserData(token);
+	const dropDown = new UserData(token);
+	
+	const departmentElement = form["department"] as HTMLSelectElement;
+	const designationElement = form["designation"] as HTMLSelectElement;
+	
+	// Fill department and only after it finishes, fill the designation
+	dropDown.departmentcall(departmentElement)
+	.then(function(){
+		departmentElement.value = data.departmentName;
+		dropDown.departdesgcall(designationElement, departmentElement).then(function(){
+			designationElement.value = data.designationName;
+		});
+	});
+
 	for(let i =0;i<3;i++)
 	{
-	 let container=form.querySelector("#phones"+(i+1));
-	 console.log(form);
-	 (container.querySelector(".contactNumberType")as HTMLInputElement).value=data.phones[i].contactNumberType;
-	 (container.querySelector(".number")as HTMLInputElement).value=data.phones[i].number;
-	 var countryCode=(container.querySelector(".countryCode")as HTMLSelectElement);
-	 await dropDown.getCountryCode(countryCode);
-	 countryCode.value=data.phones[i].countryCode;
+		let container=form.querySelector("#phones"+(i+1));
+		(container.querySelector(".contactNumberType")as HTMLInputElement).value=data.phones[i].contactNumberType;
+		(container.querySelector(".number")as HTMLInputElement).value=data.phones[i].number;
+		let countryCode=(container.querySelector(".countryCode")as HTMLSelectElement);
+		
+		await dropDown.getCountryCode(countryCode);
+		countryCode.value=data.phones[i].countryCode;
 
-	 (container.querySelector(".areaCode")as HTMLInputElement).value=data.phones[i].areaCode;
+		(container.querySelector(".areaCode")as HTMLInputElement).value=data.phones[i].areaCode;
 	}
 
 	for(let i =0;i<2;i++)
 	{
 		let container=form.querySelector("#addresses"+(i+1));
-		console.log(form);
 
 		(container.querySelector(".addressType")as HTMLInputElement).value=data.addresses[i].addressType;
 		(container.querySelector(".addressLine1")as HTMLInputElement).value=data.addresses[i].addressLine1;
 		(container.querySelector(".addressLine2")as HTMLInputElement).value=data.addresses[i].addressLine2;
 		(container.querySelector(".pin")as HTMLInputElement).value=data.addresses[i].pin;
 
-		var city=(container.querySelector(".city")as HTMLSelectElement);
-		var state=(container.querySelector(".state")as HTMLSelectElement);
-		var country=(container.querySelector(".country")as HTMLSelectElement);
+		const city=(container.querySelector(".city")as HTMLSelectElement);
+		const state=(container.querySelector(".state")as HTMLSelectElement);
+		const country=(container.querySelector(".country")as HTMLSelectElement);
 
+		// Fill country dropdown and only when it completes, fill the state
+		// Same process follows for city
 		await dropDown.getCountry(country);
+		if(data.addresses[i].country){
 		country.value=data.addresses[i].country;
 
 		await dropDown.getState(state,country);
@@ -113,8 +115,7 @@ export async  function populateFormFromObject(
 
 		await dropDown.getCity(city,state);
 		city.value=data.addresses[i].city;
-		
-		
+		}
 	}
   
 }

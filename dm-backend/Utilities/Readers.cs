@@ -14,6 +14,10 @@ namespace dm_backend.Utilities
         {
             return reader[colName] != DBNull.Value ? (string)reader[colName] : "";
         }
+        public static DateTime GetSafeDate(MySqlDataReader reader, string colName)
+        {
+            return reader[colName] != DBNull.Value ? Convert.ToDateTime(reader[colName]) : DateTime.MinValue;
+        }
         public static T GetSafeInt<T>(MySqlDataReader reader, string colName)
         {
             return reader[colName] != DBNull.Value ? (T)reader[colName] : default(T);
@@ -29,8 +33,8 @@ namespace dm_backend.Utilities
             user.DesignationName = GetSafeString(reader, "designation_name");
             user.Email = GetSafeString(reader, "email");
             user.Gender = GetSafeString(reader, "gender");
-            user.DOB = Convert.ToDateTime(reader["date_of_birth"]).ToString("yyyy-MM-dd");
-            user.DOJ = Convert.ToDateTime(reader["date_of_joining"]).ToString("yyyy-MM-dd");
+            user.DOB = GetSafeDate(reader,"date_of_birth").ToString("yyyy-MM-dd");
+            user.DOJ = GetSafeDate(reader,"date_of_joining").ToString("yyyy-MM-dd");
             return user;
         }
         public static Specification ReadSpecifications(MySqlDataReader reader)

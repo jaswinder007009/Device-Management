@@ -4,7 +4,10 @@
   .mdl-layout__content {
     overflow-x: auto;
 }
-
+div.mdl-layout__drawer
+{
+  border: none;
+}
 .mdl-card
 {   position: absolute;
 	visibility: hidden;

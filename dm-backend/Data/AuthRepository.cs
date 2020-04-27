@@ -17,21 +17,18 @@ namespace dm_backend.Data
         {
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
-            
-             Console.WriteLine(user.FirstName);
-             Console.WriteLine(user.LastName);
-             Console.WriteLine(user.Email);
-             Console.WriteLine(password);
-
             user.Hashpassword = passwordHash;
             user.Saltpassword = passwordSalt;
-
-
-            await _context.User.AddAsync(user);
+             await _context.User.AddAsync(user);
             await _context.SaveChangesAsync();
+            var _role= new UserToRole();
+            _role.UserId=user.UserId;
+            _role.RoleId=1;
+            await _context.UserToRole.AddAsync(_role);
+            await _context.SaveChangesAsync();
+            
             return user;
-
-        }
+   }
 
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
@@ -43,16 +40,16 @@ namespace dm_backend.Data
 
         public async Task<User> Login(string email, string password)
         {
-            var user = await _context.User.FirstOrDefaultAsync(x => x.Email == email);
+            var user = await _context.User.FirstOrDefaultAsync(x => (x.Email == email)&&(x.Status==1));
             
             if (user == null)
             {
-                Console.WriteLine("yes");
                 return null;
             }
 
             if (!Verify(password, user.Hashpassword, user.Saltpassword))
                 return null;
+            
 
             return user;
 
