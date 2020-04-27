@@ -732,7 +732,7 @@ namespace dm_backend.Data
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
-                
+
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Notification)

@@ -66,14 +66,14 @@ export class UserData {
 }
 
 export function populateDropdown(selectElement: HTMLSelectElement, data) {
-    let htmlString = '';
+    let htmlString = '<option data-id="" value=""></option>';
     for (let dataPair of data) {
         htmlString += '<option data-id="' + dataPair.id + '" value="' + dataPair.name + '">' + dataPair.name + '</option>';
     }
     selectElement.innerHTML = htmlString;
 }
 export function populateCountryCodeDropdown(selectElement: HTMLSelectElement, data) {
-    let htmlString = '';
+    let htmlString = '<option data-id="" value=""></option>';
     for (let dataPair of data) {
         htmlString += '<option data-id="' + dataPair.id + '" value="' + dataPair.id + '">' + dataPair.name + '</option>';
     }

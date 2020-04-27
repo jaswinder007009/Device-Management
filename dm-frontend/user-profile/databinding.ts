@@ -26,7 +26,7 @@ export function createObjectFromForm(formElement: HTMLFormElement) {
 		let number = (container.querySelector(".number") as HTMLInputElement).value;
 		let countryCode = (container.querySelector(".countryCode") as HTMLInputElement).value;
 		let areaCode = (container.querySelector(".areaCode") as HTMLInputElement).value;
-		if (number)modelObject.phones.push
+		if (number||countryCode)modelObject.phones.push
 		({contactNumberType,number,countryCode,areaCode});
 	}
 
@@ -53,22 +53,12 @@ export async  function populateFormFromObject(
 ) {
     console.log(data, form);
 
+
+	
 	form["salutation"].value   =data.salutation;
 	form["firstName"].value    =data.firstName;
 	form["middleName"].value   =data.middleName;
 	form["lastName"].value     =data.lastName;
-//	form["department"].value   =data.departmentName;
-	//await new UserData(token).departdesgcall();
-	const dropDown = new UserData(token);
-	const departmentElement = form["department"] as HTMLSelectElement;
-	const designationElement = form["designation"] as HTMLSelectElement;
-	console.log("-----------------"+departmentElement+"------------------");
-	await dropDown.departmentcall(departmentElement);
-	departmentElement.value = data.departmentName;
-	await dropDown.departdesgcall(designationElement, departmentElement);
-	designationElement.value = data.designationName;
-
-	//form["designation"].value  =data.designationName;
 	form["email"].value        =data.email;
 	form["userId"].value       =data.userId;
 	form["password"].value     ="";
@@ -77,7 +67,23 @@ export async  function populateFormFromObject(
 	form["status"].value       =data.status;
 	form["roleName"].value     =data.roleName;
 	form["doj"].value          =data.doj;
-//	const dropDown= new UserData(token);
+	const dropDown = new UserData(token);
+	
+	const departmentElement = form["department"] as HTMLSelectElement;
+	const designationElement = form["designation"] as HTMLSelectElement;
+	if(data.departmentName)
+	{
+	await dropDown.departmentcall(departmentElement);
+	departmentElement.value = data.departmentName;
+	if(data.designationName)
+	{
+	await dropDown.departdesgcall(designationElement, departmentElement);
+	designationElement.value = data.designationName;
+	}
+	}
+	
+
+	
 	for(let i =0;i<3;i++)
 	{
 	 let container=form.querySelector("#phones"+(i+1));
@@ -85,9 +91,11 @@ export async  function populateFormFromObject(
 	 (container.querySelector(".contactNumberType")as HTMLInputElement).value=data.phones[i].contactNumberType;
 	 (container.querySelector(".number")as HTMLInputElement).value=data.phones[i].number;
 	 var countryCode=(container.querySelector(".countryCode")as HTMLSelectElement);
+	 if(data.phones[i].number)
+	 {
 	 await dropDown.getCountryCode(countryCode);
 	 countryCode.value=data.phones[i].countryCode;
-
+	 }
 	 (container.querySelector(".areaCode")as HTMLInputElement).value=data.phones[i].areaCode;
 	}
 
@@ -104,7 +112,8 @@ export async  function populateFormFromObject(
 		var city=(container.querySelector(".city")as HTMLSelectElement);
 		var state=(container.querySelector(".state")as HTMLSelectElement);
 		var country=(container.querySelector(".country")as HTMLSelectElement);
-
+		if(data.addresses[i].country)
+		{
 		await dropDown.getCountry(country);
 		country.value=data.addresses[i].country;
 
@@ -113,6 +122,7 @@ export async  function populateFormFromObject(
 
 		await dropDown.getCity(city,state);
 		city.value=data.addresses[i].city;
+		}
 		
 		
 	}
