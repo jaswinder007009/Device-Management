@@ -29,13 +29,12 @@
                     <strong>Device Id:</strong><div id="device_id" ></div>
                 </label><br>
                 <label>Return Date</label>
-                <input type="date" id="return_date" placeholder="Enter return date" data-name="date">
-                <label>First Name</label>
-                <input type="text" id="first_name"  name="first_name">
-                <label>Middle Name</label>
-                <input type="text" id="middle_name" name="middle_name">
-                <label>Last Name</label>
-                <input type="text" id="last_name"  name="last_name">
+                <input type="date" id="return_date" data-name="date"><br><br>
+                <datalist id="user">
+                    <option value=""></option>
+                   </datalist>
+                <input id="inputuser" placeholder="select user"
+                autoComplete="on" list="user" required/><br><br>
                 <button type="button" class="assigndevice-btn">Assign</button>
                 <button type="button" class="cancel-button" >Close</button>
             </form>
