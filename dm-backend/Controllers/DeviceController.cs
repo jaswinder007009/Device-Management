@@ -233,15 +233,7 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return Ok();
         }
-       [HttpGet("status")]
-        public async Task<IActionResult> GetAllstatus()
-        {
-            await Db.Connection.OpenAsync();
-            var query = new Status(Db);
-            var result = await query.getallstatus();
-            return new OkObjectResult(result);
-        }
-
+     
 
 
         [HttpGet]

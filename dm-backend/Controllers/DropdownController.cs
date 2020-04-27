@@ -199,31 +199,11 @@ namespace dm_backend.Controllers
         [Route("salutation")]
         public IActionResult Salutations()
         {
-
-            List<DropdownModel> salutations = new List<DropdownModel>();
-            Db.Connection.Open();
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select * from salutation;";
-            var reader = cmd.ExecuteReader();
-
-            using (reader)
-            {
-                while (reader.Read())
-                {
-                    salutations.Add(new DropdownModel()
-                    {
-                        id = reader.GetInt32(0),
-                        name = reader.GetString(1)
-                    });
-                }
-            }
-            Db.Connection.Close();
-            if (salutations.Count > 0)
-            {
-                return Ok(salutations);
-            }
-            else
+            var result = GetListFromQuery("select * from salutation;");
+            if (result.Count < 1)
                 return NoContent();
+            return Ok(result);
+
         }
         [HttpGet]
         [Route("country_code")]
@@ -259,61 +239,23 @@ namespace dm_backend.Controllers
      [Route("addressType")]
         public IActionResult addressTypes()
         {
-
-            List<DropdownModel> addTypes = new List<DropdownModel>();
-            Db.Connection.Open();
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select * from address_type;";
-            var reader = cmd.ExecuteReader();
-
-            using (reader)
-            {
-                while (reader.Read())
-                {
-                    addTypes.Add(new DropdownModel()
-                    {
-                        id = reader.GetInt32(0),
-                        name = reader.GetString(1)
-                    });
-                }
-            }
-            Db.Connection.Close();
-            if (addTypes.Count > 0)
-            {
-                return Ok(addTypes);
-            }
-            else
+            var result = GetListFromQuery("select * from address_type;");
+            if (result.Count < 1)
                 return NoContent();
+            return Ok(result);
+            
         }
 
         [Route("contactType")]
         public IActionResult contactTypes()
         {
-
-            List<DropdownModel> phoneTypes = new List<DropdownModel>();
-            Db.Connection.Open();
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = "select * from contact_type;";
-            var reader = cmd.ExecuteReader();
-
-            using (reader)
-            {
-                while (reader.Read())
-                {
-                    phoneTypes.Add(new DropdownModel()
-                    {
-                        id = reader.GetInt32(0),
-                        name = reader.GetString(1),
-                    });
-                }
-            }
-            Db.Connection.Close();
-            if (phoneTypes.Count > 0)
-            {
-                return Ok(phoneTypes);
-            }
-            else
+             var result = GetListFromQueryWithId("select * from contact_type;");
+            if (result.Count < 1)
                 return NoContent();
+            return Ok(result);
+
+
+            
         }
 
 
@@ -347,6 +289,20 @@ namespace dm_backend.Controllers
             return Ok(result);
         }
 
+
+
+        [HttpGet]
+        [Route("brands/{type}")]
+        public IActionResult BrandsOfType(string type)
+        {
+            var querry = @"select distinct( db.brand )from device_brand as  db inner join device   using (device_brand_id) inner join device_type as dt
+using (device_type_id) where  dt.type = '" + type + "' ;";
+            var result = GetListFromQuery(querry);
+            if (result.Count < 1)
+                return NoContent();
+            return Ok(result);
+        }
+
         [HttpGet]
         [Route("models")]
         public IActionResult GetAllDeviceModels()
@@ -356,6 +312,21 @@ namespace dm_backend.Controllers
                 return NoContent();
             return Ok(result);
         }
+
+
+        [HttpGet]
+        [Route("models/{brand}")]
+        public IActionResult ModelByBrand( string brand)
+        {
+            var querry = @"select distinct( dm.model )from device_model as  dm inner join device   using (device_model_id) inner join device_brand as db
+using (device_brand_id) where  db.brand = '" + brand + "' ;";
+            var result = GetListFromQuery(querry);
+            if (result.Count < 1)
+                return NoContent();
+            return Ok(result);
+        }
+
+
 
         [HttpGet]
         [Route("types")]
@@ -406,7 +377,62 @@ namespace dm_backend.Controllers
                 return NoContent();
             return Ok(result);
         }
+          [HttpGet("status")]
+        public IActionResult GetAllstatus()
+        {
+            var result = GetListFromQueryWithId("select * from status where status.status_name='Allocated' or status.status_name='Free' or status.status_name='Faulty';");
+            if (result.Count < 1)
+                return NoContent();
+            return Ok(result);
 
+        }
+         [HttpGet]
+         [Route("userlist")]
+        public IActionResult GetUserDetails()
+        {
+            List<DropdownModel> userDetails = new List<DropdownModel>();
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = "select user.user_id,user.first_name,department.department_name from user,department,"+
+            "department_designation,status where"+
+            " user.department_designation_id=department_designation.department_designation_id and"+
+            " department_designation.department_id=department.department_id and user.status=status.status_id"+
+            " and status.status_name= 'Active'";
+            var reader = cmd.ExecuteReader();
+            using (reader)
+            {
+                while (reader.Read())
+                {
+                    userDetails.Add(new DropdownModel()
+                    {
+                        id = reader.GetInt32(0),
+                        name = reader.GetString(1),
+                        department = reader.GetString(2)
+                    });
+                }
+            }
+            Db.Connection.Close();
+            if (userDetails.Count > 0)
+            {
+                return Ok(userDetails);
+            }
+            else
+                return NoContent();
+        }
+
+
+
+        private List<DropdownModel> GetListFromQueryWithId(string queryString)
+        {
+            Db.Connection.Open();
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = queryString;
+            var reader = cmd.ExecuteReader();
+            var result = new DropdownModel().ReadAllDropdownswithId(reader);
+            Db.Connection.Close();
+            return result;
+        }
+       
         private List<DropdownModel> GetListFromQuery(string queryString)
         {
             Db.Connection.Open();
@@ -417,18 +443,15 @@ namespace dm_backend.Controllers
             Db.Connection.Close();
             return result;
         }
+        
         public AppDb Db { get; }
     }
-
-
-
-
-
 
     class DropdownModel
     {
         public int id { get; set; }
         public string name { get; set; }
+        public string department {get;set;}
 
         public List<DropdownModel> ReadAllDropdowns(MySqlDataReader reader)
         {
@@ -437,8 +460,21 @@ namespace dm_backend.Controllers
             {
                 list.Add(new DropdownModel()
                 {
-            //        id = reader.GetInt32(0),
+                //    id = reader.GetInt32(0),
                     name = reader.GetString(0)
+                });
+            }
+            return list;
+        }
+        public List<DropdownModel> ReadAllDropdownswithId(MySqlDataReader reader)
+        {
+            var list = new List<DropdownModel>();
+            while (reader.Read())
+            {
+                list.Add(new DropdownModel()
+                {
+                   id = reader.GetInt32(0),
+                    name = reader.GetString(1)
                 });
             }
             return list;

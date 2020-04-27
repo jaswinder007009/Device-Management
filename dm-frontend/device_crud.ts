@@ -45,7 +45,7 @@ export class AddDevice {
     }
     async statusDropdown()
     {
-        const URL =BASEURL +"/api/Device/status";
+        const URL =BASEURL +"/api/Dropdown/status";
         const status = await new HitApi(this.token).HitGetApi(URL);
         let htmlString = '';
         for (let dataPair of status) {

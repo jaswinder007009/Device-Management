@@ -4,6 +4,7 @@ import { Sort } from "./user-profile/SortingUser";
 import { amIUser } from "./globals";
 import { Requests } from "./RequestModel";
 import { openForm } from "./utilities";
+import { HitApi } from "./Device-Request/HitRequestApi";
 
 
 
@@ -16,9 +17,7 @@ import { openForm } from "./utilities";
 	class Assign_device {
 		device_id: number = 0;
 		return_date: string = "";
-		first_name: string = "";
-		middle_name: string = "";
-		last_name: string = "";
+		user_id: number = 0;
 		admin_id:number=0;
 	}
 
@@ -101,14 +100,35 @@ import { openForm } from "./utilities";
 				alert("Notification sent");
 			}
 		}
-		assign_device(data: Assign_device) {
+		async assign_device(data: Assign_device) {
 			let data1 = JSON.stringify(data);
 			console.log(data1);
-			fetch(BASEURL + "/api/device/assign", {
+			let res= await fetch(BASEURL + "/api/device/assign", {
 				method: "POST",
 				headers:new Headers([["Content-Type","application/json"],["Authorization", `Bearer ${this.token}`]]),
 				body: data1
-			}).catch(Error => console.log(Error));
+			});
+			if(res.status==200)
+			{
+				alert("Device assigned");
+				console.log("assign");
+				temp.closeForm1("popupForm2");
+				window.location.reload();
+			}
+		}
+		async getUserDetails()
+		{
+			const URL =BASEURL +"/api/Dropdown/userlist";
+			const user = await new HitApi(this.token).HitGetApi(URL);
+			console.log(user);
+			let htmlString = '';
+			for (let dataPair of user) {
+				htmlString += '<option data-id="'+dataPair.id +'" value="' + dataPair.name +"(Emp-id:"+dataPair.id+")Dept-"+dataPair.department+ '">'+'</option>';
+			}
+			(document.getElementById("user") as HTMLSelectElement).innerHTML = htmlString;
+		
+			return null;
+	
 		}
 		openForm1(popup) {
 			document.getElementById(popup).style.display = "block";
@@ -155,8 +175,6 @@ import { openForm } from "./utilities";
 			temp.postNotification(JSON.stringify({ "notify": [{ deviceId }] }));
 		}
 		if ((e.target as HTMLButtonElement).className == "assign-button") {
-			console.log(id);
-			console.log("notify");
 			temp.openForm1("popupForm2");
 			(document.getElementById(
 				"device_id"
@@ -178,21 +196,22 @@ import { openForm } from "./utilities";
 			assign.return_date = (document.getElementById(
 				"return_date"
 			) as HTMLInputElement).value;
-			assign.first_name = (document.getElementById(
-				"first_name"
-			) as HTMLInputElement).value;
-			assign.middle_name = (document.getElementById(
-				"middle_name"
-			) as HTMLInputElement).value;
-			assign.last_name = (document.getElementById(
-				"last_name"
-			) as HTMLInputElement).value;
-			console.log(id);
+			let option =(document.getElementById("user") as HTMLSelectElement).options;
+			let user = (document.getElementById("inputuser") as HTMLInputElement).value;
+			
+			for(let element in option)
+			{
+				if(user==option[element].value)
+				{
+					var optionElement = option[element];
+				}
+			}
+			assign.user_id = +(optionElement.getAttribute("data-id"));
+			console.log(assign.user_id);
 			assign.admin_id = +id;
 			temp.assign_device(assign);
-			console.log("assign");
-			temp.closeForm1("popupForm2");
-			//window.location.reload();
+			
+			// window.location.reload();
 		}
 	});
 	(document.querySelector("#device_id") as HTMLTableElement).addEventListener(
@@ -240,7 +259,9 @@ import { openForm } from "./utilities";
 			temp.getData();
 		}
 	);
+	
 	const temp = new GetApiForAdmin(token);
+	temp.getUserDetails();
 	temp.getData();
 	if(role ==0)
 	{
