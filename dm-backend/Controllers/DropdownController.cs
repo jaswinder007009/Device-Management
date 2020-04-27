@@ -326,8 +326,8 @@ using (device_brand_id) where  db.brand = '" + brand + "' ;";
             return Ok(result);
         }
 
-
-
+        
+        
         [HttpGet]
         [Route("types")]
         public IActionResult GetAllDeviceTypes()

@@ -74,7 +74,7 @@ namespace dm_backend.Models{
             switch (sortField.ToLower())
             {
                  case "name":
-                    sortField = "concat(first_name ,'', middle_name , '' ,  last_name)";
+                    sortField = "concat(first_name ,'', if (middle_name is null, '' , concat(middle_name , ' ')) ,last_name)";
                     break;
                 case "specification":
                     sortField = "concat(RAM,'', storage ,'' ,screen_size ,'',connectivity)";

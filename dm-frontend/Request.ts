@@ -1,6 +1,8 @@
 import { BASEURL, navigationBarsss } from "./globals";
 import * as util from "./utilities";
 import { Requests, Specification, PartialUserModel } from "./RequestModel";
+import { HitApi } from './Device-Request/HitRequestApi';
+import { Sort } from "./user-profile/SortingUser";
 
 (async function () {
     const token: string = JSON.parse(sessionStorage.getItem("user_info"))["token"];
@@ -15,9 +17,7 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
         var tableData = '';
         var specs = new Specification();
         var requestedBy = new PartialUserModel();
-        fetch(url, {
-            headers: new Headers({ "Authorization": `Bearer ${token}` })
-        }).then(Response => Response.json()).then(data => {
+        new HitApi(token).HitGetApi(url).then(data => {
             for (var i = 0; i < data.length; i++) {
                 specs = data[i]['specs'];
                 requestedBy = data[i]['requestedBy'];
@@ -47,16 +47,19 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
 
     function getDeviceHolders(request) {
         let tableData = "";
-        fetch(BASEURL + "/api/Device/search?status_name=allocated", {
-            headers: new Headers({ "Authorization": `Bearer ${token}` })
-        }).then(Response => Response.json()).then(data => {
+        new HitApi(token).HitGetApi(BASEURL + "/api/Device/search?status_name=allocated").then(data => {
             for (var i = 0; i < data.length; i++) {
-                if (filterData(data[i], request)) {
+
+                if ((data[i].type == request.deviceType) && (data[i].brand == request.deviceBrand)
+                    && (data[i].model == request.deviceModel) && (data[i].specifications.ram == request.specs.ram) &&
+                    (data[i].specifications.storage == request.specs.storage) && (data[i].specifications.screenSize == request.specs.screenSize) &&
+                    (data[i].specifications.connectivity == request.specs.connectivity)) {
+
                     tableData += "<tr>"
-                        + "<td>" + data[i]['device_id'] + "</td>"
-                        + "<td>" + data[i]['assign_to']['first_name'] + " " + data[i]['assign_to']['middle_name'] + " " + data[i]['assign_to']['last_name'] + "</td>"
-                        + "<td>" + data[i]['return_date'] + "</td>"
-                        + "<td><button class=\"notify\" data-deviceid=" + data[i]['device_id'] + " >Notify</button></center></td></tr>"
+                    + "<td>" + data[i]['device_id'] + "</td>"
+                    + "<td>" + data[i]['assign_to']['first_name'] + " " + data[i]['assign_to']['middle_name'] + " " + data[i]['assign_to']['last_name'] + "</td>"
+                    + "<td>" + data[i]['return_date'] + "</td>"
+                    + "<td><button class=\"notify\" data-deviceid=" + data[i]['device_id'] + " >Notify</button></center></td></tr>"
                     let deviceId = data[i].device_id;
                     obj.notify.push({ "deviceId": deviceId });
                 }
@@ -79,33 +82,12 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
 
     }
 
-    function getDirection(className, sortField) {
-        if (className === "mdl-data-table__header--sorted-descending") {
-            document.getElementById(sortField).setAttribute("class", "mdl-data-table__header--sorted-ascending");
-            return "asc";
-        }
-        else {
-            document.getElementById(sortField).setAttribute("class", "mdl-data-table__header--sorted-descending");
-            return "desc";
-        }
-    }
-
-    function filterData(data, request) {
-        if ((data.type == request.deviceType) && (data.brand == request.deviceBrand)
-            && (data.model == request.deviceModel) && (data.specifications.ram == request.specs.ram) &&
-            (data.specifications.storage == request.specs.storage) && (data.specifications.screenSize == request.specs.screenSize) &&
-            (data.specifications.connectivity == request.specs.connectivity))
-            return 1;
-        else
-            return 0;
-    }
-
     function postNotification(data) {
         if (confirm("Notify?")) {
             fetch(BASEURL + "/api/Notification", {
                 method: "POST",
                 headers: [["Content-Type", "application/json"], ["Authorization", `Bearer ${token}`]],
-                body: data,
+                body: JSON.stringify(data),
             }).catch(Error => console.log(Error));
             alert("Notification sent");
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
@@ -113,21 +95,21 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
                 notify: []
             };
         }
-        
+
     }
 
     (document.querySelector('#tablecol') as HTMLTableElement).addEventListener("click", function (e) {
         const sortField = (e.target as HTMLElement).getAttribute('name');
-        const className = (document.getElementById(sortField) as HTMLTableRowElement).getAttribute("class");
-        getPendingRequests(globalUrl + "pending?sortby=" + sortField + "&direction=" + getDirection(className, sortField));
+        let id = e.target as HTMLTableHeaderCellElement;
+		let sorts = new Sort(token);
+		let direction = sorts.checkSortType(id);
+        getPendingRequests(globalUrl + "pending?sortby=" + sortField + "&direction=" + direction);
 
     });
-
     document.querySelector('#fixed-header-drawer-exp').addEventListener('input', function (e) {
         var searchField = (document.getElementById("fixed-header-drawer-exp") as HTMLInputElement).value;
         getPendingRequests(globalUrl + "pending?search=" + searchField);
     });
-
     document.querySelector('.close').addEventListener('click',
         function () {
             (document.querySelector('.popup') as HTMLDivElement).style.display = 'none';
@@ -160,13 +142,12 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
 
         }
         if ((e.target as HTMLButtonElement).className == "notify-all") {
-            postNotification(JSON.stringify(obj));
-        };
-
+            postNotification(obj);
+        }
         if ((e.target as HTMLButtonElement).className == "notify") {
             let deviceId: number = parseInt((e.target as HTMLButtonElement).dataset.deviceid, 10);
-            postNotification(JSON.stringify({ "notify": [{ deviceId }] }));
-        };
+            postNotification({ "notify": [{ deviceId }] });
+        }
 
     });
 
