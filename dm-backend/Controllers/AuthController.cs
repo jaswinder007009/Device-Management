@@ -38,24 +38,23 @@ namespace dm_backend.Controllers
         {
 
             userforreg.Email = userforreg.Email.ToLower();
-            Console.WriteLine(userforreg.FirstName);
-            Console.WriteLine(userforreg.LastName);
-            Console.WriteLine(userforreg.Email);
-            Console.WriteLine(userforreg.Password);
-
+        
              if (await _repo.UserExists(userforreg.Email))
-                return BadRequest("Aleady Exist");
+             {
+                 return Ok(new { Result = "AlreadyExists" });
+             }
 
             var userTocreate = new User
             {
                 Email = userforreg.Email,
                 FirstName =userforreg.FirstName,
-                LastName=userforreg.LastName
+                LastName=userforreg.LastName,
+                Status = 1
             };
 
             var createdUser = await _repo.Register(userTocreate, userforreg.Password);
             // return StatusCode(201);
-            return Created("", createdUser);
+            return Ok(new { Result = createdUser});
         }
 
         [HttpPost("Reset")]

@@ -40,16 +40,16 @@ namespace dm_backend.Data
 
         public async Task<User> Login(string email, string password)
         {
-            var user = await _context.User.FirstOrDefaultAsync(x => x.Email == email);
+            var user = await _context.User.FirstOrDefaultAsync(x => (x.Email == email)&&(x.Status==1));
             
             if (user == null)
             {
-                Console.WriteLine("yes");
                 return null;
             }
 
             if (!Verify(password, user.Hashpassword, user.Saltpassword))
                 return null;
+            
 
             return user;
 
