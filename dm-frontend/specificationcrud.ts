@@ -133,6 +133,14 @@ let mode:string = "create";
         specs.fillSpecification(specification_id);
     
         }
+        if((e.target as HTMLButtonElement).id=="add-specification")
+        {
+            (document.getElementById("RAM")as HTMLInputElement).value  = "";
+            (document.getElementById("Connectivity")as HTMLInputElement).value = "";
+            (document.getElementById("Storage")as HTMLInputElement).value  = "";
+            (document.getElementById("Screen_size")as HTMLInputElement).value  = "";
+            specs.openForm();
+        }
     });
 
     const specs = new GetSpecification();

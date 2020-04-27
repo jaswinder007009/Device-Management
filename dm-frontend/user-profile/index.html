@@ -2,11 +2,39 @@
 
 <head>
   <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-green.min.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="/device_role/role_styles.css" />
+  
   <style>
+    div.mdl-layout__drawer
+{
+  border: none;
+}
+nav.mdl-navigation
+    {
+      height: unset;
+      box-shadow: none;
+    }
+    nav.mdl-navigation i
+    {
+      font-size: 24px;
+      line-height: 1;
+      height: auto;
+      display: inline-block;
+    }
+    nav.mdl-navigation a:hover
+    {
+      text-decoration: none;
+    }
+    input{
+      text-align: center;
+    }
+    
+
+    
     select {
       display: block !important;
     }
@@ -25,11 +53,11 @@
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
       <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">MY PROFILE</span>
+        <span class="mdl-layout-title">My Profile</span>
         <div class="mdl-layout-spacer"></div>
       </div>
     </header>
-    <div class="mdl-layout__drawer" id="navigation">
+    <div class="mdl-layout__drawer mdl-color--blue-grey-800" id="navigation">
     </div>
     <main class="mdl-layout__content">
       <div class="page-content">
@@ -51,6 +79,7 @@
                         <option value="Miss">Miss</option>
                         <option value="Dr">Dr</option>
                       </select>
+                      <span id="salutations" class="text-danger font-weight-bold"></span>
                     </div>
                     <div class="form-group col-md-3">
                       <label> <b>FirstName:</b> </label><input type="text" id="firstName">
@@ -84,6 +113,7 @@
                         <option value="Female">Female</option>
                         <option value="Others">Others</option>
                       </select>
+                      <span id="genders" class="text-danger font-weight-bold"></span>
                     </div>
                     <div class="form-group col-md-4">
                       <label><b>Date Of Birth:</b></label>
@@ -146,7 +176,10 @@
                     <div class="form-row">
                       <div class="form-group col-md-2">
                         <label><b> Address</b> </label><br>
-                        <input type="text" disabled name="CurrentAddress" class="addressType" size="50" maxlength="50">
+                        <select style="height: 46px;" class="addressType" name="CurrentAddress">
+                          <option value="current">Current</option>
+                          <option value="permanant">Permanent</option>
+                        </select>
                       </div>
                       <div class="form-group col-md-5">
                         <label> <b>AddressLine1</b> </label>
@@ -169,16 +202,18 @@
 
                         <label><b> State</b> </label>
                         <select style="height: 46px;" class="state" name="state"> </select>
+                        <span class="text-danger font-weight-bold statespan"></span>
                       </div>
                       <div class="form-group col-md-3">
 
                         <label> <b>City</b> </label>
                         <select style="height: 46px;" class="city" name="city"></select>
+                        <span class="text-danger font-weight-bold cityspan"></span>
                       </div>
                       <div class="form-group col-md-3">
 
                         <label><b>Pincode</b></label>
-                        <input type="text" name="pincode1" class="pin" maxlength="6">
+                        <input type="text" name="pincode1" class="pin" maxlength="12">
                         <span class="text-danger font-weight-bold pinspan"></span>
                       </div>
                     </div>
@@ -193,7 +228,10 @@
                     <div class="form-row">
                       <div class="form-group col-md-2">
                         <label><b> Address</b> </label><br>
-                        <input type="text" disabled name="CurrentAddress" class="addressType" size="50" maxlength="50">
+                        <select style="height: 46px;" class="addressType" name="CurrentAddress" >
+                          <option value="current">Currrent</option>
+                          <option value="permanant">Permanent</option>
+                        </select>
                       </div>
                       <div class="form-group col-md-5">
                         <label> <b>AddressLine1</b> </label>
@@ -216,16 +254,18 @@
 
                         <label><b> State</b> </label>
                         <select style="height: 46px;" class="state" name="state"> </select>
+                        <span class="text-danger font-weight-bold statespan"></span>
                       </div>
                       <div class="form-group col-md-3">
 
                         <label> <b>City</b> </label>
                         <select style="height: 46px;" class="city" name="city"></select>
+                        <span class="text-danger font-weight-bold cityspan"></span>
                       </div>
                       <div class="form-group col-md-3">
 
                         <label><b>Pincode</b></label>
-                        <input type="text" name="pincode1" class="pin" maxlength="6">
+                        <input type="text" name="pincode1" class="pin" maxlength="12">
                         <span class="text-danger font-weight-bold pinspan"></span>
                       </div>
                     </div>
@@ -240,12 +280,12 @@
                 <div class="collapsible-header"><img src="mobile.png" width="19" height="19" />&nbsp; &nbsp;Contact Info
                 </div>
                 <div class="collapsible-body">
-                  <div id="phones1">
+                  <div id="phones1" aria-required="true">
 
                     <div class="form-row">
                       <div class="form-group col-md-2">
                         <label><b>Contact 1:</b> </label>
-                        <select style="height: 46px;" class="contactNumberType" name="Contact" disabled>
+                        <select style="height: 46px;" class="contactNumberType" name="Contact">
                           <option value="mobile">Mobile</option>
                           <option value="home">Home</option>
                           <option value="work">Work</option>
@@ -267,6 +307,7 @@
 
                         <label><b>Area Code</b></label>
                         <input type="text" class="areaCode" name="AreaCode">
+                        <span class="text-danger font-weight-bold areacodespan"></span>
 
 
 
@@ -279,7 +320,7 @@
                     <div class="form-row">
                       <div class="form-group col-md-2">
                         <label><b>Contact 2:</b> </label>
-                        <select style="height: 46px;" class="contactNumberType" name="Contact" disabled>
+                        <select style="height: 46px;" class="contactNumberType" name="Contact">
                           <option value="mobile">Mobile</option>
                           <option value="home">Home</option>
                           <option value="work">Work</option>
@@ -301,6 +342,7 @@
 
                         <label><b>Area Code</b></label>
                         <input type="text" class="areaCode" name="AreaCode">
+                        <span class="text-danger font-weight-bold areacodespan"></span>
                       </div>
                     </div>
 
@@ -309,7 +351,7 @@
                     <div class="form-row">
                       <div class="form-group col-md-2">
                         <label><b>Contact 3:</b> </label>
-                        <select style="height: 46px;" class="contactNumberType" name="Contact" disabled>
+                        <select style="height: 46px;" class="contactNumberType" name="Contact">
                           <option value="mobile">Mobile</option>
                           <option value="home">Home</option>
                           <option value="work">Work</option>
@@ -331,6 +373,7 @@
 
                         <label><b>Area Code</b></label>
                         <input type="text" class="areaCode" name="AreaCode">
+                        <span class="text-danger font-weight-bold areacodespan"></span>
                       </div>
                     </div>
 

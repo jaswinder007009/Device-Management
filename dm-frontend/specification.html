@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Devicelist</title>
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-green.min.css" />
 
     <!-- Material Design icon font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="./styling.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/device_role/role_styles.css" />
 
     <style>
         .mdl-layout__content {
@@ -66,20 +67,14 @@
 
 
         <div class="mdl-layout__drawer" id="navigation">
-            <!-- <span class="mdl-layout-title">Device List</span> -->
-            <!-- <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
-            </nav> -->
+           
         </div>
         <main class="mdl-layout__content">
             <div class="page-content">
                      <!-- <div style="float:right "> <br> -->
                         <div style="float: right;">                     
                                <button class="mdl-button mdl-js-button mdl-button--raised" 
-                        value="Add Specifications" onclick="openForm()">Add Specification</button>
+                        value="Add Specifications" id="add-specification">Add Specification</button>
                                  
                                 </div>
                                 <br><br>
@@ -119,10 +114,7 @@
         </main>
     </div>
     <script>
-        function openForm() {
-            document.getElementById("popupForm").style.display = "block";
-        }
-        function closeForm() {
+      function closeForm() {
             document.getElementById("popupForm").style.display = "none";
         }
         

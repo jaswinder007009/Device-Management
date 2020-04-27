@@ -1,10 +1,11 @@
 export function validate() {
     return Firstnamevalidation() && Middlenamevalidation() &&
     Lastnamevalidation() &&
-    emailvalidation()&&passwordvalidation()&&confirmpasswordvalidation()&&addressvalidation("addresses1")&&addressvalidation("addresses2")&&
-    addressvalidation1("addresses1")&&addressvalidation1("addresses2")&&date0fbirthvalidation()&&
-    pinvalidation("addresses1")&&pinvalidation("addresses2")&&phonevalidation("phones1")&&
-    phonevalidation("phones3");
+    passwordvalidation()&&confirmpasswordvalidation()&&addressvalidation("addresses1")&&addressvalidation("addresses2")&&
+    addressvalidation1("addresses1")&&addressvalidation1("addresses2")&&cityvalidation("addresses1")&&cityvalidation("addresses2")
+    &&statevalidation("addresses1")&&statevalidation("addresses2")&&date0fbirthvalidation()&&salutationvalidation()&&
+    pinvalidation("addresses1")&&pinvalidation("addresses2")&&phonevalidation("phones1")&&gendervalidation()&&
+    phonevalidation("phones3")&&areacodevalidation("phones1")&&areacodevalidation("phones2")&&areacodevalidation("phones3");
 }
 function Firstnamevalidation() {
     var firstnames = (document.getElementById('firstName') as HTMLInputElement).value;
@@ -49,26 +50,33 @@ function Lastnamevalidation() {
         return true;
     }
 }
-function emailvalidation() {
-    var emails = (document.getElementById('email') as HTMLInputElement).value;
-    if (emails == "") {
-        document.getElementById('emails').innerHTML = "Fill Email";
+function salutationvalidation() {
+    var salutations = (document.getElementById('salutation') as HTMLInputElement).value;
+    if (salutations == "") {
+        document.getElementById('salutations').innerHTML = "Please Select The Salutaion";
         return false;
-    } else if (emails.indexOf('@') <= 0) {
-        document.getElementById('emails').innerHTML = "@ Is At Invalid position";
-        return false;
-    } else if ((emails.charAt(emails.length - 4) != '.') && (emails.charAt(emails.length - 3) != '.')) {
-        document.getElementById('emails').innerHTML = ". Is At Invalid position";
-        return false;
-    } else {
-        document.getElementById('emails').innerHTML = "";
+    }
+    else {
+        document.getElementById('salutations').innerHTML = "";
         return true;
     }
 }
+function gendervalidation() {
+    var genders = (document.getElementById('gender') as HTMLInputElement).value;
+    if (genders == "") {
+        document.getElementById('genders').innerHTML = "Please Select The Gender";
+        return false;
+    }
+    else {
+        document.getElementById('genders').innerHTML = "";
+        return true;
+    }
+}
+
 function date0fbirthvalidation() {
     var dobs= (document.getElementById('dob') as HTMLInputElement).value;
-    if (dobs == "") {
-        document.getElementById('dobs').innerHTML = "Fill date of birth";
+    if (dobs == "01-01-0001") {
+        document.getElementById('dobs').innerHTML = "Fill Correct date of birth";
         return false;
     } 
      else {
@@ -119,7 +127,7 @@ function addressvalidation(containerId: string) {
         document.querySelector("#" + containerId + ' .addressLine1span').innerHTML = "Fill  addresss line1";
         return false;
     } else if (addresses1.length > 30) {
-        document.querySelector("#" + containerId + ' .addressLine1span').innerHTML = "addressline1 Should Not Be More Than 30 Characters";
+        document.querySelector("#" + containerId + ' .addressLine1span').innerHTML = "Consider Using addressLine 2";
         return false;
     }
     else {
@@ -141,9 +149,44 @@ function addressvalidation1(containerId: string) {
         return true;
     }
 }
+function statevalidation(containerId: string) {
+    var state1 = (document.querySelector("#" + containerId + ' .state') as HTMLInputElement).value;
+    if (state1 == "") {
+        document.querySelector("#" + containerId + ' .statespan').innerHTML = "Please Select The State";
+        return false;
+    } 
+    else {
+        document.querySelector("#" + containerId + ' .statespan').innerHTML = "";
+        return true;
+    }
+}
+    function cityvalidation(containerId: string) {
+        var city1 = (document.querySelector("#" + containerId + ' .city') as HTMLInputElement).value;
+        if (city1 == "") {
+            document.querySelector("#" + containerId + ' .cityspan').innerHTML = "Please Select The City";
+            return false;
+        } 
+        else {
+            document.querySelector("#" + containerId + ' .cityspan').innerHTML = "";
+            return true;
+        }
+}
 function pinvalidation(containerId: string) {
     var pin = (document.querySelector("#" + containerId + ' .pin') as HTMLInputElement).value;
-     if (isNaN(parseInt(pin))) {
+    if(pin=="")
+    {
+        document.querySelector("#" + containerId + ' .pinspan').innerHTML = "";
+        return true;
+
+    }
+    else if(pin.length<6||pin.length>12)
+    {
+        document.querySelector("#" + containerId + ' .pinspan').innerHTML = "pincode not valid";
+        return false;
+
+    }
+    
+     else if (isNaN(parseInt(pin))) {
         document.querySelector("#" + containerId + ' .pinspan').innerHTML = "pincode must be in digit";
         return false;
     }
@@ -152,10 +195,34 @@ function pinvalidation(containerId: string) {
         return true;
     }
 }
-function phonevalidation(containerId: string) {
-    var phone = (document.querySelector("#" + containerId + ' .number') as HTMLInputElement).value;
-    if ((phone=="")) {
+function areacodevalidation(containerId: string) {
+    var areacode1 = (document.querySelector("#" + containerId + ' .areaCode') as HTMLInputElement).value;
+    if(areacode1=="")
+    {
+        document.querySelector("#" + containerId + ' .areacodespan').innerHTML = "";
         return true;
+
+    }
+    else if (isNaN(parseInt(areacode1))) {
+        document.querySelector("#" + containerId + ' .areacodespan').innerHTML = "areacode must be in digits";
+        return false;
+    }
+    else {
+        document.querySelector("#" + containerId + ' .areacodespan').innerHTML = "";
+        return true;
+    }
+}
+function phonevalidation(containerId: string) {
+    var container=document.querySelector("#" +containerId)
+    
+    var phone = (document.querySelector("#" + containerId + ' .number') as HTMLInputElement).value;
+    if (container.getAttribute("aria-required")!="true" &&(phone=="")) {
+        return true;
+    }
+    else if(phone=="")
+    {
+        document.querySelector("#" + containerId + ' .numberspan').innerHTML = "Enter the Number";
+        return false;
     }
     else if (isNaN(parseInt(phone))) {
         document.querySelector("#" + containerId + ' .numberspan').innerHTML = "**Only Digits Allowed";

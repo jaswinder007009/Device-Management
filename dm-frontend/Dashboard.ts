@@ -1,4 +1,5 @@
 import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
+import { HitApi } from './Device-Request/HitRequestApi';
 
 (async function () {
     let cardTitle = ['Total Devices', 'Free Devices', 'Faults', 'Assigned Devices', 'Device Requests', 'Rejected Requests'];
@@ -55,18 +56,25 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
         document.getElementById("content").innerHTML += tableData;
 
     }
+    function NotificationCount()
+    {
+        fetch("http://localhost:5000/api/Notification/Count/"+id)
+        .then(Response=> Response.json())
+        .then(data=>{
+            console.log(data);
+            (document.getElementById("notifications") as HTMLElement).dataset.badge=data;
+          })
+        .catch(err=>console.log(err));
+    }
+    NotificationCount();
 
     function getStatistics(url: string) {
-        fetch(url, {
-            headers: new Headers({ "Authorization": `Bearer ${token}` })
-        }).then(Response => Response.json())
-            .then(data => {
+        new HitApi(token).HitGetApi(url).then(data => {
                 let index = 0;
                 for (var key in data) {
                     createCard(index, key, data[key]);
                     index++;
                 }
-
             });
     }
 
@@ -78,10 +86,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
             + "<th>Model</th>"
             + "<th>Fault</th>";
         var tableBody = "";
-        fetch(url, {
-            headers: new Headers({ "Authorization": `Bearer ${token}` })
-        }).then(Response => Response.json())
-            .then(data => {
+        new HitApi(token).HitGetApi(url).then(data => {
                 for (var i = 0; i < data.length; i++) {
                     let tempObject = data[i];
 
@@ -103,10 +108,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
             + "<th>Model</th>"
             + "<th>Return Date</th>";
         var tableBody = "";
-        fetch(url, {
-            headers: new Headers({ "Authorization": `Bearer ${token}` })
-        }).then(Response => Response.json())
-            .then(data => {
+        new HitApi(token).HitGetApi(url).then(data => {
                 for (var i = 0; i < data.length; i++) {
                     let tempObject = data[i];
 
@@ -128,10 +130,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
             + "<th>Brand</th>"
             + "<th>Model</th>";
         var tableBody = "";
-        fetch(url, {
-            headers: new Headers({ "Authorization": `Bearer ${token}` })
-        }).then(Response => Response.json())
-            .then(data => {
+        new HitApi(token).HitGetApi(url).then(data => {
                 for (var i = 0; i < data.length; i++) {
                     let tempObject = data[i];
                     if (tempObject.assign_date != '')
@@ -153,10 +152,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
             + "<th>Type</th>"
             + "<th>Model</th>"
         var tableBody = "";
-        fetch(url, {
-            headers: new Headers({ "Authorization": `Bearer ${token}` })
-        }).then(Response => Response.json())
-            .then(data => {
+        new HitApi(token).HitGetApi(url).then(data => {
                 for (var i = 0; i < data.length; i++) {
                     let tempObject = data[i];
 
@@ -193,4 +189,7 @@ import { BASEURL, amIAdmin, amIUser,navigationBarsss } from './globals';
         
     }
     })();
+
+
+   
     
