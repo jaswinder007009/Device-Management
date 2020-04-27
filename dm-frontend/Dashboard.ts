@@ -31,7 +31,7 @@ import { HitApi } from './Device-Request/HitRequestApi';
 
     }
     function NotificationCount() {
-        fetch("http://localhost:5000/api/Notification/Count/" + id)
+        fetch(BASEURL+ "api/Notification/Count/" + id)
             .then(Response => Response.json())
             .then(data => {
                 console.log(data);
@@ -129,6 +129,7 @@ import { HitApi } from './Device-Request/HitRequestApi';
             window.open("/adminRequestPage.html", "_self");
 
         if (action == "history") {
+            window.open("request-history/request-history.html?status=Rejected","_self");
             //Get all rejected requests
         }
         if (action == "free") {
