@@ -1,33 +1,46 @@
 export function validateForm(formMode:string) {
     
-    var result= firstNamevalidation()*
+    var result= salutation()*firstNamevalidation()*lastNamevalidation()*emailvalidation()*
     passwordvalidation(formMode)*
-    confirmpasswordvalidation(formMode)*
+    confirmpasswordvalidation(formMode)*roleName()*
     departmentvalidation()*
     designationvalidation()*
-    emailvalidation()*
-    phone1validation()*
-    dob()*doj()*ac()*currAdd1()*
-    currAdd2()*lastNamevalidation()*pincode()*currState()*currCity();
+    phone1validation("phones1")*phone1validation("phones2")*phone1validation("phones3")*
+    currAdd1("addresses1")*currAdd1("addresses2");
 return result == 1 ? true : false;
 }
 export function remove() {
+    (document.getElementById('salutations') as HTMLInputElement).innerHTML = "";
     (document.getElementById('firstNames') as HTMLInputElement).innerHTML = "";
+    (document.getElementById('lastNames') as HTMLInputElement).innerHTML = "";
+    (document.getElementById('emails') as HTMLInputElement).innerHTML = "";
     (document.getElementById('passwords') as HTMLInputElement).innerHTML = "";
     (document.getElementById('confirmpasss') as HTMLInputElement).innerHTML = "";
+    (document.getElementById('roleNames') as HTMLInputElement).innerHTML = "";
     (document.getElementById('departments') as HTMLInputElement).innerHTML = "";
     (document.getElementById('designations') as HTMLInputElement).innerHTML = "";
-    (document.getElementById('emails') as HTMLInputElement).innerHTML = "";
     (document.getElementById('phone_number1s') as HTMLInputElement).innerHTML = "";
-    (document.getElementById('dobs') as HTMLInputElement).innerHTML = "";
-    (document.getElementById('dojs') as HTMLInputElement).innerHTML = "";
-    (document.getElementById('acs') as HTMLInputElement).innerHTML = "";
+    (document.getElementById('CountryCodes1') as HTMLInputElement).innerHTML = "";
+    (document.getElementById('Contact1') as HTMLInputElement).innerHTML = "";
+    (document.getElementById('ac1s') as HTMLInputElement).innerHTML = "";
     (document.getElementById('c1s') as HTMLInputElement).innerHTML = "";
     (document.getElementById('c2s') as HTMLInputElement).innerHTML = "";
     (document.getElementById('c3s') as HTMLInputElement).innerHTML = "";
-    (document.getElementById('lastNames') as HTMLInputElement).innerHTML = "";
-   (document.getElementById('c4s') as HTMLInputElement).innerHTML = "";
+    (document.getElementById('c4s') as HTMLInputElement).innerHTML = "";
     (document.getElementById('c5s') as HTMLInputElement).innerHTML = "";
+    (document.getElementById('c6s') as HTMLInputElement).innerHTML = "";
+    (document.getElementById('addressType1') as HTMLInputElement).innerHTML = "";
+    
+}
+function salutation(){
+    var salutations = (document.getElementById('salutation') as HTMLSelectElement).value;
+    if (salutations == "") {
+        (document.getElementById('salutations') as HTMLInputElement).innerHTML = "Select Salutation";
+        return 0;
+    } else {
+        (document.getElementById('salutations') as HTMLInputElement).innerHTML = "";
+        return 1;
+    }
 }
 function firstNamevalidation() {
 
@@ -35,8 +48,12 @@ function firstNamevalidation() {
     if (firstNames == "") {
         (document.getElementById('firstNames') as HTMLInputElement).innerHTML = "Fill First Name";
         return 0;
-    }else if (firstNames.length < 5 || firstNames.length > 20) {
-        (document.getElementById('firstNames') as HTMLInputElement).innerHTML = "First Name Should Be Between 5 and 20";
+    }else if (!isNaN(parseInt(firstNames))) {
+        (document.getElementById('firstNames')as HTMLInputElement).innerHTML = "Only Characters Allowed";
+        return 0;
+    }
+    else if (firstNames.length < 2 || firstNames.length > 20) {
+        (document.getElementById('firstNames') as HTMLInputElement).innerHTML = "First Name Should Be Between 2 and 20";
         return 0;
     }
      else {
@@ -50,8 +67,12 @@ function lastNamevalidation() {
     if (lastNames == "") {
         (document.getElementById('lastNames') as HTMLInputElement).innerHTML = "Fill Last Name";
         return 0;
-    }else if (lastNames.length < 5 || lastNames.length > 20) {
-        (document.getElementById('lastNames') as HTMLInputElement).innerHTML = "Last Name Should Be Between 5 and 20";
+    }else if (!isNaN(parseInt(lastNames))) {
+        (document.getElementById('lastNames')as HTMLInputElement).innerHTML = "Only Characters Allowed";
+        return 0;
+    }
+    else if (lastNames.length < 2 || lastNames.length > 20) {
+        (document.getElementById('lastNames') as HTMLInputElement).innerHTML = "Last Name Should Be Between 2 and 20";
         return 0;
     }
      else {
@@ -97,6 +118,16 @@ function confirmpasswordvalidation(formMode : string) {
         return 1;
     }
 }
+function roleName() {
+    var roleNames = (document.getElementById('roleName') as HTMLInputElement).value;
+    if (roleNames == "") {
+        (document.getElementById('roleNames') as HTMLInputElement).innerHTML = "Fill Role";
+        return 0;
+    } else {
+        (document.getElementById('roleNames') as HTMLInputElement).innerHTML = "";
+        return 1;
+    }
+}
 function departmentvalidation() {
     var departments = (document.getElementById('department') as HTMLInputElement).value;
     if (departments == "") {
@@ -114,94 +145,6 @@ function designationvalidation() {
         return 0;
     } else {
         (document.getElementById('designations') as HTMLInputElement).innerHTML = "";
-        return 1;
-    }
-}
-function dob(){
-    var dobs = (document.getElementById('dob') as HTMLInputElement).value;
-    if (dobs == "") {
-        (document.getElementById('dobs') as HTMLInputElement).innerHTML = "Fill Date Of Birth";
-        return 0;
-    } else {
-        (document.getElementById('dobs') as HTMLInputElement).innerHTML = "";
-        return 1;
-    }
-}
-function doj(){
-    var dojs = (document.getElementById('doj') as HTMLInputElement).value;
-    if (dojs == "") {
-        (document.getElementById('dojs') as HTMLInputElement).innerHTML = "Fill Date Of Joining";
-        return 0;
-    } else {
-        (document.getElementById('dojs') as HTMLInputElement).innerHTML = "";
-        return 1;
-    }
-}
-function ac(){
-    var acs = (document.getElementById('ac') as HTMLInputElement).value;
-    if (acs == "") {
-        (document.getElementById('acs') as HTMLInputElement).innerHTML = "Fill Area Code";
-        return 0;
-    }else if (isNaN(parseInt(acs))) {
-        (document.getElementById('acs')as HTMLInputElement).innerHTML = "**Only Digits Allowed";
-        return 0;
-    } 
-     else {
-        (document.getElementById('acs') as HTMLInputElement).innerHTML = "";
-        return 1;
-    }
-}
-function currAdd1(){
-    var c1s = (document.getElementById('c1') as HTMLInputElement).value;
-    if (c1s == "") {
-        (document.getElementById('c1s') as HTMLInputElement).innerHTML = "Fill Address Line 1";
-        return 0;
-    } else {
-        (document.getElementById('c1s') as HTMLInputElement).innerHTML = "";
-        return 1;
-    }
-}
-function currAdd2(){
-    var c2s = (document.getElementById('c2') as HTMLInputElement).value;
-    if (c2s == "") {
-        (document.getElementById('c2s') as HTMLInputElement).innerHTML = "Fill Address Line 2";
-        return 0;
-    } else {
-        (document.getElementById('c2s') as HTMLInputElement).innerHTML = "";
-        return 1;
-    }
-}
-function currState(){
-    var c5s = (document.getElementById('c5') as HTMLSelectElement).value;
-    if (c5s == "") {
-        (document.getElementById('c5s') as HTMLInputElement).innerHTML = "Select Country And Then Select State";
-        return 0;
-    } else {
-        (document.getElementById('c5s') as HTMLInputElement).innerHTML = "";
-        return 1;
-    }
-}
-function currCity(){
-    var c4s = (document.getElementById('c4') as HTMLSelectElement).value;
-    if (c4s == "") {
-        (document.getElementById('c4s') as HTMLInputElement).innerHTML = "Select State And Then Select City";
-        return 0;
-    } else {
-        (document.getElementById('c4s') as HTMLInputElement).innerHTML = "";
-        return 1;
-    }
-}
-function pincode(){
-    var c3s = (document.getElementById('c3') as HTMLInputElement).value;
-    if (c3s == "") {
-        (document.getElementById('c3s') as HTMLInputElement).innerHTML = "Fill Pincode";
-        return 0;
-    }else if (isNaN(parseInt(c3s))) {
-        (document.getElementById('c3s')as HTMLInputElement).innerHTML = "**Only Digits Allowed";
-        return 0;
-    } 
-    else {
-        (document.getElementById('c3s') as HTMLInputElement).innerHTML = "";
         return 1;
     }
 }
@@ -225,22 +168,157 @@ function emailvalidation() {
                 return 1; 
         }
     }
-function phone1validation() {
-    var phone_number1s = (document.getElementById('phone_number1') as HTMLInputElement).value;
-    if (phone_number1s == "") {
-        (document.getElementById('phone_number1s') as HTMLInputElement).innerHTML = "Enter Contact Number";
+
+function ac1(containerId: string){
+    var ac1s = (document.querySelector("#" + containerId + ' .areaCode') as HTMLInputElement).value;
+
+
+    if (ac1s == "") {
+        document.querySelector("#" + containerId + ' .areaCodeSpan').innerHTML = "Fill Area Code";
+        return 0;
+    }else if (isNaN(parseInt(ac1s))) {
+        document.querySelector("#" + containerId + ' .areaCodeSpan').innerHTML = "Only Digits Allowed";
         return 0;
     } 
-    else if (isNaN(parseInt(phone_number1s))) {
-        (document.getElementById('phone_number1s')as HTMLInputElement).innerHTML = "**Only Digits Allowed";
+     else {
+        document.querySelector("#" + containerId + ' .areaCodeSpan').innerHTML = "";
+        return 1;
+    }
+}
+
+function currAddType(containerId: string){
+    
+    var addressType1 = (document.querySelector("#" + containerId + ' .addressType') as HTMLInputElement).value;
+    if (addressType1 == "") {
+        document.querySelector("#" + containerId + ' .addressTypeSpan').innerHTML = "Select Type";
+        return 0;
+    } else {
+        document.querySelector("#" + containerId + ' .addressTypeSpan').innerHTML = "";
+        return 1;
+    }
+}
+function currAdd1(containerId: string){
+    var c1s = (document.querySelector("#" + containerId + ' .addressLine1') as HTMLInputElement).value;
+    if (c1s == "") {
+        document.querySelector("#" + containerId + ' .addressLine1Span').innerHTML = "";
+        return 1;
+    } else if(c1s.length < 5) {
+        document.querySelector("#" + containerId + ' .addressLine1Span').innerHTML = "Fill Full Details";
         return 0;
     }
-    else if (phone_number1s.length != 10) {
-        (document.getElementById('phone_number1s') as HTMLInputElement).innerHTML = "Enter 10 Digits";
+    else if(c1s.length > 4) {
+        document.querySelector("#" + containerId + ' .addressLine1Span').innerHTML = "";
+        return  currAdd2(containerId)*currCon(containerId)*currState(containerId)*currCity(containerId)*pincode(containerId)*currAddType(containerId);
+         
+    }
+    else {
+        document.querySelector("#" + containerId + ' .addressLine1Span').innerHTML = "";
+        return 1;
+    }
+}
+function currAdd2(containerId: string){
+    var c2s = (document.querySelector("#" + containerId + ' .addressLine2') as HTMLInputElement).value;
+    if (c2s == "") {
+        document.querySelector("#" + containerId + ' .addressLine2Span').innerHTML= "Fill Address Line 2";
+        return 1;
+    } else if(c2s.length < 5) {
+        document.querySelector("#" + containerId + ' .addressLine2Span').innerHTML= "Fill Full Details";
         return 0;
     }
      else {
-        (document.getElementById('phone_number1s') as HTMLInputElement).innerHTML = "";
+        document.querySelector("#" + containerId + ' .addressLine2Span').innerHTML= "";
         return 1;
     }
+}
+function currCon(containerId: string){
+    var c6s = (document.querySelector("#" + containerId + ' .country') as HTMLInputElement).value;
+    if (c6s == "") {
+        document.querySelector("#" + containerId + ' .countrySpan').innerHTML= "Select Country";
+        return 0;
+    } else {
+        document.querySelector("#" + containerId + ' .countrySpan').innerHTML= "";
+        return 1;
+    }
+}
+function currState(containerId: string){
+    var c5s = (document.querySelector("#" + containerId + ' .state') as HTMLInputElement).value;
+    if (c5s == "") {
+        document.querySelector("#" + containerId + ' .stateSpan').innerHTML= "Select Country And Then Select State";
+        return 0;
+    } else {
+        document.querySelector("#" + containerId + ' .stateSpan').innerHTML= "";
+        return 1;
+    }
+}
+function currCity(containerId: string){
+    var c4s = (document.querySelector("#" + containerId + ' .city') as HTMLInputElement).value;
+    if (c4s == "") {
+        document.querySelector("#" + containerId + ' .citySpan').innerHTML= "Select State And Then Select City";
+        return 0;
+    } else {
+        document.querySelector("#" + containerId + ' .citySpan').innerHTML= "";
+        return 1;
+    }
+}
+function pincode(containerId: string){
+    var c3s = (document.querySelector("#" + containerId + ' .pin') as HTMLInputElement).value;
+    if (c3s == "") {
+        document.querySelector("#" + containerId + ' .pinSpan').innerHTML= "Enter Pincode";
+        return 0;
+    }else if (isNaN(parseInt(c3s))) {
+        document.querySelector("#" + containerId + ' .pinSpan').innerHTML= "Only Digits Allowed";
+        return 0;
+    } 
+    else {
+        document.querySelector("#" + containerId + ' .pinSpan').innerHTML= "";
+        return 1;
+    }
+}
+
+function phone1validation(containerId: string) {
+    var phone_number1s = (document.querySelector("#" + containerId + ' .number') as HTMLInputElement).value;
+   
+    if (phone_number1s == "") {
+        document.querySelector("#" + containerId + ' .numberspan').innerHTML = "";
+        return 1;
+    } 
+    else if (isNaN(parseInt(phone_number1s))) {
+        document.querySelector("#" + containerId + ' .numberspan').innerHTML = "Only Digits Allowed";
+        return 0;
+    }
+    else if (phone_number1s.length != 10) {
+        document.querySelector("#" + containerId + ' .numberspan').innerHTML = "Enter 10 Digits";
+        return 0;
+    }
+    else if(phone_number1s.length == 10){
+        document.querySelector("#" + containerId + ' .numberspan').innerHTML = "";
+        
+        return phones1c(containerId)*phones1cc(containerId)*ac1(containerId); 
+       
+    }
+     else {
+        document.querySelector("#" + containerId + ' .numberspan').innerHTML = "";
+        return 1;
+    }
+}
+
+function phones1cc(containerId: string) {
+    var CountryCodes1 = (document.querySelector("#" + containerId + ' .countryCode') as HTMLInputElement).value;
+    if (CountryCodes1 == "") {
+        document.querySelector("#" + containerId + ' .CountryCodeSpan').innerHTML = "Select Country";
+
+        return 0; }
+       else {document.querySelector("#" + containerId + ' .CountryCodeSpan').innerHTML  = "";
+        return 1;
+      }
+}
+
+function phones1c(containerId: string) {
+    var Contact1 = (document.querySelector("#" + containerId + ' .contactNumberType') as HTMLInputElement).value;
+    if (Contact1 == "") {
+        document.querySelector("#" + containerId + ' .typespan').innerHTML = "Select Type";
+        return 0; }
+       else {document.querySelector("#" + containerId + ' .typespan').innerHTML = "";
+        return 1;
+      }
 }
