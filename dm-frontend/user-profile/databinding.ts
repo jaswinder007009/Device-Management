@@ -26,7 +26,7 @@ export function createObjectFromForm(formElement: HTMLFormElement) {
 		let number = (container.querySelector(".number") as HTMLInputElement).value;
 		let countryCode = (container.querySelector(".countryCode") as HTMLInputElement).value;
 		let areaCode = (container.querySelector(".areaCode") as HTMLInputElement).value;
-		if (number)modelObject.phones.push
+		if (number||countryCode)modelObject.phones.push
 		({contactNumberType,number,countryCode,areaCode});
 	}
 
@@ -64,8 +64,8 @@ export async  function populateFormFromObject(
 	form["status"].value       =data.status;
 	form["roleName"].value     =data.roleName;
 	form["doj"].value          =data.doj;
-
 	const dropDown = new UserData(token);
+	
 	const departmentElement = form["department"] as HTMLSelectElement;
 	const designationElement = form["designation"] as HTMLSelectElement;
 	

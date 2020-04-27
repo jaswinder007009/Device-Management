@@ -97,7 +97,7 @@ namespace dm_backend.Controllers
          {
             var values = _context.Notification.Count(w => (w.UserId == id)&& (w.StatusId==9) );
             return values;
-               
+
         }
 
 

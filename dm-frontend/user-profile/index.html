@@ -2,10 +2,11 @@
 
 <head>
   <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-green.min.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="/device_role/role_styles.css" />
   
   <style>
     div.mdl-layout__drawer
@@ -19,12 +20,24 @@ nav.mdl-navigation
     }
     nav.mdl-navigation i
     {
+      font-size: 24px;
+      line-height: 1;
+      height: auto;
       display: inline-block;
     }
+    nav.mdl-navigation a:hover
+    {
+      text-decoration: none;
+    }
+    input{
+      text-align: center;
+    }
+    
 
     
     select {
       display: block !important;
+      text-align-last:center;
     }
 
     .show {
@@ -41,7 +54,7 @@ nav.mdl-navigation
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
       <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">MY PROFILE</span>
+        <span class="mdl-layout-title">My Profile</span>
         <div class="mdl-layout-spacer"></div>
       </div>
     </header>
@@ -67,6 +80,7 @@ nav.mdl-navigation
                         <option value="Miss">Miss</option>
                         <option value="Dr">Dr</option>
                       </select>
+                      <span id="salutations" class="text-danger font-weight-bold"></span>
                     </div>
                     <div class="form-group col-md-3">
                       <label> <b>FirstName:</b> </label><input type="text" id="firstName">
@@ -100,6 +114,7 @@ nav.mdl-navigation
                         <option value="Female">Female</option>
                         <option value="Others">Others</option>
                       </select>
+                      <span id="genders" class="text-danger font-weight-bold"></span>
                     </div>
                     <div class="form-group col-md-4">
                       <label><b>Date Of Birth:</b></label>
@@ -162,7 +177,10 @@ nav.mdl-navigation
                     <div class="form-row">
                       <div class="form-group col-md-2">
                         <label><b> Address</b> </label><br>
-                        <input type="text" disabled name="CurrentAddress" class="addressType" size="50" maxlength="50">
+                        <select style="height: 46px;" class="addressType" name="CurrentAddress">
+                          <option value="current">Current</option>
+                          <option value="permanant">Permanent</option>
+                        </select>
                       </div>
                       <div class="form-group col-md-5">
                         <label> <b>AddressLine1</b> </label>
@@ -180,6 +198,7 @@ nav.mdl-navigation
 
                         <label><b>Country</b> </label>
                         <select style="height: 46px;" class="country" name="country"></select>
+                        <span class="text-danger font-weight-bold countryspan"></span>
                       </div>
                       <div class="form-group col-md-3">
 
@@ -196,7 +215,7 @@ nav.mdl-navigation
                       <div class="form-group col-md-3">
 
                         <label><b>Pincode</b></label>
-                        <input type="text" name="pincode1" class="pin" maxlength="6">
+                        <input type="text" name="pincode1" class="pin" maxlength="12">
                         <span class="text-danger font-weight-bold pinspan"></span>
                       </div>
                     </div>
@@ -211,7 +230,10 @@ nav.mdl-navigation
                     <div class="form-row">
                       <div class="form-group col-md-2">
                         <label><b> Address</b> </label><br>
-                        <input type="text" disabled name="CurrentAddress" class="addressType" size="50" maxlength="50">
+                        <select style="height: 46px;" class="addressType" name="CurrentAddress" >
+                          <option value="permanant">Permanent</option>
+                          <option value="current">Currrent</option>
+                        </select>
                       </div>
                       <div class="form-group col-md-5">
                         <label> <b>AddressLine1</b> </label>
@@ -229,6 +251,7 @@ nav.mdl-navigation
 
                         <label><b>Country</b> </label>
                         <select style="height: 46px;" class="country" name="country"></select>
+                        <span class="text-danger font-weight-bold countryspan"></span>
                       </div>
                       <div class="form-group col-md-3">
 
@@ -245,7 +268,7 @@ nav.mdl-navigation
                       <div class="form-group col-md-3">
 
                         <label><b>Pincode</b></label>
-                        <input type="text" name="pincode1" class="pin" maxlength="6">
+                        <input type="text" name="pincode1" class="pin" maxlength="12">
                         <span class="text-danger font-weight-bold pinspan"></span>
                       </div>
                     </div>
@@ -260,12 +283,12 @@ nav.mdl-navigation
                 <div class="collapsible-header"><img src="mobile.png" width="19" height="19" />&nbsp; &nbsp;Contact Info
                 </div>
                 <div class="collapsible-body">
-                  <div id="phones1">
+                  <div id="phones1" aria-required="true">
 
                     <div class="form-row">
                       <div class="form-group col-md-2">
                         <label><b>Contact 1:</b> </label>
-                        <select style="height: 46px;" class="contactNumberType" name="Contact" disabled>
+                        <select style="height: 46px;" class="contactNumberType" name="Contact">
                           <option value="mobile">Mobile</option>
                           <option value="home">Home</option>
                           <option value="work">Work</option>
@@ -279,9 +302,10 @@ nav.mdl-navigation
                       <div class="form-group col-md-3">
                         <label><b>Country Code</b></label>
                         <select style="height: 46px;" class="countryCode" name="CountryCode">
-                          <option value="91">India</option>
-                          <option value="93">Afghanistan</option>
+                         
+                         
                         </select>
+                        <span class="text-danger font-weight-bold countrycodespan"></span>
                       </div>
                       <div class="form-group col-md-3">
 
@@ -300,10 +324,10 @@ nav.mdl-navigation
                     <div class="form-row">
                       <div class="form-group col-md-2">
                         <label><b>Contact 2:</b> </label>
-                        <select style="height: 46px;" class="contactNumberType" name="Contact" disabled>
-                          <option value="mobile">Mobile</option>
-                          <option value="home">Home</option>
+                        <select style="height: 46px;" class="contactNumberType" name="Contact">
                           <option value="work">Work</option>
+                          <option value="mobile">Mobile</option>
+                          <option value="home">Home</option>                        
                         </select>
                       </div>
                       <div class="form-group col-md-4">
@@ -313,10 +337,9 @@ nav.mdl-navigation
                       </div>
                       <div class="form-group col-md-3">
                         <label><b>Country Code</b></label>
-                        <select style="height: 46px;" class="countryCode" name="CountryCode">
-                          <option value="91">India</option>
-                          <option value="93">Afghanistan</option>
+                        <select style="height: 46px;" class="countryCode" name="CountryCode">  
                         </select>
+                        <span class="text-danger font-weight-bold countrycodespan"></span>
                       </div>
                       <div class="form-group col-md-3">
 
@@ -331,9 +354,9 @@ nav.mdl-navigation
                     <div class="form-row">
                       <div class="form-group col-md-2">
                         <label><b>Contact 3:</b> </label>
-                        <select style="height: 46px;" class="contactNumberType" name="Contact" disabled>
-                          <option value="mobile">Mobile</option>
+                        <select style="height: 46px;" class="contactNumberType" name="Contact">
                           <option value="home">Home</option>
+                          <option value="mobile">Mobile</option>
                           <option value="work">Work</option>
                         </select>
                       </div>
@@ -345,9 +368,8 @@ nav.mdl-navigation
                       <div class="form-group col-md-3">
                         <label><b>Country Code</b></label>
                         <select style="height: 46px;" class="countryCode" name="CountryCode">
-                          <option value="91">India</option>
-                          <option value="93">Afghanistan</option>
                         </select>
+                        <span class="text-danger font-weight-bold countrycodespan"></span>
                       </div>
                       <div class="form-group col-md-3">
 

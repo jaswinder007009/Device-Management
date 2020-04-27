@@ -16,6 +16,10 @@
     
         align-content: center;
     }
+    div.mdl-layout__drawer
+{
+  border: none;
+}
 
 .request-form label{
     

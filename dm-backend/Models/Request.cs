@@ -57,7 +57,7 @@ namespace dm_backend.Models
                 cmd.CommandText +=" and user_id="+userId;
             cmd.CommandText +=" order by "+sortField+ " "+sortDirection; 
             cmd.Parameters.AddWithValue("@search_field", searchField); 
-            Console.WriteLine(cmd.CommandText);
+            // Console.WriteLine(cmd.CommandText);
             using MySqlDataReader reader =  cmd.ExecuteReader();
             return ReadAll(reader);
         }

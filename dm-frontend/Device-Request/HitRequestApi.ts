@@ -11,7 +11,6 @@ export class HitApi {
       res = await fetch(uri, {
         headers: new Headers({ Authorization: `Bearer ${this.token}` }),
       });
-      // debugger
       console.log(res.status);
     // } catch {
         // console.log("error while hittiing api");
