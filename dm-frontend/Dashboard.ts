@@ -132,9 +132,11 @@ import { HitApi } from './Device-Request/HitRequestApi';
             //Get all rejected requests
         }
         if (action == "free") {
+            window.open("/deviceListForadmin.html?status=Free", "_self");
             //Get all free devices
         }
         if (action == "allocated") {
+            window.open("/deviceListForadmin.html?status=Allocated", "_self");
             //Get all allocated devices
         }
 

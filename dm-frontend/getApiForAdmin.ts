@@ -47,15 +47,13 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 			const URL = BASEURL + "/api/Device/page?limit1=15&offset1=0";
 			this.getApi(URL);
 		}
-		searchByName() {
+		searchByName(status:string) {
 			var serial_number = (document.getElementById(
 				"search_serial_number"
 			) as HTMLInputElement).value;
 			var device_name = (document.getElementById(
 				"fixed-header-drawer-exp"
 			) as HTMLInputElement).value;
-			var status = (document.getElementById("status") as HTMLInputElement)
-				.value;
 			const URL1 = BASEURL + "/api/Device/search?device_name=" + device_name;
 			if (serial_number) {
 				const URL = URL1 + "&serial_number=" + serial_number;
@@ -230,15 +228,22 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 			temp.sort(col, direction);
 		}
 	);
+	
+
+	
+
+console.log(status);
 	(document.querySelector(
 		"#fixed-header-drawer-exp"
 	) as HTMLInputElement).addEventListener("change", function(e) {
-		temp.searchByName();
+		let status=(document.getElementById("status") as HTMLInputElement).value;
+		console.log("acdvfvf"+status);
+		temp.searchByName(status);
 	});
 	(document.querySelector(
 		"#search_serial_number"
 	) as HTMLInputElement).addEventListener("change", function(e) {
-		temp.searchByName();
+		temp.searchByName(status);
 	});
 	(document.querySelector("#status") as HTMLInputElement).addEventListener(
 		"click",
@@ -248,7 +253,8 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 			) {
 				temp.getData();
 			} else {
-				temp.searchByName();
+				const status=(document.getElementById("status") as HTMLInputElement).value;
+				temp.searchByName(status);
 			}
 		}
 	);
@@ -262,7 +268,7 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 	
 	const temp = new GetApiForAdmin(token);
 	temp.getUserDetails();
-	temp.getData();
+
 	if(role ==0)
 	{
 		var roles ="User";
@@ -270,4 +276,16 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 	else 
 	roles = "Admin";
 	navigationBarsss(roles,"navigations");
+	
+	const urlParams = new URLSearchParams(window.location.search);
+	const myParam = urlParams.get("status");
+	if (myParam != null) {
+		temp.searchByName(myParam);
+		(document.getElementById("status")as HTMLSelectElement).value=myParam;
+		
+	}
+	else
+	{
+		temp.getData();
+	}
 })();
