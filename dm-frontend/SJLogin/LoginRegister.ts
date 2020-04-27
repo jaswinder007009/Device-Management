@@ -51,6 +51,16 @@ function RegisterUser() {
 		}
 	})
 		.then(response => response.json())
+		.then(data=>{
+            if(data.result !== "AlreadyExists")
+			{
+				alert("Registration Successfull !");
+			}
+			else{
+				alert("This Email Already Exists !");
+			}
+
+		})
 		.catch(err => {
 			console.log(err);
 		});
