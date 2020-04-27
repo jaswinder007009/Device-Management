@@ -113,7 +113,6 @@ import { Requests, Specification, PartialUserModel } from "./RequestModel";
                 notify: []
             };
         }
-        
     }
 
     (document.querySelector('#tablecol') as HTMLTableElement).addEventListener("click", function (e) {

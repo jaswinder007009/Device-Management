@@ -15,7 +15,7 @@ using dm_backend.Data;
 
 namespace dm_backend.Controllers
 {
-    // [Authorize]
+   // [Authorize]
     [Route("api/[controller]")]
     public class NotificationController : ControllerBase
     {
@@ -29,11 +29,13 @@ namespace dm_backend.Controllers
         }
         
         [HttpPost]
-        public IActionResult PostMultipleNotifications([FromBody]MultipleNotifications item)
+        public async Task<IActionResult> PostMultipleNotifications([FromBody]MultipleNotifications item)
         {
             Db.Connection.Open();
             item.Db = Db;
+            await new sendMail(Db).sendMultipleMail(item);
             var result = item.AddMultipleNotifications();
+            
             Db.Connection.Close();
             return new OkObjectResult(item);
         }
