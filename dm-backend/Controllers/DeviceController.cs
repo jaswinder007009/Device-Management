@@ -4,6 +4,7 @@ using dm_backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using dm_backend.Utilities;
 
 namespace dm_backend.Controllers
 {
@@ -20,13 +21,14 @@ namespace dm_backend.Controllers
         [Route("page")]
         public IActionResult GetAllDevices()
         {
-            int limit1 = Convert.ToInt32(HttpContext.Request.Query["limit1"]);
-            int offset1 = Convert.ToInt32(HttpContext.Request.Query["offset1"]);
+            // int limit1 = Convert.ToInt32(HttpContext.Request.Query["limit1"]);
+            // int offset1 = Convert.ToInt32(HttpContext.Request.Query["offset1"]);
             Db.Connection.Open();
             var query = new devices(Db);
-            var result = query.GetAllDevices(limit1, offset1);
+            var pager=PagedList<devices>.ToPagedList(query.GetAllDevices(1000,0),1,19);
+            //var result = query.GetAllDevices(1000, 0);
             Db.Connection.Close();
-            return Ok(result);
+            return Ok(pager);
         }
         [HttpGet]
         [Route("device_id/{device_id}")]
