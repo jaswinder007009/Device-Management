@@ -123,7 +123,7 @@
 
                  <div class="form-row">
                     <div class="form-group col-md-4"><label for="DOB">Date Of Birth:</label>
-                        <input type="date" id="dob" placeholder="dd-mm-YYYY" name="DOB" class="form-control">
+                        <input type="date" id="dob" placeholder="dd-mm-YYYY" value="0001-01-01" name="DOB" class="form-control">
                         <span id="dobs" class="text-danger font-weight-bold"></span>
                     </div><br>
                     <div class="form-group col-md-4">
@@ -137,7 +137,7 @@
                     </div>
 
                     <div class="form-group col-md-4"><label for="DOJ">Date Of Joining:</label>
-                        <input type="date" id="doj" placeholder="dd-mm-YYYY" name="DOJ" class="form-control">
+                        <input type="date" id="doj" placeholder="dd-mm-YYYY" value="0001-01-01" name="DOJ" class="form-control">
                         <span id="dojs" class="text-danger font-weight-bold"></span>
                     </div>
                     </div><br>
@@ -155,7 +155,7 @@
                         </h2>
                     </div>
 
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
                         data-parent="#accordion1">
                         <div class="card-body">
                             <label> Contact 1 Details </label><br>
@@ -165,8 +165,8 @@
                                         <label for="type">Type</label>
                                         <select id="contactNumberType" name="Contact"
                                             class="contactNumberType form-control">
-                                            <option value="home">Home</option>
                                             <option value="mobile">Mobile</option>
+                                            <option value="home">Home</option>
                                             <option value="work">Work</option>
                                         </select>
                                     </div>
@@ -234,9 +234,10 @@
                                         <label for="type">Type</label>
                                         <select id="contactNumberType" name="Contact"
                                             class="contactNumberType form-control">
+                                            <option value="work">Work</option>
                                             <option value="home">Home</option>
                                             <option value="mobile">Mobile</option>
-                                            <option value="work">Work</option>
+                                           
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
@@ -347,8 +348,9 @@
                                     <div class="form-group col-md-2">
                                         <label for="type">Type:</label>
                                         <select class="addressType form-control">
-                                            <option value="current">Current</option>
                                             <option value="permanant">Permanent</option>
+                                            <option value="current">Current</option>
+                                           
                                         </select>
                                     </div>
                                     <div class="form-group col-md-5">
