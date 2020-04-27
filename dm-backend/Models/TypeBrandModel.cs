@@ -9,43 +9,7 @@ using dm_backend;
 
 namespace dm_backend.Models
 {
-public class Status
-    {
-        public int id { get; set; }
-        public string name { get; set; }
-        internal AppDb Db { get; set; }
-        public Status()
-        {
-        }
-        internal Status(AppDb db)
-        {
-            Db = db;
-        }
-        public async Task<List<Status>> getallstatus()
-        {
-            using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"select * from status where status.status_name='Allocated' or status.status_name='Free' or status.status_name='Faulty';";
-            return await Readstatus(await cmd.ExecuteReaderAsync());
-        }
-        async public Task<List<Status>> Readstatus(DbDataReader reader)
-        {
-            var status1 = new List<Status>();
-            using (reader)
-            {
-                while (await reader.ReadAsync())
-                {
-                    var status2 = new Status()
-                    {
-                        id = reader.GetInt32(0),
-                        name = reader.GetString(1),
-                    };
-                    status1.Add(status2);
-                }
-            }
-            return status1;
-        }
 
-    }
     public class TypeBrandModel
     {
         public string field { get; set; }
