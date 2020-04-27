@@ -34,9 +34,9 @@ namespace dm_backend.Controllers
             Db.Connection.Open();
             var query = new User(Db);
             var result = query.getUserByuser_id(user_id);
-                  result.SetSerializableProperties(String.Empty);
+            result.SetSerializableProperties(String.Empty);
             Db.Connection.Close();
-             return Json(result);
+            return Json(result);
         }
        
        
@@ -49,7 +49,7 @@ namespace dm_backend.Controllers
 
             string ToSort = (string)HttpContext.Request.Query["sortby"] ?? "first_name";
             string direction = (string)HttpContext.Request.Query["direction"]  ?? "ASC" ;
-             Db.Connection.Open();
+            Db.Connection.Open();
             var query = new User(Db);
             var result = query.SortUserbyName(ToSort, direction, namesToSearch);//names To Sort
             Db.Connection.Close();
@@ -63,32 +63,30 @@ namespace dm_backend.Controllers
         }
         
         [Authorize(Roles="admin")]
-         [HttpPost]
-         [Route("add")]
-         public IActionResult Post([FromBody]User item)
-         {
-             Db.Connection.Open();
-             Console.WriteLine("------------" + item.addresses[0].AddressLine1 + "----------------");
-              //Console.WriteLine("------------" + item.addresses[1].AddressLine2 + "----------------");
-             item.Db = Db;
-             var result = item.AddOneUser();
-             Db.Connection.Close();
-             return new OkObjectResult(item);
-         }
+        [HttpPost]
+        [Route("add")]
+        public IActionResult Post([FromBody]User item)
+        {
+            Db.Connection.Open();
+            item.Db = Db;
+            var result = item.AddOneUser();
+            Db.Connection.Close();
+            return new OkObjectResult(item);
+        }
 
         [Authorize(Roles="admin,user")]
         [HttpPut]
         [Route("{user_id}/update")]
-         public ActionResult Put(int user_id, [FromBody]User body)
-         {
+        public ActionResult Put(int user_id, [FromBody]User body)
+        {
             Db.Connection.Open();
             body.Db = Db;
             body.UserId = user_id;
             Console.WriteLine(body.FirstName);
-          var result=  body.UpdateUser();
+            var result=  body.UpdateUser();
             Db.Connection.Close();
             return Ok(result);
-        
+    
         }
 
         [Authorize(Roles="admin")]
@@ -106,9 +104,9 @@ namespace dm_backend.Controllers
         [Authorize(Roles="admin")]
         [HttpDelete]
         [Route("{user_id}/remove")]
-         public IActionResult DeleteOne(int user_id)
-         {
-             Db.Connection.Open();
+        public IActionResult DeleteOne(int user_id)
+        {
+            Db.Connection.Open();
             User query = new User(Db)
             {
                 UserId = user_id
@@ -116,7 +114,7 @@ namespace dm_backend.Controllers
             query.Delete();
             Db.Connection.Close();
             return  Ok();
-         }
+        }
        
         public AppDb Db { get; }
     }
