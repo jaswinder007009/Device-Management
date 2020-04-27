@@ -10,6 +10,7 @@ import { BASEURL,amIUser,navigationBarsss } from './globals';
 import { UserData }  from "./dropdown";
 import {MyDevices } from "./userHistory";
 import {dropDownListen } from "./user-profile/dropDownListener";
+import { formatPhone } from "./utilities";
 
 (async function(){
 	const token:string=JSON.parse(sessionStorage.getItem("user_info"))["token"];
@@ -46,8 +47,9 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 				
 					console.log("Button clicked");
 					(document.getElementById("email") as HTMLInputElement).disabled = false;
-					changeheadingText();
+					
 					form_mode="create";
+					changeheadingText();
                     util.openForm(form_mode);
 					var user = new UserData(token);
 				}
@@ -233,9 +235,10 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 
 	document.addEventListener("click", function(e) {
 		if ((e.target as HTMLButtonElement).className.includes("userEditData")) {
-			changeheadingText();
+			
 			(document.getElementById("email") as HTMLInputElement).disabled = true;
 			form_mode="edit";
+			changeheadingText();
 			util.openForm(form_mode);
 				
 			const userId: number = parseInt((e.target as HTMLButtonElement).id) ;
@@ -259,7 +262,7 @@ import {dropDownListen } from "./user-profile/dropDownListener";
 		});
 	});
 	navigationBarsss(role,"navigation");
-    
+    util.addressCheck();
 	dropDownListen(form,token);
 
 

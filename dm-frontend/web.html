@@ -10,6 +10,7 @@
     <!-- Popper JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <!-- Latest compiled JavaScript -->
+    
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <!-- Material Design Lite -->
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
@@ -49,6 +50,7 @@
                                 <option value="Ms">Ms</option>
                                 <option value="Dr">Dr</option>
                             </select>
+                            <span id="salutations" class="text-danger font-weight-bold"></span>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="firstName">First Name</label>
@@ -101,6 +103,7 @@
                         <option value="admin">Admin</option>
                         <option value="superadmin">Super Admin</option>
                          </select>
+                         <span id="roleNames" class="text-danger font-weight-bold"></span>
 
                     </div>
 
@@ -169,12 +172,21 @@
                                             <option value="home">Home</option>
                                             <option value="work">Work</option>
                                         </select>
+                                        <span id="Contact1" class="text-danger font-weight-bold typespan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="number">Number</label>
                                         <input type="text" id="phone_number1" name="phone_number1" maxlength="10"
                                             class="number form-control">
-                                        <span id="phone_number1s" class="text-danger font-weight-bold"></span>
+                                        <!-- <input type="tel" id="phone_number1" name="phone_number1" maxlength="12" class="number form-control" placeholder="XXX-XXXX-XXX" pattern="[0-9]{3}-[0-9]{4}-[0-9]{3}">-->
+                                        <!-- <small>Format: XXX-XXX-XXXX</small><br><br> -->
+
+                                            <!-- <label for="phone">Enter a phone number:</label><br><br>
+                                            <input type="tel" id="phone" name="phone" placeholder="XXX-XXXX-XXX" pattern="[0-9]{3}-[0-9]{4}-[0-9]{3}" required><br><br>
+                                            <small>Format: 123-45-678</small><br><br> -->
+
+
+                                        <span id="phone_number1s" class="text-danger font-weight-bold numberspan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="country">Country Code</label>
@@ -182,11 +194,12 @@
                                             <option value="91">India</option>
 
                                         </select>
+                                        <span id="CountryCodes1" class="text-danger font-weight-bold CountryCodeSpan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="areacode">Area Code</label>
-                                        <input type="text" class="areaCode form-control" id="ac" name="AreaCode"  maxlength="4">
-                                        <span id="acs" class="text-danger font-weight-bold"></span>
+                                        <input type="text" class="areaCode form-control" id="ac1" name="AreaCode"  maxlength="4">
+                                        <span id="ac1s" class="text-danger font-weight-bold areaCodeSpan"></span>
                                     </div>
                                 </div>
 
@@ -204,12 +217,14 @@
                                             <option value="mobile">Mobile</option>
                                             <option value="work">Work</option>
                                         </select>
+                                        <span id="Contact2" class="text-danger font-weight-bold typespan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="number">Number</label>
-                                        <input type="text" name="phone_number2" maxlength="10"
+                                        <input type="text" id="phone_number2" name="phone_number2" maxlength="10"
                                             class="number form-control">
-
+                                            <!-- <small>Format: XXX-XXX-XXXX</small><br><br> -->
+                                            <span id="phone_number2s" class="text-danger font-weight-bold numberspan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="country">Country Code</label>
@@ -217,10 +232,12 @@
                                             <option value="91">India</option>
 
                                         </select>
+                                        <span id="CountryCodes2" class="text-danger font-weight-bold CountryCodeSpan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="areacode">Area Code</label>
-                                        <input type="text" class="areaCode form-control" name="AreaCode" maxlength="4">
+                                        <input type="text" id="ac2" class="areaCode form-control" name="AreaCode" maxlength="4">
+                                        <span id="ac2s" class="text-danger font-weight-bold areaCodeSpan"></span>
                                     </div>
                                 </div>
 
@@ -239,12 +256,14 @@
                                             <option value="mobile">Mobile</option>
                                            
                                         </select>
+                                        <span id="Contact3" class="text-danger font-weight-bold typespan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="number">Number</label>
-                                        <input type="text" name="phone_number2" maxlength="10"
+                                        <input type="text" id="phone_number3" name="phone_number3" maxlength="10"
                                             class="number form-control">
-
+                                            <!-- <small>Format: XXX-XXX-XXXX</small><br><br> -->
+                                            <span id="phone_number3s" class="text-danger font-weight-bold numberspan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="country">Country Code</label>
@@ -252,10 +271,12 @@
                                             <option value="91">India</option>
 
                                         </select>
+                                        <span id="CountryCodes3" class="text-danger font-weight-bold CountryCodeSpan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="areacode">Area Code</label>
-                                        <input type="text" class="areaCode form-control" name="AreaCode" maxlength="4">
+                                        <input type="text" id="ac3" class="areaCode form-control" name="AreaCode" maxlength="4">
+                                        <span id="ac3s" class="text-danger font-weight-bold areaCodeSpan"></span>
                                     </div>
                                 </div>
 
@@ -287,34 +308,36 @@
                                 <div class="form-row" id="addresses1">
                                     <div class="form-group col-md-2">
                                         <label for="type">Type:</label>
-                                        <select class="addressType form-control">
+                                        <select class="addressType form-control" id="addressType">
                                             <option value="current">Current</option>
                                             <option value="permanant">Permanent</option>
                                         </select>
+                                        <span id="addressType1" class="text-danger font-weight-bold addressTypeSpan"></span>
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label>Adddress Line 1:</label>
                                         <input type="text" name="CurrentAddress1" class="addressLine1 form-control" id="c1" size="50" maxlength="50">
-                                        <span id="c1s" class="text-danger font-weight-bold"></span>
+                                        <span id="c1s" class="text-danger font-weight-bold addressLine1Span"></span>
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label>Adddress Line 2:</label>
                                         <input type="text" name="CurrentAddress2" class="addressLine2 form-control"
                                             id="c2" size="50" maxlength="50">
-                                            <span id="c2s" class="text-danger font-weight-bold"></span>
+                                            <span id="c2s" class="text-danger font-weight-bold addressLine2Span"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Country:</label>
                                         <select class="country form-control" id="c6" name="Country1">
 
                                         </select>
+                                        <span id="c6s" class="text-danger font-weight-bold countrySpan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>State:</label>
                                         <select class="state form-control" id="c5" name="State1">
                                           
                                         </select>
-                                        <span id="c5s" class="text-danger font-weight-bold"></span>
+                                        <span id="c5s" class="text-danger font-weight-bold stateSpan"></span>
                                     </div>
                                    
                                     <div class="form-group col-md-3">
@@ -322,13 +345,13 @@
                                         <select class="city form-control" id="c4" name="city1">
                                          
                                         </select>
-                                        <span id="c4s" class="text-danger font-weight-bold"></span> 
+                                        <span id="c4s" class="text-danger font-weight-bold citySpan"></span> 
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Pincode</label>
                                         <input type="text" name="pincode1" id="c3" class="pin form-control"
                                             maxlength="6">
-                                            <span id="c3s" class="text-danger font-weight-bold"></span>
+                                            <span id="c3s" class="text-danger font-weight-bold pinSpan"></span>
                                     </div>
                                 </div><br>
 
@@ -347,46 +370,51 @@
                                 <div class="form-row" id="addresses2">
                                     <div class="form-group col-md-2">
                                         <label for="type">Type:</label>
-                                        <select class="addressType form-control">
+                                        <select class="addressType form-control" id="addressType">
                                             <option value="permanant">Permanent</option>
                                             <option value="current">Current</option>
                                            
                                         </select>
+                                        <span id="addressType2" class="text-danger font-weight-bold addressTypeSpan"></span>
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label>Adddress Line 1:</label>
                                         <input type="text" name="PermanentAddress1" class="addressLine1 form-control"
                                             id="p1" size="50" maxlength="50">
-                                            <span id="p1s" class="text-danger font-weight-bold"></span>
+                                            <span id="p1s" class="text-danger font-weight-bold addressLine1Span"></span>
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label>Adddress Line 2:</label>
                                         <input type="text" name="PermanentAddress2" class="addressLine2 form-control"
                                             id="p2" size="50" maxlength="50">
-                                            <span id="p2s" class="text-danger font-weight-bold"></span>
+                                            <span id="p2s" class="text-danger font-weight-bold addressLine2Span"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Country:</label>
                                         <select id="p6" class="country form-control" name="Country2">
 
                                         </select>
+                                        <span id="" class="text-danger font-weight-bold countrySpan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>State:</label>
                                         <select id="p5" class="state form-control" name="State2">
 
                                         </select>
+                                        <span id="" class="text-danger font-weight-bold stateSpan"></span>
                                     </div>
                                     
                                     <div class="form-group col-md-3">
                                         <label>City:</label>
                                         <select id="p4" class="city form-control" name="city2">
                                         </select>
+                                        <span id="" class="text-danger font-weight-bold citySpan"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Pincode</label>
                                         <input type="text" id="p3" name="pincode2" class="pin form-control"
                                             maxlength="6">
+                                            <span id="" class="text-danger font-weight-bold pinSpan"></span>
                                     </div>
                                 </div><br>
 

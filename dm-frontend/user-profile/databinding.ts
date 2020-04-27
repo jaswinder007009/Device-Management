@@ -107,6 +107,7 @@ export async  function populateFormFromObject(
 		// Fill country dropdown and only when it completes, fill the state
 		// Same process follows for city
 		await dropDown.getCountry(country);
+		if(data.addresses[i].country){
 		country.value=data.addresses[i].country;
 
 		await dropDown.getState(state,country);
@@ -114,7 +115,7 @@ export async  function populateFormFromObject(
 
 		await dropDown.getCity(city,state);
 		city.value=data.addresses[i].city;
-		
+		}
 	}
   
 }

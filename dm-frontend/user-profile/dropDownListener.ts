@@ -11,19 +11,19 @@ export async function dropDownListen(form:HTMLFormElement,token:string){
             dropDown.getState(state,this);
             return null;
         });
-        
         state.addEventListener("change",async function (f){
             dropDown.getCity(city,this);
             return null;
         });
      }
-    
+
     deptdesgListen(form);
     return null;
 }
 export async function deptdesgListen(form:HTMLFormElement){
+   
     form["department"].addEventListener("change",function(e){
-        
+
         let dept=(form["designation"]as HTMLSelectElement);
     
         new UserData().departdesgcall(dept,this);

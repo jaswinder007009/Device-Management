@@ -11,6 +11,7 @@ export function closeForm() {
     (document.querySelector("#myForm") as HTMLFormElement).style.display="none";
 	(document.querySelector("#myForm") as HTMLFormElement).reset();
 	clearDropdowns(document.querySelector("#myForm") as HTMLFormElement);
+
 }
 export function formatDate1(date) {
     var d = new Date(date),
@@ -23,7 +24,17 @@ export function formatDate1(date) {
 
     return [year, month, day].join('-');
 }
+export function formatPhone(str:string) {
 
+	return str.slice(0,3)+"-"+str.slice(3,6)+"-"+str.slice(6);    //XXXXXXXXXX=>XXX-XXXX-XXX
+
+}
+export function formatPhone1(str:string) {
+
+	let a =  str.split("-");   //XXX-XXXX-XXX =>XXXXXXXXXX
+console.log(a);
+return a[0]+a[1]+a[2];
+}	
 export function concatName(value : any )
 {
     let name = "";
@@ -69,11 +80,12 @@ function fillInitialDropdowns(formElement: HTMLFormElement){
 	});
 	// Fill salutation dropdown
 	dropDown.getSalutation(formElement.querySelector("#salutation"));
-	
+	dropDown.departmentcall(formElement.querySelector("#department"));/////
 }
 function clearDropdowns(formElement: HTMLFormElement){
 	formElement.querySelectorAll('select').forEach((selectElement: HTMLSelectElement) => {
-		selectElement.innerHTML = "";
+		selectElement.value = "";
+		
 	})
 }
 export async function addressCheck()
