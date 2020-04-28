@@ -1,11 +1,10 @@
-import { BASEURL, navigationBarsss, PageNo } from "./globals";
+import { BASEURL, navigationBarsss, PageNo, current_page, paging } from "./globals";
 import { DeviceListForAdmin } from "./deviceListForAdmin";
 import { Sort } from "./user-profile/SortingUser";
 import { amIUser } from "./globals";
 import { Requests } from "./RequestModel";
 import { openForm } from "./utilities";
 import { HitApi } from "./Device-Request/HitRequestApi";
-import {paging} from "./globals";
 
 
 
@@ -23,8 +22,8 @@ import {paging} from "./globals";
 
 	class GetApiForAdmin {
 		token: string="";
-		page_no:number=0;
-		total_count:number=0;
+		currentPage:number=current_page;
+
 		constructor(token:string){
 			this.token=token;
 		
@@ -34,8 +33,11 @@ import {paging} from "./globals";
 				headers: new Headers({"Authorization": `Bearer ${token}`})
 				
             })
-				.then(response =>{console.log(response.headers.get('X-Pagination')) 
-					return response.json()})
+				.then(response =>{
+					let metadata=JSON.parse(response.headers.get('X-Pagination'));
+					paging(metadata);
+					return response.json()
+				})
 				
 				.then(data => {
 					console.log();
@@ -50,7 +52,7 @@ import {paging} from "./globals";
 				.catch(err => console.log(err));
 		}
 		getData(uri:string) {
-			const URL = BASEURL + "/api/Device/page"+uri;
+			const URL = BASEURL + "/api/Device/page?"+PageNo(this.currentPage);
 			console.log(URL);
 			this.getApi(URL);
 		}
@@ -61,7 +63,7 @@ import {paging} from "./globals";
 			var device_name = (document.getElementById(
 				"fixed-header-drawer-exp"
 			) as HTMLInputElement).value;
-			const URL1 = BASEURL + "/api/Device/search?page_no=1&page_size=5&device_name=" + device_name;
+			const URL1 = BASEURL + "/api/Device/search?"+PageNo(this.currentPage)+"&device_name=" + device_name;
 			if (serial_number) {
 				const URL = URL1 + "&serial_number=" + serial_number;
 				this.getApi(URL);
@@ -84,7 +86,8 @@ import {paging} from "./globals";
 				"/api/Device/sort"+uri+"SortColumn=" +
 				SortColumn +
 				"&SortDirection=" +
-				SortDirection;
+				SortDirection +
+				"&" + PageNo(this.currentPage);
 			this.getApi(URL);
 		}
 
@@ -226,24 +229,26 @@ import {paging} from "./globals";
 			window.location.href="./devicedetail.html";
 		}
 	);
-	paging();
+	
+
+	
 	(document.querySelector("#pagination") as HTMLButtonElement).addEventListener("click" ,e =>
 	{ 
-		//var page_no=1;
 		if((e.target as HTMLButtonElement).value==">>")
 		{
-			temp.page_no+=1;
+			temp.currentPage+=1;
 		}
 		else if((e.target as HTMLButtonElement).value=="<<")
 		{
-			temp.page_no = temp.page_no-1;
+			temp.currentPage-=1;
 		}
 		else
 		{
-			temp.page_no=+((e.target as HTMLButtonElement).value);
+			temp.currentPage=+((e.target as HTMLButtonElement).value);
 		}
 	       console.log((e.target as HTMLButtonElement).value);
-		let uri = PageNo(temp.page_no);
+		let uri = PageNo(temp.currentPage);
+		console.log(uri);
 		temp.getData(uri);   
     });
 	(document.querySelector("#tablecol") as HTMLTableElement).addEventListener(
@@ -293,7 +298,7 @@ console.log(status);
 			temp.getData("");
 		}
 	);
-	
+
 	const temp = new GetApiForAdmin(token);
 	temp.getUserDetails();
 
@@ -304,6 +309,7 @@ console.log(status);
 	else 
 	roles = "Admin";
 	navigationBarsss(roles,"navigations");
+	
 	
 	const urlParams = new URLSearchParams(window.location.search);
 	const myParam = urlParams.get("status");

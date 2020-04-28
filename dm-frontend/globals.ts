@@ -1,6 +1,8 @@
 import { HitApi } from "./Device-Request/HitRequestApi";
 
 export const BASEURL = "http://localhost:5000";
+export var page_size=4;
+export var current_page=1;
 
 export function amIAdmin(token: string){
    return new HitApi(token).HitGetApi(BASEURL + "/api/is_admin")
@@ -65,16 +67,22 @@ export function navigationBarsss(role:string , element:string) {
 }
 
 }
-export function paging(start:number=1,end:number=4)
-{
-    (document.getElementById("pagination") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="" value="<<" >`;
-    for (let loop = start ; loop <= end ; loop++)
+export function paging(metadata)
+{   let total_pages=metadata.TotalPages;
+    current_page=metadata.CurrentPage;
+    let has_next=metadata.HasNext;
+    let has_previous=metadata.HasPrevious;
+    (document.getElementById("pagination") as HTMLDivElement).innerHTML="";
+    if(has_previous)
+        (document.getElementById("pagination") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="" value="<<" >`;
+    for (let loop = 1 ; loop <= total_pages ; loop++)
     (document.getElementById("pagination") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="${loop}" value="${loop}" >`;
-    (document.getElementById("pagination") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="" value=">>" >`;
+    if(has_next)
+        (document.getElementById("pagination") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="" value=">>" >`;
 }
-export function PageNo(page_no,page_size=6)
+export function PageNo(page_no)
 {
-    let uri= "?page="+page_no + "&page-size="+page_size;
+    let uri= "page="+page_no + "&page-size="+page_size;
     return uri;
 }
 // export function getPageNo(page_no,value:string)
