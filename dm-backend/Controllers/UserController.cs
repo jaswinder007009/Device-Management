@@ -3,6 +3,7 @@ using dm_backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using dm_backend.Models;
+using Newtonsoft.Json;
 namespace dm_backend.Controllers
 {
     [Authorize]
@@ -53,7 +54,7 @@ namespace dm_backend.Controllers
             Db.Connection.Open();
             var query = new User(Db);
              var pager=PagedList<User>.ToPagedList(query.SortUserbyName(ToSort, direction, namesToSearch),pageNumber,pageSize);
-            //var result = query.SortUserbyName(ToSort, direction, namesToSearch);//names To Sort
+            Response.Headers.Add("X-Pagination",JsonConvert.SerializeObject(pager.getMetaData()));
             Db.Connection.Close();
             foreach (var m1 in pager)
             {
