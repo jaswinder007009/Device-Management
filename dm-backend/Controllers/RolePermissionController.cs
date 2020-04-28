@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using dm_backend.Data;
 using dm_backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ namespace dm_backend.Controllers
     [Route("api/")]
     public class RolepermissionController : BaseController
     {
-        public RolepermissionController(AppDb db)
+        public RolepermissionController(AppDb db, EFDbContext ef): base(ef)
         {
             Db = db;
         }
@@ -152,6 +153,12 @@ namespace dm_backend.Controllers
         [Route("is_admin")]
         public IActionResult AmIAdmin(){
             return Ok(new{ result= GetUserRoles().Contains("admin") });
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("canI/{permission_name}")]
+        public IActionResult DoIHavePermission(string permission_name){
+            return Ok(new{ result = GetUserPermissions().Contains(permission_name) });
         }
     }
 }
