@@ -63,8 +63,37 @@ export function navigationBarsss(role:string , element:string) {
    {
     document.getElementById(element).innerHTML = navigation;
 }
-}
 
+}
+export function paging(start:number=1,end:number=4)
+{
+    (document.getElementById("pagination") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="" value="<<" >`;
+    for (let loop = start ; loop <= end ; loop++)
+    (document.getElementById("pagination") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="${loop}" value="${loop}" >`;
+    (document.getElementById("pagination") as HTMLDivElement).innerHTML += `<input type="submit" class="page" id="" value=">>" >`;
+}
+export function PageNo(page_no,page_size=6)
+{
+    let uri= "?page="+page_no + "&page-size="+page_size;
+    return uri;
+}
+// export function getPageNo(page_no,value:string)
+// {
+
+// 		  if(value==">>")
+// 		{
+// 			page_no+=1;
+// 		}
+// 		else if(value=="<<")
+// 		{
+// 			page_no = page_no-1;
+// 		}
+// 		else
+// 		{
+// 			page_no=+(value);
+//         }
+//         return page_no;
+// }
 export class Token    /// call static method that return an object 
 {
     userID:number 

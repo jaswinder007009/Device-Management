@@ -1,11 +1,11 @@
-import { BASEURL, navigationBarsss } from "./globals";
+import { BASEURL, navigationBarsss, PageNo } from "./globals";
 import { DeviceListForAdmin } from "./deviceListForAdmin";
 import { Sort } from "./user-profile/SortingUser";
 import { amIUser } from "./globals";
 import { Requests } from "./RequestModel";
 import { openForm } from "./utilities";
 import { HitApi } from "./Device-Request/HitRequestApi";
-
+import {paging} from "./globals";
 
 
 
@@ -23,16 +23,22 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 
 	class GetApiForAdmin {
 		token: string="";
+		page_no:number=0;
+		total_count:number=0;
 		constructor(token:string){
 			this.token=token;
+		
 		}
 		getApi(URL: string) {
 			fetch(URL,{
-                headers: new Headers({"Authorization": `Bearer ${token}`})
+				headers: new Headers({"Authorization": `Bearer ${token}`})
+				
             })
-				.then(Response => Response.json())
+				.then(response =>{console.log(response.headers.get('X-Pagination')) 
+					return response.json()})
+				
 				.then(data => {
-					console.log(data);
+					console.log();
 					(document.getElementById(
 						"Request_data"
 					) as HTMLTableElement).innerHTML = "";
@@ -43,8 +49,9 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 				})
 				.catch(err => console.log(err));
 		}
-		getData() {
-			const URL = BASEURL + "/api/Device/page?limit1=15&offset1=0";
+		getData(uri:string) {
+			const URL = BASEURL + "/api/Device/page"+uri;
+			console.log(URL);
 			this.getApi(URL);
 		}
 		searchByName(status:string) {
@@ -54,7 +61,7 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 			var device_name = (document.getElementById(
 				"fixed-header-drawer-exp"
 			) as HTMLInputElement).value;
-			const URL1 = BASEURL + "/api/Device/search?device_name=" + device_name;
+			const URL1 = BASEURL + "/api/Device/search?page_no=1&page_size=5&device_name=" + device_name;
 			if (serial_number) {
 				const URL = URL1 + "&serial_number=" + serial_number;
 				this.getApi(URL);
@@ -71,10 +78,10 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 			//(document.getElementById("fixed-header-drawer-exp") as HTMLInputElement).value="";
 			//(document.getElementById("search_serial_number") as HTMLInputElement).value="";
 		}
-		sort(SortColumn: string, SortDirection: any) {
+		sort(SortColumn: string, SortDirection: any,uri:string) {
 			const URL =
 				BASEURL +
-				"/api/Device/sort?SortColumn=" +
+				"/api/Device/sort"+uri+"SortColumn=" +
 				SortColumn +
 				"&SortDirection=" +
 				SortDirection;
@@ -134,6 +141,7 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 		closeForm1(popup) {
 			document.getElementById(popup).style.display = "none";
 		}
+	
 	}
 
 	document.addEventListener("click", function(e) {
@@ -157,7 +165,7 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 				temp.deleteDevice(device_id);
 				
 	           window.location.reload();
-				temp.getData();
+				temp.getData("");
 			} 
 		}
 		if((e.target as HTMLTableCellElement).className=="cards")
@@ -218,6 +226,26 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 			window.location.href="./devicedetail.html";
 		}
 	);
+	paging();
+	(document.querySelector("#pagination") as HTMLButtonElement).addEventListener("click" ,e =>
+	{ 
+		//var page_no=1;
+		if((e.target as HTMLButtonElement).value==">>")
+		{
+			temp.page_no+=1;
+		}
+		else if((e.target as HTMLButtonElement).value=="<<")
+		{
+			temp.page_no = temp.page_no-1;
+		}
+		else
+		{
+			temp.page_no=+((e.target as HTMLButtonElement).value);
+		}
+	       console.log((e.target as HTMLButtonElement).value);
+		let uri = PageNo(temp.page_no);
+		temp.getData(uri);   
+    });
 	(document.querySelector("#tablecol") as HTMLTableElement).addEventListener(
 		"click",
 		function(e) {
@@ -225,7 +253,7 @@ import { HitApi } from "./Device-Request/HitRequestApi";
 			let id = e.target as HTMLTableHeaderCellElement;
 			let sorts = new Sort(token);
 			let direction = sorts.checkSortType(id);
-			temp.sort(col, direction);
+			temp.sort(col, direction,"?");
 		}
 	);
 	
@@ -251,7 +279,7 @@ console.log(status);
 			if (
 				(document.getElementById("status") as HTMLInputElement).value == "all"
 			) {
-				temp.getData();
+				temp.getData("");
 			} else {
 				const status=(document.getElementById("status") as HTMLInputElement).value;
 				temp.searchByName(status);
@@ -262,7 +290,7 @@ console.log(status);
 	(document.querySelector(".devices") as HTMLDivElement).addEventListener(
 		"click",
 		function(e) {
-			temp.getData();
+			temp.getData("");
 		}
 	);
 	
@@ -286,6 +314,7 @@ console.log(status);
 	}
 	else
 	{
-		temp.getData();
+		temp.getData("");
 	}
+	
 })();
