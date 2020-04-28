@@ -95,10 +95,6 @@ import { Sort } from "./user-profile/SortingUser";
                 notify: []
             };
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> b796189563f00ccab10a6ab8af811246bd518f53
     }
 
     (document.querySelector('#tablecol') as HTMLTableElement).addEventListener("click", function (e) {

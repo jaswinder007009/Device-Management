@@ -33,7 +33,14 @@ namespace dm_backend.Controllers
         {
             Db.Connection.Open();
             item.Db = Db;
-            await new sendMail(Db).sendMultipleMail(item);
+            try
+            {
+                await new sendMail(Db).sendMultipleMail(item);
+            }
+            catch
+            {
+                return BadRequest();
+            }
             var result = item.AddMultipleNotifications();
             
             Db.Connection.Close();

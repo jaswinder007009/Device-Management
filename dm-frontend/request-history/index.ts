@@ -14,7 +14,17 @@ import { HitApi } from "../Device-Request/HitRequestApi";
 let token=JSON.parse(sessionStorage.getItem("user_info"))["token"];
 let url = BASEURL +"/sorting";
 var domElement =  new HtmlElementsData();
+(function(){
+    var prams = window.location.href;
+    var pramList = prams.split("?")
+    if(pramList.length > 1)
+    {
+        getData("?"+pramList[1])
+    }
+    else 
+    getData();
 
+})();
 
 function getData(params = "")
 {
@@ -78,7 +88,7 @@ document.querySelector("#tableHead").addEventListener('click', function (e) {
         getData(new page(token).slectedPage(x));
     });
 navigationBarsss("Admin","navigation");
-getData();
+
 }());
 
 
