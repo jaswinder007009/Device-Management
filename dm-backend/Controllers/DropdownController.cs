@@ -261,14 +261,14 @@ namespace dm_backend.Controllers
 
         [HttpGet]
         [Route("{type}/{brand}/{model}/specification")]
-        async public Task<IActionResult> GetAllDeviceBrands(String type ,String brand ,  String model )
+        public async Task<IActionResult> GetAllDeviceBrands(String type ,String brand ,  String model )
         {
 
             Db.Connection.Open();
 
             var specs = new Specification(Db);
 
-            var result = await specs.getSpecificSpecification( type, brand, model);
+            var result = specs.getSpecificSpecification( type, brand, model);
 
             Db.Connection.Close();
             // if (result.Any() < 1)

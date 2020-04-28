@@ -353,7 +353,7 @@ public class PartialDeviceModel
         }
 
        
-        public async Task<List<devices>> getCurrentDevice(int id, string search, string sort = "", string direction = "")
+        public List<devices> getCurrentDevice(int id, string search, string sort = "", string direction = "")
         {
             using var cmd = Db.Connection.CreateCommand();
 
@@ -385,10 +385,10 @@ and device.device_model_id=device_model.device_model_id  and assign_device.statu
             Console.WriteLine("Search = " + cmd.Parameters["@search"].Value);
             // Console.WriteLine("Search = " + cmd.Parameters["@sort"].Value);
 
-            return await ReadAllDevice(cmd.ExecuteReader());
+            return  ReadAllDevice(cmd.ExecuteReader());
 
         }
-        public async Task<List<devices>> getPreviousDevice(int id, string search = "", string sort = "", string direction = "")
+        public List<devices> getPreviousDevice(int id, string search = "", string sort = "", string direction = "")
         {
             using var cmd = Db.Connection.CreateCommand();
 
@@ -418,7 +418,7 @@ and request_history.device_model=device_model.device_model_id and request_histor
             Console.WriteLine("id = " + cmd.Parameters["@id"].Value);
             Console.WriteLine("Search = " + cmd.Parameters["@search"].Value);
             // Console.WriteLine("Search = " + cmd.Parameters["@sort"].Value);
-            return await ReadAllDevice(cmd.ExecuteReader());
+            return  ReadAllDevice(cmd.ExecuteReader());
 
 
 
@@ -426,13 +426,13 @@ and request_history.device_model=device_model.device_model_id and request_histor
         }
         
 	
-		public async Task<List<devices>> ReadAllDevice(MySqlDataReader reader)
+		public List<devices> ReadAllDevice(MySqlDataReader reader)
 		{
 			Console.WriteLine("Rows" + reader.HasRows);
 			var posts = new List<devices>();
 			using (reader)
 			{
-				while (await reader.ReadAsync())
+				while (reader.Read())
 				{
 					Console.WriteLine("Found a row");
 					var post = new devices()
