@@ -11,6 +11,7 @@ using dm_backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using MySql.Data.MySqlClient;
 using dm_backend.Utilities;
+using Newtonsoft.Json;
 
 namespace dm_backend.Controllers
 {
@@ -74,6 +75,7 @@ namespace dm_backend.Controllers
             Db.Connection.Open();
             var returnObject = new ReturnRequestModel(Db);
             var pager=PagedList<ReturnRequestModel>.ToPagedList(returnObject.GetReturnRequests(userId,sortField,sortDirection,searchField),pageNumber,pageSize);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pager.getMetaData()));
             Db.Connection.Close();
             return new OkObjectResult(pager);
         }

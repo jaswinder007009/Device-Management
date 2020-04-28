@@ -9,6 +9,7 @@ using dm_backend.Logics;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using dm_backend.Utilities;
+using Newtonsoft.Json;
 
 namespace dm_backend.Models{
     [Authorize]
@@ -86,6 +87,7 @@ namespace dm_backend.Models{
             Db.Connection.Open();
             var requestObject = new RequestModel(Db);
             var pager=PagedList<RequestModel>.ToPagedList(requestObject.GetAllPendingRequests(userId,sortField,sortDirection,searchField),pageNumber,pageSize);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pager.getMetaData()));
             Db.Connection.Close();
             return Ok(pager);
         }

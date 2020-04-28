@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using MySql.Data.MySqlClient;
 using dm_backend.Data;
 using dm_backend.Utilities;
+using Newtonsoft.Json;
 
 namespace dm_backend.Controllers
 {
@@ -68,6 +69,7 @@ namespace dm_backend.Controllers
             Db.Connection.Open();
             var NotificationObject = new NotificationModel(Db);
             var pager=PagedList<NotificationModel>.ToPagedList(NotificationObject.GetNotifications(userId,sortField,sortDirection,searchField),pageNumber,pageSize);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pager.getMetaData()));
             Db.Connection.Close();
             return Ok(pager);
         }
