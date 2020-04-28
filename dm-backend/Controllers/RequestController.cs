@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using dm_backend.Logics;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
+using dm_backend.Utilities;
 
 namespace dm_backend.Models{
     [Authorize]
@@ -69,6 +70,8 @@ namespace dm_backend.Models{
             string searchField=(string) HttpContext.Request.Query["search"] ?? "";
             string sortField=(string) HttpContext.Request.Query["sortby"] ?? "request_device_id";
             string sortDirection=(string)HttpContext.Request.Query["direction"] ?? "asc";
+            int pageNumber=Convert.ToInt32((string)HttpContext.Request.Query["page"]);
+            int pageSize=Convert.ToInt32((string)HttpContext.Request.Query["page-size"]);
             if(!string.IsNullOrEmpty(HttpContext.Request.Query["id"]))
             userId=Convert.ToInt32((string)HttpContext.Request.Query["id"]);
             switch (sortField.ToLower())
@@ -82,9 +85,9 @@ namespace dm_backend.Models{
             }
             Db.Connection.Open();
             var requestObject = new RequestModel(Db);
-            var result = requestObject.GetAllPendingRequests(userId,sortField,sortDirection,searchField);
+            var pager=PagedList<RequestModel>.ToPagedList(requestObject.GetAllPendingRequests(userId,sortField,sortDirection,searchField),pageNumber,pageSize);
             Db.Connection.Close();
-            return Ok(result);
+            return Ok(pager);
         }
 
         [Authorize(Roles="admin")]
