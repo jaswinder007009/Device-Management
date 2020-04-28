@@ -240,12 +240,12 @@ public class PartialDeviceModel
         }
 
 
-        public List<devices> GetAllDevices(int limit1, int offset1)
+        public List<devices> GetAllDevices()
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = " call getAllDevice(@limit1,@offset1)";
-            cmd.Parameters.AddWithValue("@limit1", limit1);
-            cmd.Parameters.AddWithValue("@offset1", offset1);
+            cmd.CommandText = "call getAllDevice";
+            //cmd.Parameters.AddWithValue("@limit1", limit1);
+            //cmd.Parameters.AddWithValue("@offset1", offset1);
             return ReadAll(cmd.ExecuteReader());
 
         }

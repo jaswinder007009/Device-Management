@@ -25,7 +25,7 @@ namespace dm_backend.Controllers
             int pageSize=Convert.ToInt32((string)HttpContext.Request.Query["page-size"]);
             Db.Connection.Open();
             var query = new devices(Db);
-            var pager=PagedList<devices>.ToPagedList(query.GetAllDevices(1000,0),pageNumber,pageSize);
+            var pager=PagedList<devices>.ToPagedList(query.GetAllDevices(),1,5);
             //var result = query.GetAllDevices(1000, 0);
             Db.Connection.Close();
             return Ok(pager);
