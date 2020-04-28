@@ -71,6 +71,34 @@ import { navigationBarsss, amIUser } from "../globals";
 	document.querySelector('#save-button').addEventListener('click', function(){
 		rolePermisison.save();
 	});
+	document.addEventListener("click", event => {
+		if ((event.target as HTMLButtonElement).dataset.id == "update_role") {
+			console.log("sdfghjkl");
+			roles.update_data1(parseInt((event.target as HTMLButtonElement).value));
+		}
+	});
+	document.addEventListener("click", e => {
+		if ((e.target as HTMLButtonElement).className === "role_update_1") {
+			console.log("sdfghjkl");
+			console.log((event.target as HTMLButtonElement).value);
+			roles.updateRole_1(parseInt((event.target as HTMLButtonElement).value));
+			roles.headerTag34.innerHTML == "";
+		}
+	});
+	document.addEventListener("click", event => {
+		if ((event.target as HTMLButtonElement).dataset.id == "close_role") {
+			this.headerTag34.innerHTML == "";
+		roles.getroles();
+		}
+	});
+	document.addEventListener("click", event => {
+		if ((event.target as HTMLButtonElement).dataset.id == "close_perm") {
+			this.headerTag35.innerHTML == "";
+		roles.getpermissions();
+		}
+	});
+
+
 
 	rolePermisison.setup();
 

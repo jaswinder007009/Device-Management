@@ -183,24 +183,34 @@ export default class role {
 			body: JSON.stringify(this.data)
 		}).then(response => {
 			if (!response.ok) {
-				alert("duplicate role");
+				alert("duplicate permission");
 				throw new Error(response.statusText);
 			}
 			alert("permission inserted");
+			document.getElementById("popup1").style.display = "none";
 			this.getpermissions();
 		});
 		(document.getElementById("permissionName") as HTMLInputElement).value == "";
 		document.getElementById("popup1").style.display = "none";
-		this.getpermissions();
-	} //update role
+	this.getpermissions();
+	} 
+	//update role
 	update_data1(x: number) {
 		this.headerTag34.innerHTML == "";
 		this.headerTag34.innerHTML = `
-        <div style="border-radius: 10px;border:5px ; background-color:linen; padding:10px; margin: auto; width:500px;">
+        <dialog id="popup1" class="mdl-dialog"  >
+
+		<div class="mdl-dialog__content">
         <label> Enter The New Role Name </label>
         <input type="text" id="RoleName111"  name="RoleName111" value=""  >
         <button class="role_update_1" value="${x}">SUBMIT</button>
-        </div>`;
+		</div>
+		<div class="mdl-dialog__actions">
+					  <button type="button" class="mdl-button"  id="close_role">Close</button>
+					
+					</div>
+				  </dialog>
+		`;
 	}
 	bindData_1() {
 		this.Role_up = (document.getElementById(
@@ -238,11 +248,21 @@ export default class role {
 	update_data2(y: number) {
 		this.headerTag35.innerHTML == "";
 		this.headerTag35.innerHTML = `
-        <div style="border-radius: 10px;border:5px ; background-color:linen; padding:10px; margin: auto; width:500px;">
+	
+		
+		<dialog id="popup1" class="mdl-dialog"  >
+
+		<div class="mdl-dialog__content">
         <label> Enter The New Permission Name </label>
         <input type="text" id="PermissionName111"  name="PermissionName111" value=""  >
         <button class="permission_update_1" value="${y}">SUBMIT</button>
-        </div> `;
+		</div>
+		
+		<div class="mdl-dialog__actions">
+					  <button type="button" class="mdl-button" id="close_perm" >Close</button>
+					
+					</div>
+				  </dialog>`;
 	}
 	bindData_2() {
 		this.permission_up = (document.getElementById(

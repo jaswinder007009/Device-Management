@@ -40,33 +40,49 @@
 				</section>
 
 				<section class="mdl-layout__tab-panel" id="fixed-tab-2">
-					<!-- popup -->
-					<div class="container" id="popup">
-						<div class="get_role">
-							<button class="btn btn-danger" style="float:right;" onclick="closeForm()">X</button>
+					
+					<dialog id="popup" class="mdl-dialog">
+						<h3 class="mdl-dialog__title">Enter Role Name</h3>
+						<div class="mdl-dialog__content">
+
+
+					<!-- <div class="container" id="popup">
+						<div class="get_role"> -->
+							<!-- <button class="btn btn-danger" style="float:right;" onclick="closeForm()">X</button> -->
 							<form method="POST" class="form-inline">
 								<div class="form-group" style="padding:5px;">
-									<label id="colors">Enter the Role Name </label><br />
+									<!-- <label id="colors">Enter the Role Name </label><br /> -->
 									<input type="text"
 										class="form-control"
 										id="roleName"
 										name="roleName"
 										value=""
 									/>
-									<button
+									
+								</div>
+							</form>
+						</div>
+						<div class="mdl-dialog__actions">
+						  <button type="button" class="mdl-button" onclick="closeForm()">Close</button>
+						  <button
 										type="button"
-										class="btn btn-primary btn-block form-control"
+										class="mdl-button"
 										id="btn_insert"
 									>
 										ADD
 									</button>
-								</div>
-							</form>
+						
 						</div>
-					</div>
+					  </dialog>
+						<!-- </div>
+					</div> -->
 					<div id="insert_role"></div>
 					<div class="page-content">
-						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="addrole" onclick="openForm()">Add Role</button>
+						<button class="mdl-button mdl-button--raised mdl-js-button dialog-button" id="addrole" onclick="openForm()" >Add Role</button>
+
+
+						<!-- id="addrole" onclick="openForm()" -->
+
 						<div class="main">
 							<table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp" id="tab2">
 								<tr>
@@ -78,16 +94,21 @@
 					</div>
 				</section>
 				<section class="mdl-layout__tab-panel" id="fixed-tab-3">
-					<!-- popup1 -->
+					
 					<center>
-						<div class="container"  id="popup1">
+						<!-- <div class="container"  id="popup1">
 							<div class="caintain">
 								<button style="float:right" onclick="closePermission()">
 									X
-								</button>
+								</button> -->
+								<dialog id="popup1" class="mdl-dialog"  >
+									<h3 class="mdl-dialog__title">Enter Permission </h3>
+									<div class="mdl-dialog__content">
+
+
 								<form method="POST" class="form-inline">
 									<div class="form-group">
-										<label id="colors">Enter the Permission Name </label><br />
+										<!-- <label id="colors">Enter the Permission Name </label><br /> -->
 										<input
 											type="text"
 											class="form-control"
@@ -96,23 +117,30 @@
 											value=""
 										/>
 										<br />
-										<button
-											type="button"
-											class="btn btn-primary"
-											style="margin:1px;"
+										
+									</div>
+								</form>
+							<!-- </div>
+						</div> -->
+					</div>
+					<div class="mdl-dialog__actions">
+						<button type="button" class="mdl-button" onclick="closePermission()">Close</button>
+						<button		type="button"
+						class="mdl-button"
 											id="btn_insert1"
 										>
 											ADD
 										</button>
-									</div>
-								</form>
-							</div>
-						</div>
+					 
+					
+					</div>
+				  </dialog>
 					</center>
-					<div id="insert_permission"></div>
+					<!-- <div id="insert_permission"></div> -->
 					
 					<div class="page-content">
-						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="addpermission" onclick="openPermission();">
+						<button class="mdl-button mdl-button--raised mdl-js-button dialog-button1" id="addpermission" onclick="openPermission();" >
+							<!-- id="addpermission" onclick="openPermission();" -->
 							Add Permission
 						</button>
 						<div class="main">
@@ -124,6 +152,7 @@
 							</table>
 						</div>
 					</div>
+					<div id="insert_permission"></div>
 				</section>
 			</main>
 		</div>
@@ -142,5 +171,38 @@
 		function closePermission() {
 			document.getElementById("popup1").style.display = "none";
 		}
+
+
+
+		// ---------------------------------------------------------
+		(function() {
+    'use strict';
+	var dialogButton = document.querySelector('.dialog-button');
+	var dialogButton1 = document.querySelector('.dialog-button1');
+	var dialog = document.querySelector('#popup');
+	var dialog1 = document.querySelector('#popup1');
+    if (! dialog.showModal) {
+      dialogPolyfill.registerDialog(dialog);
+	}
+	if (! dialog1.showModal) {
+      dialogPolyfill.registerDialog(dialog1);
+    }
+    dialogButton.addEventListener('click', function() {
+       dialog.showModal();
+	});
+	dialogButton1.addEventListener('click', function() {
+       dialog1.showModal();
+	});
+	dialog1.querySelector('button:not([disabled])')
+    .addEventListener('click', function() {
+      dialog1.close();
+    });
+	
+    dialog.querySelector('button:not([disabled])')
+    .addEventListener('click', function() {
+      dialog.close();
+    });
+  }());
+// ------------------------------------
 	</script>
 </html>
