@@ -88,7 +88,6 @@ document.querySelector("#tableHead").addEventListener('click', function (e) {
         getData(new page(token).slectedPage(x));
     });
 navigationBarsss("Admin","navigation");
-
 }());
 
 

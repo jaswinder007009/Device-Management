@@ -59,6 +59,7 @@ export class RolePermission{
         document.querySelector('#fixed-tab-1 .mdl-spinner').classList.remove("is-active");
         emptyElement(document.querySelector('#fixed-tab-1 .main'));
         document.querySelector('#fixed-tab-1 .main').appendChild(htmlString.body.firstChild);
+        window["componentHandler"].upgradeDom();
     }
 
     checkboxListener(event: MouseEvent){

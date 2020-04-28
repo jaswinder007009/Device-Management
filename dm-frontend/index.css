@@ -73,7 +73,10 @@
     cursor: pointer;
     border-radius: 15px;
   }
-  
+  div.mdl-layout__drawer
+{
+  border: none;
+}
   
   
   .Requestbutton {

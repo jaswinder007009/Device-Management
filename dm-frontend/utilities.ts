@@ -1,15 +1,17 @@
-import { Specification } from "./RequestModel";
 import { UserData } from "./dropdown";
 
-export function openForm() {
-	// document.getElementsByClassName("RegisterForm")[0].classList.add("active");
+export function openForm(formMode: string) {
 	(document.querySelector("#myForm") as HTMLFormElement).style.display="block";
+	if(formMode == "create"){
+		fillInitialDropdowns((document.querySelector("#myForm") as HTMLFormElement));
+	}
 }
 ​
 export function closeForm() {
-	// document.getElementsByClassName("RegisterForm")[0].classList.remove("active");
     (document.querySelector("#myForm") as HTMLFormElement).style.display="none";
-    (document.querySelector("#myForm") as HTMLFormElement).reset();
+	(document.querySelector("#myForm") as HTMLFormElement).reset();
+	clearDropdowns(document.querySelector("#myForm") as HTMLFormElement);
+
 }
 export function formatDate1(date) {
     var d = new Date(date),
@@ -22,7 +24,17 @@ export function formatDate1(date) {
 
     return [year, month, day].join('-');
 }
+export function formatPhone(str:string) {
 
+	return str.slice(0,3)+"-"+str.slice(3,6)+"-"+str.slice(6);    //XXXXXXXXXX=>XXX-XXXX-XXX
+
+}
+export function formatPhone1(str:string) {
+
+	let a =  str.split("-");   //XXX-XXXX-XXX =>XXXXXXXXXX
+console.log(a);
+return a[0]+a[1]+a[2];
+}	
 export function concatName(value : any )
 {
     let name = "";
@@ -54,8 +66,30 @@ export function closeModal(modalElement: HTMLElement){
     document.body.classList.remove("modal-open");
 	modalElement.classList.remove("show");
 }
+function fillInitialDropdowns(formElement: HTMLFormElement){
+	const dropDown= new UserData("");
+	// Fill all country dropdowns
+	formElement.querySelectorAll("[id^=addresses]").forEach((addressDiv: HTMLDivElement) => {
+		const country = addressDiv.querySelector(".country") as HTMLSelectElement;
+		dropDown.getCountry(country);
+	});
+	// Fill all country code dropdowns
+	formElement.querySelectorAll("[id^=phones]").forEach((phoneDiv: HTMLDivElement) => {
+		const countryCode = phoneDiv.querySelector(".countryCode") as HTMLSelectElement;
+		dropDown.getCountryCode(countryCode);
+	});
+	// Fill salutation dropdown
+	dropDown.getSalutation(formElement.querySelector("#salutation"));
+	dropDown.departmentcall(formElement.querySelector("#department"));/////
+}
+function clearDropdowns(formElement: HTMLFormElement){
+	formElement.querySelectorAll('select').forEach((selectElement: HTMLSelectElement) => {
+		selectElement.value = "";
+		
+	})
+}
 export async function addressCheck()
-    {
+{
         let checkbox = document.querySelector('.sameaddress');
 
 	checkbox.addEventListener('change', async function() {
@@ -79,8 +113,8 @@ export async function addressCheck()
 
 			var container1 = document.getElementById("addresses2");
 			var city=(container1.querySelector(".city")as HTMLSelectElement);
-		var state=(container1.querySelector(".state")as HTMLSelectElement);
-		var country=(container1.querySelector(".country")as HTMLSelectElement);
+			var state=(container1.querySelector(".state")as HTMLSelectElement);
+			var country=(container1.querySelector(".country")as HTMLSelectElement);
 			(container1.querySelector(".addressLine1")as HTMLInputElement).value = peradd1;
 			(container1.querySelector(".addressLine2")as HTMLInputElement).value = peradd2;
 			country.value= perpcountry;
@@ -103,4 +137,4 @@ export async function addressCheck()
 	});
 
 
-    }
+}

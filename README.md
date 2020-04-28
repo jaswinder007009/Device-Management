@@ -77,6 +77,18 @@ Eg.
 public IActionResult MethodName(){}
 ```
 
+4. Use the `[PermissionAuthorize(Permission="<PERMISSION NAME>,<ANOTHER PERMISSION>")]` attribute to secure your routes based on permissions
+
+Eg.
+```cs
+
+[PermissionAuthorize(Permission="read_all_users")]
+[HttpGet]
+public IActionResult MethodName(){}
+```
+
+**NOTE** PermissionAuthorize can be used alongside with the Authorize attribute. If used together, it would require both conditions to be fulfilled.
+
 Roles supported currently are *admin*, *user*, *superadmin*
 
 #### Reading data from token

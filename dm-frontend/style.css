@@ -150,7 +150,10 @@ body {
 	opacity: 0.8;
 	position: fixed;
 }
-
+div.mdl-layout__drawer
+{
+  border: none;
+}
 .userForm {
 position: absolute;
 text-align: left;
