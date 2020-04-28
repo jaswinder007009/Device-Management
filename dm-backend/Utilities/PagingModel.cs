@@ -14,9 +14,9 @@ public class PagedList<T> : List<T>
 	public bool HasPrevious => CurrentPage > 1;
 	public bool HasNext => CurrentPage < TotalPages;
 
-	public PagedList(List<T> items, int pageNumber, int pageSize)
+	public PagedList(List<T> items,int count, int pageNumber, int pageSize)
 	{
-		TotalCount = items.Count;
+		TotalCount = count;
 		PageSize = pageSize;
 		CurrentPage = pageNumber;
 		TotalPages = (int)Math.Ceiling(TotalCount / (double)pageSize);
@@ -29,6 +29,16 @@ public class PagedList<T> : List<T>
 		var count = source.Count();
 		var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
 
-		return new PagedList<T>(items,pageNumber, pageSize);
+		return new PagedList<T>(items,count,pageNumber, pageSize);
 	}
+	public object getMetaData()
+            {
+               return new { TotalCount=TotalCount,
+                PageSize=PageSize,
+                CurrentPage=CurrentPage,
+                TotalPages=TotalPages,
+                HasNext=HasNext,
+                HasPrevious=HasPrevious
+			   };
+            }
 }
