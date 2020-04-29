@@ -263,17 +263,24 @@ namespace dm_backend.Controllers
 
         [HttpGet]
         [Route("{type}/{brand}/{model}/specification")]
-        async public Task<IActionResult> GetAllDeviceBrands(String type ,String brand ,  String model )
+        public  IActionResult GetAllDeviceBrands(String type ,String brand ,  String model )
         {
 
             Db.Connection.Open();
 
             var specs = new Specification(Db);
 
-            var result = await specs.getSpecificSpecification( type, brand, model);
+            var result = specs.getSpecificSpecification( type, brand, model);
 
             Db.Connection.Close();
+<<<<<<< HEAD
            
+=======
+             if (result.Count < 1)
+               return NoContent();
+            //var json = config.Formatters.JsonFormatter;
+           // json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
+>>>>>>> f43230423bc6705b1bcc7671a783d10a8d66e5ef
             return new OkObjectResult(result);
         }
 
