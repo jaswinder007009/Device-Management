@@ -86,14 +86,17 @@ import { navigationBarsss, amIUser } from "../globals";
 		}
 	});
 	document.addEventListener("click", event => {
-		if ((event.target as HTMLButtonElement).dataset.id == "close_role") {
+		if ((event.target as HTMLButtonElement).dataset.id == "close_role1") {
 			this.headerTag34.innerHTML == "";
+			this.headerTag34.innerHTML==``;
 		roles.getroles();
 		}
 	});
 	document.addEventListener("click", event => {
-		if ((event.target as HTMLButtonElement).dataset.id == "close_perm") {
-			this.headerTag35.innerHTML == "";
+		if ((event.target as HTMLButtonElement).dataset.id == "close_perm1") {
+			this.headerTag35.innerHTML== "";
+			this.headerTag35.innerHTML==``;
+			
 		roles.getpermissions();
 		}
 	});

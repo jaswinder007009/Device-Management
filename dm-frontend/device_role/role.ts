@@ -1,5 +1,6 @@
 import { BASEURL } from "../globals";
 
+
 export default class role {
 	data: any;
 	size: number;
@@ -134,9 +135,20 @@ export default class role {
 			RoleName: this.roleName
 		};
 	}
+	role_validate() {
+		var role_no = (document.getElementById('roleName') as HTMLInputElement).value;
+		if (role_no == "") {
+			alert("fill the role name");
+		} 
+		else{
+			this.postData();
+		}
+	}
+	
 	updateRole() {
 		this.bindData();
-		this.postData();
+		this.role_validate();
+		
 	}
 	postData() {
 		let url = BASEURL + "/api/role/add";
@@ -168,9 +180,21 @@ export default class role {
 			PermissionName: this.PermissionName
 		};
 	}
+
+	perm_validate() {
+		var perm_no = (document.getElementById('PermissionName') as HTMLInputElement).value;
+		if (perm_no == "") {
+			alert("fill the permission name");
+		} 
+		else{
+			this.postData1();
+		}
+	}
+
 	updatePermission() {
 		this.bindData1();
-		this.postData1();
+		this.perm_validate();
+	
 	}
 	postData1() {
 		let url = BASEURL + "/api/permission/add";
@@ -198,15 +222,16 @@ export default class role {
 	update_data1(x: number) {
 		this.headerTag34.innerHTML == "";
 		this.headerTag34.innerHTML = `
-        <dialog id="popup1" class="mdl-dialog"  >
-
+        <dialog id="popup10" class="mdl-dialog"  >
+		<h3 class="mdl-dialog__title">Enter Role </h3>
 		<div class="mdl-dialog__content">
-        <label> Enter The New Role Name </label>
+        
         <input type="text" id="RoleName111"  name="RoleName111" value=""  >
-        <button class="role_update_1" value="${x}">SUBMIT</button>
+       
 		</div>
 		<div class="mdl-dialog__actions">
-					  <button type="button" class="mdl-button"  id="close_role">Close</button>
+		<button  type="button" class="role_update_1  mdl-button" value="${x}">SUBMIT</button>
+					  <button type="button" class="mdl-button"  id="close_role1">Close</button>
 					
 					</div>
 				  </dialog>
@@ -220,9 +245,22 @@ export default class role {
 			RoleName: this.Role_up
 		};
 	}
+
+	role1_validate(x:number) {
+		var perm_no1= (document.getElementById('RoleName111') as HTMLInputElement).value;
+		if (perm_no1 == "") {
+			alert("fill the role name");
+		} 
+		else{
+			this.postData_1(x);
+		}
+	}
+
 	updateRole_1(x: number) {
 		this.bindData_1();
-		this.postData_1(x);
+		this.role1_validate(x);
+
+		
 	}
 	postData_1(x: number) {
 		let url = BASEURL + "/api/role/" + x + "/update";
@@ -251,15 +289,16 @@ export default class role {
 	
 		
 		<dialog id="popup1" class="mdl-dialog"  >
-
+		<h3 class="mdl-dialog__title">Enter Permission </h3>
 		<div class="mdl-dialog__content">
-        <label> Enter The New Permission Name </label>
+       
         <input type="text" id="PermissionName111"  name="PermissionName111" value=""  >
-        <button class="permission_update_1" value="${y}">SUBMIT</button>
+        
 		</div>
 		
 		<div class="mdl-dialog__actions">
-					  <button type="button" class="mdl-button" id="close_perm" >Close</button>
+		<button  type="button" class="permission_update_1  mdl-button" value="${y}">SUBMIT</button>
+					  <button type="button" class="mdl-button" id="close_perm1" >Close</button>
 					
 					</div>
 				  </dialog>`;
@@ -272,9 +311,19 @@ export default class role {
 			PermissionName: this.permission_up
 		};
 	}
+
+	perm1_validate(y:number) {
+		var perm_no1 = (document.getElementById('PermissionName111') as HTMLInputElement).value;
+		if (perm_no1 == "") {
+			alert("fill the permission name");
+		} 
+		else{
+			this.postData_2(y);
+		}
+	}
 	updatePermission_1(y: number) {
 		this.bindData_2();
-		this.postData_2(y);
+		this.perm1_validate(y);
 	}
 	postData_2(y: number) {
 		let url = BASEURL + "/api/permission/" + y + "/update";
@@ -291,9 +340,11 @@ export default class role {
 				throw new Error(response.statusText);
 			}
 			alert("permission updated");
-			this.headerTag35.innerHTML = "";
+			this.headerTag35.innerHTML == "";
+			this.headerTag35.innerHTML==``;
 			this.getpermissions();
 		});
+
 		this.getpermissions();
 	}
 }
