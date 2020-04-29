@@ -11,10 +11,11 @@ export class GetUserApi
 	array: any = [];
 /////API TO SORT
 	getSort(uri : string) {
-		return fetch(uri,{
+		return fetch(uri+"&"+PageNo(currentPage),{
 			headers: new Headers({"Authorization": `Bearer ${this.token}`})})
 			.then(response =>{
-				
+				let metadata=JSON.parse(response.headers.get('X-Pagination'));
+       			paging(metadata);
 				return response.json()
 			})
 			.then(data => {
