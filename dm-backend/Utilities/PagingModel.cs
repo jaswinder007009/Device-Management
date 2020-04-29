@@ -25,7 +25,8 @@ public class PagedList<T> : List<T>
 	}
 
 	public static PagedList<T> ToPagedList(List<T> source, int pageNumber, int pageSize)
-	{
+	{	pageNumber= pageNumber<1 ? 1 : pageNumber;
+		pageSize= pageSize<1 ? 5 : pageSize;
 		var count = source.Count();
 		var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
 
