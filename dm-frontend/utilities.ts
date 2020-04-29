@@ -93,6 +93,12 @@ function clearDropdowns(formElement: HTMLFormElement){
 		
 	})
 }
+export function clearSpan(formElement: HTMLFormElement){
+	formElement.querySelectorAll('span').forEach((spanElement: HTMLSelectElement) => {
+		spanElement.textContent = "";
+		
+	})
+}
 export async function addressCheck()
 {
         let checkbox = document.querySelector('.sameaddress');
