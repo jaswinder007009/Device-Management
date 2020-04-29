@@ -40,7 +40,6 @@ export let currentPage:number=current_page;
 			});
 		}
 		
-		setData();
 
 		document.addEventListener('click' , e =>
 		{
@@ -284,6 +283,7 @@ export let currentPage:number=current_page;
     });
 
 	navigationBarsss(role,"navigation");
+	setData();
     util.addressCheck();
 	dropDownListen(form,token);
 
