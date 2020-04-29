@@ -208,7 +208,7 @@ function currAdd1(containerId: string){
     }
     else if(c1s.length > 4) {
         document.querySelector("#" + containerId + ' .addressLine1Span').innerHTML = "";
-        return  currAdd2(containerId)*currCon(containerId)*currState(containerId)*currCity(containerId)*pincode(containerId)*currAddType(containerId);
+        return  currAdd2(containerId)*currCon(containerId)*currState(containerId)*currCity(containerId);//*pincode(containerId)*currAddType(containerId);
          
     }
     else {
@@ -293,7 +293,7 @@ function phone1validation(containerId: string) {
     else if(phone_number1s.length == 10){
         document.querySelector("#" + containerId + ' .numberspan').innerHTML = "";
         
-        return phones1c(containerId)*phones1cc(containerId)*ac1(containerId); 
+        return phones1c(containerId)*phones1cc(containerId);//*ac1(containerId); 
        
     }
      else {
