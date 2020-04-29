@@ -139,3 +139,15 @@ rpassword.addEventListener("focus", d => {
 	document.getElementById("passwords").innerHTML = "";
 	document.getElementById("confirmpasss").innerHTML = "";
 });
+
+let hideregisters = document.getElementById('hideregister');
+hideregisters.addEventListener("click",e=>{
+	//location.reload();
+	document.getElementById("abc").style.display = "none";
+
+});
+
+let registercards = document.getElementById('registercard');
+registercards.addEventListener("click",f=>{
+	document.getElementById("abc").style.display = "flex";
+});
