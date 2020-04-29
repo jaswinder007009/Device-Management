@@ -1,5 +1,8 @@
-﻿using System;
+﻿using dm_backend.Models;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,11 +20,11 @@ namespace dm_backend.Logics
                             inner join device_type as dt using(device_type_id)  inner join device_model as dm  
                             using(device_model_id)inner join assign_device using(device_id) inner join user as
                             u using(user_id) inner join salutation  as st using (salutation_id) where d.device_id=";
-        public sendMail(AppDb db)
+        public SendNotificationMail(AppDb db)
         {
             Db = db;
         }
-        public sendMail()
+        public SendNotificationMail()
         {
 
         }
@@ -30,35 +33,24 @@ namespace dm_backend.Logics
 
         public async Task<string> sendMultipleMail(MultipleNotifications item)
         {
+            var body = "";
 
             foreach (NotificationModel device in item.notify)
             {
 
                 var user = await getUserDetails(device.deviceId);
-                await sendNotification(user);
+               body  =  "" + user.name + "<br> <br> This mail is to inform you that  some of our worker need device that you have i.e( <b>  " + user.deviceType + " " + user.deviceName +
+                   "</b>) if you have done  with your work  kindly return to admin so Other may utilize it <br><br>  Thank You <br> Admin";
+
+                await (new sendMail().sendNotification(user.email , body));
             }
             return "";
         }
 
-        private string Dec(string v)
-        {
-            byte[] b;
-            string decrypted;
-            try
-            {
-                b = Convert.FromBase64String(v);
-                decrypted = System.Text.ASCIIEncoding.ASCII.GetString(b);
-            }
-            catch (FormatException fe)
-            {
-                decrypted = "";
-            }
-            return decrypted;
-        }
+       
 
 
-
-        public async Task<sendMail> getUserDetails(int deviceId)
+        public async Task<SendNotificationMail> getUserDetails(int deviceId)
         {
             var tempQuerry = querry + "" + deviceId + ";";
 
@@ -71,9 +63,9 @@ namespace dm_backend.Logics
 
 
 
-        public async Task<sendMail> bindResult(DbDataReader reader)
+        public async Task<SendNotificationMail> bindResult(DbDataReader reader)
         {
-            var x = new sendMail();
+            var x = new SendNotificationMail();
             using (reader)
             {
                 while (await reader.ReadAsync())

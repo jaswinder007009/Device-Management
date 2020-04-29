@@ -1,5 +1,6 @@
 
 ﻿using dm_backend.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,29 +14,40 @@ namespace dm_backend.Logics
     public class sendMail
     {
          //MultipleNotifications item
-        public async Task<string>  sendNotification(sendMail datalist)
+        public async Task<string>  sendNotification(string  email , string  body )
         {
-            
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
-                mail.From = new MailAddress("ssrawat@ex2india.com" , "Admin");
-                mail.To.Add(datalist.email);
+                mail.From = new MailAddress("sjangra@ex2india.com", "Admin");
+                mail.To.Add(email);
                 mail.IsBodyHtml = true;
 
                 mail.Subject = "Device Notification";
-                mail.Body = "" + datalist.name + "<br> <br> This mail is to inform you that  some of our worker need device that you have i.e( <b>  "+ datalist.deviceType + " " + datalist.deviceName +
-                    "</b>) if you have done  with your work  kindly return to admin so Other may utilize it <br><br>  Thank You";
-
+                mail.Body = body;
                 SmtpServer.Port = 587;
-            string ans = Dec("SmVmZmhhcmR5QDYxOQ==");
-            SmtpServer.Credentials = new System.Net.NetworkCredential("ssrawat@ex2india.com ", "so@obvious");
+                string ans = Dec("SmVmZmhhcmR5QDYxOQ==");
+                SmtpServer.Credentials = new System.Net.NetworkCredential("sjangra@ex2india.com ", ans);
                 SmtpServer.EnableSsl = true;
-              await   SmtpServer.SendMailAsync(mail);
-            return null;
-            
-            
+                await   SmtpServer.SendMailAsync(mail);
+                return null;
         }
+        private string Dec(string v)
+        {
+            byte[] b;
+            string decrypted;
+            try
+            {
+                b = Convert.FromBase64String(v);
+                decrypted = System.Text.ASCIIEncoding.ASCII.GetString(b);
+            }
+            catch (FormatException fe)
+            {
+                decrypted = "";
+            }
+            return decrypted;
+        }
+
     }
 
 
