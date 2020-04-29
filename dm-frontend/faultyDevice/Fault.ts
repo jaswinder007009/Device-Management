@@ -2,7 +2,6 @@
 import { BASEURL, Token, PageNo } from "../globals";
 import { HitApi } from "../Device-Request/HitRequestApi";
 import { FaultyDeviceModel } from "./FaultyDeviceModel";
-import { currentPage } from "../webpage";
 
 export class FalultyDevice
 {
